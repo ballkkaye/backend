@@ -106,7 +106,7 @@ VALUES ('1234', '쌀', 'ssar', 1, 'ssar@nate.com', '1999-09-09', 'MALE', '/img/p
        ('1234', '김정원', 'jungwon', 5, 'jungwon@example.com', '1996-06-06', 'MALE', '/img/profile.png', 'USER'),
        ('1234', '김미숙', 'misook', 6, 'misook@example.com', '1994-04-04', 'FEMALE', '/img/profile.png', 'USER');
 
--- 6.game_tb
+-- 6.user_tb
 INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
                      home_team_id, away_team_id,
                      home_win_per, away_win_per,
