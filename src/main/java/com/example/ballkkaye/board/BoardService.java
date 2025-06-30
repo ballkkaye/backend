@@ -39,11 +39,17 @@ public class BoardService {
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
                 .orElseThrow(() -> new RuntimeException("팀을 찾을 수 없습니다"));
 
-        // 3. board 게시글 저장
+        // 3. 이미지 최대 수 넘으면 throw
+        if (reqDTO.getImages() != null && reqDTO.getImages().size() > 10) {
+            throw new RuntimeException("최대 이미지 저장 한도를 넘었습니다.");
+        }
+
+
+        // 4. board 게시글 저장
         Board board = reqDTO.toEntity(userPS, teamPS);
         boardRepository.save(board);
 
-        // 4. board 게시글의 이미지 저장 << image 테이블에
+        // 5. board 게시글의 이미지 저장 << image 테이블에
         List<BoardImageResponse.ItemDTO> imageUrls = new java.util.ArrayList<>();
         List<String> base64Images = reqDTO.getImages();
         if (base64Images != null && !base64Images.isEmpty()) {
@@ -83,6 +89,7 @@ public class BoardService {
                             .build();
                     boardImageRepository.save(boardImage);
 
+                    // response에 옮겨담는다.
                     imageUrls.add(new BoardImageResponse.ItemDTO(boardImage.getId(), boardImage.getImgUrl()));
 
                 } catch (Exception e) {
@@ -91,7 +98,7 @@ public class BoardService {
             }
         }
 
-        // 5. 응답 DTO 생성 및 반환
+        // 6. 응답 DTO 생성 및 반환
         return new BoardResponse.SaveDTO(board, imageUrls);
     }
 }
