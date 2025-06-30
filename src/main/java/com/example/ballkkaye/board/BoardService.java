@@ -4,18 +4,24 @@ import com.example.ballkkaye._core.util.ImageUtil;
 import com.example.ballkkaye.board.image.BoardImage;
 import com.example.ballkkaye.board.image.BoardImageRepository;
 import com.example.ballkkaye.board.image.BoardImageResponse;
+import com.example.ballkkaye.board.reply.BoardReplyRepository;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.team.TeamRepository;
+import com.example.ballkkaye.team.TeamResponse;
+import com.example.ballkkaye.team.record.TeamRecordRepository;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +30,8 @@ public class BoardService {
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
     private final BoardImageRepository boardImageRepository;
+    private final BoardReplyRepository boardReplyRepository;
+    private final TeamRecordRepository teamRecordRepository;
 
     // 커뮤니티 게시글 등록
     @Transactional
@@ -106,5 +114,48 @@ public class BoardService {
 
         // 갱신된 게시글 + 이미지 반환
         return new BoardResponse.UpdateDTO(boardPS, itemDTOS);
+    }
+
+
+    // 게시글 목록 조회
+    public BoardResponse.ListDTO getBoards(Integer teamId, Integer page) {
+        PrettyTime p = new PrettyTime(Locale.KOREAN);
+        List<Board> boards = boardRepository.findAll(teamId, page, DeleteStatus.NOT_DELETED);
+        List<BoardResponse.ItemDTO> itemDTOS = new ArrayList<>();
+
+        for (Board board : boards) {
+            String title = board.getTitle();
+            String nickname = board.getUser().getNickname();
+            String relativeTime = p.format(new Date(board.getCreatedAt().getTime()));
+            Integer tId = board.getTeam() != null ? board.getTeam().getId() : null;
+            String teamName = board.getTeam() != null ? board.getTeam().getTeamName() : null;
+            Long replyCount = boardReplyRepository.totalCount(board.getId());
+
+            BoardResponse.ItemDTO dto = new BoardResponse.ItemDTO(
+                    board.getId(),
+                    title,
+                    nickname,
+                    relativeTime,
+                    tId,
+                    teamName,
+                    replyCount.intValue()
+            );
+
+            itemDTOS.add(dto);
+        }
+        List<TeamResponse.ItemDTO> teamDTOS = new ArrayList<>();
+        List<Team> teams = teamRepository.findAll();
+        for (Team team : teams) {
+
+            TeamResponse.ItemDTO dto = new TeamResponse.ItemDTO(
+                    team.getId(),
+                    team.getTeamName(),
+                    team.getLogoUrl(),
+                    teamRecordRepository.getRank(team.getId())
+            );
+            teamDTOS.add(dto);
+        }
+        BoardResponse.ListDTO respDTO = new BoardResponse.ListDTO(teamDTOS, itemDTOS);
+        return respDTO;
     }
 }
