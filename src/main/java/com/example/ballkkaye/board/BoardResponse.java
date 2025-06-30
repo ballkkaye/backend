@@ -1,6 +1,7 @@
 package com.example.ballkkaye.board;
 
 import com.example.ballkkaye.board.image.BoardImageResponse;
+import com.example.ballkkaye.board.reply.BoardReplyResponse;
 import com.example.ballkkaye.team.TeamResponse;
 import lombok.Data;
 
@@ -71,6 +72,39 @@ public class BoardResponse {
         public ListDTO(List<TeamResponse.ItemDTO> teams, List<ItemDTO> items) {
             this.teams = teams;
             this.items = items;
+        }
+    }
+
+    @Data
+    public static class DetailDTO {
+        private Integer boardId;
+        private String nickname;
+        private String profileImageUrl;
+        private String relativeTime;
+        private String myTeamName;
+        private Integer teamCategoryId;
+        private String teamCategoryName;
+        private String title;
+        private String content;
+        private Boolean isOwner;
+        private Boolean isLike;
+        private Integer LikeCount;
+        private List<BoardReplyResponse.ParentItemDTO> replyItems;
+
+        public DetailDTO(Integer boardId, String nickname, String profileImageUrl, String relativeTime, String myTeamName, Integer teamCategoryId, String teamCategoryName, String title, String content, Boolean isOwner, Boolean isLike, Integer likeCount, List<BoardReplyResponse.ParentItemDTO> replyItems) {
+            this.boardId = boardId;
+            this.nickname = nickname;
+            this.profileImageUrl = profileImageUrl;
+            this.relativeTime = relativeTime;
+            this.myTeamName = myTeamName;
+            this.teamCategoryId = teamCategoryId;
+            this.teamCategoryName = teamCategoryName;
+            this.title = title;
+            this.content = content;
+            this.isOwner = isOwner;
+            this.isLike = isLike;
+            this.LikeCount = likeCount;
+            this.replyItems = replyItems;
         }
     }
 }
