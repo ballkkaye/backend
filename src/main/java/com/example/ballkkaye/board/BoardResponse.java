@@ -40,4 +40,25 @@ public class BoardResponse {
             this.imagesUrl = imagesUrl;
         }
     }
+
+    @Data
+    public static class ListDTO {
+        private Integer boardId;
+        private String title;
+        private String nickname;
+        private String relativeTime;
+        private Integer teamId;
+        private String teamName;
+        private Integer replyCount;
+
+        public ListDTO(Integer boardId, String title, String nickname, String relativeTime, Integer teamId, String teamName, Integer replyCount) {
+            this.boardId = boardId;
+            this.title = title;
+            this.nickname = nickname;
+            this.relativeTime = relativeTime;
+            this.teamId = teamId;
+            this.teamName = teamName;
+            this.replyCount = replyCount;
+        }
+    }
 }

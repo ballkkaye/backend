@@ -1,9 +1,12 @@
 package com.example.ballkkaye.board;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -19,5 +22,26 @@ public class BoardRepository {
     // 게시글 조회
     public Optional<Board> findById(Integer boardId) {
         return Optional.ofNullable(em.find(Board.class, boardId));
+    }
+
+    public List<Board> findAll(Integer teamId, int page, DeleteStatus deleteStatus) {
+        String q = "SELECT b FROM Board b " +
+                "JOIN FETCH b.user u " +
+                "LEFT JOIN FETCH b.team t " +
+                "WHERE b.deleteStatus = :deleteStatus " +
+                (teamId != null ? "AND t.id = :teamId " : "") +
+                "ORDER BY b.createdAt DESC";
+
+        Query query = em.createQuery(q, Board.class)
+                .setParameter("deleteStatus", deleteStatus);
+
+        if (teamId != null) {
+            query.setParameter("teamId", teamId);
+        }
+
+        query.setFirstResult(page * 5);
+        query.setMaxResults(5);
+
+        return query.getResultList();
     }
 }

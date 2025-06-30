@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class BoardController {
@@ -35,6 +37,18 @@ public class BoardController {
         User sessionUser = userRepository.findByEmail("ssar@nate.com")
                 .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
         BoardResponse.UpdateDTO respDTO = boardService.update(reqDTO, sessionUser, id);
+        return Resp.ok(respDTO);
+    }
+
+    @GetMapping("/s/api/boards")
+    public ResponseEntity<?> getBoards(@RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+                                       @RequestParam(required = false, value = "teamId") Integer teamId
+    ) {
+        //        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        List<BoardResponse.ListDTO> respDTO = boardService.getBoards(teamId, page);
+
         return Resp.ok(respDTO);
     }
 }
