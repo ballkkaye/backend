@@ -106,7 +106,7 @@ VALUES ('1234', '쌀', 'ssar', 1, 'ssar@nate.com', '1999-09-09', 'MALE', '/img/p
        ('1234', '김정원', 'jungwon', 5, 'jungwon@example.com', '1996-06-06', 'MALE', '/img/profile.png', 'USER'),
        ('1234', '김미숙', 'misook', 6, 'misook@example.com', '1994-04-04', 'FEMALE', '/img/profile.png', 'USER');
 
--- 6.user_tb
+-- 6.game_tb
 INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
                      home_team_id, away_team_id,
                      home_win_per, away_win_per,
@@ -222,3 +222,4 @@ VALUES (1, 1, 78, 45, 32, 1, 0.584, 0, '5승0무5패', '1패', 0.950, 720, 3.50)
        (8, 8, 76, 35, 37, 4, 0.486, 7.5, '4승2무4패', '1패', 0.830, 600, 4.00),
        (9, 9, 79, 31, 45, 3, 0.408, 13.5, '4승0무6패', '1승', 0.810, 570, 4.20),
        (10, 10, 82, 25, 54, 3, 0.316, 21, '5승1무4패', '3승', 0.790, 540, 4.30);
+
