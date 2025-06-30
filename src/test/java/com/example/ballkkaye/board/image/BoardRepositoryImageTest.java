@@ -1,5 +1,6 @@
-package com.example.ballkkaye.board;
+package com.example.ballkkaye.board.image;
 
+import com.example.ballkkaye.board.Board;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.common.enums.Gender;
 import com.example.ballkkaye.common.enums.StadiumType;
@@ -7,7 +8,6 @@ import com.example.ballkkaye.common.enums.UserRole;
 import com.example.ballkkaye.stadium.Stadium;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.user.User;
-import com.example.ballkkaye.user.UserRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +15,18 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
 
-@Import({BoardRepository.class, UserRepository.class})
+@Import(BoardImageRepository.class)
 @DataJpaTest
-public class BoardRepositoryTest {
+public class BoardRepositoryImageTest {
     @Autowired
     private EntityManager em;
     @Autowired
-    private BoardRepository boardRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private BoardImageRepository boardImageRepository;
 
     @Test
     public void save_test() {
-        em.flush();
-        em.clear();
         // given
         Stadium stadium = Stadium.builder()
                 .stadiumName("잠실야구장")
@@ -47,11 +43,11 @@ public class BoardRepositoryTest {
         em.persist(team);
 
         User user = User.builder()
-                .email("ssar_test@nate.com")
-                .name("쌀테스트")
-                .nickname("ssar_test")
+                .email("save_test@nate.com")
+                .name("이미지저장테스트")
+                .nickname("saveTest")
                 .password("1234")
-                .birthDate(LocalDate.of(1999, 9, 9))
+                .birthDate(LocalDate.of(1999, 1, 1))
                 .gender(Gender.MALE)
                 .profileUrl("/img/profile.png")
                 .userRole(UserRole.USER)
@@ -60,30 +56,38 @@ public class BoardRepositoryTest {
         em.persist(user);
 
         Board board = Board.builder()
-                .title("게시글 테스트 제목")
-                .content("테스트 내용입니다.")
+                .title("이미지 저장용 게시글")
+                .content("이미지 저장 테스트입니다.")
                 .user(user)
                 .team(team)
                 .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
+        em.persist(board);
+
+        BoardImage boardImage = BoardImage.builder()
+                .board(board)
+                .imgUrl("/img/test-save.png")
+                .deleteStatus(DeleteStatus.NOT_DELETED)
+                .build();
 
         // when
-        boardRepository.save(board);
+        boardImageRepository.save(boardImage);
+        em.flush();
+        em.clear();
+
+        // then
+        BoardImage imagePS = em.find(BoardImage.class, boardImage.getId());
 
         // eye
-        Board boardPS = em.find(Board.class, board.getId());
-        System.out.println("===== 저장된 게시글 정보 =====");
-        System.out.println("ID: " + boardPS.getId());
-        System.out.println("제목: " + boardPS.getTitle());
-        System.out.println("내용: " + boardPS.getContent());
-        System.out.println("작성자: " + boardPS.getUser().getName());
-        System.out.println("팀: " + boardPS.getTeam().getTeamName());
-        System.out.println("삭제 상태: " + boardPS.getDeleteStatus());
-        System.out.println("작성일: " + boardPS.getCreatedAt());
+        System.out.println("===== 저장된 이미지 정보 =====");
+        System.out.println("ID: " + imagePS.getId());
+        System.out.println("URL: " + imagePS.getImgUrl());
+        System.out.println("삭제 상태: " + imagePS.getDeleteStatus());
     }
 
+
     @Test
-    public void find_by_id_test() {
+    public void findByBoardAndDeleteStatus_test() {
         // given
         Stadium stadium = Stadium.builder()
                 .stadiumName("잠실야구장")
@@ -101,10 +105,10 @@ public class BoardRepositoryTest {
 
         User user = User.builder()
                 .email("find_test@nate.com")
-                .name("찾기테스트")
-                .nickname("find_test")
-                .password("5678")
-                .birthDate(LocalDate.of(2000, 1, 1))
+                .name("이미지찾기테스트")
+                .nickname("findTest")
+                .password("1234")
+                .birthDate(LocalDate.of(1999, 1, 1))
                 .gender(Gender.MALE)
                 .profileUrl("/img/profile.png")
                 .userRole(UserRole.USER)
@@ -113,31 +117,40 @@ public class BoardRepositoryTest {
         em.persist(user);
 
         Board board = Board.builder()
-                .title("찾기 테스트 제목")
-                .content("찾기 테스트 내용")
+                .title("이미지 찾기용 게시글")
+                .content("이미지 조회 테스트입니다.")
                 .user(user)
                 .team(team)
                 .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
         em.persist(board);
 
+        BoardImage img1 = BoardImage.builder()
+                .board(board)
+                .imgUrl("/img/test1.png")
+                .deleteStatus(DeleteStatus.NOT_DELETED)
+                .build();
+        BoardImage img2 = BoardImage.builder()
+                .board(board)
+                .imgUrl("/img/test2.png")
+                .deleteStatus(DeleteStatus.DELETED)
+                .build();
+        em.persist(img1);
+        em.persist(img2);
+
         em.flush();
         em.clear();
 
         // when
-        Optional<Board> boardOP = boardRepository.findById(board.getId());
+        List<BoardImage> imageList = boardImageRepository.findByBoardIdAndDeleteStatus(board, DeleteStatus.NOT_DELETED);
 
         // eye
-        System.out.println("===== 조회된 게시글 정보 =====");
-        boardOP.ifPresent(b -> {
-            System.out.println("ID: " + b.getId());
-            System.out.println("제목: " + b.getTitle());
-            System.out.println("내용: " + b.getContent());
-            System.out.println("작성자: " + b.getUser().getName());
-            System.out.println("팀: " + b.getTeam().getTeamName());
-            System.out.println("삭제 상태: " + b.getDeleteStatus());
-            System.out.println("작성일: " + b.getCreatedAt());
-        });
+        System.out.println("===== 조회된 이미지 목록 (NOT_DELETED) =====");
+        for (BoardImage img : imageList) {
+            System.out.println("ID: " + img.getId());
+            System.out.println("URL: " + img.getImgUrl());
+            System.out.println("삭제 상태: " + img.getDeleteStatus());
+        }
     }
 
 }

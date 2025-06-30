@@ -33,4 +33,21 @@ public class BoardRequest {
                     .build();
         }
     }
+
+    @Data
+    public static class UpdateDTO {
+        private String title;
+        private Integer teamId;
+        private String content;
+        private List<String> remainImageUrls;
+        private List<String> newImages;
+
+        public UpdateDTO(String title, Integer teamId, String content, List<String> remainImageUrls, List<String> newImages) {
+            this.title = title;
+            this.teamId = teamId;
+            this.content = content;
+            this.remainImageUrls = remainImageUrls;
+            this.newImages = newImages;
+        }
+    }
 }

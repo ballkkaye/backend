@@ -8,9 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,6 +24,17 @@ public class BoardController {
         User sessionUser = userRepository.findByEmail("ssar@nate.com")
                 .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
         BoardResponse.SaveDTO respDTO = boardService.save(reqDTO, sessionUser);
+        return Resp.ok(respDTO);
+    }
+
+    @PutMapping("/s/api/boards/{id}")
+    public ResponseEntity<?> update(@Valid @RequestBody BoardRequest.UpdateDTO reqDTO,
+                                    @PathVariable("id") Integer id,
+                                    Errors errors) {
+//        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        BoardResponse.UpdateDTO respDTO = boardService.update(reqDTO, sessionUser, id);
         return Resp.ok(respDTO);
     }
 }

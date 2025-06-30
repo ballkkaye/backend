@@ -11,6 +11,7 @@ import java.util.Optional;
 public class TeamRepository {
     private final EntityManager em;
 
+    // 팀 조회
     public Optional<Team> findById(Integer teamId) {
         return Optional.ofNullable(em.find(Team.class, teamId));
     }

@@ -33,4 +33,8 @@ public class BoardImage {
         this.deleteStatus = deleteStatus;
         this.imgUrl = imgUrl;
     }
+
+    public void delete() {
+        this.deleteStatus = DeleteStatus.DELETED;
+    }
 }

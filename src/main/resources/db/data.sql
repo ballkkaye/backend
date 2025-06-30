@@ -14,6 +14,8 @@ VALUES ('잠실야구장', '서울특별시 잠실동', 'OUTDOOR'),
        ('포항야구장', '경상북도 포항시', 'OUTDOOR'),
        ('군산 월명야구장', '전라북도 군산시', 'OUTDOOR');
 
+INSERT INTO stadium_tb (stadium_name, location, stadium_type)
+VALUES ('부산 사직야구장', '부산광역시 사직동', 'OUTDOOR');
 
 -- 2. stadium_correction_tb (구장 보정 계수)테이블
 INSERT INTO stadium_correction_tb (stadium_id, correction, this_year)
@@ -104,7 +106,7 @@ VALUES ('1234', '쌀', 'ssar', 1, 'ssar@nate.com', '1999-09-09', 'MALE', '/img/p
        ('1234', '김정원', 'jungwon', 5, 'jungwon@example.com', '1996-06-06', 'MALE', '/img/profile.png', 'USER'),
        ('1234', '김미숙', 'misook', 6, 'misook@example.com', '1994-04-04', 'FEMALE', '/img/profile.png', 'USER');
 
--- 6.user_tb
+-- 6.game_tb
 INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
                      home_team_id, away_team_id,
                      home_win_per, away_win_per,
@@ -191,5 +193,9 @@ VALUES (423, 1, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/202
         '없음'),
        (427, 10, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/64350.png', 4.88, 15, 8, 1.51,
         '6승 7패');
+
+
+INSERT INTO board_tb (team_id, user_id, title, content, delete_status, created_at)
+VALUES (3, 1, '직관 다녀온 후기', '롯데 경기 진짜 재밌었음. 9회말 역전승은 감동이었어.', 'NOT_DELETED', '2025-06-29 15:30:00');
 
 
