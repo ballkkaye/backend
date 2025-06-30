@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BoardImageRepository {
     private final EntityManager em;
+
+    public void save(BoardImage boardImage) {
+        em.persist(boardImage);
+    }
 }

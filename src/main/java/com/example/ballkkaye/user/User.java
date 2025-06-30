@@ -4,6 +4,7 @@ import com.example.ballkkaye.common.enums.Gender;
 import com.example.ballkkaye.common.enums.UserRole;
 import com.example.ballkkaye.team.Team;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -52,4 +53,20 @@ public class User {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public User(String password, String name, String nickname, Team team,
+                String email, LocalDate birthDate, Gender gender,
+                String profileUrl, UserRole userRole) {
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+        this.team = team;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.profileUrl = profileUrl;
+        this.userRole = userRole;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.ballkkaye.board.image;
 import com.example.ballkkaye.board.Board;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,11 @@ public class BoardImage {
 
     @Column(nullable = false)
     private String imgUrl;
+
+    @Builder
+    public BoardImage(Board board, DeleteStatus deleteStatus, String imgUrl) {
+        this.board = board;
+        this.deleteStatus = deleteStatus;
+        this.imgUrl = imgUrl;
+    }
 }

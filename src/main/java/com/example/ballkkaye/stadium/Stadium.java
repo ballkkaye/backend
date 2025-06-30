@@ -2,6 +2,7 @@ package com.example.ballkkaye.stadium;
 
 import com.example.ballkkaye.common.enums.StadiumType;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,11 @@ public class Stadium {
     @Column(name = "stadium_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private StadiumType stadiumType;
+
+    @Builder
+    public Stadium(String stadiumName, String location, StadiumType stadiumType) {
+        this.stadiumName = stadiumName;
+        this.location = location;
+        this.stadiumType = stadiumType;
+    }
 }
