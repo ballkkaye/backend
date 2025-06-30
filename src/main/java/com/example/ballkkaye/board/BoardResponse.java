@@ -1,6 +1,7 @@
 package com.example.ballkkaye.board;
 
 import com.example.ballkkaye.board.image.BoardImageResponse;
+import com.example.ballkkaye.team.TeamResponse;
 import lombok.Data;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class BoardResponse {
     }
 
     @Data
-    public static class ListDTO {
+    public static class ItemDTO {
         private Integer boardId;
         private String title;
         private String nickname;
@@ -51,7 +52,7 @@ public class BoardResponse {
         private String teamName;
         private Integer replyCount;
 
-        public ListDTO(Integer boardId, String title, String nickname, String relativeTime, Integer teamId, String teamName, Integer replyCount) {
+        public ItemDTO(Integer boardId, String title, String nickname, String relativeTime, Integer teamId, String teamName, Integer replyCount) {
             this.boardId = boardId;
             this.title = title;
             this.nickname = nickname;
@@ -59,6 +60,17 @@ public class BoardResponse {
             this.teamId = teamId;
             this.teamName = teamName;
             this.replyCount = replyCount;
+        }
+    }
+
+    @Data
+    public static class ListDTO {
+        private List<TeamResponse.ItemDTO> teams;
+        private List<ItemDTO> items;
+
+        public ListDTO(List<TeamResponse.ItemDTO> teams, List<ItemDTO> items) {
+            this.teams = teams;
+            this.items = items;
         }
     }
 }

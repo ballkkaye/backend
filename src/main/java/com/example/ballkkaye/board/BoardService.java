@@ -8,6 +8,8 @@ import com.example.ballkkaye.board.reply.BoardReplyRepository;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.team.TeamRepository;
+import com.example.ballkkaye.team.TeamResponse;
+import com.example.ballkkaye.team.record.TeamRecordRepository;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -29,6 +31,7 @@ public class BoardService {
     private final TeamRepository teamRepository;
     private final BoardImageRepository boardImageRepository;
     private final BoardReplyRepository boardReplyRepository;
+    private final TeamRecordRepository teamRecordRepository;
 
     // 커뮤니티 게시글 등록
     @Transactional
@@ -115,10 +118,10 @@ public class BoardService {
 
 
     // 게시글 목록 조회
-    public List<BoardResponse.ListDTO> getBoards(Integer teamId, Integer page) {
+    public BoardResponse.ListDTO getBoards(Integer teamId, Integer page) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         List<Board> boards = boardRepository.findAll(teamId, page, DeleteStatus.NOT_DELETED);
-        List<BoardResponse.ListDTO> respDTO = new ArrayList<>();
+        List<BoardResponse.ItemDTO> itemDTOS = new ArrayList<>();
 
         System.out.println("==============================");
         for (Board board : boards) {
@@ -130,7 +133,7 @@ public class BoardService {
             Long replyCount = boardReplyRepository.totalCount(board.getId());
             System.out.println("replyCount: " + replyCount);
 
-            BoardResponse.ListDTO dto = new BoardResponse.ListDTO(
+            BoardResponse.ItemDTO dto = new BoardResponse.ItemDTO(
                     board.getId(),
                     title,
                     nickname,
@@ -140,8 +143,21 @@ public class BoardService {
                     replyCount.intValue()
             );
 
-            respDTO.add(dto);
+            itemDTOS.add(dto);
         }
+        List<TeamResponse.ItemDTO> teamDTOS = new ArrayList<>();
+        List<Team> teams = teamRepository.findAll();
+        for (Team team : teams) {
+
+            TeamResponse.ItemDTO dto = new TeamResponse.ItemDTO(
+                    team.getId(),
+                    team.getTeamName(),
+                    team.getLogoUrl(),
+                    teamRecordRepository.getRank(team.getId())
+            );
+            teamDTOS.add(dto);
+        }
+        BoardResponse.ListDTO respDTO = new BoardResponse.ListDTO(teamDTOS, itemDTOS);
         return respDTO;
     }
 }
