@@ -4,6 +4,7 @@ import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.user.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,11 +36,19 @@ public class Board {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DeleteStatus deleteStatus;
-
-
+    
     @UpdateTimestamp
     private Timestamp updatedAt;
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public Board(User user, Team team, String title, String content, DeleteStatus deleteStatus) {
+        this.user = user;
+        this.team = team;
+        this.title = title;
+        this.content = content;
+        this.deleteStatus = deleteStatus;
+    }
 }
