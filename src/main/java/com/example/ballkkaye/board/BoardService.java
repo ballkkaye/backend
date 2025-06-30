@@ -123,7 +123,6 @@ public class BoardService {
         List<Board> boards = boardRepository.findAll(teamId, page, DeleteStatus.NOT_DELETED);
         List<BoardResponse.ItemDTO> itemDTOS = new ArrayList<>();
 
-        System.out.println("==============================");
         for (Board board : boards) {
             String title = board.getTitle();
             String nickname = board.getUser().getNickname();
@@ -131,7 +130,6 @@ public class BoardService {
             Integer tId = board.getTeam() != null ? board.getTeam().getId() : null;
             String teamName = board.getTeam() != null ? board.getTeam().getTeamName() : null;
             Long replyCount = boardReplyRepository.totalCount(board.getId());
-            System.out.println("replyCount: " + replyCount);
 
             BoardResponse.ItemDTO dto = new BoardResponse.ItemDTO(
                     board.getId(),
