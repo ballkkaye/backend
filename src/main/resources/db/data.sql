@@ -14,6 +14,8 @@ VALUES ('잠실야구장', '서울특별시 잠실동', 'OUTDOOR'),
        ('포항야구장', '경상북도 포항시', 'OUTDOOR'),
        ('군산 월명야구장', '전라북도 군산시', 'OUTDOOR');
 
+INSERT INTO stadium_tb (stadium_name, location, stadium_type)
+VALUES ('부산 사직야구장', '부산광역시 사직동', 'OUTDOOR');
 
 -- 2. stadium_correction_tb (구장 보정 계수)테이블
 INSERT INTO stadium_correction_tb (stadium_id, correction, this_year)
@@ -104,7 +106,7 @@ VALUES ('1234', '쌀', 'ssar', 1, 'ssar@nate.com', '1999-09-09', 'MALE', '/img/p
        ('1234', '김정원', 'jungwon', 5, 'jungwon@example.com', '1996-06-06', 'MALE', '/img/profile.png', 'USER'),
        ('1234', '김미숙', 'misook', 6, 'misook@example.com', '1994-04-04', 'FEMALE', '/img/profile.png', 'USER');
 
--- 6.user_tb
+-- 6.game_tb
 INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
                      home_team_id, away_team_id,
                      home_win_per, away_win_per,

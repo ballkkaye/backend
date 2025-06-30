@@ -37,6 +37,7 @@ public class Board {
     @Column(nullable = false)
     private DeleteStatus deleteStatus;
 
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 
