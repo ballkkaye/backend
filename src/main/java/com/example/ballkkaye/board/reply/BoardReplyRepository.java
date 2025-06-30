@@ -11,11 +11,11 @@ import java.util.List;
 public class BoardReplyRepository {
     private final EntityManager em;
 
-    public Long totalCount(Integer boardId) {
+    public Integer totalCount(Integer boardId) {
         String q = "SELECT COUNT(c) FROM BoardReply c WHERE c.board.id = :boardId";
         return em.createQuery(q, Long.class)
                 .setParameter("boardId", boardId)
-                .getSingleResult();
+                .getSingleResult().intValue();
     }
 
     public List<BoardReply> findByBoardId(Integer boardId) {

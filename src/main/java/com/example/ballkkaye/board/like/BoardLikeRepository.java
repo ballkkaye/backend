@@ -27,10 +27,10 @@ public class BoardLikeRepository {
         }
     }
 
-    public Long totalCount(Integer boardId) {
+    public Integer totalCount(Integer boardId) {
         return em.createQuery(
                         "SELECT COUNT(brl) FROM BoardLike brl WHERE brl.board.id = :boardId", Long.class)
                 .setParameter("boardId", boardId)
-                .getSingleResult();
+                .getSingleResult().intValue();
     }
 }

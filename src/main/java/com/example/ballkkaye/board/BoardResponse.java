@@ -51,15 +51,17 @@ public class BoardResponse {
         private String relativeTime;
         private Integer teamId;
         private String teamName;
+        private Integer likeCount;
         private Integer replyCount;
 
-        public ItemDTO(Integer boardId, String title, String nickname, String relativeTime, Integer teamId, String teamName, Integer replyCount) {
+        public ItemDTO(Integer boardId, String title, String nickname, String relativeTime, Integer teamId, String teamName, Integer likeCount, Integer replyCount) {
             this.boardId = boardId;
             this.title = title;
             this.nickname = nickname;
             this.relativeTime = relativeTime;
             this.teamId = teamId;
             this.teamName = teamName;
+            this.likeCount = likeCount;
             this.replyCount = replyCount;
         }
     }

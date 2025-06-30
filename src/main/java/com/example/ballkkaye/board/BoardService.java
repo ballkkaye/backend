@@ -69,7 +69,6 @@ public class BoardService {
         return new BoardResponse.SaveDTO(board, imageUrls);
     }
 
-
     // 커뮤니티 게시글 수정
     @Transactional
     public BoardResponse.UpdateDTO update(BoardRequest.@Valid UpdateDTO reqDTO, User sessionUser, Integer boardId) {
@@ -120,7 +119,6 @@ public class BoardService {
         return new BoardResponse.UpdateDTO(boardPS, itemDTOS);
     }
 
-
     // 게시글 목록 조회
     public BoardResponse.ListDTO getBoards(Integer teamId, Integer page) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
@@ -133,7 +131,9 @@ public class BoardService {
             String relativeTime = p.format(new Date(board.getCreatedAt().getTime()));
             Integer tId = board.getTeam() != null ? board.getTeam().getId() : null;
             String teamName = board.getTeam() != null ? board.getTeam().getTeamName() : null;
-            Long replyCount = boardReplyRepository.totalCount(board.getId());
+            Integer replyCount = boardReplyRepository.totalCount(board.getId());
+            Integer likeCount = boardLikeRepository.totalCount(board.getId());
+
 
             BoardResponse.ItemDTO dto = new BoardResponse.ItemDTO(
                     board.getId(),
@@ -142,7 +142,8 @@ public class BoardService {
                     relativeTime,
                     tId,
                     teamName,
-                    replyCount.intValue()
+                    likeCount,
+                    replyCount
             );
 
             itemDTOS.add(dto);
@@ -248,7 +249,7 @@ public class BoardService {
         Boolean isBoardOwner = board.getUser().getId() == sessionUser.getId();
         Boolean isBoardLike = boardLikeRepository.findByBoardIdAndUserId(board.getId(), sessionUser.getId())
                 .isPresent();
-        Long replyCount = boardLikeRepository.totalCount(board.getId());
+        Integer replyCount = boardLikeRepository.totalCount(board.getId());
 
 
         BoardResponse.DetailDTO respDTO = new BoardResponse.DetailDTO(
@@ -263,7 +264,7 @@ public class BoardService {
                 board.getContent(),
                 isBoardOwner,
                 isBoardLike,
-                replyCount.intValue(),
+                replyCount,
                 parentReplyItemDTOs);
 
         return respDTO;
