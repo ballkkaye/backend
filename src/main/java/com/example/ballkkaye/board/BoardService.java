@@ -1,6 +1,6 @@
 package com.example.ballkkaye.board;
 
-import com.example.ballkkaye._core.util.Base64Util;
+import com.example.ballkkaye._core.util.ImageUtil;
 import com.example.ballkkaye.board.image.BoardImage;
 import com.example.ballkkaye.board.image.BoardImageRepository;
 import com.example.ballkkaye.board.image.BoardImageResponse;
@@ -10,15 +10,12 @@ import com.example.ballkkaye.team.TeamRepository;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -39,66 +36,75 @@ public class BoardService {
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
                 .orElseThrow(() -> new RuntimeException("팀을 찾을 수 없습니다"));
 
-        // 3. 이미지 최대 수 넘으면 throw
-        if (reqDTO.getImages() != null && reqDTO.getImages().size() > 10) {
+        // 3. 이미지 최대 수 검사
+        List<String> base64Images = reqDTO.getImages();
+        if (base64Images != null && base64Images.size() > 10) {
             throw new RuntimeException("최대 이미지 저장 한도를 넘었습니다.");
         }
 
-
-        // 4. board 게시글 저장
+        // 4. 게시글 저장
         Board board = reqDTO.toEntity(userPS, teamPS);
         boardRepository.save(board);
 
-        // 5. board 게시글의 이미지 저장 << image 테이블에
-        List<BoardImageResponse.ItemDTO> imageUrls = new java.util.ArrayList<>();
-        List<String> base64Images = reqDTO.getImages();
-        if (base64Images != null && !base64Images.isEmpty()) {
-            for (String base64Image : base64Images) {
-                if (base64Image == null || base64Image.isBlank()) continue;
+        // 5. 이미지 저장
+        List<BoardImageResponse.ItemDTO> imageUrls = ImageUtil.saveBase64Images(
+                base64Images,
+                board,
+                boardImageRepository
+        );
 
-                try {
-                    // 전체 base64Image에서 MIME 타입 추출
-                    String mimeType = Base64Util.getMimeType(base64Image); // ← 이게 핵심
-                    String extension;
-                    if (mimeType.contains("jpeg") || mimeType.contains("jpg")) {
-                        extension = ".jpg";
-                    } else if (mimeType.contains("png")) {
-                        extension = ".png";
-                    } else if (mimeType.contains("gif")) {
-                        extension = ".gif";
-                    } else {
-                        throw new RuntimeException("지원하지 않는 이미지 형식입니다. jpeg, png, gif만 허용됩니다.");
-                    }
+        // 6. 응답 반환
+        return new BoardResponse.SaveDTO(board, imageUrls);
+    }
 
-                    String uploadDir = System.getProperty("user.dir") + "/upload/";
-                    Files.createDirectories(Paths.get(uploadDir));
 
-                    String fileName = UUID.randomUUID() + extension;
-                    Path imagePath = Paths.get(uploadDir + fileName);
+    // 커뮤니티 게시글 수정
+    @Transactional
+    public BoardResponse.UpdateDTO update(BoardRequest.@Valid UpdateDTO reqDTO, User sessionUser, Integer boardId) {
+        // 1. user 조회
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
 
-                    // 전체 base64Image에서 ',' 이후 base64 데이터만 추출
-                    String base64Data = base64Image.split(",")[1];
-                    byte[] imageBytes = Base64.getDecoder().decode(base64Data);
-                    Files.write(imagePath, imageBytes);
+        // 2. 게시글이 존재하는지 확인
+        Board boardPS = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
 
-                    // DB 저장
-                    BoardImage boardImage = BoardImage.builder()
-                            .board(board)
-                            .imgUrl("/upload/" + fileName)
-                            .deleteStatus(DeleteStatus.NOT_DELETED)
-                            .build();
-                    boardImageRepository.save(boardImage);
+        // 3. 게시글의 소유자인지 확인
+        if (!boardPS.getUser().getId().equals(userPS.getId())) throw new RuntimeException("403 예외처리 예정");
 
-                    // response에 옮겨담는다.
-                    imageUrls.add(new BoardImageResponse.ItemDTO(boardImage.getId(), boardImage.getImgUrl()));
+        // 4. 존재하는 팀인지 확인
+        Team teamPS = teamRepository.findById(reqDTO.getTeamId())
+                .orElseThrow(() -> new RuntimeException("팀을 찾을 수 없습니다"));
 
-                } catch (Exception e) {
-                    throw new RuntimeException("이미지 저장 실패", e);
-                }
+        // 5. 이미지 수 10개 넘으면 throw
+        if (reqDTO.getNewImages().size() + reqDTO.getRemainImageUrls().size() > 10) {
+            throw new RuntimeException("이미지 너무 많음");
+        }
+
+        // 5. 기존 이미지 조회
+        List<BoardImage> images = boardImageRepository.findByBoardIdAndDeleteStatus(boardPS, DeleteStatus.NOT_DELETED);
+
+        // 6. 삭제할 이미지 찾아서 삭제 호출 << 컬럼 상태값 갱신
+        for (BoardImage image : images) {
+            if (!reqDTO.getRemainImageUrls().contains(image.getImgUrl())) {
+                image.delete();
             }
         }
 
-        // 6. 응답 DTO 생성 및 반환
-        return new BoardResponse.SaveDTO(board, imageUrls);
+        // 7. 새 이미지 저장
+        ImageUtil.saveBase64Images(reqDTO.getNewImages(), boardPS, boardImageRepository);
+
+        // 8. 게시글 update 성공
+        boardPS.update(reqDTO.getTitle(), reqDTO.getContent(), teamPS);
+
+        // 9. udpate한 게시글 이미지들 조회
+        List<BoardImage> newImagesUrl = boardImageRepository.findByBoardIdAndDeleteStatus(boardPS, DeleteStatus.NOT_DELETED);
+        List<BoardImageResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (BoardImage image : newImagesUrl) {
+            itemDTOS.add(new BoardImageResponse.ItemDTO(image.getId(), image.getImgUrl()));
+        }
+
+        // 갱신된 게시글 + 이미지 반환
+        return new BoardResponse.UpdateDTO(boardPS, itemDTOS);
     }
 }

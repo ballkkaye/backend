@@ -36,7 +36,7 @@ public class Board {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DeleteStatus deleteStatus;
-    
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 
@@ -50,5 +50,11 @@ public class Board {
         this.title = title;
         this.content = content;
         this.deleteStatus = deleteStatus;
+    }
+
+    public void update(String title, String content, Team team) {
+        this.title = title;
+        this.content = content;
+        this.team = team;
     }
 }
