@@ -2,6 +2,7 @@ package com.example.ballkkaye.board.reply;
 
 import com.example.ballkkaye.board.Board;
 import com.example.ballkkaye.board.BoardRepository;
+import com.example.ballkkaye.board.reply.like.BoardReplyLikeRepository;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
@@ -19,6 +20,7 @@ public class BoardReplyService {
     private final BoardReplyRepository boardReplyRepository;
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
+    private final BoardReplyLikeRepository boardReplyLikeRepository;
 
     // 댓글 등록 
     @Transactional
@@ -47,7 +49,7 @@ public class BoardReplyService {
         boardReplyRepository.save(boardReply);
         String relativeTime = p.format(new Date(boardReply.getCreatedAt().getTime()));
 
-        BoardReplyResponse.SaveDTO respDTO = new BoardReplyResponse.SaveDTO(boardReply, boardPS, parentReply, tagReply, sessionUser, relativeTime);
+        BoardReplyResponse.SaveDTO respDTO = new BoardReplyResponse.SaveDTO(boardReply, boardPS, sessionUser, relativeTime);
         return respDTO;
     }
 
@@ -70,5 +72,33 @@ public class BoardReplyService {
         // 4. 삭제
         boardReply.delete();
 
+    }
+
+    @Transactional
+    public Object update(BoardReplyRequest.UpdateDTO reqDTO, Integer replyId, User sessionUser) {
+        PrettyTime p = new PrettyTime(Locale.KOREAN);
+
+        BoardReply boardReplyPS = boardReplyRepository.findById(replyId)
+                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+
+        // 3. 주인인지 확인
+        if (boardReplyPS.getUser().getId() != sessionUser.getId()) {
+            throw new RuntimeException("해당 기능에 대한 권한이 없습니다.");
+        }
+
+        // 존재하는 댓글인지 조회(tagReplyId)
+        BoardReply tagReplyPS = boardReplyRepository.findById(replyId)
+                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+
+        // 4. 업데이트
+        boardReplyPS.update(reqDTO.getContent(), tagReplyPS);
+        String relativeTime = p.format(new Date(boardReplyPS.getCreatedAt().getTime()));
+
+        Integer replyLikeCount = boardReplyLikeRepository.findByReplyId(replyId);
+        Boolean isLike = boardReplyLikeRepository.findByReplyIdAndUserId(replyId, sessionUser.getId()).isPresent();
+
+
+        BoardReplyResponse.UpdateDTO respDTO = new BoardReplyResponse.UpdateDTO(boardReplyPS, relativeTime, replyLikeCount, isLike);
+        return respDTO;
     }
 }

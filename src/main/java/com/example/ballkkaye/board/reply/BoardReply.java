@@ -55,8 +55,13 @@ public class BoardReply {
         this.deleteStatus = deleteStatus;
         this.content = content;
     }
-    
+
     public void delete() {
         this.deleteStatus = DeleteStatus.DELETED;
+    }
+
+    public void update(String content, BoardReply tagReply) {
+        this.content = content;
+        this.tagReplyId = tagReply.getTagReplyId();
     }
 }
