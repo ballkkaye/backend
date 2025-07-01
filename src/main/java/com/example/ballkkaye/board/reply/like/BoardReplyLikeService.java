@@ -1,5 +1,6 @@
 package com.example.ballkkaye.board.reply.like;
 
+import com.example.ballkkaye.board.like.BoardLikeResponse;
 import com.example.ballkkaye.board.reply.BoardReply;
 import com.example.ballkkaye.board.reply.BoardReplyRepository;
 import com.example.ballkkaye.user.User;
@@ -36,11 +37,38 @@ public class BoardReplyLikeService {
         boardReplyLikeRepository.save(boardReplyLike);
 
         // 5. 좋아요 수 조회
-        Integer boardLikeCount = boardReplyLikeRepository.findByReplyId(replyId);
+        Integer boardLikeCount = boardReplyLikeRepository.findTotalCount(replyId);
 
         BoardReplyLikeResponse.SaveDTO respDTO = new BoardReplyLikeResponse.SaveDTO(boardReplyLike, boardLikeCount);
 
         // 5. 저장된 객체 반환 (PK 포함됨)
+        return respDTO;
+    }
+
+    @Transactional
+    public Object delete(Integer likeId, User sessionUser) {
+        // 1. user 조회
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
+        // 2. board/reply/like 조회
+        BoardReplyLike boardReplyLikePS = boardReplyLikeRepository.findById(likeId)
+                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+
+        // 3. 주인인지 확인
+        if (boardReplyLikePS.getUser().getId() != userPS.getId()) {
+            throw new RuntimeException("해당 기능에 대한 권한이 없습니다.");
+        }
+
+        // 4. 좋아요 삭제
+        boardReplyLikeRepository.deleteById(boardReplyLikePS.getId());
+
+        // 5. 좋아요 갯수 반환
+        Integer boardLikeCount = boardReplyLikeRepository.findTotalCount(boardReplyLikePS.getId());
+
+        // 6. DTO에 옮기기
+        BoardLikeResponse.DeleteDTO respDTO = new BoardLikeResponse.DeleteDTO(boardLikeCount);
+
         return respDTO;
     }
 }

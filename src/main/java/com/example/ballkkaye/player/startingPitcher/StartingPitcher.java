@@ -27,19 +27,19 @@ public class StartingPitcher {
     @Column
     private String profileUrl;
 
-    @Column
+    @Column(nullable = true)
     private Double ERA;
 
-    @Column
+    @Column(nullable = true)
     private Integer gameCount;
 
-    @Column
+    @Column(nullable = true)
     private String result;
 
-    @Column
+    @Column(nullable = true)
     private Integer QS;
 
-    @Column
+    @Column(nullable = true)
     private Double WHIP;
 
     @CreationTimestamp
