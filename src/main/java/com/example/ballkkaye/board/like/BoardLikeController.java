@@ -25,4 +25,14 @@ public class BoardLikeController {
         var respDTO = boardLikeService.save(id, sessionUser);
         return ResponseEntity.ok(respDTO);
     }
+
+    // 좋아요 삭제
+    @DeleteMapping("/s/api/boards/like/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+//        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        BoardLikeResponse.DeleteDTO respDTO = boardLikeService.delete(id, sessionUser);
+        return Resp.ok(respDTO);
+    }
 }

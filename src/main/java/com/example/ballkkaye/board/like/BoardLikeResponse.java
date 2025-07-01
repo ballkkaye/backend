@@ -17,4 +17,13 @@ public class BoardLikeResponse {
             this.boardLikeCount = boardLikeCount;
         }
     }
+
+    @Data
+    public static class DeleteDTO {
+        private Integer boardLikeCount;
+
+        public DeleteDTO(Integer boardLikeCount) {
+            this.boardLikeCount = boardLikeCount;
+        }
+    }
 }
