@@ -58,4 +58,8 @@ public class Board {
         this.content = content;
         this.team = team;
     }
+
+    public void delete() {
+        this.deleteStatus = DeleteStatus.DELETED;
+    }
 }

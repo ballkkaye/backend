@@ -61,4 +61,13 @@ public class BoardController {
         BoardResponse.DetailDTO respDTO = boardService.detail(id, sessionUser);
         return Resp.ok(respDTO);
     }
+
+    @PostMapping("/s/api/boards/{id}/delete")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        //        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        boardService.delete(id, sessionUser);
+        return Resp.ok(null);
+    }
 }

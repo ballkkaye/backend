@@ -269,4 +269,25 @@ public class BoardService {
 
         return respDTO;
     }
+
+    @Transactional
+    public void delete(Integer boardId, User sessionUser) {
+        // 1. 존재하는 유저인지
+        userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
+        // 2. 게시글이 존재하는지 확인
+        Board boardPS = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
+
+        // 3. 게시글 주인이 맞는지
+        if (boardPS.getUser().getId() != sessionUser.getId()) {
+            throw new RuntimeException("403 예외처리 예정");
+        }
+
+        // 4. 게시글 DeleteStatus 상태 변경
+        boardPS.delete();
+
+        // 5. ok
+    }
 }
