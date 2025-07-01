@@ -52,7 +52,7 @@ public class BoardController {
         return Resp.ok(respDTO);
     }
 
-    // 게시글 상세보기 조회 TODO 댓글 + 좋아요 완성하고 테스트 해봐야함
+    // 게시글 상세보기 조회
     @GetMapping("/s/api/boards/{id}")
     public ResponseEntity<?> detail(@PathVariable("id") Integer id) {
         //        User sessionUser = (User) session.getAttribute("sessionUser");

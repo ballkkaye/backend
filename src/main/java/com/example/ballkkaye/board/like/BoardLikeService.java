@@ -33,8 +33,11 @@ public class BoardLikeService {
         // 4. 없으면 저장
         BoardLike boardLike = new BoardLike(boardPS, userPS);
         boardLikeRepository.save(boardLike);
-        System.out.println("boardLike: " + boardLike);
-        BoardLikeResponse.SaveDTO respDTO = new BoardLikeResponse.SaveDTO(boardLike);
+
+        // 5. 좋아요 수 조회
+        Integer boardLikeCount = boardLikeRepository.totalCount(boardId);
+
+        BoardLikeResponse.SaveDTO respDTO = new BoardLikeResponse.SaveDTO(boardLike, boardLikeCount);
 
         // 5. 저장된 객체 반환 (PK 포함됨)
         return respDTO;
@@ -67,4 +70,3 @@ public class BoardLikeService {
         return respDTO;
     }
 }
-
