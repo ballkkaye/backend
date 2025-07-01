@@ -15,4 +15,13 @@ public class BoardLikeResponse {
             this.boardId = boardLike.getBoard().getId();
         }
     }
+
+    @Data
+    public static class DeleteDTO {
+        private Integer boardLikeCount;
+
+        public DeleteDTO(Integer boardLikeCount) {
+            this.boardLikeCount = boardLikeCount;
+        }
+    }
 }

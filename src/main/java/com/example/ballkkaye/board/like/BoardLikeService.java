@@ -39,5 +39,32 @@ public class BoardLikeService {
         // 5. 저장된 객체 반환 (PK 포함됨)
         return respDTO;
     }
+
+    @Transactional
+    public BoardLikeResponse.DeleteDTO delete(Integer likeId, User sessionUser) {
+        // 1. user 조회
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
+        // 2. board/like 조회
+        BoardLike boardLikePS = boardLikeRepository.findById(likeId)
+                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+
+        // 3. 주인인지 확인
+        if (boardLikePS.getUser().getId() != userPS.getId()) {
+            throw new RuntimeException("해당 기능에 대한 권한이 없습니다.");
+        }
+
+        // 4. 좋아요 삭제
+        boardLikeRepository.deleteById(boardLikePS.getId());
+
+        // 5. 좋아요 갯수 반환
+        Integer boardLikeCount = boardLikeRepository.totalCount(boardLikePS.getId());
+
+        // 6. DTO에 옮기기
+        BoardLikeResponse.DeleteDTO respDTO = new BoardLikeResponse.DeleteDTO(boardLikeCount);
+
+        return respDTO;
+    }
 }
 

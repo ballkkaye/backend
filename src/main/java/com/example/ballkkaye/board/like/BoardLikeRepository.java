@@ -2,6 +2,7 @@ package com.example.ballkkaye.board.like;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -36,5 +37,16 @@ public class BoardLikeRepository {
 
     public void save(BoardLike boardLike) {
         em.persist(boardLike);
+    }
+
+    public Optional<BoardLike> findById(Integer likeId) {
+        BoardLike boardLike = em.find(BoardLike.class, likeId);
+        return Optional.ofNullable(boardLike);
+    }
+
+    public void deleteById(Integer id) {
+        Query query = em.createQuery("delete from BoardLike lo where lo.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }
