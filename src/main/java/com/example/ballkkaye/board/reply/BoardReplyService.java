@@ -35,6 +35,9 @@ public class BoardReplyService {
             tagReply = boardReplyRepository.findById(reqDTO.getTagReplyId())
                     .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
         }
+        if (parentReply.getParentReplyId() != null) {
+            throw new RuntimeException("잘못된 접근");
+        }
 
         BoardReply boardReply = new BoardReply(boardPS, sessionUser, parentReply, tagReply, DeleteStatus.NOT_DELETED, reqDTO.getContent());
 
