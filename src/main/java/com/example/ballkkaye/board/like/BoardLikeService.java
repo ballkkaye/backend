@@ -43,4 +43,3 @@ public class BoardLikeService {
         return respDTO;
     }
 }
-
