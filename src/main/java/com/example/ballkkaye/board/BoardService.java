@@ -270,6 +270,8 @@ public class BoardService {
         return respDTO;
     }
 
+
+    // 게시글 삭제
     @Transactional
     public void delete(Integer boardId, User sessionUser) {
         // 1. 존재하는 유저인지

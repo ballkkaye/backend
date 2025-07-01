@@ -43,10 +43,4 @@ public class BoardLikeRepository {
         BoardLike boardLike = em.find(BoardLike.class, likeId);
         return Optional.ofNullable(boardLike);
     }
-
-    public void deleteById(Integer id) {
-        Query query = em.createQuery("delete from BoardLike lo where lo.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
-    }
 }
