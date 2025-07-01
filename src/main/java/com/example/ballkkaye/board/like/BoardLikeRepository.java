@@ -33,4 +33,8 @@ public class BoardLikeRepository {
                 .setParameter("boardId", boardId)
                 .getSingleResult().intValue();
     }
+
+    public void save(BoardLike boardLike) {
+        em.persist(boardLike);
+    }
 }
