@@ -1,5 +1,7 @@
 package com.example.ballkkaye.board.reply;
 
+import com.example.ballkkaye.board.Board;
+import com.example.ballkkaye.user.User;
 import lombok.Data;
 
 import java.util.List;
@@ -60,6 +62,41 @@ public class BoardReplyResponse {
             this.isOwner = isOwner;
             this.isLike = isLike;
             this.likeCount = likeCount;
+        }
+    }
+
+    @Data
+    public static class SaveDTO {
+        private Integer replyId;
+        private Integer boardId;
+        private Integer userId;
+        private String nickname;
+        private String profileImg;
+        private String teamName;
+        private Integer parentReplyId;
+        private Integer tagReplyId;
+        private String tagReplyName;
+        private Boolean isOwner;
+        private Boolean isLike;
+        private Integer likeCount;
+        private String content;
+        private String relativeTime;
+
+        public SaveDTO(BoardReply boardReply, Board boardPS, BoardReply parentReply, BoardReply tagReply, User user, String relativeTime) {
+            this.replyId = boardReply.getId();
+            this.boardId = boardPS.getId();
+            this.userId = user.getId();
+            this.nickname = user.getNickname();
+            this.profileImg = user.getProfileUrl();
+            this.teamName = user.getTeam() == null ? null : user.getTeam().getTeamName();
+            this.parentReplyId = boardReply.getParentReplyId() == null ? null : boardReply.getParentReplyId().getId();
+            this.tagReplyId = boardReply.getTagReplyId() == null ? null : boardReply.getTagReplyId().getId();
+            this.tagReplyName = boardReply.getTagReplyId() == null ? null : boardReply.getTagReplyId().getUser().getNickname();
+            this.isOwner = true;
+            this.isLike = false;
+            this.likeCount = 0;
+            this.content = boardReply.getContent();
+            this.relativeTime = relativeTime;
         }
     }
 }

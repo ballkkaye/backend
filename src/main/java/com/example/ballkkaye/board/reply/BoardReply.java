@@ -46,4 +46,13 @@ public class BoardReply {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    public BoardReply(Board board, User user, BoardReply parentReplyId, BoardReply tagReplyId, DeleteStatus deleteStatus, String content) {
+        this.board = board;
+        this.user = user;
+        this.parentReplyId = parentReplyId;
+        this.tagReplyId = tagReplyId;
+        this.deleteStatus = deleteStatus;
+        this.content = content;
+    }
 }
