@@ -15,6 +15,7 @@ public class BoardLikeService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
 
+    // 게시글 좋아요 저장
     @Transactional
     public Object save(Integer boardId, User sessionUser) {
         // 1. user 조회
