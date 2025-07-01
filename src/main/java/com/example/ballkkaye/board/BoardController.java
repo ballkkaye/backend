@@ -27,6 +27,7 @@ public class BoardController {
         return Resp.ok(respDTO);
     }
 
+    // 게시글 수정
     @PutMapping("/s/api/boards/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody BoardRequest.UpdateDTO reqDTO,
                                     @PathVariable("id") Integer id,
@@ -38,6 +39,7 @@ public class BoardController {
         return Resp.ok(respDTO);
     }
 
+    // 게시글 목록
     @GetMapping("/s/api/boards")
     public ResponseEntity<?> getBoards(@RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
                                        @RequestParam(required = false, value = "teamId") Integer teamId

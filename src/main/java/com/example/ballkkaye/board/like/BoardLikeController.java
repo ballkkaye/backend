@@ -14,7 +14,7 @@ public class BoardLikeController {
     private final BoardLikeService boardLikeService;
     private final UserRepository userRepository; // 지워야함
 
-    @PostMapping("/s/api/boards/like/{id}")
+    @PostMapping("/s/api/boards/{id}/like")
     public ResponseEntity<?> save(@PathVariable("id") Integer id) {
 //        User sessionUser = (User) session.getAttribute("sessionUser");
         User sessionUser = userRepository.findByEmail("ssar@nate.com")
