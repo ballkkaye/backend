@@ -62,6 +62,7 @@ public class BoardController {
         return Resp.ok(respDTO);
     }
 
+    // 게시글 삭제
     @PostMapping("/s/api/boards/{id}/delete")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         //        User sessionUser = (User) session.getAttribute("sessionUser");

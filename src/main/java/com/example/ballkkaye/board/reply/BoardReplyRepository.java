@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -41,5 +42,14 @@ public class BoardReplyRepository {
                     .setParameter("parentReplyId", parentReplyId) // 실제 BoardReply 객체를 전달
                     .getResultList();
         }
+    }
+
+    // 게시글 댓글 조회
+    public Optional<BoardReply> findById(Integer replyId) {
+        return Optional.ofNullable(em.find(BoardReply.class, replyId));
+    }
+
+    public void save(BoardReply boardReply) {
+        em.persist(boardReply);
     }
 }
