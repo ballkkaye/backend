@@ -5,10 +5,7 @@ import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,5 +32,15 @@ public class BoardReplyController {
                 .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
         boardReplyService.delete(id, sessionUser);
         return Resp.ok(null);
+    }
+
+    // 댓글 수정
+    @PutMapping("/s/api/boards/reply/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody BoardReplyRequest.UpdateDTO reqDTO) {
+//        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        var respDTO = boardReplyService.update(reqDTO, id, sessionUser);
+        return Resp.ok(respDTO);
     }
 }

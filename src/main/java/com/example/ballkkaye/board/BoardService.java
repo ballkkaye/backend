@@ -196,6 +196,7 @@ public class BoardService {
             if (parentReplyLikeOP.isPresent()) {
                 isParentReplyLike = true;
             }
+
             List<BoardReply> childrenReplies = boardReplyRepository.findByBoardIdAndParentReplyId(boardId, replyId);
             for (BoardReply childReply : childrenReplies) {
                 Integer childReplyId = childReply.getId();

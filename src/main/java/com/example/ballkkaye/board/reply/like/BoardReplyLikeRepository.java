@@ -35,4 +35,8 @@ public class BoardReplyLikeRepository {
                 .getSingleResult()
                 .intValue();
     }
+
+    public void save(BoardReplyLike boardReplyLike) {
+        em.persist(boardReplyLike);
+    }
 }

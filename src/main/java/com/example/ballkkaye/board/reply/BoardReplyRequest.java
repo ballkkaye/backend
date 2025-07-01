@@ -15,4 +15,15 @@ public class BoardReplyRequest {
             this.content = content;
         }
     }
+
+    @Data
+    public static class UpdateDTO {
+        private Integer tagReplyId;
+        private String content;
+
+        public UpdateDTO(Integer tagReplyId, String content) {
+            this.tagReplyId = tagReplyId;
+            this.content = content;
+        }
+    }
 }

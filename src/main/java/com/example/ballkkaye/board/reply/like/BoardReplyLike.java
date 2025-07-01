@@ -28,4 +28,9 @@ public class BoardReplyLike {
 
     @CreationTimestamp
     private Timestamp createTime;
+
+    public BoardReplyLike(BoardReply boardReply, User user) {
+        this.boardReply = boardReply;
+        this.user = user;
+    }
 }
