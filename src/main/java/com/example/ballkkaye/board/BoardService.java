@@ -185,7 +185,9 @@ public class BoardService {
             String relativeTime = p.format(new Date(board.getCreatedAt().getTime()));
             String myTeamName = parentReply.getUser().getTeam().getTeamName();
             String content = parentReply.getContent();
-            Integer parentReplyId = parentReply.getParentReplyId().getId();
+            Integer parentReplyId = parentReply.getParentReplyId() != null
+                    ? parentReply.getParentReplyId().getId()
+                    : null;
             Integer parentTagReplyId = null;
             if (parentReply.getUser().getId() == sessionUser.getId()) {
                 isParentReplyOwner = true;
@@ -202,9 +204,18 @@ public class BoardService {
                 String childRelativeTime = p.format(new Date(childReply.getCreatedAt().getTime()));
                 String childMyTeamName = childReply.getUser().getTeam().getTeamName();
                 String childContent = childReply.getContent();
-                Integer childParentReplyId = childReply.getParentReplyId().getId();
-                Integer childParentTagReplyId = childReply.getTagReplyId().getId();
-                String childParentTagReplyName = childReply.getTagReplyId().getUser().getNickname();
+                Integer childParentReplyId = childReply.getParentReplyId() != null
+                        ? childReply.getParentReplyId().getId()
+                        : null;
+
+                Integer childParentTagReplyId = childReply.getTagReplyId() != null
+                        ? childReply.getTagReplyId().getId()
+                        : null;
+
+                String childParentTagReplyName = childReply.getTagReplyId() != null
+                        ? childReply.getTagReplyId().getUser().getNickname()
+                        : null;
+
                 if (childReply.getUser().getId() == sessionUser.getId()) {
                     isChildReplyOwner = true;
                 }

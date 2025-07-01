@@ -55,7 +55,7 @@ public class BoardReply {
         this.deleteStatus = deleteStatus;
         this.content = content;
     }
-
+  
     public void delete() {
         this.deleteStatus = DeleteStatus.DELETED;
     }
