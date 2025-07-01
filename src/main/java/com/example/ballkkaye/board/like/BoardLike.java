@@ -28,4 +28,9 @@ public class BoardLike {
 
     @CreationTimestamp
     private Timestamp createTime;
+
+    public BoardLike(Board board, User user) {
+        this.board = board;
+        this.user = user;
+    }
 }
