@@ -35,7 +35,7 @@ public class BoardReplyController {
     }
 
     // 댓글 수정
-    @PutMapping("/s/api/board/reply/{id}")
+    @PutMapping("/s/api/boards/reply/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody BoardReplyRequest.UpdateDTO reqDTO) {
 //        User sessionUser = (User) session.getAttribute("sessionUser");
         User sessionUser = userRepository.findByEmail("ssar@nate.com")
