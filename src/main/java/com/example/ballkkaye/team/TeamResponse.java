@@ -18,4 +18,15 @@ public class TeamResponse {
             this.teamRank = teamRank;
         }
     }
+
+    @Data
+    public static class ListDTO {
+        private Integer teamId;
+        private String teamName;
+
+        public ListDTO(Integer teamId, String teamName) {
+            this.teamId = teamId;
+            this.teamName = teamName;
+        }
+    }
 }
