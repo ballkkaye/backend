@@ -94,7 +94,7 @@ public class BoardReplyService {
         boardReplyPS.update(reqDTO.getContent(), tagReplyPS);
         String relativeTime = p.format(new Date(boardReplyPS.getCreatedAt().getTime()));
 
-        Integer replyLikeCount = boardReplyLikeRepository.findByReplyId(replyId);
+        Integer replyLikeCount = boardReplyLikeRepository.findTotalCount(replyId);
         Boolean isLike = boardReplyLikeRepository.findByReplyIdAndUserId(replyId, sessionUser.getId()).isPresent();
 
 

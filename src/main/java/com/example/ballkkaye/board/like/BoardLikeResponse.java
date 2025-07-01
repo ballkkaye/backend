@@ -8,22 +8,22 @@ public class BoardLikeResponse {
         private Integer id;
         private Integer userId;
         private Integer boardId;
-        private Integer boardLikeCount;
+        private Integer count;
 
         public SaveDTO(BoardLike boardLike, Integer boardLikeCount) {
             this.id = boardLike.getId();
             this.userId = boardLike.getUser().getId();
             this.boardId = boardLike.getBoard().getId();
-            this.boardLikeCount = boardLikeCount;
+            this.count = boardLikeCount;
         }
     }
 
     @Data
     public static class DeleteDTO {
-        private Integer boardLikeCount;
+        private Integer count;
 
         public DeleteDTO(Integer boardLikeCount) {
-            this.boardLikeCount = boardLikeCount;
+            this.count = boardLikeCount;
         }
     }
 }

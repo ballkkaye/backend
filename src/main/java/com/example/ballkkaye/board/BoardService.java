@@ -224,7 +224,7 @@ public class BoardService {
                 if (childReplyLikeOP.isPresent()) {
                     isChildReplyLike = true;
                 }
-                Integer likeCount = boardReplyLikeRepository.findByReplyId(replyId);
+                Integer likeCount = boardReplyLikeRepository.findTotalCount(replyId);
                 BoardReplyResponse.ChildItemDTO dto = new BoardReplyResponse.ChildItemDTO(
                         childReplyId,
                         childNickname,
@@ -242,7 +242,7 @@ public class BoardService {
                 );
                 childReplyItemDTOs.add(dto);
             }
-            Integer likeCount = boardReplyLikeRepository.findByReplyId(replyId);
+            Integer likeCount = boardReplyLikeRepository.findTotalCount(replyId);
 
             BoardReplyResponse.ParentItemDTO dto = new BoardReplyResponse.ParentItemDTO(
                     replyId,

@@ -2,6 +2,7 @@ package com.example.ballkkaye.board.reply.like;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -27,7 +28,7 @@ public class BoardReplyLikeRepository {
         }
     }
 
-    public Integer findByReplyId(Integer replyId) {
+    public Integer findTotalCount(Integer replyId) {
         return em.createQuery(
                         "SELECT COUNT(brl) FROM BoardReplyLike brl WHERE brl.boardReply.id = :replyId",
                         Long.class)
@@ -38,5 +39,16 @@ public class BoardReplyLikeRepository {
 
     public void save(BoardReplyLike boardReplyLike) {
         em.persist(boardReplyLike);
+    }
+
+    public Optional<BoardReplyLike> findById(Integer likeId) {
+        BoardReplyLike boardReplyLike = em.find(BoardReplyLike.class, likeId);
+        return Optional.ofNullable(boardReplyLike);
+    }
+
+    public void deleteById(Integer id) {
+        Query query = em.createQuery("delete from BoardReplyLike lo where lo.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }
