@@ -4,6 +4,7 @@ import com.example.ballkkaye.board.Board;
 import com.example.ballkkaye.board.BoardRepository;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.user.User;
+import com.example.ballkkaye.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -17,7 +18,9 @@ import java.util.Locale;
 public class BoardReplyService {
     private final BoardReplyRepository boardReplyRepository;
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
+    // 댓글 등록 
     @Transactional
     public Object save(Integer boardId, User sessionUser, BoardReplyRequest.SaveDTO reqDTO) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
@@ -35,7 +38,7 @@ public class BoardReplyService {
             tagReply = boardReplyRepository.findById(reqDTO.getTagReplyId())
                     .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
         }
-        if (parentReply.getParentReplyId() != null) {
+        if (parentReply != null && parentReply.getParentReplyId() != null) {
             throw new RuntimeException("잘못된 접근");
         }
 
@@ -46,5 +49,26 @@ public class BoardReplyService {
 
         BoardReplyResponse.SaveDTO respDTO = new BoardReplyResponse.SaveDTO(boardReply, boardPS, parentReply, tagReply, sessionUser, relativeTime);
         return respDTO;
+    }
+
+    // 댓글 삭제
+    @Transactional
+    public void delete(Integer replyId, User sessionUser) {
+        // 1. 존재하는 유저인지
+        userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
+        // 2. 존재하는 댓글인지 확인
+        BoardReply boardReply = boardReplyRepository.findById(replyId)
+                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+
+        // 3. 주인인지 확인
+        if (boardReply.getUser().getId() != sessionUser.getId()) {
+            throw new RuntimeException("해당 기능에 대한 권한이 없습니다.");
+        }
+
+        // 4. 삭제
+        boardReply.delete();
+
     }
 }
