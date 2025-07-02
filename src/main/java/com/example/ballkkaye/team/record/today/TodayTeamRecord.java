@@ -33,7 +33,7 @@ public class TodayTeamRecord {
     private Integer loseGame;
 
     @Column(nullable = false)
-    private Integer drawGame;
+    private Integer tieGame;
 
     @Column(nullable = false)
     private Double winRate;
