@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -14,5 +15,11 @@ public class TeamRepository {
     // 팀 조회
     public Optional<Team> findById(Integer teamId) {
         return Optional.ofNullable(em.find(Team.class, teamId));
+    }
+
+    // 전체 팀 조회
+    public List<Team> findAll() {
+        String q = "SELECT t FROM Team t";
+        return em.createQuery(q, Team.class).getResultList();
     }
 }

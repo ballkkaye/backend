@@ -27,6 +27,7 @@ public class BoardController {
         return Resp.ok(respDTO);
     }
 
+    // 게시글 수정
     @PutMapping("/s/api/boards/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody BoardRequest.UpdateDTO reqDTO,
                                     @PathVariable("id") Integer id,
@@ -36,5 +37,38 @@ public class BoardController {
                 .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
         BoardResponse.UpdateDTO respDTO = boardService.update(reqDTO, sessionUser, id);
         return Resp.ok(respDTO);
+    }
+
+    // 게시글 목록
+    @GetMapping("/s/api/boards")
+    public ResponseEntity<?> getBoards(@RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+                                       @RequestParam(required = false, value = "teamId") Integer teamId
+    ) {
+        //        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        BoardResponse.ListDTO respDTO = boardService.getBoards(teamId, page);
+
+        return Resp.ok(respDTO);
+    }
+
+    // 게시글 상세보기 조회
+    @GetMapping("/s/api/boards/{id}")
+    public ResponseEntity<?> detail(@PathVariable("id") Integer id) {
+        //        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        BoardResponse.DetailDTO respDTO = boardService.detail(id, sessionUser);
+        return Resp.ok(respDTO);
+    }
+
+    // 게시글 삭제
+    @PostMapping("/s/api/boards/{id}/delete")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        //        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        boardService.delete(id, sessionUser);
+        return Resp.ok(null);
     }
 }

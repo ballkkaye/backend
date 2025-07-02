@@ -27,8 +27,12 @@ public class BoardReply {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_comment_id")
-    private BoardReply parentCommentId;
+    @JoinColumn(name = "parent_reply_id")
+    private BoardReply parentReplyId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_reply_id")
+    private BoardReply tagReplyId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -42,4 +46,22 @@ public class BoardReply {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    public BoardReply(Board board, User user, BoardReply parentReplyId, BoardReply tagReplyId, DeleteStatus deleteStatus, String content) {
+        this.board = board;
+        this.user = user;
+        this.parentReplyId = parentReplyId;
+        this.tagReplyId = tagReplyId;
+        this.deleteStatus = deleteStatus;
+        this.content = content;
+    }
+
+    public void delete() {
+        this.deleteStatus = DeleteStatus.DELETED;
+    }
+
+    public void update(String content, BoardReply tagReply) {
+        this.content = content;
+        this.tagReplyId = tagReply.getTagReplyId();
+    }
 }

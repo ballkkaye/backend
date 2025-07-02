@@ -1,5 +1,29 @@
 package com.example.ballkkaye.board.reply;
 
-public class BoardReplyRequest {
+import lombok.Data;
 
+public class BoardReplyRequest {
+    @Data
+    public static class SaveDTO {
+        private Integer parentReplyId;
+        private Integer tagReplyId;
+        private String content;
+
+        public SaveDTO(Integer parentReplyId, Integer tagReplyId, String content) {
+            this.parentReplyId = parentReplyId;
+            this.tagReplyId = tagReplyId;
+            this.content = content;
+        }
+    }
+
+    @Data
+    public static class UpdateDTO {
+        private Integer tagReplyId;
+        private String content;
+
+        public UpdateDTO(Integer tagReplyId, String content) {
+            this.tagReplyId = tagReplyId;
+            this.content = content;
+        }
+    }
 }
