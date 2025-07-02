@@ -106,6 +106,11 @@ VALUES ('1234', '쌀', 'ssar', 1, 'ssar@nate.com', '1999-09-09', 'MALE', '/img/p
        ('1234', '김정원', 'jungwon', 5, 'jungwon@example.com', '1996-06-06', 'MALE', '/img/profile.png', 'USER'),
        ('1234', '김미숙', 'misook', 6, 'misook@example.com', '1994-04-04', 'FEMALE', '/img/profile.png', 'USER');
 
+-- 테스트 용
+INSERT INTO user_tb (password, name, nickname, team_id, email, birth_date, gender, profile_url, user_role)
+VALUES ('test1234', '테스트유저', 'test', 1, 'test@example.com', '2001-01-01', 'MALE', '/img/profile.png', 'USER');
+
+
 -- 6.game_tb
 INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
                      home_team_id, away_team_id,
@@ -113,11 +118,11 @@ INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
                      home_prediction_score, away_prediction_score,
                      home_result_score, away_result_score,
                      total_prediction_score)
-VALUES (423, TIMESTAMP '2025-06-27 18:30:00', 1, 'MS_T', 'COMPLETED', 2, 4, 50.0, 50.0, NULL, NULL, 0, 0, NULL),
-       (424, TIMESTAMP '2025-06-27 18:30:00', 5, 'KN_T', 'COMPLETED', 6, 8, 50.0, 50.0, NULL, NULL, 0, 0, NULL),
-       (425, TIMESTAMP '2025-06-27 18:30:00', 8, 'SS_T', 'COMPLETED', 9, 7, 50.0, 50.0, NULL, NULL, 0, 0, NULL),
-       (426, TIMESTAMP '2025-06-27 18:30:00', 9, 'SPO_T', 'COMPLETED', 10, 1, 50.0, 50.0, NULL, NULL, 0, 0, NULL),
-       (427, TIMESTAMP '2025-06-27 18:30:00', 2, 'SPO_2T', 'COMPLETED', 3, 5, 50.0, 50.0, NULL, NULL, 0, 0, NULL);
+VALUES (423, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'COMPLETED', 2, 4, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (424, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'COMPLETED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (425, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'COMPLETED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (426, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'COMPLETED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
+       (427, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'IN_PROGRESS', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL);
 
 
 -- 7. today_game_tb
@@ -127,11 +132,11 @@ INSERT INTO today_game_tb (id, game_time, stadium_id, broadcast_channel, game_st
                            home_prediction_score, away_prediction_score,
                            home_result_score, away_result_score,
                            total_prediction_score)
-VALUES (423, TIMESTAMP '2025-06-27 18:30:00', 1, 'MS_T', 'COMPLETED', 2, 4, 50.0, 50.0, NULL, NULL, 0, 0, NULL),
-       (424, TIMESTAMP '2025-06-27 18:30:00', 5, 'KN_T', 'COMPLETED', 6, 8, 50.0, 50.0, NULL, NULL, 0, 0, NULL),
-       (425, TIMESTAMP '2025-06-27 18:30:00', 8, 'SS_T', 'COMPLETED', 9, 7, 50.0, 50.0, NULL, NULL, 0, 0, NULL),
-       (426, TIMESTAMP '2025-06-27 18:30:00', 9, 'SPO_T', 'COMPLETED', 10, 1, 50.0, 50.0, NULL, NULL, 0, 0, NULL),
-       (427, TIMESTAMP '2025-06-27 18:30:00', 2, 'SPO_2T', 'COMPLETED', 3, 5, 50.0, 50.0, NULL, NULL, 0, 0, NULL);
+VALUES (423, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (424, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (425, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (426, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
+       (427, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL);
 
 -- 8. player_tb
 INSERT INTO player_tb (kbo_player_id, team_id, name)
@@ -197,5 +202,3 @@ VALUES (423, 1, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/202
 
 INSERT INTO board_tb (team_id, user_id, title, content, delete_status, created_at)
 VALUES (3, 1, '직관 다녀온 후기', '롯데 경기 진짜 재밌었음. 9회말 역전승은 감동이었어.', 'NOT_DELETED', '2025-06-29 15:30:00');
-
-

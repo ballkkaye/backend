@@ -16,4 +16,8 @@ public enum GameStatus {
     public String getState() {
         return state;
     }
+
+    public boolean isCompleted() {
+        return this == COMPLETED;
+    }
 }
