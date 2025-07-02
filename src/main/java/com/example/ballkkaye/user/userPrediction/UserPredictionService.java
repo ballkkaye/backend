@@ -26,7 +26,7 @@ public class UserPredictionService {
     private final TeamRepository teamRepository;
 
     @Transactional
-    public List<UserPredictionResponse.SaveDTO> savePrediction(UserPredictionRequest.SaveDTO reqDTO) {
+    public UserPredictionResponse.SaveListDTO savePrediction(UserPredictionRequest.SaveDTO reqDTO) {
         List<UserPredictionResponse.SaveDTO> savedList = new ArrayList<>();
 
         User user = userRepository.findById(reqDTO.getUserId())
@@ -36,23 +36,17 @@ public class UserPredictionService {
             Integer gameId = prediction.getGameId();
             Integer teamId = prediction.getUserChoiceTeamId();
 
-            TodayGame game = todayGameRepository.findById(gameId)
-                    .orElseThrow(() -> new IllegalArgumentException("경기를 찾을 수 없습니다"));
+            TodayGame game = todayGameRepository.findByGameId(gameId)
+                    .orElseThrow(() -> new IllegalArgumentException("경기를 찾을 수 없습니다 = " + gameId));
 
             if (game.getGameTime().toLocalDateTime().isBefore(LocalDateTime.now())) {
                 throw new IllegalArgumentException("이미 시작된 경기는 예측할 수 없습니다: gameId = " + gameId);
             }
 
-            if (game.getGameStatus() == GameStatus.IN_PROGRESS) {
-                throw new IllegalArgumentException("이미 시작된 경기는 예측할 수 없습니다: gameId = " + gameId);
-            }
-
-            if (game.getGameStatus() == GameStatus.COMPLETED) {
-                throw new IllegalArgumentException("종료된 경기는 예측할 수 없습니다: gameId = " + gameId);
-            }
-
-            if (game.getGameStatus() == GameStatus.CANCELLED) {
-                throw new IllegalArgumentException("취소된 경기는 예측할 수 없습니다: gameId = " + gameId);
+            if (game.getGameStatus() == GameStatus.IN_PROGRESS ||
+                    game.getGameStatus() == GameStatus.COMPLETED ||
+                    game.getGameStatus() == GameStatus.CANCELLED) {
+                throw new IllegalArgumentException("예측할 수 없는 상태의 경기입니다: gameId = " + gameId);
             }
 
             if (userPredictionRepository.existsByUserAndGame(user, gameId)) {
@@ -77,10 +71,10 @@ public class UserPredictionService {
             savedList.add(new UserPredictionResponse.SaveDTO(userPredictionRepository.save(up)));
         }
 
-        return savedList;
+        return new UserPredictionResponse.SaveListDTO(user.getId(), savedList);
     }
 
-    public UserPredictionResponse.TodayListResponse getTodayPredictions(Integer userId) {
+    public UserPredictionResponse.TodayListResponse TodayPredictions(Integer userId) {
         List<Object[]> rows = userPredictionRepository.findTodayPredictionsByUser(userId, LocalDate.now());
         List<UserPredictionResponse.TodayListDTO> dtos = new ArrayList<>();
 

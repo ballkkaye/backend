@@ -113,11 +113,11 @@ INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
                      home_prediction_score, away_prediction_score,
                      home_result_score, away_result_score,
                      total_prediction_score)
-VALUES (423, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'COMPLETED', 2, 4, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (424, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'COMPLETED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (425, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'COMPLETED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (426, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'COMPLETED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
-       (427, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'IN_PROGRESS', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL);
+VALUES (423, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (424, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (425, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (426, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
+       (427, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL);
 
 
 -- 7. today_game_tb
@@ -126,12 +126,28 @@ INSERT INTO today_game_tb (id, game_time, stadium_id, broadcast_channel, game_st
                            home_win_per, away_win_per,
                            home_prediction_score, away_prediction_score,
                            home_result_score, away_result_score,
-                           total_prediction_score)
-VALUES (423, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (424, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (425, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (426, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
-       (427, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL);
+                           total_prediction_score, game_id)
+VALUES
+-- 두산 vs SSG
+(1, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4,
+ 52.0, 48.0, 4.2, 3.9, 3, 5, 8.1, 423),
+
+-- 삼성 vs 한화
+(2, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8,
+ 49.2, 50.8, 3.7, 3.8, 3, 5, 7.5, 424),
+
+-- NC vs 롯데
+(3, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7,
+ 55.6, 44.4, 4.5, 3.6, 3, 5, 8.1, 425),
+
+-- KT vs LG
+(4, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1,
+ 50.0, 50.0, 3.8, 3.8, 5, 5, 7.6, 426),
+
+-- 키움 vs KIA
+(5, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5,
+ 47.6, 52.4, 3.5, 3.9, 2, 0, 7.4, 427);
+;
 
 -- 8. player_tb
 INSERT INTO player_tb (kbo_player_id, team_id, name)
@@ -223,3 +239,17 @@ VALUES (1, 1, 78, 45, 32, 1, 0.584, 0, '5승0무5패', '1패', 0.950, 720, 3.50)
        (9, 9, 79, 31, 45, 3, 0.408, 13.5, '4승0무6패', '1승', 0.810, 570, 4.20),
        (10, 10, 82, 25, 54, 3, 0.316, 21, '5승1무4패', '3승', 0.790, 540, 4.30);
 
+-- 2. today_team_record_tb에 데이터 삽입
+INSERT INTO today_team_record_tb (team_id, team_rank, total_game, win_game, lose_game, tie_game, win_rate, gap,
+                                  recent_ten_game,
+                                  streak, ops, r, era)
+VALUES (1, 1, 78, 45, 32, 1, 0.584, 0, '5승0무5패', '1패', 0.950, 720, 3.50),
+       (2, 2, 79, 44, 33, 2, 0.571, 1, '4승0무6패', '2패', 0.930, 710, 3.20),
+       (3, 3, 80, 43, 34, 3, 0.558, 3.5, '6승0무4패', '1승', 0.920, 690, 3.40),
+       (4, 4, 79, 41, 35, 3, 0.539, 5, '6승2무2패', '2승', 0.880, 680, 3.60),
+       (5, 5, 78, 39, 36, 3, 0.520, 5, '5승1무4패', '1패', 0.870, 650, 3.70),
+       (6, 6, 80, 40, 37, 3, 0.519, 6.5, '4승0무6패', '1패', 0.850, 630, 3.80),
+       (7, 7, 79, 39, 39, 3, 0.500, 6, '3승0무7패', '4패', 0.840, 620, 3.90),
+       (8, 8, 76, 35, 37, 4, 0.486, 7.5, '4승2무4패', '1패', 0.830, 600, 4.00),
+       (9, 9, 79, 31, 45, 3, 0.408, 13.5, '4승0무6패', '1승', 0.810, 570, 4.20),
+       (10, 10, 82, 25, 54, 3, 0.316, 21, '5승1무4패', '3승', 0.790, 540, 4.30);

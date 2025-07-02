@@ -10,14 +10,14 @@ public class UserPredictionResponse {
     @Data
     public static class SaveDTO {
         private Integer id;
-        private Integer userId;
         private Integer gameId;
+        private Integer userChoiceTeamId;
         private Timestamp createdAt;
 
         public SaveDTO(UserPrediction userPrediction) {
             this.id = userPrediction.getId();
-            this.userId = userPrediction.getUser().getId();
-            this.gameId = userPrediction.getGame().getId();
+            this.gameId = userPrediction.getGame().getGame().getId();
+            this.userChoiceTeamId = userPrediction.getUserChoiceTeam() == null ? null : userPrediction.getUserChoiceTeam().getId();
             this.createdAt = userPrediction.getCreatedAt();
         }
     }
@@ -54,4 +54,16 @@ public class UserPredictionResponse {
             this.userPredictions = userPredictions;
         }
     }
+
+    @Data
+    public static class SaveListDTO {
+        private Integer userId;
+        private List<SaveDTO> userPredictions;
+
+        public SaveListDTO(Integer userId, List<SaveDTO> userPredictions) {
+            this.userId = userId;
+            this.userPredictions = userPredictions;
+        }
+    }
+
 }
