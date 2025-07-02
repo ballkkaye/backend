@@ -23,4 +23,27 @@ public class UserRepository {
                 .stream()
                 .findFirst();
     }
+
+    public Optional<User> findByUsername(String username) {
+        String q = "SELECT u FROM User u WHERE u.username = :username";
+        return em.createQuery(q, User.class)
+                .setParameter("username", username)
+                .getResultList()
+                .stream()
+                .findFirst();
+    }
+
+    public User save(User user) {
+        em.persist(user);
+        return user;
+    }
+
+    public Optional<User> findByPhoneNumber(String phoneNumber) {
+        String q = "SELECT u FROM User u WHERE u.phoneNumber = :phoneNumber";
+        return em.createQuery(q, User.class)
+                .setParameter("phoneNumber", phoneNumber)
+                .getResultList()
+                .stream()
+                .findFirst();
+    }
 }
