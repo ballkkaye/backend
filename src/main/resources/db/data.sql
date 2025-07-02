@@ -129,23 +129,23 @@ INSERT INTO today_game_tb (id, game_time, stadium_id, broadcast_channel, game_st
                            total_prediction_score, game_id)
 VALUES
 -- 두산 vs SSG
-(1, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4,
+(1, TIMESTAMP '2025-07-02 22:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4,
  52.0, 48.0, 4.2, 3.9, 3, 5, 8.1, 423),
 
 -- 삼성 vs 한화
-(2, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8,
+(2, TIMESTAMP '2025-07-02 22:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8,
  49.2, 50.8, 3.7, 3.8, 3, 5, 7.5, 424),
 
 -- NC vs 롯데
-(3, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7,
+(3, TIMESTAMP '2025-07-02 22:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7,
  55.6, 44.4, 4.5, 3.6, 3, 5, 8.1, 425),
 
 -- KT vs LG
-(4, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1,
+(4, TIMESTAMP '2025-07-02 22:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1,
  50.0, 50.0, 3.8, 3.8, 5, 5, 7.6, 426),
 
 -- 키움 vs KIA
-(5, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5,
+(5, TIMESTAMP '2025-07-02 22:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5,
  47.6, 52.4, 3.5, 3.9, 2, 0, 7.4, 427);
 ;
 
