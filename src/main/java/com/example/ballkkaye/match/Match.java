@@ -45,4 +45,10 @@ public class Match {
         this.title = title;
         this.content = content;
     }
+
+    public void update(ChatRoom chatRoomPS, String title, String content) {
+        this.chatRoom = chatRoomPS == null ? this.chatRoom : chatRoomPS;
+        this.title = title == null ? this.title : title;
+        this.content = content == null ? this.content : content;
+    }
 }

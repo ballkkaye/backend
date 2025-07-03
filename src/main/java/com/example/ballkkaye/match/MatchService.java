@@ -132,4 +132,52 @@ public class MatchService {
         MatchResponse.DetailDTO detailDTO = new MatchResponse.DetailDTO(matchPS, isOwner, relativeTime, likeCount, isLike, countUser);
         return detailDTO;
     }
+
+
+    @Transactional
+    public Object update(Integer matchId, MatchRequest.@Valid UpdateDTO reqDTO, User sessionUser) {
+        PrettyTime p = new PrettyTime(Locale.KOREAN);
+        Match matchPS = null;
+        Game gamePS = null;
+        Team teamPS = null;
+
+        if (!(matchId == null)) {
+            matchPS = matchRepository.findById(matchId).orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+        }
+
+        if (!(matchPS.getUser().getId().equals(sessionUser.getId()))) {
+            throw new RuntimeException("해당 자원에 대한 권한이 없습니다.");
+        }
+
+
+        if (!(reqDTO.getGameId() == null)) {
+            gamePS = gameRepository.findById(reqDTO.getGameId())
+                    .orElseThrow(() -> new RuntimeException("Game not found"));
+            if (gamePS.getGameTime().before(new Timestamp(System.currentTimeMillis()))) {
+                throw new RuntimeException("해당 자원을 찾을 수 없습니다.");
+            }
+        }
+
+        ChatRoom chatRoomPS = chatRoomRepository.findById(matchPS.getChatRoom().getId())
+                .orElseThrow(() -> new RuntimeException("ChatRoom not found"));
+        if (chatRoomPS.getDeleteStatus().equals(DeleteStatus.DELETED)) {
+            throw new RuntimeException("해당 자원을 찾을 수 없습니다.");
+        }
+
+        if (!(reqDTO.getTeamId() == null)) {
+            teamPS = teamRepository.findById(reqDTO.getTeamId())
+                    .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+        }
+        String relativeTime = p.format(new Date(matchPS.getCreatedAt().getTime()));
+
+        chatRoomPS.update(gamePS, teamPS, reqDTO);
+        matchPS.update(chatRoomPS, reqDTO.getTitle(), reqDTO.getContent());
+        Boolean isOwner = true;
+        Integer likeCount = matchLikeRepository.totalCount(matchId);
+        Boolean isLike = matchLikeRepository.findByMatchIdAndUserId(matchId, sessionUser.getId()).isPresent();
+        String countUser = chatRoomUserRepository.countByChatRoomId(matchPS.getChatRoom().getId()).toString();
+        MatchResponse.UpdateDTO respDTO = new MatchResponse.UpdateDTO(matchPS, isOwner, relativeTime, likeCount, isLike, countUser);
+
+        return respDTO;
+    }
 }

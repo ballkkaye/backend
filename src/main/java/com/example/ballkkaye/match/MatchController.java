@@ -44,4 +44,12 @@ public class MatchController {
         var respDTO = matchService.getDetail(id, sessionUser);
         return Resp.ok(respDTO);
     }
+
+    // 매칭 글 수정
+    @PutMapping("/s/api/matches/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody @Valid MatchRequest.UpdateDTO reqDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        var respDTO = matchService.update(id, reqDTO, sessionUser);
+        return Resp.ok(respDTO);
+    }
 }
