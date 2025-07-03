@@ -5,8 +5,11 @@ import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye.common.enums.Gender;
 import com.example.ballkkaye.common.enums.ProviderType;
 import com.example.ballkkaye.common.enums.UserRole;
+import com.example.ballkkaye.team.Team;
+import com.example.ballkkaye.team.TeamRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,6 +28,7 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final RestTemplate restTemplate = new RestTemplate();
+    private final TeamRepository teamRepository;
 
     @Transactional
     public Object naverOauthLogin(String accessToken) {
@@ -57,13 +61,16 @@ public class UserService {
             // 4. gender enum 넣기
             Gender gender = userInfo.getGender().equals("M") ? Gender.MALE : Gender.FEMALE;
 
-            // 5.
+            // 5. 비밀번호 생성
+            String password = BCrypt.hashpw(UUID.randomUUID().toString(), BCrypt.gensalt());
+
+            // 6. 닉네임 생성
             String nickname = GenerateNickname.create();
 
-            // 5. user 객체 생성
+            // 7. user 객체 생성
             User user = User.builder()
                     .username(username)
-                    .password(UUID.randomUUID().toString()) // 소셜 로그인용 고정
+                    .password(password) // 소셜 로그인용 고정
                     .name(userInfo.getName())
                     .nickname(nickname)
                     .team(null) // 팀은 null 또는 가입 이후 별도 입력
@@ -119,6 +126,21 @@ public class UserService {
         return tokens;
     }
 
-    public void selectMyTeam(User sessionUser, UserRequest.@Valid SaveDTO reqDTO) {
+    @Transactional
+    public void additionalUserInfo(User sessionUser, UserRequest.@Valid AdditionalInfoDTO reqDTO) {
+        // 유저 존재하는지 검사
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
+        // req로 들어온 팀이 존재하는지 검사
+        Team teamPS = teamRepository.findById(reqDTO.getTeamId())
+                .orElseThrow(() -> new RuntimeException("해당 팀을 찾을 수 없습니다"));
+        // TODO 닉네임 중복 검사 이거 따로 api로 빼야될 듯 그래야 중복체크하지 여기도 있어도 괜찮을 듯
+        // 닉네임 중복 검사
+        if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
+            throw new RuntimeException("이미 존재하는 닉네임");
+        }
+        // updateNicknameAndTeam 함수 호출해서 응원팀, 닉네임 업데이트
+        userPS.updateNicknameAndTeam(teamPS, reqDTO.getNickname().trim());
     }
 }

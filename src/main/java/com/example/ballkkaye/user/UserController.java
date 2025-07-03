@@ -13,13 +13,13 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
-    @GetMapping("/api/oauth/login") // Post로 해도 될 듯
-    public ResponseEntity<?> naverOauthLogin(@RequestParam("accessToken") String accessToken) {
-        var userInfo = userService.naverOauthLogin(accessToken);
+    @PostMapping("/api/oauth/login") // Post로 해도 될 듯
+    public ResponseEntity<?> naverOauthLogin(@RequestBody @Valid UserRequest.LoginDTO reqDTO) {
+        var userInfo = userService.naverOauthLogin(reqDTO.getAccessToken());
         return ResponseEntity.ok(userInfo);
     }
 
-    @PostMapping("/auth/reissue")
+    @PostMapping("/oauth/reissue")
     public ResponseEntity<?> reissue(@RequestHeader("Authorization") String refreshToken) {
         var resp = userService.reissue(refreshToken);
 
@@ -27,9 +27,9 @@ public class UserController {
     }
 
     @PutMapping("/s/myteam")
-    public ResponseEntity<?> selectMyTeam(@PathVariable @Valid UserRequest.SaveDTO reqDTO) {
+    public ResponseEntity<?> additionalUserInfo(@PathVariable @Valid UserRequest.AdditionalInfoDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        userService.selectMyTeam(sessionUser, reqDTO);
+        userService.additionalUserInfo(sessionUser, reqDTO);
         return null;
     }
 }

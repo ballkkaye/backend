@@ -12,4 +12,7 @@ public class BallkkayeApplication {
         SpringApplication.run(BallkkayeApplication.class, args);
     }
 
+//    public static void main(String[] args) {
+//        System.out.println();
+//    }
 }

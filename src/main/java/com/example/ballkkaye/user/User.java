@@ -91,4 +91,9 @@ public class User {
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
+    public void updateNicknameAndTeam(Team team, String nickname) {
+        this.nickname = nickname == null ? this.nickname : nickname;
+        this.team = team == null ? this.team : team;
+    }
 }

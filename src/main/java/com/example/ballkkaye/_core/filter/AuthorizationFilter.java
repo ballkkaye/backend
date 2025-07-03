@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AuthorizationFilter implements Filter {
 
@@ -45,13 +47,13 @@ public class AuthorizationFilter implements Filter {
         } catch (TokenExpiredException e) {
             // 4. accessToken 만료 → refreshToken 검증
             if (refreshToken == null || !refreshToken.startsWith("Bearer ")) {
-                redirectToLogin(response);
+                sendLoginResponse(response);
                 return;
             }
 
             try {
                 refreshToken = refreshToken.replace("Bearer ", "");
-                User user = JwtUtil.verify(refreshToken); // refreshToken도 User 정보 담고 있다고 가정
+                User user = JwtUtil.verify(refreshToken);
 
                 // 5. 재발급
                 String newAccessToken = JwtUtil.create(user);
@@ -62,7 +64,7 @@ public class AuthorizationFilter implements Filter {
                 session.setAttribute("sessionUser", user);
                 chain.doFilter(request, response);
             } catch (TokenExpiredException | SignatureVerificationException | JWTDecodeException ex) {
-                redirectToLogin(response);
+                sendLoginResponse(response);
             }
         } catch (RuntimeException e) {
             exResponse(response, "토큰 검증 실패: " + e.getMessage());
@@ -77,7 +79,16 @@ public class AuthorizationFilter implements Filter {
         out.println(new ObjectMapper().writeValueAsString(resp));
     }
 
-    private void redirectToLogin(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/login");
+    private void sendLoginResponse(HttpServletResponse response) throws IOException {
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(401);
+        PrintWriter out = response.getWriter();
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("code", 401);
+        body.put("msg", "로그인이 필요합니다");
+        body.put("redirectUrl", "/login");
+
+        out.println(new ObjectMapper().writeValueAsString(body));
     }
 }

@@ -3,6 +3,7 @@ package com.example.ballkkaye._core.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.ballkkaye.common.enums.UserRole;
 import com.example.ballkkaye.user.User;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ public class JwtUtil {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .withClaim("id", user.getId())
                 .withClaim("nickname", user.getNickname())
+                .withClaim("userrole", user.getUserRole().toString())
                 .sign(Algorithm.HMAC512("ballkkaye"));
         return jwt;
     }
@@ -24,6 +26,7 @@ public class JwtUtil {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .withClaim("id", user.getId())
                 .withClaim("nickname", user.getNickname())
+                .withClaim("userrole", user.getUserRole().toString())
                 .sign(Algorithm.HMAC512("ballkkaye"));
         return jwt;
     }
@@ -32,10 +35,13 @@ public class JwtUtil {
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512("ballkkaye")).build().verify(jwt);
         int id = decodedJWT.getClaim("id").asInt();
         String nickname = decodedJWT.getClaim("nickname").asString();
+        String role = decodedJWT.getClaim("userrole").asString();
+        UserRole userRole = UserRole.valueOf(role);
 
         return User.builder()
                 .id(id)
                 .nickname(nickname)
+                .userRole(userRole)
                 .build();
     }
 }

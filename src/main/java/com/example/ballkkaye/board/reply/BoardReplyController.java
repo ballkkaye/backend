@@ -2,7 +2,7 @@ package com.example.ballkkaye.board.reply;
 
 import com.example.ballkkaye._core.util.Resp;
 import com.example.ballkkaye.user.User;
-import com.example.ballkkaye.user.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class BoardReplyController {
     private final BoardReplyService boardReplyService;
-    private final UserRepository userRepository; // 지워야함
+    private final HttpSession session;
 
     // 댓글 작성
     @PostMapping("/s/api/boards/{id}/reply")
     public ResponseEntity<?> save(@PathVariable("id") Integer id,
                                   @RequestBody BoardReplyRequest.SaveDTO reqDTO) {
-//        User sessionUser = (User) session.getAttribute("sessionUser");
-        User sessionUser = userRepository.findByEmail("ssar@nate.com")
-                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = boardReplyService.save(id, sessionUser, reqDTO);
         return Resp.ok(respDTO);
     }
@@ -27,9 +25,7 @@ public class BoardReplyController {
     // 댓글 삭제
     @PostMapping("/s/api/boards/reply/{id}/delete")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
-//        User sessionUser = (User) session.getAttribute("sessionUser");
-        User sessionUser = userRepository.findByEmail("ssar@nate.com")
-                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        User sessionUser = (User) session.getAttribute("sessionUser");
         boardReplyService.delete(id, sessionUser);
         return Resp.ok(null);
     }
@@ -37,9 +33,7 @@ public class BoardReplyController {
     // 댓글 수정
     @PutMapping("/s/api/boards/reply/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody BoardReplyRequest.UpdateDTO reqDTO) {
-//        User sessionUser = (User) session.getAttribute("sessionUser");
-        User sessionUser = userRepository.findByEmail("ssar@nate.com")
-                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+        User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = boardReplyService.update(reqDTO, id, sessionUser);
         return Resp.ok(respDTO);
     }
