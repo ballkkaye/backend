@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+
 @RequiredArgsConstructor
 @Service
 public class MatchService {
@@ -32,6 +34,9 @@ public class MatchService {
                 .orElseThrow(() -> new RuntimeException("Game not found"));
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
                 .orElseThrow(() -> new RuntimeException("Team not found"));
+        if (gamePS.getGameTime().before(new Timestamp(System.currentTimeMillis()))) {
+            throw new RuntimeException("이미 지난 경기는 매칭할 수 없습니다");
+        }
 
         ChatRoom chatRoom = new ChatRoom().builder()
                 .game(gamePS)
