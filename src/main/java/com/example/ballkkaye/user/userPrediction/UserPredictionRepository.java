@@ -1,11 +1,12 @@
 package com.example.ballkkaye.user.userPrediction;
 
-import com.example.ballkkaye.user.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -19,60 +20,58 @@ public class UserPredictionRepository {
         return userPrediction;
     }
 
-    public boolean existsByUserAndGame(User user, Integer gameId) {
-        String jpql = "SELECT COUNT(up) FROM UserPrediction up WHERE up.user = :user AND up.game.id = :gameId";
-        Long count = em.createQuery(jpql, Long.class)
-                .setParameter("user", user)
-                .setParameter("gameId", gameId)
-                .getSingleResult();
-        return count > 0;
-    }
+    public List<UserPredictionResponse.TodayGameDTO> findTodayGamesForPrediction(LocalDate today, Integer userId) {
+        String sql = "SELECT\n" +
+                "  g.id,\n" +
+                "  g.game_time,\n" +
+                "  ht.id,\n" +
+                "  ht.team_name,\n" +
+                "  ht.logo_url,\n" +
+                "  at.id,\n" +
+                "  at.team_name,\n" +
+                "  at.logo_url,\n" +
+                "  (SELECT COUNT(*) FROM user_prediction_tb up1 WHERE up1.game_id = g.id AND up1.team_id = g.home_team_id),\n" +
+                "  (SELECT COUNT(*) FROM user_prediction_tb up2 WHERE up2.game_id = g.id AND up2.team_id = g.away_team_id)\n" +
+                "FROM today_game_tb g\n" +
+                "JOIN team_tb ht ON g.home_team_id = ht.id\n" +
+                "JOIN team_tb at ON g.away_team_id = at.id\n" +
+                "WHERE CAST(g.game_time AS DATE) = :today\n" +
+                "  AND g.game_time > CURRENT_TIMESTAMP\n" +
+                "  AND g.id NOT IN (\n" +
+                "      SELECT game_id FROM user_prediction_tb WHERE user_id = :userId\n" +
+                "  )\n";
 
-    public List<Object[]> findTodayPredictionsByUser(Integer userId, LocalDate today) {
-        String q = """
-                SELECT
-                    up.ID,
-                    tg.ID,
-                    tg.GAME_STATUS,
-                    tg.HOME_RESULT_SCORE,
-                    tg.AWAY_RESULT_SCORE,
-                
-                    ht.ID AS homeTeamId,
-                    ht.TEAM_NAME AS homeTeamName,
-                    ht.LOGO_URL AS homeLogoUrl,
-                
-                    at.ID AS awayTeamId,
-                    at.TEAM_NAME AS awayTeamName,
-                    at.LOGO_URL AS awayLogoUrl,
-                
-                    up.TEAM_ID AS userChoiceTeamId,
-                    up.RESULT,
-                
-                    (SELECT COUNT(*)
-                     FROM user_prediction_tb sub_up
-                     JOIN today_game_tb sub_tg ON sub_up.GAME_ID = sub_tg.ID
-                     WHERE sub_tg.ID = tg.ID AND sub_up.TEAM_ID = ht.ID) AS homeCount,
-                
-                    (SELECT COUNT(*)
-                     FROM user_prediction_tb sub_up
-                     JOIN today_game_tb sub_tg ON sub_up.GAME_ID = sub_tg.ID
-                     WHERE sub_tg.ID = tg.ID AND sub_up.TEAM_ID = at.ID) AS awayCount
-                
-                FROM user_prediction_tb up
-                JOIN today_game_tb tg ON up.GAME_ID = tg.ID
-                JOIN team_tb ht ON tg.HOME_TEAM_ID = ht.ID
-                JOIN team_tb at ON tg.AWAY_TEAM_ID = at.ID
-                
-                WHERE up.USER_ID = :userId
-                  AND CAST(tg.GAME_TIME AS DATE) = :today
-                
-                ORDER BY tg.GAME_TIME ASC
-                """;
-
-        return em.createNativeQuery(q)
-                .setParameter("userId", userId)
+        List<Object[]> results = em.createNativeQuery(sql)
                 .setParameter("today", today)
+                .setParameter("userId", userId)
                 .getResultList();
-    }
 
+        List<UserPredictionResponse.TodayGameDTO> dtos = new ArrayList<>();
+        for (Object[] row : results) {
+            UserPredictionResponse.TodayGameDTO dto = new UserPredictionResponse.TodayGameDTO();
+            dto.setGameId((Integer) row[0]);
+            Timestamp gameTime = (Timestamp) row[1];
+            dto.setGameTime(gameTime.toLocalDateTime().toLocalTime().toString()); // or substring(0, 5)
+
+            UserPredictionResponse.TeamDTO home = new UserPredictionResponse.TeamDTO();
+            home.setTeamId((Integer) row[2]);
+            home.setTeamName((String) row[3]);
+            home.setLogoUrl((String) row[4]);
+
+            UserPredictionResponse.TeamDTO away = new UserPredictionResponse.TeamDTO();
+            away.setTeamId((Integer) row[5]);
+            away.setTeamName((String) row[6]);
+            away.setLogoUrl((String) row[7]);
+
+            Integer homeVotes = ((Number) row[8]).intValue();
+            Integer awayVotes = ((Number) row[9]).intValue();
+            dto.setHomeTeam(home);
+            dto.setAwayTeam(away);
+            dto.setHomeVoteRate(homeVotes); // 비율 아님, raw count
+            dto.setAwayVoteRate(awayVotes); // 비율 아님, raw count
+
+            dtos.add(dto);
+        }
+        return dtos;
+    }
 }
