@@ -84,8 +84,8 @@ public class UserService {
                     .providerType(ProviderType.NAVER)
                     .userRole(UserRole.USER)
                     .build();
-            String myAccessToken = JwtUtil.create(user);
             userRepository.save(user);
+            String myAccessToken = JwtUtil.create(user);
 
             return new UserResponse.LoginDTO(user, myAccessToken);
         }

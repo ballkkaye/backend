@@ -1,8 +1,11 @@
 package com.example.ballkkaye.match.chat.room.user;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -10,4 +13,31 @@ public class ChatRoomUserRepository {
 
     private final EntityManager em;
 
+    public void save(ChatRoomUser chatRoomUser) {
+        em.persist(chatRoomUser);
+    }
+
+    public Optional<ChatRoomUser> findByUserIdAndChatRoomId(Integer userId, Integer chatRoomId) {
+        try {
+            ChatRoomUser result = em.createQuery("""
+                            SELECT cru FROM ChatRoomUser cru
+                            WHERE cru.user.id = :userId AND cru.chatRoom.id = :chatRoomId
+                            """, ChatRoomUser.class)
+                    .setParameter("userId", userId)
+                    .setParameter("chatRoomId", chatRoomId)
+                    .getSingleResult();
+            return Optional.of(result);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+
+    public Long countByChatRoomId(Integer chatRoomId) {
+        return em.createQuery("""
+                        SELECT COUNT(cru) FROM ChatRoomUser cru
+                        WHERE cru.chatRoom.id = :chatRoomId AND cru.deleteStatus = 'NOT_DELETED'
+                        """, Long.class)
+                .setParameter("chatRoomId", chatRoomId)
+                .getSingleResult();
+    }
 }
