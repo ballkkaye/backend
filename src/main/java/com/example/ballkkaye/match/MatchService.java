@@ -112,4 +112,17 @@ public class MatchService {
         MatchResponse.ListDTO respDTO = new MatchResponse.ListDTO(gender.getLabel(), age.getName(), team.getTeamName(), items);
         return respDTO;
     }
+
+    public Object getDetail(Integer matchId, User sessionUser) {
+        PrettyTime p = new PrettyTime(Locale.KOREAN);
+        Match matchPS = matchRepository.findById(matchId)
+                .orElseThrow(() -> new RuntimeException("Match not found"));
+        String relativeTime = p.format(new Date(matchPS.getCreatedAt().getTime()));
+        Boolean isOwner = false;
+        if (matchPS.getUser().getId().equals(sessionUser.getId())) {
+            isOwner = true;
+        }
+        MatchResponse.DetailDTO detailDTO = new MatchResponse.DetailDTO(matchPS, isOwner, relativeTime);
+        return detailDTO;
+    }
 }

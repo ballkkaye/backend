@@ -82,4 +82,48 @@ public class MatchResponse {
             this.relativeTime = relativeTime;
         }
     }
+
+    @Data
+    public static class DetailDTO {
+        private String gameTitle;
+        private String gameDate;
+        private String stadiumName;
+        private String userNickname;
+        private String userTeamName;
+        private String userProfileUrl;
+        private String relativeTime;
+        private String title;
+        private String content;
+        private String gender;
+        private String age;
+        private String region;
+        private Boolean isSameTeam;
+        private String participationInfo;
+        private Boolean isLike;
+        private Boolean isOwner;
+        private Integer chatRoomId;
+
+        public DetailDTO(Match match, Boolean isOwner, String relativeTime) {
+            this.gameTitle = match.getChatRoom().getGame().getHomeTeam().getTeamName() + " vs " + match.getChatRoom().getGame().getAwayTeam().getTeamName();
+            ;
+            this.gameDate = match.getChatRoom().getGame().getGameTime().toString();
+            this.gameDate = match.getChatRoom().getGame().getGameTime()
+                    .toLocalDateTime()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            this.userNickname = match.getUser().getNickname();
+            this.userTeamName = match.getUser().getTeam() == null ? null : match.getUser().getTeam().getTeamName();
+            this.userProfileUrl = match.getUser().getProfileUrl();
+            this.relativeTime = relativeTime;
+            this.title = match.getTitle();
+            this.content = match.getContent();
+            this.gender = match.getChatRoom().getPreferredGender().getLabel();
+            this.age = match.getChatRoom().getPreferredAge().getName();
+            this.region = match.getChatRoom().getPreferredRegion().getName();
+            this.isSameTeam = match.getChatRoom().getIsSameTeam();
+            this.participationInfo = participationInfo + "/" + match.getChatRoom().getMaxParticipants().toString();
+            this.isLike = isLike; //TODO 좋아요 기능 만들고 추가해야함.
+            this.isOwner = isOwner;
+            this.chatRoomId = match.getChatRoom().getId();
+        }
+    }
 }

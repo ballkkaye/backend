@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -48,5 +49,9 @@ public class MatchRepository {
         query.setMaxResults(5);
 
         return query.getResultList();
+    }
+
+    public Optional<Match> findById(Integer matchId) {
+        return Optional.ofNullable(em.find(Match.class, matchId));
     }
 }
