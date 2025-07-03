@@ -29,7 +29,7 @@ public class UserPrediction {
     @JoinColumn(name = "game_id")
     private TodayGame game;
 
-    @ManyToOne(fetch = FetchType.LAZY) // 무승부를 예측할 경우 선택한 팀 없음
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "team_id")
     private Team userChoiceTeam;
 
