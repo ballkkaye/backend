@@ -4,6 +4,7 @@ import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.match.chat.room.ChatRoom;
 import com.example.ballkkaye.user.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,4 +32,11 @@ public class ChatRoomUser {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public ChatRoomUser(ChatRoom chatRoom, User user, DeleteStatus deleteStatus) {
+        this.chatRoom = chatRoom;
+        this.user = user;
+        this.deleteStatus = deleteStatus;
+    }
 }

@@ -1,8 +1,5 @@
 package com.example.ballkkaye.match.chat.room;
 
-import com.example.ballkkaye.common.enums.Age;
-import com.example.ballkkaye.common.enums.Gender;
-import com.example.ballkkaye.common.enums.Region;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -20,9 +17,9 @@ public class ChatRoomResponse {
         private Integer preferredTeamId;
         private String preferredTeamName;
         private Integer maxParticipants;
-        private Gender preferredGender;
-        private Age preferredAge;
-        private Region preferredRegion;
+        private String preferredGender;
+        private String preferredAge;
+        private String preferredRegion;
         private Boolean isSameTeam;
         private String createdAt;
 
@@ -35,9 +32,9 @@ public class ChatRoomResponse {
             this.preferredTeamId = chatRoom.getTeam().getId();
             this.preferredTeamName = chatRoom.getTeam().getTeamName();
             this.maxParticipants = chatRoom.getMaxParticipants();
-            this.preferredGender = chatRoom.getPreferredGender();
-            this.preferredAge = chatRoom.getPreferredAge();
-            this.preferredRegion = chatRoom.getPreferredRegion();
+            this.preferredGender = chatRoom.getPreferredGender().getLabel();
+            this.preferredAge = chatRoom.getPreferredAge().getName();
+            this.preferredRegion = chatRoom.getPreferredRegion().getName();
             this.isSameTeam = chatRoom.getIsSameTeam();
             Timestamp timestamp = chatRoom.getCreatedAt();
             if (timestamp != null) {
