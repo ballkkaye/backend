@@ -10,4 +10,7 @@ public class ChatRoomRepository {
 
     private final EntityManager em;
 
+    public void save(ChatRoom chatRoom) {
+        em.persist(chatRoom);
+    }
 }
