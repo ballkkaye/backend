@@ -7,6 +7,7 @@ import com.example.ballkkaye.common.enums.Region;
 import com.example.ballkkaye.game.Game;
 import com.example.ballkkaye.team.Team;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -45,6 +46,9 @@ public class ChatRoom {
     @Enumerated(EnumType.STRING)
     private DeleteStatus deleteStatus;
 
+    @Column(nullable = false)
+    private Boolean isSameTeam;
+
     @Column
     private Timestamp lastDisconnectedAt;
 
@@ -53,4 +57,25 @@ public class ChatRoom {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public ChatRoom(Game game,
+                    Team team,
+                    Integer maxParticipants,
+                    Gender preferredGender,
+                    Age preferredAge,
+                    Region preferredRegion,
+                    DeleteStatus deleteStatus,
+                    Boolean isSameTeam,
+                    Timestamp lastDisconnectedAt) {
+        this.game = game;
+        this.team = team;
+        this.maxParticipants = maxParticipants;
+        this.preferredGender = preferredGender;
+        this.preferredAge = preferredAge;
+        this.preferredRegion = preferredRegion;
+        this.deleteStatus = deleteStatus;
+        this.isSameTeam = isSameTeam;
+        this.lastDisconnectedAt = lastDisconnectedAt;
+    }
 }
