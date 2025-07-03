@@ -10,6 +10,7 @@ import com.example.ballkkaye.match.chat.room.ChatRoomRepository;
 import com.example.ballkkaye.match.chat.room.ChatRoomResponse;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUser;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUserRepository;
+import com.example.ballkkaye.match.like.MatchLikeRepository;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.team.TeamRepository;
 import com.example.ballkkaye.user.User;
@@ -35,6 +36,7 @@ public class MatchService {
     private final GameRepository gameRepository;
     private final TeamRepository teamRepository;
     private final ChatRoomUserRepository chatRoomUserRepository;
+    private final MatchLikeRepository matchLikeRepository;
 
     // 동행글 작성
     @Transactional
@@ -122,7 +124,12 @@ public class MatchService {
         if (matchPS.getUser().getId().equals(sessionUser.getId())) {
             isOwner = true;
         }
-        MatchResponse.DetailDTO detailDTO = new MatchResponse.DetailDTO(matchPS, isOwner, relativeTime);
+        Integer likeCount = matchLikeRepository.totalCount(matchId);
+        Boolean isLike = matchLikeRepository.findByMatchIdAndUserId(matchId, sessionUser.getId()).isPresent();
+        String countUser = chatRoomUserRepository.countByChatRoomId(matchPS.getChatRoom().getId()).toString();
+
+
+        MatchResponse.DetailDTO detailDTO = new MatchResponse.DetailDTO(matchPS, isOwner, relativeTime, likeCount, isLike, countUser);
         return detailDTO;
     }
 }

@@ -100,10 +100,11 @@ public class MatchResponse {
         private Boolean isSameTeam;
         private String participationInfo;
         private Boolean isLike;
+        private Integer likeCount;
         private Boolean isOwner;
         private Integer chatRoomId;
 
-        public DetailDTO(Match match, Boolean isOwner, String relativeTime) {
+        public DetailDTO(Match match, Boolean isOwner, String relativeTime, Integer likeCount, Boolean isLike, String countUser) {
             this.gameTitle = match.getChatRoom().getGame().getHomeTeam().getTeamName() + " vs " + match.getChatRoom().getGame().getAwayTeam().getTeamName();
             ;
             this.gameDate = match.getChatRoom().getGame().getGameTime().toString();
@@ -113,6 +114,7 @@ public class MatchResponse {
             this.userNickname = match.getUser().getNickname();
             this.userTeamName = match.getUser().getTeam() == null ? null : match.getUser().getTeam().getTeamName();
             this.userProfileUrl = match.getUser().getProfileUrl();
+            this.stadiumName = match.getChatRoom().getGame().getStadium().getStadiumName();
             this.relativeTime = relativeTime;
             this.title = match.getTitle();
             this.content = match.getContent();
@@ -120,8 +122,9 @@ public class MatchResponse {
             this.age = match.getChatRoom().getPreferredAge().getName();
             this.region = match.getChatRoom().getPreferredRegion().getName();
             this.isSameTeam = match.getChatRoom().getIsSameTeam();
-            this.participationInfo = participationInfo + "/" + match.getChatRoom().getMaxParticipants().toString();
-            this.isLike = isLike; //TODO 좋아요 기능 만들고 추가해야함.
+            this.participationInfo = countUser + "/" + match.getChatRoom().getMaxParticipants().toString();
+            this.isLike = isLike;
+            this.likeCount = likeCount;
             this.isOwner = isOwner;
             this.chatRoomId = match.getChatRoom().getId();
         }
