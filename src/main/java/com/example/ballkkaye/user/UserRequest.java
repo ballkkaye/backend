@@ -22,4 +22,15 @@ public class UserRequest {
             this.accessToken = accessToken;
         }
     }
+
+    @Data
+    public static class UpdateDTO {
+        private String nickname;
+        private Integer teamId;
+
+        public UpdateDTO(String nickname, Integer teamId) {
+            this.nickname = nickname;
+            this.teamId = teamId;
+        }
+    }
 }
