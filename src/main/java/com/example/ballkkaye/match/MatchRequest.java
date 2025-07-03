@@ -33,10 +33,9 @@ public class MatchRequest {
     }
 
     @Data
-    public class UpdateDTO {
+    public static class UpdateDTO {
         private String title;
         private String content;
-        private Integer matchId;
         private Integer gameId;
         private Integer teamId;
         private Boolean isSameTeam;
@@ -45,10 +44,9 @@ public class MatchRequest {
         private Age preferredAge;
         private Region preferredRegion;
 
-        public UpdateDTO(String title, String content, Integer matchId, Integer gameId, Integer teamId, Boolean isSameTeam, Integer maxParticipants, Gender preferredGender, Age preferredAge, Region preferredRegion) {
+        public UpdateDTO(String title, String content, Integer gameId, Integer teamId, Boolean isSameTeam, Integer maxParticipants, Gender preferredGender, Age preferredAge, Region preferredRegion) {
             this.title = title;
             this.content = content;
-            this.matchId = matchId;
             this.gameId = gameId;
             this.teamId = teamId;
             this.isSameTeam = isSameTeam;
