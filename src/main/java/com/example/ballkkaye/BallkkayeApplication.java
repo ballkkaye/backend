@@ -11,5 +11,4 @@ public class BallkkayeApplication {
     public static void main(String[] args) {
         SpringApplication.run(BallkkayeApplication.class, args);
     }
-
 }

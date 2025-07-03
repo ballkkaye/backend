@@ -1,6 +1,7 @@
 package com.example.ballkkaye.user;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -22,5 +23,39 @@ public class UserRepository {
                 .getResultList()
                 .stream()
                 .findFirst();
+    }
+
+    public Optional<User> findByUsername(String username) {
+        String q = "SELECT u FROM User u WHERE u.username = :username";
+        return em.createQuery(q, User.class)
+                .setParameter("username", username)
+                .getResultList()
+                .stream()
+                .findFirst();
+    }
+
+    public User save(User user) {
+        em.persist(user);
+        return user;
+    }
+
+    public Optional<User> findByPhoneNumber(String phoneNumber) {
+        String q = "SELECT u FROM User u WHERE u.phoneNumber = :phoneNumber";
+        return em.createQuery(q, User.class)
+                .setParameter("phoneNumber", phoneNumber)
+                .getResultList()
+                .stream()
+                .findFirst();
+    }
+
+    public Optional<User> findByNickname(String nickname) {
+        try {
+            User user = em.createQuery("SELECT u FROM User u WHERE u.nickname = :nickname", User.class)
+                    .setParameter("nickname", nickname)
+                    .getSingleResult();
+            return Optional.ofNullable(user);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 }
