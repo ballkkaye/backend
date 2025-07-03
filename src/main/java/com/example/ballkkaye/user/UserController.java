@@ -15,12 +15,14 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+    // oauth로그인
     @PostMapping("/api/oauth/login")
     public ResponseEntity<?> naverOauthLogin(@RequestBody @Valid UserRequest.LoginDTO reqDTO) {
         var userInfo = userService.naverOauthLogin(reqDTO.getAccessToken());
         return Resp.ok(userInfo);
     }
 
+    // 유저 추가정보 유저 응원팀 id + 유저 닉네임
     @PutMapping("/s/addtion-user-info")
     public ResponseEntity<?> additionalUserInfo(@PathVariable @Valid UserRequest.AdditionalInfoDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
