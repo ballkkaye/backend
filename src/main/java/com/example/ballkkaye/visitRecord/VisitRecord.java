@@ -61,4 +61,9 @@ public class VisitRecord {
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
+
+
+    public void delete() {
+        this.deleteStatus = DeleteStatus.DELETED;
+    }
 }
