@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MatchRepository {
     private final EntityManager em;
+
+    public void save(Match match) {
+        em.persist(match);
+    }
 }
