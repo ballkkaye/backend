@@ -57,7 +57,7 @@ public class UserResponse {
     }
 
     @Data
-    public static class myTeamDTO {
+    public static class DTO {
         private String username;
         private String name;
         private String nickname;
@@ -69,9 +69,8 @@ public class UserResponse {
         private String profileUrl;
         private String providerType;
         private String userRole;
-        private String accessToken;
 
-        public myTeamDTO(User user, String accessToken) {
+        public DTO(User user) {
             this.username = user.getUsername();
             this.name = user.getName();
             this.nickname = user.getNickname();
@@ -83,7 +82,6 @@ public class UserResponse {
             this.profileUrl = user.getProfileUrl();
             this.providerType = user.getProviderType().toString();
             this.userRole = user.getUserRole().toString();
-            this.accessToken = accessToken;
         }
     }
 }

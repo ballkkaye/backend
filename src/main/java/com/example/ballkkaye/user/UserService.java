@@ -83,8 +83,8 @@ public class UserService {
                     .providerType(ProviderType.NAVER)
                     .userRole(UserRole.USER)
                     .build();
-            String myAccessToken = JwtUtil.create(user);
             userRepository.save(user);
+            String myAccessToken = JwtUtil.create(user);
 
             return new UserResponse.LoginDTO(user, myAccessToken);
         }
@@ -95,7 +95,7 @@ public class UserService {
     }
 
     @Transactional
-    public void additionalUserInfo(User sessionUser, UserRequest.@Valid AdditionalInfoDTO reqDTO) {
+    public Object additionalUserInfo(User sessionUser, UserRequest.@Valid AdditionalInfoDTO reqDTO) {
         // 유저 존재하는지 검사
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
@@ -110,6 +110,9 @@ public class UserService {
         }
         // updateNicknameAndTeam 함수 호출해서 응원팀, 닉네임 업데이트
         userPS.updateNicknameAndTeam(teamPS, reqDTO.getNickname().trim());
+
+        UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
+        return respDTO;
     }
 
     public Map<String, Object> checkUsernameAvailable(String nickname) {
@@ -121,6 +124,21 @@ public class UserService {
         } else {
             respDTO.put("available", true);
         }
+        return respDTO;
+    }
+
+    public Object update(UserRequest.UpdateDTO reqDTO, User sessionUser) {
+        if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
+            throw new RuntimeException("이미 존재하는 닉네임");
+        }
+        Team teamPS = teamRepository.findById(reqDTO.getTeamId())
+                .orElseThrow(() -> new RuntimeException("해당 팀을 찾을 수 없습니다"));
+
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
+        userPS.updateNicknameAndTeam(teamPS, reqDTO.getNickname().trim());
+        UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
         return respDTO;
     }
 }
