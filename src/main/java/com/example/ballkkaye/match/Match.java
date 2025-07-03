@@ -3,6 +3,7 @@ package com.example.ballkkaye.match;
 import com.example.ballkkaye.match.chat.room.ChatRoom;
 import com.example.ballkkaye.user.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,4 +36,13 @@ public class Match {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public Match(Integer id, User user, ChatRoom chatRoom, String title, String content) {
+        this.id = id;
+        this.user = user;
+        this.chatRoom = chatRoom;
+        this.title = title;
+        this.content = content;
+    }
 }

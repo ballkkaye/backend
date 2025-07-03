@@ -2,68 +2,46 @@ package com.example.ballkkaye.user.userPrediction;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
-import java.util.List;
-
+@Data
 public class UserPredictionResponse {
 
+    // 예측 가능한 경기 리스트 조회용 DTO
     @Data
-    public static class SaveDTO {
-        private Integer id;
+    public static class TodayGameDTO {
         private Integer gameId;
-        private Integer userChoiceTeamId;
-        private Timestamp createdAt;
+        private String gameTime;
 
-        public SaveDTO(UserPrediction userPrediction) {
-            this.id = userPrediction.getId();
-            this.gameId = userPrediction.getGame().getGame().getId();
-            this.userChoiceTeamId = userPrediction.getUserChoiceTeam() == null ? null : userPrediction.getUserChoiceTeam().getId();
-            this.createdAt = userPrediction.getCreatedAt();
-        }
+        private TeamDTO homeTeam;
+        private TeamDTO awayTeam;
+
+        private Integer homeVoteRate;
+        private Integer awayVoteRate;
     }
 
+    // 유저 예측 결과 조회용 DTO
     @Data
-    public static class TodayListDTO {
+    public static class PredictionResultDTO {
         private Integer gameId;
-        private TeamInfo homeTeam;
-        private TeamInfo awayTeam;
-        private Integer userChoiceTeamId;
-        private ChoicePercentage choicePer;
-        private String result; // "O", "X", null
+        private String gameTime;
+
+        private TeamDTO homeTeam;
+        private TeamDTO awayTeam;
+
+        private Integer homeScore;
+        private Integer awayScore;
+
+        private Integer userVotedTeamId;
+        private Boolean userPredictionCorrect;
+
+        private Integer homeVoteRate;
+        private Integer awayVoteRate;
     }
 
+    // 공통 팀 정보 DTO
     @Data
-    public static class TeamInfo {
+    public static class TeamDTO {
         private Integer teamId;
         private String teamName;
-        private Integer score; // 경기 종료 후만 노출
-        private String logoImgUrl;
+        private String logoUrl;
     }
-
-    @Data
-    public static class ChoicePercentage {
-        private Integer home;
-        private Integer away;
-    }
-
-    @Data
-    public static class TodayListResponse {
-        private List<TodayListDTO> userPredictions;
-
-        public TodayListResponse(List<TodayListDTO> userPredictions) {
-            this.userPredictions = userPredictions;
-        }
-    }
-
-    @Data
-    public static class SaveListDTO {
-        private Integer userId;
-        private List<SaveDTO> userPredictions;
-
-        public SaveListDTO(Integer userId, List<SaveDTO> userPredictions) {
-            this.userId = userId;
-            this.userPredictions = userPredictions;
-        }
-    }
-
 }
