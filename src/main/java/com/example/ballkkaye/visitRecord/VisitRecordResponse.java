@@ -55,4 +55,28 @@ public class VisitRecordResponse {
 
     }
 
+    @Data
+    public static class ListDTO {
+        private Integer id;
+        private String homeTeamName;
+        private String awayTeamName;
+        private Integer homeScore;
+        private Integer awayScore;
+        private String gameDate;      // "2025.07.03"
+        private String stadiumName;
+
+        public ListDTO(VisitRecord visitRecord) {
+            this.id = visitRecord.getId();
+            this.homeTeamName = visitRecord.getGame().getHomeTeam().getTeamName().split(" ")[0];
+            this.awayTeamName = visitRecord.getGame().getAwayTeam().getTeamName().split(" ")[0];
+            this.homeScore = visitRecord.getGame().getHomeResultScore();
+            this.awayScore = visitRecord.getGame().getAwayResultScore();
+            this.gameDate = visitRecord.getGame().getGameTime()
+                    .toLocalDateTime()
+                    .toLocalDate()
+                    .format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+            this.stadiumName = visitRecord.getGame().getStadium().getStadiumName();
+        }
+    }
+
 }

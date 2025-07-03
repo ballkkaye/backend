@@ -14,6 +14,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class VisitRecordService {
@@ -111,5 +116,40 @@ public class VisitRecordService {
                 .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다"));
 
         return new VisitRecordResponse.DTO(visitRecordPS, image);
+    }
+
+
+    public List<VisitRecordResponse.ListDTO> getList(Integer sessionUserId, LocalDate date, Integer year, Integer month) {
+        List<VisitRecord> visitRecords;
+
+        if (date != null) {
+            visitRecords = visitRecordRepository.findAllByUserIdAndDate(sessionUserId, date);
+        } else if (year != null && month != null) {
+            LocalDate start = LocalDate.of(year, month, 1);
+            LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+            visitRecords = visitRecordRepository.findAllByUserIdAndMonth(sessionUserId, start, end);
+        } else {
+            throw new IllegalArgumentException("날짜 또는 년월 정보가 필요합니다.");
+        }
+
+        return visitRecords.stream()
+                .map(VisitRecordResponse.ListDTO::new)
+                .toList();
+    }
+
+
+    public List<LocalDate> getHighlightDates(Integer sessionUserId, Integer year, Integer month) {
+        LocalDate start = LocalDate.of(year, month, 1);
+        LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+
+        Timestamp startTimestamp = Timestamp.valueOf(start.atStartOfDay());
+        Timestamp endTimestamp = Timestamp.valueOf(end.plusDays(1).atStartOfDay().minusSeconds(1));
+
+        List<Date> sqlDates = visitRecordRepository.findDistinctDatesByUserIdAndMonth(sessionUserId, startTimestamp, endTimestamp);
+
+
+        return sqlDates.stream()
+                .map(Date::toLocalDate)
+                .toList();
     }
 }
