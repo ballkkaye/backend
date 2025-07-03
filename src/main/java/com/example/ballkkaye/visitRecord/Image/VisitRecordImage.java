@@ -40,4 +40,12 @@ public class VisitRecordImage {
         this.deleteStatus = deleteStatus;
         this.createdAt = createdAt;
     }
+
+    public void updateVisitRecordId(Integer newId) {
+        this.visitRecordId = newId;
+    }
+
+    public void delete() {
+        this.deleteStatus = DeleteStatus.DELETED;
+    }
 }

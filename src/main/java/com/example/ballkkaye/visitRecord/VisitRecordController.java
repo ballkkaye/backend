@@ -7,9 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,6 +16,7 @@ public class VisitRecordController {
     private final UserRepository userRepository;
 
 
+    // 직관기록 등록
     @PostMapping("/s/api/visitRecords")
     public ResponseEntity<?> save(@Valid @RequestBody VisitRecordRequest.SaveDTO reqDTO, Errors errors) {
         //User sessionUser = (User) session.getAttribute("sessionUser");
@@ -29,4 +28,32 @@ public class VisitRecordController {
 
         return Resp.ok(respDTO);
     }
+
+
+    // 직관기록 수정
+    @PutMapping("/s/api/visitRecords/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Integer id, @Valid @RequestBody VisitRecordRequest.UpdateDTO reqDTO, Errors errors) {
+        //User sessionUser = (User) session.getAttribute("sessionUser");
+
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+
+        VisitRecordResponse.DTO respDTO = visitRecordService.update(reqDTO, id, sessionUser.getId());
+
+        return Resp.ok(respDTO);
+    }
+
+
+    // 직관기록 수정 확인
+    @GetMapping("/s/api/visitRecords/{id}")
+    public ResponseEntity<?> getOne(@PathVariable("id") Integer id) {
+        //User sessionUser = (User) session.getAttribute("sessionUser");
+
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+
+        VisitRecordResponse.DTO respDTO = visitRecordService.getOne(id, sessionUser.getId());
+        return Resp.ok(respDTO);
+    }
+
 }
