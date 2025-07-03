@@ -24,8 +24,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // OAuth2 클라이언트 핵심
-    implementation 'org.springframework.boot:spring-boot-starter-web' // 웹 개발을 위한 기본 스타터
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.jsoup:jsoup:1.20.1'
     implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
     implementation 'com.google.code.gson:gson:2.13.1'
