@@ -32,12 +32,12 @@ public class ChatRoomUserRepository {
         }
     }
 
-    public Long countByChatRoomId(Integer chatRoomId) {
+    public Integer countByChatRoomId(Integer chatRoomId) {
         return em.createQuery("""
                         SELECT COUNT(cru) FROM ChatRoomUser cru
                         WHERE cru.chatRoom.id = :chatRoomId AND cru.deleteStatus = 'NOT_DELETED'
                         """, Long.class)
                 .setParameter("chatRoomId", chatRoomId)
-                .getSingleResult();
+                .getSingleResult().intValue();
     }
 }

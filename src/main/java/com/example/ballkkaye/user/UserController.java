@@ -1,5 +1,6 @@
 package com.example.ballkkaye.user;
 
+import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye._core.util.Resp;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -51,5 +52,14 @@ public class UserController {
         var sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = userService.getUser(sessionUser);
         return Resp.ok(respDTO);
+    }
+
+    private final UserRepository userRepository;
+
+    @GetMapping("/token")
+    public ResponseEntity<?> token() {
+        User userPS = userRepository.findById(1).orElse(null);
+        String newAccess = JwtUtil.create(userPS);
+        return Resp.ok(newAccess);
     }
 }
