@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -95,35 +93,6 @@ public class UserService {
         userPS.updateRefreshToken(myRefreshToken);
 
         return new UserResponse.LoginDTO(userPS, myAccessToken, myRefreshToken);
-    }
-
-    @Transactional
-    public Map<String, String> reissue(String refreshToken) {
-        if (refreshToken == null || !refreshToken.startsWith("Bearer ")) {
-            throw new RuntimeException("RefreshToken이 올바르지 않습니다");
-        }
-        refreshToken = refreshToken.replace("Bearer ", "");
-        User user = JwtUtil.verify(refreshToken);
-
-        User userPS = userRepository.findById(user.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
-
-        if (!refreshToken.equals(userPS.getRefreshToken())) {
-            throw new RuntimeException("RefreshToken이 일치하지 않습니다");
-        }
-
-        // 새 토큰들 발급
-        String newAccess = JwtUtil.create(user);
-        String newRefresh = JwtUtil.createRefresh(user);
-
-        // DB 저장
-        user.updateRefreshToken(newRefresh);
-        userRepository.save(user);
-
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("accessToken", newAccess);
-        tokens.put("refreshToken", newRefresh);
-        return tokens;
     }
 
     @Transactional

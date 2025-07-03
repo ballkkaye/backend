@@ -1,6 +1,5 @@
 package com.example.ballkkaye.user;
 
-import com.example.ballkkaye._core.util.Resp;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +16,6 @@ public class UserController {
     public ResponseEntity<?> naverOauthLogin(@RequestBody @Valid UserRequest.LoginDTO reqDTO) {
         var userInfo = userService.naverOauthLogin(reqDTO.getAccessToken());
         return ResponseEntity.ok(userInfo);
-    }
-
-    @PostMapping("/oauth/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader("Authorization") String refreshToken) {
-        var resp = userService.reissue(refreshToken);
-
-        return Resp.ok(resp);
     }
 
     @PutMapping("/s/myteam")
