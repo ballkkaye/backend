@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
@@ -31,7 +32,7 @@ public class Match {
     @Column
     private String content;
 
-    @Column
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
     @CreationTimestamp
@@ -44,5 +45,11 @@ public class Match {
         this.chatRoom = chatRoom;
         this.title = title;
         this.content = content;
+    }
+
+    public void update(ChatRoom chatRoomPS, String title, String content) {
+        this.chatRoom = chatRoomPS == null ? this.chatRoom : chatRoomPS;
+        this.title = title == null ? this.title : title;
+        this.content = content == null ? this.content : content;
     }
 }

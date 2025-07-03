@@ -31,4 +31,29 @@ public class MatchRequest {
             this.isSameTeam = isSameTeam;
         }
     }
+
+    @Data
+    public static class UpdateDTO {
+        private String title;
+        private String content;
+        private Integer gameId;
+        private Integer teamId;
+        private Boolean isSameTeam;
+        private Integer maxParticipants;
+        private Gender preferredGender;
+        private Age preferredAge;
+        private Region preferredRegion;
+
+        public UpdateDTO(String title, String content, Integer gameId, Integer teamId, Boolean isSameTeam, Integer maxParticipants, Gender preferredGender, Age preferredAge, Region preferredRegion) {
+            this.title = title;
+            this.content = content;
+            this.gameId = gameId;
+            this.teamId = teamId;
+            this.isSameTeam = isSameTeam;
+            this.maxParticipants = maxParticipants;
+            this.preferredGender = preferredGender;
+            this.preferredAge = preferredAge;
+            this.preferredRegion = preferredRegion;
+        }
+    }
 }
