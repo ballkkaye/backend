@@ -40,9 +40,38 @@ public class MatchLikeService {
 
         // 저장
         matchLikeRepository.save(matchLike);
+
         Integer likeCount = matchLikeRepository.totalCount(matchPS.getId());
 
         MatchLikeResponse.SaveDTO respDTO = new MatchLikeResponse.SaveDTO(matchLike.getId(), likeCount);
+        return respDTO;
+    }
+
+    // 좋아요 삭제
+    @Transactional
+    public MatchLikeResponse.DeleteDTO delete(Integer likeId, User sessionUser) {
+        // 1. user 조회
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
+        // 2. match/like 조회
+        MatchLike matchLikePS = matchLikeRepository.findById(likeId)
+                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+
+        // 3. 주인인지 확인
+        if (matchLikePS.getUser().getId() != userPS.getId()) {
+            throw new RuntimeException("해당 기능에 대한 권한이 없습니다.");
+        }
+
+        // 4. 좋아요 삭제
+        matchLikeRepository.deleteById(matchLikePS.getId());
+
+        // 5. 좋아요 갯수 반환
+        Integer matchLikeCount = matchLikeRepository.totalCount(matchLikePS.getId());
+
+        // 6. DTO에 옮기기
+        MatchLikeResponse.DeleteDTO respDTO = new MatchLikeResponse.DeleteDTO(matchLikeCount);
+
         return respDTO;
     }
 }

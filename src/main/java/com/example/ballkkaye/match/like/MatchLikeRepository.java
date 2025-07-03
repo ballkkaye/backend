@@ -2,6 +2,7 @@ package com.example.ballkkaye.match.like;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +30,7 @@ public class MatchLikeRepository {
     }
 
     public void save(MatchLike matchLike) {
-        em.merge(matchLike);
+        em.persist(matchLike);
     }
 
     public Integer totalCount(Integer matchId) {
@@ -37,5 +38,16 @@ public class MatchLikeRepository {
                         "SELECT COUNT(mtl) FROM MatchLike mtl WHERE mtl.match.id = :matchId", Long.class)
                 .setParameter("matchId", matchId)
                 .getSingleResult().intValue();
+    }
+
+    public Optional<MatchLike> findById(Integer likeId) {
+        MatchLike matchLike = em.find(MatchLike.class, likeId);
+        return Optional.ofNullable(matchLike);
+    }
+
+    public void deleteById(Integer id) {
+        Query query = em.createQuery("delete from MatchLike ml where ml.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }
