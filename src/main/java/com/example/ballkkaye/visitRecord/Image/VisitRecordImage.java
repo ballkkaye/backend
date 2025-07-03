@@ -33,7 +33,6 @@ public class VisitRecordImage {
 
 
     @Builder
-
     public VisitRecordImage(Integer id, Integer visitRecordId, String imageUrl, DeleteStatus deleteStatus, Timestamp createdAt) {
         this.id = id;
         this.visitRecordId = visitRecordId;
