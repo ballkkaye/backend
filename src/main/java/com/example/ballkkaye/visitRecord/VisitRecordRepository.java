@@ -8,4 +8,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class VisitRecordRepository {
     private final EntityManager em;
+
+
+    // 직관기록 저장
+    public VisitRecord save(VisitRecord visitRecord) {
+        em.persist(visitRecord);
+        return visitRecord;
+    }
 }
