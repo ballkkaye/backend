@@ -127,6 +127,7 @@ public class UserService {
         return respDTO;
     }
 
+    @Transactional
     public Object update(UserRequest.UpdateDTO reqDTO, User sessionUser) {
         if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
             throw new RuntimeException("이미 존재하는 닉네임");
