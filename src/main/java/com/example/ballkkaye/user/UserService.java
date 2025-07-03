@@ -128,6 +128,7 @@ public class UserService {
         return respDTO;
     }
 
+    // 유저 정보 수정
     @Transactional
     public Object update(UserRequest.UpdateDTO reqDTO, User sessionUser) {
         User userPS = userRepository.findById(sessionUser.getId())
@@ -146,6 +147,15 @@ public class UserService {
 
 
         userPS.updateUserInfo(teamPS, reqDTO.getNickname().trim(), profileUrl);
+        UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
+        return respDTO;
+    }
+
+    // 유저 정보 조회
+    public Object getUser(User sessionUser) {
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
         UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
         return respDTO;
     }
