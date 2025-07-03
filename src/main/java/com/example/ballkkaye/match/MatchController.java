@@ -36,4 +36,12 @@ public class MatchController {
         var respDTO = matchService.getMatches(sessionUser, page, gender, age, teamId);
         return Resp.ok(respDTO);
     }
+
+    // 매칭 글 상세
+    @GetMapping("/s/api/matches/{id}")
+    public ResponseEntity<?> getDetail(@PathVariable("id") Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        var respDTO = matchService.getDetail(id, sessionUser);
+        return Resp.ok(respDTO);
+    }
 }
