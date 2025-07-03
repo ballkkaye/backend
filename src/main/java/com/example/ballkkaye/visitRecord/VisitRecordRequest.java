@@ -30,4 +30,11 @@ public class VisitRecordRequest {
         }
     }
 
+    @Data
+    public static class UpdateDTO {
+        private Result result;
+        private String content;
+        private String imageString;
+    }
+
 }
