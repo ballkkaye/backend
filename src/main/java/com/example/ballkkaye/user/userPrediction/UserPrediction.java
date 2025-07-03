@@ -29,7 +29,7 @@ public class UserPrediction {
     @JoinColumn(name = "game_id")
     private TodayGame game;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "team_id")
     private Team userChoiceTeam;
 
