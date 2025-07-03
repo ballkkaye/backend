@@ -1,5 +1,6 @@
 package com.example.ballkkaye.user;
 
+import com.example.ballkkaye._core.util.Base64Util;
 import com.example.ballkkaye._core.util.GenerateNickname;
 import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye.common.enums.Gender;
@@ -109,7 +110,7 @@ public class UserService {
             throw new RuntimeException("이미 존재하는 닉네임");
         }
         // updateNicknameAndTeam 함수 호출해서 응원팀, 닉네임 업데이트
-        userPS.updateNicknameAndTeam(teamPS, reqDTO.getNickname().trim());
+        userPS.additionalUserInfo(teamPS, reqDTO.getNickname().trim());
 
         UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
         return respDTO;
@@ -127,18 +128,34 @@ public class UserService {
         return respDTO;
     }
 
+    // 유저 정보 수정
     @Transactional
     public Object update(UserRequest.UpdateDTO reqDTO, User sessionUser) {
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
         if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
             throw new RuntimeException("이미 존재하는 닉네임");
         }
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
                 .orElseThrow(() -> new RuntimeException("해당 팀을 찾을 수 없습니다"));
 
+        String profileUrl = null;
+        if (reqDTO.getProfileImg() != null) {
+            profileUrl = Base64Util.saveBase64Image(reqDTO.getProfileImg());
+        }
+
+
+        userPS.updateUserInfo(teamPS, reqDTO.getNickname().trim(), profileUrl);
+        UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
+        return respDTO;
+    }
+
+    // 유저 정보 조회
+    public Object getUser(User sessionUser) {
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
 
-        userPS.updateNicknameAndTeam(teamPS, reqDTO.getNickname().trim());
         UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
         return respDTO;
     }

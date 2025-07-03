@@ -85,8 +85,14 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public void updateNicknameAndTeam(Team team, String nickname) {
+    public void additionalUserInfo(Team team, String nickname) {
         this.nickname = nickname == null ? this.nickname : nickname;
         this.team = team == null ? this.team : team;
+    }
+
+    public void updateUserInfo(Team team, String nickname, String profileUrl) {
+        this.nickname = nickname == null ? this.nickname : nickname;
+        this.team = team == null ? this.team : team;
+        this.profileUrl = profileUrl == null ? this.profileUrl : profileUrl;
     }
 }

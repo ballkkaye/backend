@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.UUID;
 
 public class Base64Util {
     public static String getMimeType(String base64) {
@@ -74,5 +75,28 @@ public class Base64Util {
         } catch (IOException e) {
             throw new RuntimeException("upload 폴더에서 이미지 읽기 실패: " + filenameInUpload, e);
         }
+    }
+
+    public static String saveBase64Image(String base64) {
+        byte[] imgBytes = decodeAsBytes(base64);
+        String mimeType = getMimeType(base64);
+
+        String extension = switch (mimeType) {
+            case "image/png" -> ".png";
+            case "image/jpeg" -> ".jpg";
+            default -> throw new IllegalArgumentException("지원하지 않는 이미지 타입: " + mimeType);
+        };
+
+        String filename = UUID.randomUUID().toString() + extension;
+        String uploadDir = System.getProperty("user.dir") + "/upload/";
+        Path path = Paths.get(uploadDir + filename);
+
+        try {
+            Files.write(path, imgBytes);
+        } catch (IOException e) {
+            throw new RuntimeException("이미지 저장 실패", e);
+        }
+
+        return "/upload/" + filename;
     }
 }

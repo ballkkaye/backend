@@ -56,7 +56,6 @@ public class ImageUtil {
         return imageUrls;
     }
 
-
     // 직관기록 이미지 디코딩
     public static String saveBase64VisitImage(String base64Image) {
         if (base64Image == null || base64Image.isBlank()) {
