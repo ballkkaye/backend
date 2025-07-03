@@ -1,6 +1,5 @@
 package com.example.ballkkaye.match.like;
 
-import com.example.ballkkaye.board.like.BoardLikeResponse;
 import com.example.ballkkaye.match.Match;
 import com.example.ballkkaye.match.MatchRepository;
 import com.example.ballkkaye.user.User;
@@ -64,13 +63,13 @@ public class MatchLikeService {
         }
 
         // 4. 좋아요 삭제
-        boardLikeRepository.deleteById(boardLikePS.getId());
+        matchLikeRepository.deleteById(matchLikePS.getId());
 
         // 5. 좋아요 갯수 반환
-        Integer boardLikeCount = boardLikeRepository.totalCount(boardLikePS.getId());
+        Integer matchLikeCount = matchLikeRepository.totalCount(matchLikePS.getId());
 
         // 6. DTO에 옮기기
-        BoardLikeResponse.DeleteDTO respDTO = new BoardLikeResponse.DeleteDTO(boardLikeCount);
+        MatchLikeResponse.DeleteDTO respDTO = new MatchLikeResponse.DeleteDTO(matchLikeCount);
 
         return respDTO;
     }

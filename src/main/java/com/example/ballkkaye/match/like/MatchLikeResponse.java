@@ -21,9 +21,9 @@ public class MatchLikeResponse {
         private Integer likeCount;
         private Boolean isLiked;
 
-        public DeleteDTO(Integer likeCount, Boolean isLiked) {
+        public DeleteDTO(Integer likeCount) {
             this.likeCount = likeCount;
-            this.isLiked = isLiked;
+            this.isLiked = false;
         }
     }
 }
