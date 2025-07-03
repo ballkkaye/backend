@@ -1,6 +1,8 @@
 package com.example.ballkkaye.visitRecord.Image;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,6 +24,21 @@ public class VisitRecordImage {
     @Column(nullable = false)
     private String imageUrl;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DeleteStatus deleteStatus;
+
     @CreationTimestamp
     private Timestamp createdAt;
+
+
+    @Builder
+
+    public VisitRecordImage(Integer id, Integer visitRecordId, String imageUrl, DeleteStatus deleteStatus, Timestamp createdAt) {
+        this.id = id;
+        this.visitRecordId = visitRecordId;
+        this.imageUrl = imageUrl;
+        this.deleteStatus = deleteStatus;
+        this.createdAt = createdAt;
+    }
 }
