@@ -39,9 +39,8 @@ public class UserResponse {
         private String providerType;
         private String userRole;
         private String accessToken;
-        private String refreshToken;
 
-        public LoginDTO(User user, String accessToken, String refreshToken) {
+        public LoginDTO(User user, String accessToken) {
             this.username = user.getUsername();
             this.name = user.getName();
             this.nickname = user.getNickname();
@@ -54,7 +53,37 @@ public class UserResponse {
             this.providerType = user.getProviderType().toString();
             this.userRole = user.getUserRole().toString();
             this.accessToken = accessToken;
-            this.refreshToken = refreshToken;
+        }
+    }
+
+    @Data
+    public static class myTeamDTO {
+        private String username;
+        private String name;
+        private String nickname;
+        private Integer teamId;
+        private String phoneNumber;
+        private String email;
+        private String birthDate;
+        private String gender;
+        private String profileUrl;
+        private String providerType;
+        private String userRole;
+        private String accessToken;
+
+        public myTeamDTO(User user, String accessToken) {
+            this.username = user.getUsername();
+            this.name = user.getName();
+            this.nickname = user.getNickname();
+            this.teamId = user.getTeam() == null ? null : user.getTeam().getId();
+            this.phoneNumber = user.getPhoneNumber();
+            this.email = user.getEmail();
+            this.birthDate = user.getBirthDate().toString();
+            this.gender = user.getGender().toString();
+            this.profileUrl = user.getProfileUrl();
+            this.providerType = user.getProviderType().toString();
+            this.userRole = user.getUserRole().toString();
+            this.accessToken = accessToken;
         }
     }
 }

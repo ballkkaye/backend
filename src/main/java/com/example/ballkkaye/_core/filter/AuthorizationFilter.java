@@ -14,60 +14,38 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AuthorizationFilter implements Filter {
-
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
-            throws IOException, ServletException {
-
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
         String accessToken = request.getHeader("Authorization");
-        String refreshToken = request.getHeader("RefreshToken");
 
         try {
-            // 1. accessToken null 또는 형식 오류
-            if (accessToken == null || !accessToken.startsWith("Bearer ")) {
-                throw new RuntimeException("올바른 AccessToken이 필요합니다");
-            }
+            if (accessToken == null || accessToken.isBlank()) throw new RuntimeException("토큰을 전달해주세요");
+            if (!accessToken.startsWith("Bearer ")) throw new RuntimeException("유효하지 않은 토큰입니다.");
 
             accessToken = accessToken.replace("Bearer ", "");
 
-            // 2. accessToken 검증 시도
+
             User user = JwtUtil.verify(accessToken);
 
-            // 3. 세션 저장 후 통과
+            // 토큰을 다시 검증하기 귀찮아서, 임시로 세션에 넣어둔거다.
             HttpSession session = request.getSession();
             session.setAttribute("sessionUser", user);
+
             chain.doFilter(request, response);
-        } catch (TokenExpiredException e) {
-            // 4. accessToken 만료 → refreshToken 검증
-            if (refreshToken == null || !refreshToken.startsWith("Bearer ")) {
-                sendLoginResponse(response);
-                return;
-            }
-
-            try {
-                refreshToken = refreshToken.replace("Bearer ", "");
-                User user = JwtUtil.verify(refreshToken);
-
-                // 5. 재발급
-                String newAccessToken = JwtUtil.create(user);
-                response.setHeader("Authorization", "Bearer " + newAccessToken);
-
-                // 6. 세션 저장
-                HttpSession session = request.getSession();
-                session.setAttribute("sessionUser", user);
-                chain.doFilter(request, response);
-            } catch (TokenExpiredException | SignatureVerificationException | JWTDecodeException ex) {
-                sendLoginResponse(response);
-            }
-        } catch (RuntimeException e) {
-            exResponse(response, "토큰 검증 실패: " + e.getMessage());
+        } catch (TokenExpiredException e1) {
+            e1.printStackTrace();
+            exResponse(response, "토큰이 만료되었습니다");
+        } catch (JWTDecodeException | SignatureVerificationException e2) {
+            e2.printStackTrace();
+            exResponse(response, "토큰 검증에 실패했어요");
+        } catch (RuntimeException e3) {
+            e3.printStackTrace();
+            exResponse(response, e3.getMessage());
         }
     }
 
@@ -75,20 +53,9 @@ public class AuthorizationFilter implements Filter {
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(401);
         PrintWriter out = response.getWriter();
+
         Resp<?> resp = Resp.fail(401, msg);
-        out.println(new ObjectMapper().writeValueAsString(resp));
-    }
-
-    private void sendLoginResponse(HttpServletResponse response) throws IOException {
-        response.setContentType("application/json;charset=utf-8");
-        response.setStatus(401);
-        PrintWriter out = response.getWriter();
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("code", 401);
-        body.put("msg", "로그인이 필요합니다");
-        body.put("redirectUrl", "/login");
-
-        out.println(new ObjectMapper().writeValueAsString(body));
+        String responseBody = new ObjectMapper().writeValueAsString(resp);
+        out.println(responseBody);
     }
 }

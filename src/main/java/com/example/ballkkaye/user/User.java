@@ -62,9 +62,6 @@ public class User {
     @Column(nullable = false)
     private UserRole userRole; //
 
-    @Column(length = 512)
-    private String refreshToken;
-
     @CreationTimestamp
     private Timestamp createdAt; //
 
@@ -86,10 +83,6 @@ public class User {
         this.providerType = providerType;
         this.userRole = userRole;
         this.createdAt = createdAt;
-    }
-
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
     }
 
     public void updateNicknameAndTeam(Team team, String nickname) {

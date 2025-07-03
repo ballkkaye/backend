@@ -19,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -80,19 +83,15 @@ public class UserService {
                     .providerType(ProviderType.NAVER)
                     .userRole(UserRole.USER)
                     .build();
-            String myRefreshToken = JwtUtil.createRefresh(user);
             String myAccessToken = JwtUtil.create(user);
-            user.updateRefreshToken(myRefreshToken);
             userRepository.save(user);
 
-            return new UserResponse.LoginDTO(user, myAccessToken, myRefreshToken);
+            return new UserResponse.LoginDTO(user, myAccessToken);
         }
         // 2. 로그인 처리 (토큰 발급 및 저장)
-        String myRefreshToken = JwtUtil.createRefresh(userPS);
         String myAccessToken = JwtUtil.create(userPS);
-        userPS.updateRefreshToken(myRefreshToken);
 
-        return new UserResponse.LoginDTO(userPS, myAccessToken, myRefreshToken);
+        return new UserResponse.LoginDTO(userPS, myAccessToken);
     }
 
     @Transactional
@@ -104,12 +103,24 @@ public class UserService {
         // req로 들어온 팀이 존재하는지 검사
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
                 .orElseThrow(() -> new RuntimeException("해당 팀을 찾을 수 없습니다"));
-        // TODO 닉네임 중복 검사 이거 따로 api로 빼야될 듯 그래야 중복체크하지 여기도 있어도 괜찮을 듯
+
         // 닉네임 중복 검사
         if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
             throw new RuntimeException("이미 존재하는 닉네임");
         }
         // updateNicknameAndTeam 함수 호출해서 응원팀, 닉네임 업데이트
         userPS.updateNicknameAndTeam(teamPS, reqDTO.getNickname().trim());
+    }
+
+    public Map<String, Object> checkUsernameAvailable(String nickname) {
+        Optional<User> userOP = userRepository.findByNickname(nickname);
+        Map<String, Object> respDTO = new HashMap<>();
+
+        if (userOP.isPresent()) {
+            respDTO.put("available", false);
+        } else {
+            respDTO.put("available", true);
+        }
+        return respDTO;
     }
 }
