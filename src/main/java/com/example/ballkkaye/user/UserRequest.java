@@ -27,10 +27,12 @@ public class UserRequest {
     public static class UpdateDTO {
         private String nickname;
         private Integer teamId;
+        private String ProfileImg;
 
-        public UpdateDTO(String nickname, Integer teamId) {
+        public UpdateDTO(String nickname, Integer teamId, String profileImg) {
             this.nickname = nickname;
             this.teamId = teamId;
+            ProfileImg = profileImg;
         }
     }
 }

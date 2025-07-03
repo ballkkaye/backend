@@ -44,4 +44,12 @@ public class UserController {
         var respDTO = userService.update(reqDTO, sessionUser);
         return Resp.ok(respDTO);
     }
+
+    // 유저 정보
+    @GetMapping("/s/api/user")
+    public ResponseEntity<?> getUser() {
+        var sessionUser = (User) session.getAttribute("sessionUser");
+        var respDTO = userService.getUser(sessionUser);
+        return Resp.ok(respDTO);
+    }
 }

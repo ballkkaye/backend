@@ -55,5 +55,11 @@ public class ImageUtil {
 
         return imageUrls;
     }
+
+    public static List<BoardImageResponse.ItemDTO> saveBase64Image(String base64Image, Board board, BoardImageRepository boardImageRepository) {
+
+        return null;
+    }
+
 }
 
