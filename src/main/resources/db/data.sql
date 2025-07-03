@@ -97,14 +97,23 @@ VALUES (1, NULL, 'LG 트윈스', 'https://upload.wikimedia.org/wikipedia/ko/4/4f
 
 -- 5.user_tb
 INSERT INTO user_tb
-(password, name, nickname, team_id, email, birth_date, gender, profile_url, user_role)
-VALUES ('1234', '쌀', 'ssar', 1, 'ssar@nate.com', '1999-09-09', 'MALE', '/img/profile.png', 'USER'),
-       ('1234', '코스', 'cos', 2, 'cos@nate.com', '2000-01-01', 'FEMALE', '/img/profile.png', 'USER'),
-       ('1234', '러브', 'love', 3, 'love@nate.com', '1998-08-08', 'MALE', '/img/profile.png', 'USER'),
-       ('1234', '하하', 'haha', NULL, 'haha@nate.com', '1997-07-07', 'FEMALE', '/img/profile.png', 'ADMIN'),
-       ('1234', '백하림', 'harim', 4, 'harim@example.com', '1995-05-05', 'MALE', '/img/profile.png', 'USER'),
-       ('1234', '김정원', 'jungwon', 5, 'jungwon@example.com', '1996-06-06', 'MALE', '/img/profile.png', 'USER'),
-       ('1234', '김미숙', 'misook', 6, 'misook@example.com', '1994-04-04', 'FEMALE', '/img/profile.png', 'USER');
+(username, password, name, nickname, team_id, phone_number, email, birth_date, gender, profile_url, provider_type,
+ user_role)
+VALUES ('ssar123', '1234', '쌀', 'ssar', 1, '01011112222', 'ssar@nate.com', '1999-09-09', 'MALE', '/img/profile.png',
+        'BALLKKAYE', 'USER'),
+       ('cos123', '1234', '코스', 'cos', 2, '01022223333', 'cos@nate.com', '2000-01-01', 'FEMALE', '/img/profile.png',
+        'BALLKKAYE', 'USER'),
+       ('love123', '1234', '러브', 'love', 3, '01033334444', 'love@nate.com', '1998-08-08', 'MALE', '/img/profile.png',
+        'BALLKKAYE', 'USER'),
+       ('haha123', '1234', '하하', 'haha', NULL, '01044445555', 'haha@nate.com', '1997-07-07', 'FEMALE',
+        '/img/profile.png', 'BALLKKAYE', 'ADMIN'),
+       ('harim123', '1234', '백하림', 'harim', 4, '01055556666', 'harim@example.com', '1995-05-05', 'MALE',
+        '/img/profile.png', 'BALLKKAYE', 'USER'),
+       ('jungwon123', '1234', '김정원', 'jungwon', 5, '01066667777', 'jungwon@example.com', '1996-06-06', 'MALE',
+        '/img/profile.png', 'BALLKKAYE', 'USER'),
+       ('misook123', '1234', '김미숙', 'misook', 6, '01077778888', 'misook@example.com', '1994-04-04', 'FEMALE',
+        '/img/profile.png', 'BALLKKAYE', 'USER');
+
 
 -- 6.game_tb
 INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
