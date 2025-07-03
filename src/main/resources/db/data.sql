@@ -126,7 +126,12 @@ VALUES (423, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0
        (424, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
        (425, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
        (426, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
-       (427, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL);
+       (427, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL),
+       (428, TIMESTAMP '2025-07-03 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (429, TIMESTAMP '2025-07-03 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (430, TIMESTAMP '2025-07-03 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (431, TIMESTAMP '2025-07-03 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
+       (432, TIMESTAMP '2025-07-03 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL);
 
 
 -- 7. today_game_tb
@@ -138,23 +143,23 @@ INSERT INTO today_game_tb (id, game_time, stadium_id, broadcast_channel, game_st
                            total_prediction_score, game_id)
 VALUES
 -- 두산 vs SSG
-(1, TIMESTAMP '2025-07-02 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4,
+(1, TIMESTAMP '2025-07-03 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4,
  52.0, 48.0, 4.2, 3.9, 3, 5, 8.1, 423),
 
 -- 삼성 vs 한화
-(2, TIMESTAMP '2025-07-02 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8,
+(2, TIMESTAMP '2025-07-03 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8,
  49.2, 50.8, 3.7, 3.8, 3, 5, 7.5, 424),
 
 -- NC vs 롯데
-(3, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7,
+(3, TIMESTAMP '2025-07-03 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7,
  55.6, 44.4, 4.5, 3.6, 3, 5, 8.1, 425),
 
 -- KT vs LG
-(4, TIMESTAMP '2025-07-02 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1,
+(4, TIMESTAMP '2025-07-03 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1,
  50.0, 50.0, 3.8, 3.8, 5, 5, 7.6, 426),
 
 -- 키움 vs KIA
-(5, TIMESTAMP '2025-07-02 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5,
+(5, TIMESTAMP '2025-07-03 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5,
  47.6, 52.4, 3.5, 3.9, 2, 0, 7.4, 427);
 ;
 
@@ -217,6 +222,26 @@ VALUES (423, 1, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/202
        (427, 9, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/76225.png', 7.53, 11, 0, 1.88,
         '없음'),
        (427, 10, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/64350.png', 4.88, 15, 8, 1.51,
+        '6승 7패'),
+       (428, 1, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/51867.png', 4.58, 27, 0, 1.53,
+        '2승 3패'),
+       (428, 2, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/55257.png', 4.86, 14, 8, 1.38,
+        '5승 7패'),
+       (429, 3, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/52701.png', 4.09, 11, 4, 1.2,
+        '5승 2패'),
+       (429, 4, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/55460.png', NULL, NULL, NULL, NULL,
+        '없음'),
+       (430, 5, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/55532.png', 2.37, 5, 4, 1.02,
+        '4승 1패'),
+       (430, 6, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/66920.png', 5.34, 17, 0, 1.71,
+        '2승 2패'),
+       (431, 7, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/61101.png', 2.61, 14, 9, 1.18,
+        '8승 2패'),
+       (431, 8, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/50030.png', 3.13, 13, 10, 1.18,
+        '5승 2패'),
+       (432, 9, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/76225.png', 7.53, 11, 0, 1.88,
+        '없음'),
+       (432, 10, 'https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/kbo/2025/64350.png', 4.88, 15, 8, 1.51,
         '6승 7패');
 
 
@@ -249,16 +274,41 @@ VALUES (1, 1, 78, 45, 32, 1, 0.584, 0, '5승0무5패', '1패', 0.950, 720, 3.50)
        (10, 10, 82, 25, 54, 3, 0.316, 21, '5승1무4패', '3승', 0.790, 540, 4.30);
 
 -- 2. today_team_record_tb에 데이터 삽입
-INSERT INTO today_team_record_tb (team_id, team_rank, total_game, win_game, lose_game, tie_game, win_rate, gap,
-                                  recent_ten_game,
-                                  streak, ops, r, era)
-VALUES (1, 1, 78, 45, 32, 1, 0.584, 0, '5승0무5패', '1패', 0.950, 720, 3.50),
-       (2, 2, 79, 44, 33, 2, 0.571, 1, '4승0무6패', '2패', 0.930, 710, 3.20),
-       (3, 3, 80, 43, 34, 3, 0.558, 3.5, '6승0무4패', '1승', 0.920, 690, 3.40),
-       (4, 4, 79, 41, 35, 3, 0.539, 5, '6승2무2패', '2승', 0.880, 680, 3.60),
-       (5, 5, 78, 39, 36, 3, 0.520, 5, '5승1무4패', '1패', 0.870, 650, 3.70),
-       (6, 6, 80, 40, 37, 3, 0.519, 6.5, '4승0무6패', '1패', 0.850, 630, 3.80),
-       (7, 7, 79, 39, 39, 3, 0.500, 6, '3승0무7패', '4패', 0.840, 620, 3.90),
-       (8, 8, 76, 35, 37, 4, 0.486, 7.5, '4승2무4패', '1패', 0.830, 600, 4.00),
-       (9, 9, 79, 31, 45, 3, 0.408, 13.5, '4승0무6패', '1승', 0.810, 570, 4.20),
-       (10, 10, 82, 25, 54, 3, 0.316, 21, '5승1무4패', '3승', 0.790, 540, 4.30);
+INSERT INTO today_team_record_tb (team_id, era, gap, win_game, lose_game, tie_game, total_game, win_rate, ops, r,
+                                  team_rank, created_at, recent_ten_game, streak)
+VALUES (8, 3.43, 0.0, 46, 33, 1, 80, 0.582, 0.754, 411, 1, NOW(), '4승0무6패', '1패'),
+       (1, 3.52, 1.0, 45, 34, 2, 81, 0.570, 0.753, 425, 2, NOW(), '4승0무6패', '1패'),
+       (7, 3.61, 2.0, 44, 35, 3, 82, 0.557, 0.758, 418, 3, NOW(), '6승0무4패', '1승'),
+       (5, 3.84, 3.5, 42, 36, 3, 81, 0.538, 0.739, 391, 4, NOW(), '5승2무3패', '1패'),
+       (4, 4.18, 5.0, 40, 37, 3, 80, 0.519, 0.710, 361, 5, NOW(), '5승1무4패', '1승'),
+       (10, 4.22, 5.0, 41, 38, 3, 82, 0.519, 0.732, 370, 6, NOW(), '5승0무5패', '1승'),
+       (6, 4.43, 6.5, 40, 40, 1, 81, 0.500, 0.692, 342, 7, NOW(), '2승0무8패', '1패'),
+       (9, 4.56, 7.5, 36, 38, 4, 78, 0.486, 0.703, 354, 8, NOW(), '6승0무4패', '1승'),
+       (2, 4.69, 13.5, 32, 46, 3, 81, 0.410, 0.683, 328, 9, NOW(), '5승0무5패', '1승'),
+       (3, 5.41, 21.0, 26, 55, 3, 84, 0.321, 0.653, 313, 10, NOW(), '5승1무4패', '1패');
+;
+
+-- 8. user_prediction_tb
+INSERT INTO user_prediction_tb (user_id, game_id, team_id, created_at, result)
+VALUES
+-- today_game_tb.id=1 (game_tb.id=423): 두산(홈) vs SSG(어웨이)
+(1, 1, 4, now(), 'CORRECT'),    -- USER_ID 1, today_game_tb.id 1, team_id 4
+(1, 1, 2, now(), 'INCORRECT'),  -- USER_ID 1, today_game_tb.id 1, team_id 2
+
+-- today_game_tb.id=2 (game_tb.id=424): 삼성(홈) vs 한화(어웨이)
+(2, 2, 8, now(), 'CORRECT'),    -- USER_ID 2, today_game_tb.id 2, team_id 8
+(2, 2, 6, now(), 'INCORRECT'),  -- USER_ID 2, today_game_tb.id 2, team_id 6
+
+-- today_game_tb.id=3 (today_game_tb.id=3, game_tb.id=425): NC(홈) vs 롯데(어웨이)
+(3, 3, 7, now(), 'CORRECT'),    -- USER_ID 3, today_game_tb.id 3, team_id 7
+
+-- today_game_tb.id=4 (today_game_tb.id=4, game_tb.id=426): KT(홈) vs LG(어웨이)
+-- 이전에는 'DRAW'였지만, PredictionStatus에 'DRAW'가 없다면 'CORRECT' 또는 'INCORRECT' 중 하나를 선택해야 합니다.
+-- USER_ID 4가 무승부 예측을 했다면, 실제 결과가 무승부일 때 'CORRECT'로 간주할 수 있습니다.
+(4, 4, null, now(), 'CORRECT'), -- USER_ID 4, today_game_tb.id 4, 무승부 예측 (team_id=null), 결과는 '정답'
+
+(1, 4, 1, now(), 'INCORRECT'),  -- USER_ID 1, today_game_tb.id 4, team_id 1
+
+-- today_game_tb.id=5 (today_game_tb.id=5, game_tb.id=427): 키움(홈) vs KIA(어웨이)
+(5, 5, 3, now(), 'CORRECT'),    -- USER_ID 5, today_game_tb.id 5, team_id 3
+(5, 5, 5, now(), 'INCORRECT'); -- USER_ID 5, today_game_tb.id 5, team_id 5
