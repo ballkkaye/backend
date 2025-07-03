@@ -15,4 +15,15 @@ public class MatchLikeResponse {
             this.isLiked = true;
         }
     }
+
+    @Data
+    public static class DeleteDTO {
+        private Integer likeCount;
+        private Boolean isLiked;
+
+        public DeleteDTO(Integer likeCount, Boolean isLiked) {
+            this.likeCount = likeCount;
+            this.isLiked = isLiked;
+        }
+    }
 }

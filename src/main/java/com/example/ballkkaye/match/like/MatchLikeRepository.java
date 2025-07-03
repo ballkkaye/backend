@@ -1,5 +1,6 @@
 package com.example.ballkkaye.match.like;
 
+import com.example.ballkkaye.board.like.BoardLike;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,10 @@ public class MatchLikeRepository {
                         "SELECT COUNT(mtl) FROM MatchLike mtl WHERE mtl.match.id = :matchId", Long.class)
                 .setParameter("matchId", matchId)
                 .getSingleResult().intValue();
+    }
+
+    public Optional<MatchLike> findById(Integer likeId) {
+        MatchLike matchLike = em.find(BoardLike.class, likeId);
+        return Optional.ofNullable(matchLike);
     }
 }
