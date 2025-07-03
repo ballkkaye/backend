@@ -287,28 +287,3 @@ VALUES (8, 3.43, 0.0, 46, 33, 1, 80, 0.582, 0.754, 411, 1, NOW(), '4승0무6패'
        (2, 4.69, 13.5, 32, 46, 3, 81, 0.410, 0.683, 328, 9, NOW(), '5승0무5패', '1승'),
        (3, 5.41, 21.0, 26, 55, 3, 84, 0.321, 0.653, 313, 10, NOW(), '5승1무4패', '1패');
 ;
-
--- 8. user_prediction_tb
-INSERT INTO user_prediction_tb (user_id, game_id, team_id, created_at, result)
-VALUES
--- today_game_tb.id=1 (game_tb.id=423): 두산(홈) vs SSG(어웨이)
-(1, 1, 4, now(), 'CORRECT'),    -- USER_ID 1, today_game_tb.id 1, team_id 4
-(1, 1, 2, now(), 'INCORRECT'),  -- USER_ID 1, today_game_tb.id 1, team_id 2
-
--- today_game_tb.id=2 (game_tb.id=424): 삼성(홈) vs 한화(어웨이)
-(2, 2, 8, now(), 'CORRECT'),    -- USER_ID 2, today_game_tb.id 2, team_id 8
-(2, 2, 6, now(), 'INCORRECT'),  -- USER_ID 2, today_game_tb.id 2, team_id 6
-
--- today_game_tb.id=3 (today_game_tb.id=3, game_tb.id=425): NC(홈) vs 롯데(어웨이)
-(3, 3, 7, now(), 'CORRECT'),    -- USER_ID 3, today_game_tb.id 3, team_id 7
-
--- today_game_tb.id=4 (today_game_tb.id=4, game_tb.id=426): KT(홈) vs LG(어웨이)
--- 이전에는 'DRAW'였지만, PredictionStatus에 'DRAW'가 없다면 'CORRECT' 또는 'INCORRECT' 중 하나를 선택해야 합니다.
--- USER_ID 4가 무승부 예측을 했다면, 실제 결과가 무승부일 때 'CORRECT'로 간주할 수 있습니다.
-(4, 4, null, now(), 'CORRECT'), -- USER_ID 4, today_game_tb.id 4, 무승부 예측 (team_id=null), 결과는 '정답'
-
-(1, 4, 1, now(), 'INCORRECT'),  -- USER_ID 1, today_game_tb.id 4, team_id 1
-
--- today_game_tb.id=5 (today_game_tb.id=5, game_tb.id=427): 키움(홈) vs KIA(어웨이)
-(5, 5, 3, now(), 'CORRECT'),    -- USER_ID 5, today_game_tb.id 5, team_id 3
-(5, 5, 5, now(), 'INCORRECT'); -- USER_ID 5, today_game_tb.id 5, team_id 5
