@@ -30,7 +30,7 @@ public class MatchLikeRepository {
     }
 
     public void save(MatchLike matchLike) {
-        em.merge(matchLike);
+        em.persist(matchLike);
     }
 
     public Integer totalCount(Integer matchId) {

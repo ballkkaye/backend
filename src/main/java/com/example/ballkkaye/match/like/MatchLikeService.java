@@ -40,6 +40,7 @@ public class MatchLikeService {
 
         // 저장
         matchLikeRepository.save(matchLike);
+
         Integer likeCount = matchLikeRepository.totalCount(matchPS.getId());
 
         MatchLikeResponse.SaveDTO respDTO = new MatchLikeResponse.SaveDTO(matchLike.getId(), likeCount);
