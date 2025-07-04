@@ -64,23 +64,22 @@ public class MatchResponse {
 
     @Data
     public static class Item {
-        private String gameTitle;
+        private String homeTeamName;
+        private String awayTeamName;
         private String title;
         private String gender;
         private String age;
-        private String region;
         private Boolean isSameTeam;
         private String participationInfo;
         private String relativeTime;
         private Integer matchId;
 
         public Item(Match match, String participationInfo, String relativeTime) {
-            this.gameTitle = match.getChatRoom().getGame().getHomeTeam().getTeamName() + " vs " + match.getChatRoom().getGame().getAwayTeam().getTeamName();
-            ;
+            this.homeTeamName = match.getChatRoom().getGame().getHomeTeam().getTeamName();
+            this.awayTeamName = match.getChatRoom().getGame().getAwayTeam().getTeamName();
             this.title = match.getTitle();
             this.gender = match.getChatRoom().getPreferredGender().getLabel();
             this.age = match.getChatRoom().getPreferredAge().getName();
-            this.region = match.getChatRoom().getPreferredRegion().getName();
             this.isSameTeam = match.getChatRoom().getIsSameTeam();
             this.participationInfo = participationInfo + "/" + match.getChatRoom().getMaxParticipants().toString();
             this.relativeTime = relativeTime;
@@ -90,7 +89,8 @@ public class MatchResponse {
 
     @Data
     public static class DetailDTO {
-        private String gameTitle;
+        private String homeTeamName;
+        private String awayTeamName;
         private String gameDate;
         private String stadiumName;
         private String userNickname;
@@ -101,7 +101,6 @@ public class MatchResponse {
         private String content;
         private String gender;
         private String age;
-        private String region;
         private Boolean isSameTeam;
         private String participationInfo;
         private Boolean isLike;
@@ -110,7 +109,8 @@ public class MatchResponse {
         private Integer chatRoomId;
 
         public DetailDTO(Match match, Boolean isOwner, String relativeTime, Integer likeCount, Boolean isLike, String countUser) {
-            this.gameTitle = match.getChatRoom().getGame().getHomeTeam().getTeamName() + " vs " + match.getChatRoom().getGame().getAwayTeam().getTeamName();
+            this.homeTeamName = match.getChatRoom().getGame().getHomeTeam().getTeamName();
+            this.awayTeamName = match.getChatRoom().getGame().getAwayTeam().getTeamName();
             this.gameDate = match.getChatRoom().getGame().getGameTime().toString();
             this.gameDate = match.getChatRoom().getGame().getGameTime()
                     .toLocalDateTime()
@@ -124,7 +124,6 @@ public class MatchResponse {
             this.content = match.getContent();
             this.gender = match.getChatRoom().getPreferredGender().getLabel();
             this.age = match.getChatRoom().getPreferredAge().getName();
-            this.region = match.getChatRoom().getPreferredRegion().getName();
             this.isSameTeam = match.getChatRoom().getIsSameTeam();
             this.participationInfo = countUser + "/" + match.getChatRoom().getMaxParticipants().toString();
             this.isLike = isLike;
@@ -147,7 +146,6 @@ public class MatchResponse {
         private String content;
         private String gender;
         private String age;
-        private String region;
         private Boolean isSameTeam;
         private String participationInfo;
         private Boolean isLike;
@@ -170,7 +168,6 @@ public class MatchResponse {
             this.content = match.getContent();
             this.gender = match.getChatRoom().getPreferredGender().getLabel();
             this.age = match.getChatRoom().getPreferredAge().getName();
-            this.region = match.getChatRoom().getPreferredRegion().getName();
             this.isSameTeam = match.getChatRoom().getIsSameTeam();
             this.participationInfo = countUser + "/" + match.getChatRoom().getMaxParticipants().toString();
             this.isLike = isLike;

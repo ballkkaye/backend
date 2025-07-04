@@ -3,7 +3,6 @@ package com.example.ballkkaye.match.chat.room;
 import com.example.ballkkaye.common.enums.Age;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.common.enums.Gender;
-import com.example.ballkkaye.common.enums.Region;
 import com.example.ballkkaye.game.Game;
 import com.example.ballkkaye.match.MatchRequest;
 import com.example.ballkkaye.team.Team;
@@ -40,9 +39,6 @@ public class ChatRoom {
     @Column
     private Age preferredAge;
 
-    @Column
-    private Region preferredRegion;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private DeleteStatus deleteStatus;
@@ -65,7 +61,6 @@ public class ChatRoom {
                     Integer maxParticipants,
                     Gender preferredGender,
                     Age preferredAge,
-                    Region preferredRegion,
                     DeleteStatus deleteStatus,
                     Boolean isSameTeam,
                     Timestamp lastDisconnectedAt) {
@@ -74,7 +69,6 @@ public class ChatRoom {
         this.maxParticipants = maxParticipants;
         this.preferredGender = preferredGender;
         this.preferredAge = preferredAge;
-        this.preferredRegion = preferredRegion;
         this.deleteStatus = deleteStatus;
         this.isSameTeam = isSameTeam;
         this.lastDisconnectedAt = lastDisconnectedAt;
@@ -86,7 +80,6 @@ public class ChatRoom {
         this.maxParticipants = reqDTO.getMaxParticipants() == null ? this.maxParticipants : reqDTO.getMaxParticipants();
         this.preferredGender = reqDTO.getPreferredGender() == null ? this.preferredGender : reqDTO.getPreferredGender();
         this.preferredAge = reqDTO.getPreferredAge() == null ? this.preferredAge : reqDTO.getPreferredAge();
-        this.preferredRegion = reqDTO.getPreferredRegion() == null ? this.preferredRegion : reqDTO.getPreferredRegion();
         this.isSameTeam = reqDTO.getIsSameTeam() == null ? this.isSameTeam : reqDTO.getIsSameTeam();
     }
 
