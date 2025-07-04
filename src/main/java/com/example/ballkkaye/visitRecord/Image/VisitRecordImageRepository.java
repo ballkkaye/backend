@@ -1,11 +1,12 @@
 package com.example.ballkkaye.visitRecord.Image;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
+import com.example.ballkkaye.visitRecord.VisitRecord;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
@@ -19,22 +20,12 @@ public class VisitRecordImageRepository {
         return visitRecordImage;
     }
 
-
-    // 직관기록 이미지 상태 조회 (NOT_DELETED 상태만)
-    public Optional<VisitRecordImage> findByVisitRecordId(Integer visitRecordId) {
-        try {
-            VisitRecordImage result = em.createQuery("""
-                            SELECT v FROM VisitRecordImage v
-                            WHERE v.visitRecordId = :visitRecordId
-                              AND v.deleteStatus = com.example.ballkkaye.common.enums.DeleteStatus.NOT_DELETED
-                            """, VisitRecordImage.class)
-                    .setParameter("visitRecordId", visitRecordId)
-                    .getSingleResult();
-            return Optional.of(result);
-        } catch (NoResultException e) {
-            return Optional.empty();
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+    public List<VisitRecordImage> findByVisitRecordIdAndDeleteStatus(VisitRecord visitRecordPS, DeleteStatus deleteStatus) {
+        return em.createQuery(
+                        "SELECT vri FROM VisitRecordImage vri WHERE vri.visitRecord = :visitRecord AND vri.deleteStatus = :deleteStatus",
+                        VisitRecordImage.class)
+                .setParameter("visitRecord", visitRecordPS)
+                .setParameter("deleteStatus", deleteStatus)
+                .getResultList();
     }
 }

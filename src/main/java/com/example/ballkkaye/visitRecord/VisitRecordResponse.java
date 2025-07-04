@@ -1,10 +1,10 @@
 package com.example.ballkkaye.visitRecord;
 
-import com.example.ballkkaye._core.util.Base64Util;
-import com.example.ballkkaye.visitRecord.Image.VisitRecordImage;
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import lombok.Data;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class VisitRecordResponse {
 
@@ -20,9 +20,9 @@ public class VisitRecordResponse {
         private String result;
         private String DeleteStatus;
         private String content;
-        private String imageString; // base64로 변환된 문자열
+        private List<ItemDTO> images; // base64로 변환된 문자열
 
-        public DTO(VisitRecord visitRecord, VisitRecordImage image) {
+        public DTO(VisitRecord visitRecord, List<ItemDTO> images) {
             this.id = visitRecord.getId();
             this.homeTeamName = visitRecord.getGame().getHomeTeam().getTeamName().split(" ")[0];
             this.awayTeamName = visitRecord.getGame().getAwayTeam().getTeamName().split(" ")[0];
@@ -36,23 +36,8 @@ public class VisitRecordResponse {
             this.result = visitRecord.getResult().getValue(); // "승", "패", "무"
             this.DeleteStatus = visitRecord.getDeleteStatus().getLabel(); // "정상", "삭제됨"
             this.content = visitRecord.getContent();
-            if (image != null) {
-                String imageUrl = image.getImageUrl();
-                String filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-
-                byte[] bytes = Base64Util.readImageAsByteArray("visit-record/" + filename);
-                String mimeType;
-                if (filename.endsWith(".jpg") || filename.endsWith(".jpeg")) mimeType = "image/jpeg";
-                else if (filename.endsWith(".png")) mimeType = "image/png";
-                else if (filename.endsWith(".gif")) mimeType = "image/gif";
-                else throw new IllegalArgumentException("지원하지 않는 이미지 확장자입니다: " + filename);
-
-                this.imageString = Base64Util.encodeAsString(bytes, mimeType);
-            } else {
-                this.imageString = null;
-            }
+            this.images = images;
         }
-
     }
 
     @Data
@@ -91,9 +76,9 @@ public class VisitRecordResponse {
         private String stadiumName;
         private String result;
         private String content;
-        private String imageString; // base64로 변환된 문자열
+        private List<ItemDTO> imageString; // base64로 변환된 문자열
 
-        public DetailDTO(VisitRecord visitRecord, VisitRecordImage image) {
+        public DetailDTO(VisitRecord visitRecord, List<ItemDTO> imageString) {
             this.id = visitRecord.getId();
             this.homeScore = visitRecord.getGame().getHomeResultScore();
             this.awayScore = visitRecord.getGame().getAwayResultScore();
@@ -106,21 +91,27 @@ public class VisitRecordResponse {
             this.stadiumName = visitRecord.getGame().getStadium().getStadiumName();
             this.result = visitRecord.getResult().getValue(); // "승", "패", "무"
             this.content = visitRecord.getContent();
-            if (image != null) {
-                String imageUrl = image.getImageUrl();
-                String filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+            this.imageString = imageString;
+        }
+    }
 
-                byte[] bytes = Base64Util.readImageAsByteArray("visit-record/" + filename);
-                String mimeType;
-                if (filename.endsWith(".jpg") || filename.endsWith(".jpeg")) mimeType = "image/jpeg";
-                else if (filename.endsWith(".png")) mimeType = "image/png";
-                else if (filename.endsWith(".gif")) mimeType = "image/gif";
-                else throw new IllegalArgumentException("지원하지 않는 이미지 확장자입니다: " + filename);
+    @Data
+    public static class ItemDTO {
+        private Integer id;
+        private String imageUrl;
 
-                this.imageString = Base64Util.encodeAsString(bytes, mimeType);
-            } else {
-                this.imageString = null;
-            }
+        public ItemDTO(Integer id, String imageUrl) {
+            this.id = id;
+            this.imageUrl = imageUrl;
+        }
+    }
+
+    @Data
+    public static class DeleteDTO {
+        private String deleteStatus;
+
+        public DeleteDTO() {
+            this.deleteStatus = DeleteStatus.DELETED.getLabel();
         }
     }
 }

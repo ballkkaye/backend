@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -51,11 +52,22 @@ public class VisitRecordService {
         visitRecordRepository.save(visitRecord);
 
         //  직관기록 이미지 저장
-        VisitRecordImage savedImage = null;
-        if (reqDTO.getImageString() != null && !reqDTO.getImageString().isBlank()) {
-            savedImage = visitRecordImageService.save(reqDTO.getImageString(), visitRecord.getId());
+        List<VisitRecordResponse.ItemDTO> imgs = new ArrayList<>();
+        for (String img : reqDTO.getImages()) {
+            VisitRecordImage visitRecordImage = new VisitRecordImage()
+                    .builder()
+                    .visitRecord(visitRecord)
+                    .imageUrl(img)
+                    .deleteStatus(DeleteStatus.NOT_DELETED)
+                    .build();
+            visitRecordImageRepository.save(visitRecordImage);
+            imgs.add(new VisitRecordResponse.ItemDTO(
+                    visitRecordImage.getId(),
+                    visitRecordImage.getImageUrl()
+            ));
         }
-        return new VisitRecordResponse.DTO(visitRecord, savedImage);
+
+        return new VisitRecordResponse.DTO(visitRecord, imgs);
     }
 
 
@@ -70,15 +82,31 @@ public class VisitRecordService {
             throw new RuntimeException("권한이 없습니다");
         }
 
-        // 2. 이미지 먼저 처리 (기존 ID로)
-        VisitRecordImage savedImage = null;
-        if (reqDTO.getImageString() != null && !reqDTO.getImageString().isBlank()) {
-            savedImage = visitRecordImageService.update(reqDTO.getImageString(), visitRecordPS.getId());
+        // 2. 이미지 먼저 처리
+        if (reqDTO.getNewImages().size() + reqDTO.getRemainImageUrls().size() > 10) {
+            throw new RuntimeException("이미지 너무 많음");
         }
 
+        List<VisitRecordImage> images = visitRecordImageRepository.findByVisitRecordIdAndDeleteStatus(visitRecordPS, DeleteStatus.NOT_DELETED);
 
         // 3. 기존 기록을 삭제 상태로 변경
-        visitRecordPS.delete(); // DeleteStatus.DELETED 로 상태 변경
+        for (VisitRecordImage image : images) {
+            if (!reqDTO.getRemainImageUrls().contains(image.getImageUrl())) {
+                image.delete();
+            }
+        }
+
+        // 4. 새로운 이미지 저장
+        for (String img : reqDTO.getNewImages()) {
+            VisitRecordImage visitRecordImage = new VisitRecordImage()
+                    .builder()
+                    .visitRecord(visitRecordPS)
+                    .deleteStatus(DeleteStatus.NOT_DELETED)
+                    .imageUrl(img)
+                    .build();
+            visitRecordImageRepository.save(visitRecordImage);
+        }
+
 
         // 4. 새 기록 생성 후 저장
         VisitRecord newRecord = VisitRecord.builder()
@@ -90,14 +118,12 @@ public class VisitRecordService {
                 .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
         visitRecordRepository.save(newRecord);
-
-        // 4. 새 이미지에도 새 visitRecordId 부여
-        if (savedImage != null) {
-            savedImage.updateVisitRecordId(newRecord.getId());
-            visitRecordImageRepository.save(savedImage);
+        List<VisitRecordImage> newImagesUrl = visitRecordImageRepository.findByVisitRecordIdAndDeleteStatus(visitRecordPS, DeleteStatus.NOT_DELETED);
+        List<VisitRecordResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (VisitRecordImage image : newImagesUrl) {
+            itemDTOS.add(new VisitRecordResponse.ItemDTO(image.getId(), image.getImageUrl()));
         }
-
-        return new VisitRecordResponse.DTO(newRecord, savedImage);
+        return new VisitRecordResponse.DTO(newRecord, itemDTOS);
     }
 
 
@@ -111,11 +137,14 @@ public class VisitRecordService {
         }
 
         // 2. 이미지 조회
-        VisitRecordImage image = visitRecordImageRepository
-                .findByVisitRecordId(visitRecordPS.getId())
-                .orElseThrow(() -> new RuntimeException("직관기록 이미지를 찾을 수 없습니다"));
+        List<VisitRecordImage> images = visitRecordImageRepository.findByVisitRecordIdAndDeleteStatus(visitRecordPS, DeleteStatus.NOT_DELETED);
 
-        return new VisitRecordResponse.DTO(visitRecordPS, image);
+        List<VisitRecordResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (VisitRecordImage image : images) {
+            itemDTOS.add(new VisitRecordResponse.ItemDTO(image.getId(), image.getImageUrl()));
+        }
+
+        return new VisitRecordResponse.DTO(visitRecordPS, itemDTOS);
     }
 
 
@@ -160,26 +189,26 @@ public class VisitRecordService {
                 .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다."));
 
         // 2. 이미지 조회
-        VisitRecordImage image = visitRecordImageRepository
-                .findByVisitRecordId(visitRecordPS.getId())
-                .orElseThrow(() -> new RuntimeException("직관기록 이미지를 찾을 수 없습니다"));
+        List<VisitRecordImage> images = visitRecordImageRepository.findByVisitRecordIdAndDeleteStatus(visitRecordPS, DeleteStatus.NOT_DELETED);
 
-        VisitRecordResponse.DetailDTO detailDTO = new VisitRecordResponse.DetailDTO(visitRecordPS, image);
+        List<VisitRecordResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (VisitRecordImage image : images) {
+            itemDTOS.add(new VisitRecordResponse.ItemDTO(image.getId(), image.getImageUrl()));
+        }
+        VisitRecordResponse.DetailDTO detailDTO = new VisitRecordResponse.DetailDTO(visitRecordPS, itemDTOS);
 
         return detailDTO;
     }
 
 
     @Transactional
-    public void delete(Integer visitRecordId, Integer sessionUserId) {
+    public Object delete(Integer visitRecordId, Integer sessionUserId) {
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(visitRecordId, sessionUserId)
                 .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다."));
 
         // 2. 직관기록 이미지 조회
-        VisitRecordImage imagePS = visitRecordImageRepository
-                .findByVisitRecordId(visitRecordPS.getId())
-                .orElseThrow(() -> new RuntimeException("직관기록 이미지를 찾을 수 없습니다"));
+        List<VisitRecordImage> images = visitRecordImageRepository.findByVisitRecordIdAndDeleteStatus(visitRecordPS, DeleteStatus.NOT_DELETED);
 
         // 권한 확인
         if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
@@ -189,6 +218,10 @@ public class VisitRecordService {
         // 직관기록 삭제
         visitRecordPS.delete();
         // 이미지 삭제
-        imagePS.delete();
+        for (VisitRecordImage image : images) {
+            image.delete();
+        }
+
+        return new VisitRecordResponse.DeleteDTO();
     }
 }
