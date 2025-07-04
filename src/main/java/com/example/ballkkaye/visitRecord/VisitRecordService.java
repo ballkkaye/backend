@@ -113,7 +113,7 @@ public class VisitRecordService {
         // 2. 이미지 조회
         VisitRecordImage image = visitRecordImageRepository
                 .findByVisitRecordId(visitRecordPS.getId())
-                .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다"));
+                .orElseThrow(() -> new RuntimeException("직관기록 이미지를 찾을 수 없습니다"));
 
         return new VisitRecordResponse.DTO(visitRecordPS, image);
     }
@@ -151,5 +151,21 @@ public class VisitRecordService {
         return sqlDates.stream()
                 .map(Date::toLocalDate)
                 .toList();
+    }
+
+
+    public VisitRecordResponse.DetailDTO getDetail(Integer id, Integer sessionUserId) {
+        // 1. 직관기록 조회
+        VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(id, sessionUserId)
+                .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다."));
+
+        // 2. 이미지 조회
+        VisitRecordImage image = visitRecordImageRepository
+                .findByVisitRecordId(visitRecordPS.getId())
+                .orElseThrow(() -> new RuntimeException("직관기록 이미지를 찾을 수 없습니다"));
+
+        VisitRecordResponse.DetailDTO detailDTO = new VisitRecordResponse.DetailDTO(visitRecordPS, image);
+
+        return detailDTO;
     }
 }

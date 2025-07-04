@@ -287,3 +287,29 @@ VALUES (8, 3.43, 0.0, 46, 33, 1, 80, 0.582, 0.754, 411, 1, NOW(), '4승0무6패'
        (2, 4.69, 13.5, 32, 46, 3, 81, 0.410, 0.683, 328, 9, NOW(), '5승0무5패', '1승'),
        (3, 5.41, 21.0, 26, 55, 3, 84, 0.321, 0.653, 313, 10, NOW(), '5승1무4패', '1패');
 ;
+
+
+-- visit_record_image_tb
+INSERT INTO visit_record_image_tb (visit_record_id, image_url, delete_status, created_at)
+VALUES (1, '/upload/직관1.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-03 10:00:00'),
+       (2, '/upload/sample1.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-01 15:00:00'),
+       (3, '/upload/sample1.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-02 18:00:00'),
+       (4, '/upload/sample2.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-01 15:00:00'),
+       (5, '/upload/sample1.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-02 19:00:00'),
+       (6, '/upload/sample2.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-03 10:00:00'),
+       (7, '/upload/sample1.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-03 10:00:00'),
+       (8, '/upload/sample2.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-02 10:00:00'),
+       (9, '/upload/sample1.jpg', 'NOT_DELETED', TIMESTAMP '2025-07-03 11:00:00');
+
+
+-- visit_record_tb
+INSERT INTO visit_record_tb (user_id, game_id, team_id, result, content, delete_status, created_at, updated_at)
+VALUES (1, 428, 1, 'WIN', '오늘 직관 재밌었음! 박동원 홈런 쩔었다.', 'NOT_DELETED', TIMESTAMP '2025-07-03 10:00:00', NOW()),
+       (1, 432, 1, 'WIN', '수아레즈 완봉! 직관 꿀잼이었다.', 'NOT_DELETED', TIMESTAMP '2025-07-01 15:00:00', NOW()),
+       (1, 429, 1, 'LOSE', '날도 덥고 경기 내용도 별로였다… 삭제 예정.', 'DELETED', TIMESTAMP '2025-07-02 18:00:00', NOW()),
+       (2, 431, 2, 'TIE', '타자들 다들 잘 쳤는데 아쉽게 무승부...', 'NOT_DELETED', TIMESTAMP '2025-07-01 15:00:00', NOW()),
+       (2, 427, 2, 'LOSE', '수비 실책 너무 많아서 아쉬운 경기였다.', 'NOT_DELETED', TIMESTAMP '2025-07-02 19:00:00', NOW()),
+       (2, 425, 2, 'WIN', '이건 그냥 테스트로 넣어본 기록입니다.', 'DELETED', TIMESTAMP '2025-07-03 10:00:00', NOW()),
+       (3, 425, 3, 'LOSE', '타선이 침묵했다... ㅠㅠ', 'NOT_DELETED', TIMESTAMP '2025-07-03 10:00:00', NOW()),
+       (3, 427, 3, 'WIN', '역전승! 오늘 진짜 소리 질렀다.', 'NOT_DELETED', TIMESTAMP '2025-07-02 10:00:00', NOW()),
+       (3, 431, 3, 'TIE', '롯데 가을 야구 가자 ~.', 'DELETED', TIMESTAMP '2025-07-03 11:00:00', NOW());
