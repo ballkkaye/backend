@@ -23,7 +23,7 @@ public class BoardReplyController {
     }
 
     // 댓글 삭제
-    @PostMapping("/s/api/boards/reply/{id}/delete")
+    @DeleteMapping("/s/api/boards/reply/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         boardReplyService.delete(id, sessionUser);

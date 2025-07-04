@@ -89,6 +89,7 @@ public class MatchResponse {
 
     @Data
     public static class DetailDTO {
+        private Integer matchId;
         private String homeTeamName;
         private String awayTeamName;
         private String gameDate;
@@ -109,6 +110,7 @@ public class MatchResponse {
         private Integer chatRoomId;
 
         public DetailDTO(Match match, Boolean isOwner, String relativeTime, Integer likeCount, Boolean isLike, String countUser) {
+            this.matchId = match.getId();
             this.homeTeamName = match.getChatRoom().getGame().getHomeTeam().getTeamName();
             this.awayTeamName = match.getChatRoom().getGame().getAwayTeam().getTeamName();
             this.gameDate = match.getChatRoom().getGame().getGameTime().toString();

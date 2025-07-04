@@ -88,7 +88,7 @@ public class VisitRecordController {
     }
 
     // 직관 기록 삭제
-    @PutMapping("/s/api/visitRecords/{id}/delete")
+    @DeleteMapping("/s/api/visitRecords/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = visitRecordService.delete(id, sessionUser.getId());
