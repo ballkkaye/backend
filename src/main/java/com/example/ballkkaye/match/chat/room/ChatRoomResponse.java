@@ -1,5 +1,6 @@
 package com.example.ballkkaye.match.chat.room;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -38,6 +39,15 @@ public class ChatRoomResponse {
             if (timestamp != null) {
                 this.createdAt = timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             }
+        }
+    }
+
+    @Data
+    public static class DeleteDTO {
+        private DeleteStatus deleteStatus;
+
+        public DeleteDTO(DeleteStatus deleteStatus) {
+            this.deleteStatus = deleteStatus;
         }
     }
 }

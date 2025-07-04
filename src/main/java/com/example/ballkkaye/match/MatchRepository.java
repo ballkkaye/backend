@@ -58,4 +58,17 @@ public class MatchRepository {
     public Optional<Match> findById(Integer matchId) {
         return Optional.ofNullable(em.find(Match.class, matchId));
     }
+
+    public Optional<Match> findByChatRoomId(Integer chatRoomId) {
+        String q = "SELECT m FROM Match m WHERE m.chatRoom.id = :chatRoomId AND m.deleteStatus = 'NOT_DELETED'";
+
+        try {
+            Match match = em.createQuery(q, Match.class)
+                    .setParameter("chatRoomId", chatRoomId)
+                    .getSingleResult();
+            return Optional.of(match);
+        } catch (jakarta.persistence.NoResultException e) {
+            return Optional.empty();
+        }
+    }
 }

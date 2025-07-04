@@ -17,14 +17,14 @@ public class UserController {
     private final HttpSession session;
 
     // oauth로그인
-    @PostMapping("/api/oauth/login")
+    @PostMapping("/oauth/login")
     public ResponseEntity<?> naverOauthLogin(@RequestBody @Valid UserRequest.LoginDTO reqDTO) {
         var respDTO = userService.naverOauthLogin(reqDTO.getAccessToken());
         return Resp.ok(respDTO);
     }
 
     // 유저 추가정보 유저 응원팀 id + 유저 닉네임
-    @PutMapping("/s/addtion-user-info")
+    @PutMapping("/s/user/addtion-info")
     public ResponseEntity<?> additionalUserInfo(@RequestBody @Valid UserRequest.AdditionalInfoDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = userService.additionalUserInfo(sessionUser, reqDTO);
@@ -32,14 +32,14 @@ public class UserController {
     }
 
     // 유저닉네임 중복체크
-    @GetMapping("/api/check-nickname-available/{nickname}")
+    @GetMapping("/api/users/check-nickname-available/{nickname}")
     public ResponseEntity<?> checkUsernameAvailable(@PathVariable("nickname") String nickname) {
         Map<String, Object> respDTO = userService.checkUsernameAvailable(nickname);
         return Resp.ok(respDTO);
     }
 
     // 유저 정보 수정
-    @PutMapping("/s/api/user")
+    @PutMapping("/s/api/users")
     public ResponseEntity<?> update(@RequestBody @Valid UserRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = userService.update(reqDTO, sessionUser);
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     // 유저 정보
-    @GetMapping("/s/api/user")
+    @GetMapping("/s/api/users")
     public ResponseEntity<?> getUser() {
         var sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = userService.getUser(sessionUser);
