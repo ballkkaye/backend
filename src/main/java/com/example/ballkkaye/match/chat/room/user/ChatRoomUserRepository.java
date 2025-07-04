@@ -52,4 +52,16 @@ public class ChatRoomUserRepository {
                 .setParameter("status", DeleteStatus.NOT_DELETED)
                 .getResultList();
     }
+
+    public Optional<ChatRoomUser> findById(Integer chatRoomUserId) {
+        return Optional.ofNullable(em.find(ChatRoomUser.class, chatRoomUserId));
+    }
+
+    public Long countByChatRoomIdAndDeleteStatus(Integer chatRoomId, DeleteStatus deleteStatus) {
+        return ((Number) em.createNativeQuery(
+                        "SELECT COUNT(*) FROM chat_room_user_tb WHERE chat_room_id = ?1 AND delete_status = ?2")
+                .setParameter(1, chatRoomId)
+                .setParameter(2, deleteStatus.name())
+                .getSingleResult()).longValue();
+    }
 }
