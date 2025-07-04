@@ -76,4 +76,15 @@ public class GameRepository {
 
         return query.getResultList();
     }
+
+    public List<String> findDistinctDatesByMonth(String month) {
+        String sql = "SELECT DISTINCT FORMATDATETIME(game_time, 'yyyy-MM-dd') FROM game_tb " +
+                "WHERE FORMATDATETIME(game_time, 'yyyy-MM') = ?1";
+        return em.createNativeQuery(sql).setParameter(1, month).getResultList();
+    }
+
+    public List<String> findAllDistinctGameDates() {
+        String sql = "SELECT DISTINCT FORMATDATETIME(game_time, 'yyyy-MM-dd') FROM game_tb";
+        return em.createNativeQuery(sql).getResultList();
+    }
 }

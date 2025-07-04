@@ -17,4 +17,10 @@ public class GameController {
         var respDTO = gameService.getGames(date);
         return Resp.ok(respDTO);
     }
+
+    @GetMapping("/s/api/games/dates")
+    public ResponseEntity<?> getCalendarGames(@RequestParam(required = false) String date) {
+        var respDTO = gameService.getCalendarGames(date);
+        return Resp.ok(respDTO);
+    }
 }

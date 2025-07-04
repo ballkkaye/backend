@@ -52,4 +52,23 @@ public class GameResponse {
             }
         }
     }
+
+    @Data
+    public static class CalendarDTO {
+        private String year;
+        private List<MonthDTO> monthDTO;
+    }
+
+    @Data
+    public static class MonthDTO {
+        private String month;
+        private List<DayDTO> day;
+
+    }
+
+    @Data
+    public static class DayDTO {
+        private String day;
+        private Boolean isHaveGame;
+    }
 }
