@@ -48,4 +48,22 @@ public class ChatRoomUserService {
         chatRoomUserRepository.save(chatRoomUser);
         return new ChatRoomUserResponse.SaveDTO(chatRoomUser);
     }
+
+    @Transactional
+    public Object delete(Integer chatRoomUserId, User sessionUser) {
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
+        ChatRoomUser chatRoomUserPS = chatRoomUserRepository.findById(chatRoomUserId)
+                .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
+        chatRoomUserPS.delete();
+        ChatRoom chatRoomPS = chatRoomRepository.findById(chatRoomUserPS.getChatRoom().getId())
+                .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
+        Integer countUser = chatRoomUserRepository.countByChatRoomIdAndDeleteStatus(chatRoomUserPS.getChatRoom().getId(), DeleteStatus.NOT_DELETED).intValue();
+        if (countUser == 0) {
+            chatRoomPS.delete();
+        }
+
+
+        return new ChatRoomUserResponse.DeleteDTO();
+    }
 }
