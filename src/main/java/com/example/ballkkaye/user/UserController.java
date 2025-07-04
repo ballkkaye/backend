@@ -1,5 +1,6 @@
 package com.example.ballkkaye.user;
 
+import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye._core.util.Resp;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -14,6 +15,7 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
     private final HttpSession session;
+    private final UserRepository userRepository; // TODO 지워야함
 
     // oauth로그인
     @PostMapping("/api/oauth/login")
@@ -51,5 +53,12 @@ public class UserController {
         var sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = userService.getUser(sessionUser);
         return Resp.ok(respDTO);
+    }
+
+    @GetMapping("/token")
+    public ResponseEntity<?> token() {
+        User userPS = userRepository.findById(1).orElse(null);
+        String newAccess = JwtUtil.create(userPS);
+        return Resp.ok(newAccess);
     }
 }

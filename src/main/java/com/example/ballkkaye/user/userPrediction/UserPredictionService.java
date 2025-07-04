@@ -1,9 +1,12 @@
 package com.example.ballkkaye.user.userPrediction;
 
+import com.example.ballkkaye.common.enums.GameStatus;
+import com.example.ballkkaye.common.enums.PredictionStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,6 @@ public class UserPredictionService {
         List<UserPredictionResponse.TodayGameDTO> finalList = new ArrayList<>();
 
         for (UserPredictionResponse.TodayGameDTO raw : rawList) {
-            // count 값을 가져옴 (초기 상태는 투표 수)
             int homeCount = raw.getHomeVoteRate();
             int awayCount = raw.getAwayVoteRate();
 
@@ -36,7 +38,6 @@ public class UserPredictionService {
                 awayRate = 100 - homeRate;
             }
 
-            // 비율로 덮어쓰기
             raw.setHomeVoteRate(homeRate);
             raw.setAwayVoteRate(awayRate);
 
@@ -44,5 +45,64 @@ public class UserPredictionService {
         }
 
         return finalList;
+    }
+
+    public List<UserPredictionResponse.MyPredictionDTO> findMyPredictions(Integer userId, LocalDate date) {
+        List<UserPredictionResponse.MyPredictionDTO> myPredictions =
+                userPredictionRepository.findMyPredictions(userId, date);
+
+        for (UserPredictionResponse.MyPredictionDTO prediction : myPredictions) {
+            GameStatus gameStatus = prediction.getGameStatus();
+            Integer userChoiceTeamId = prediction.getUserChoiceTeamId();
+            Integer homeScore = prediction.getHomeScore();
+            Integer awayScore = prediction.getAwayScore();
+            Integer homeTeamId = prediction.getHomeTeam().getTeamId();
+            Integer awayTeamId = prediction.getAwayTeam().getTeamId();
+            LocalDateTime updatedAt = prediction.getUpdatedAt();
+
+            PredictionStatus predictionStatus;
+
+            // 오늘의 게임 결과가 갱신되지 않았으면 예측 결과는 WAITING
+            if (updatedAt == null) {
+                predictionStatus = PredictionStatus.WAITING;
+            }
+            // 경기 상태 기반으로 결과 처리
+            else {
+                switch (gameStatus) {
+                    case SCHEDULED:
+                    case DELAYED:
+                    case IN_PROGRESS:
+                        predictionStatus = PredictionStatus.WAITING;
+                        break;
+
+                    case COMPLETED:
+                        if (homeScore == null || awayScore == null) {
+                            predictionStatus = PredictionStatus.TIE; // 예외 상황: score 없으면 취소로 간주
+                        } else if (homeScore > awayScore) {
+                            predictionStatus = userChoiceTeamId != null && userChoiceTeamId.equals(homeTeamId)
+                                    ? PredictionStatus.CORRECT
+                                    : PredictionStatus.INCORRECT;
+                        } else if (awayScore > homeScore) {
+                            predictionStatus = userChoiceTeamId != null && userChoiceTeamId.equals(awayTeamId)
+                                    ? PredictionStatus.CORRECT
+                                    : PredictionStatus.INCORRECT;
+                        } else {
+                            predictionStatus = PredictionStatus.TIE; // 무승부
+                        }
+                        break;
+
+                    case CANCELLED:
+                        predictionStatus = PredictionStatus.TIE;
+                        break;
+
+                    default:
+                        predictionStatus = null;
+                }
+            }
+
+            prediction.setPredictionStatus(predictionStatus);
+        }
+
+        return myPredictions;
     }
 }
