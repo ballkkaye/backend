@@ -1,5 +1,6 @@
 package com.example.ballkkaye.match;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.match.chat.room.ChatRoomResponse;
 import lombok.Data;
 
@@ -48,13 +49,15 @@ public class MatchResponse {
     public static class ListDTO {
         private String selectedGender;
         private String selectedAge;
-        private String selectedRegion;
+        private Integer selectedTeamId;
+        private String selectedTimeName;
         private List<Item> matches;
 
-        public ListDTO(String selectedGender, String selectedAge, String selectedRegion, List<Item> matches) {
+        public ListDTO(String selectedGender, String selectedAge, Integer selectedTeamId, String selectedTimeName, List<Item> matches) {
             this.selectedGender = selectedGender;
             this.selectedAge = selectedAge;
-            this.selectedRegion = selectedRegion;
+            this.selectedTeamId = selectedTeamId;
+            this.selectedTimeName = selectedTimeName;
             this.matches = matches;
         }
     }
@@ -69,6 +72,7 @@ public class MatchResponse {
         private Boolean isSameTeam;
         private String participationInfo;
         private String relativeTime;
+        private Integer matchId;
 
         public Item(Match match, String participationInfo, String relativeTime) {
             this.gameTitle = match.getChatRoom().getGame().getHomeTeam().getTeamName() + " vs " + match.getChatRoom().getGame().getAwayTeam().getTeamName();
@@ -80,6 +84,7 @@ public class MatchResponse {
             this.isSameTeam = match.getChatRoom().getIsSameTeam();
             this.participationInfo = participationInfo + "/" + match.getChatRoom().getMaxParticipants().toString();
             this.relativeTime = relativeTime;
+            this.matchId = match.getId();
         }
     }
 
@@ -172,6 +177,15 @@ public class MatchResponse {
             this.likeCount = likeCount;
             this.isOwner = isOwner;
             this.chatRoomId = match.getChatRoom().getId();
+        }
+    }
+
+    @Data
+    public static class DeleteDTO {
+        private DeleteStatus deleteStatus;
+
+        public DeleteDTO(DeleteStatus deleteStatus) {
+            this.deleteStatus = deleteStatus;
         }
     }
 }
