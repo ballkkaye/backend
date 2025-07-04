@@ -1,5 +1,6 @@
 package com.example.ballkkaye.board.like;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import lombok.Data;
 
 public class BoardLikeResponse {
@@ -24,10 +25,12 @@ public class BoardLikeResponse {
     public static class DeleteDTO {
         private Integer count;
         private Boolean isLike;
+        private String deleteStatus;
 
         public DeleteDTO(Integer boardLikeCount) {
             this.count = boardLikeCount;
             this.isLike = false;
+            this.deleteStatus = DeleteStatus.DELETED.getLabel();
         }
     }
 }

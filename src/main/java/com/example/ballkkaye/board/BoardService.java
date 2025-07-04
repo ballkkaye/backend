@@ -307,7 +307,7 @@ public class BoardService {
 
     // 게시글 삭제
     @Transactional
-    public void delete(Integer boardId, User sessionUser) {
+    public Object delete(Integer boardId, User sessionUser) {
         // 1. 존재하는 유저인지
         userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
@@ -325,5 +325,6 @@ public class BoardService {
         boardPS.delete();
 
         // 5. ok
+        return new BoardResponse.DeleteDTO();
     }
 }
