@@ -57,7 +57,6 @@ public class MatchService {
                 .maxParticipants(reqDTO.getMaxParticipants())
                 .preferredGender(reqDTO.getPreferredGender())
                 .preferredAge(reqDTO.getPreferredAge())
-                .preferredRegion(reqDTO.getPreferredRegion())
                 .deleteStatus(DeleteStatus.NOT_DELETED)
                 .isSameTeam(reqDTO.getIsSameTeam())
                 .build();
@@ -74,6 +73,7 @@ public class MatchService {
                         .builder()
                         .chatRoom(chatRoom)
                         .user(userPS)
+                        .isOwner(true)
                         .deleteStatus(DeleteStatus.NOT_DELETED)
                         .build());
 
