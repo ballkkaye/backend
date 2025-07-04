@@ -5,6 +5,7 @@ import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.common.enums.Gender;
 import com.example.ballkkaye.common.enums.Region;
 import com.example.ballkkaye.game.Game;
+import com.example.ballkkaye.match.MatchRequest;
 import com.example.ballkkaye.team.Team;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -77,5 +78,19 @@ public class ChatRoom {
         this.deleteStatus = deleteStatus;
         this.isSameTeam = isSameTeam;
         this.lastDisconnectedAt = lastDisconnectedAt;
+    }
+
+    public void update(Game gamePS, Team teamPS, MatchRequest.UpdateDTO reqDTO) {
+        this.game = gamePS == null ? this.game : gamePS;
+        this.team = teamPS == null ? this.team : teamPS;
+        this.maxParticipants = reqDTO.getMaxParticipants() == null ? this.maxParticipants : reqDTO.getMaxParticipants();
+        this.preferredGender = reqDTO.getPreferredGender() == null ? this.preferredGender : reqDTO.getPreferredGender();
+        this.preferredAge = reqDTO.getPreferredAge() == null ? this.preferredAge : reqDTO.getPreferredAge();
+        this.preferredRegion = reqDTO.getPreferredRegion() == null ? this.preferredRegion : reqDTO.getPreferredRegion();
+        this.isSameTeam = reqDTO.getIsSameTeam() == null ? this.isSameTeam : reqDTO.getIsSameTeam();
+    }
+
+    public void delete() {
+        this.deleteStatus = DeleteStatus.DELETED;
     }
 }

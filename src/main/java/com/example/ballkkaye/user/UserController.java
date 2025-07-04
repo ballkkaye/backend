@@ -15,7 +15,6 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
     private final HttpSession session;
-    private final UserRepository userRepository; // TODO 지워야함
 
     // oauth로그인
     @PostMapping("/api/oauth/login")
@@ -54,6 +53,8 @@ public class UserController {
         var respDTO = userService.getUser(sessionUser);
         return Resp.ok(respDTO);
     }
+
+    private final UserRepository userRepository;
 
     @GetMapping("/token")
     public ResponseEntity<?> token() {
