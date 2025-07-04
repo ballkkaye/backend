@@ -12,8 +12,6 @@ public class GameService {
 
     public Object getGames(String date) {
         // date 검사
-        System.out.println("================");
-        System.out.println(date);
         if (date == null || date.isBlank()) {
             throw new RuntimeException("잘못된 요청입니다.");
         }
@@ -21,8 +19,6 @@ public class GameService {
         // 게임 조회
         List<Game> games = gameRepository.findByDate(date);
         for (Game game : games) {
-            System.out.println("--------------");
-            System.out.println(game.getHomeTeam());
         }
 
         // 게임 item에 담기
