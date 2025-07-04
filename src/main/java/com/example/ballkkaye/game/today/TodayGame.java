@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
@@ -69,6 +70,14 @@ public class TodayGame {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @UpdateTimestamp
+    private Timestamp updatedAt; // 오늘의 게임 결과 갱신할 때 필요
+
+    public boolean isUpdatedAfterGameTime() {
+        if (updatedAt == null || gameTime == null) return false;
+        return updatedAt.after(gameTime);
+    }
 
     @Builder
     public TodayGame(Stadium stadium,

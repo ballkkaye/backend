@@ -286,4 +286,138 @@ VALUES (8, 3.43, 0.0, 46, 33, 1, 80, 0.582, 0.754, 411, 1, NOW(), '4승0무6패'
        (9, 4.56, 7.5, 36, 38, 4, 78, 0.486, 0.703, 354, 8, NOW(), '6승0무4패', '1승'),
        (2, 4.69, 13.5, 32, 46, 3, 81, 0.410, 0.683, 328, 9, NOW(), '5승0무5패', '1승'),
        (3, 5.41, 21.0, 26, 55, 3, 84, 0.321, 0.653, 313, 10, NOW(), '5승1무4패', '1패');
-;
+
+-- CASE 1: 무승부
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (101, 3, 4, 2, 2,
+        '2025-07-03 19:00:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        50.0, 50.0);
+
+-- CASE 2: 유저 예측 틀림 (홈 졌는데 홈 선택)
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (102, 5, 1, 1, 4,
+        '2025-07-03 17:30:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        40.0, 60.0);
+
+-- CASE 3: 경기 진행 중
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (103, 2, 3, null, null,
+        '2025-07-03 20:00:00', 'IN_PROGRESS', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        55.0, 45.0);
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (104, 1, 2, 5, 2,
+        '2025-07-03 18:00:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        65.0, 35.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (105, 2, 1, 1, 3,
+        '2025-07-03 19:30:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        45.0, 55.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (106, 3, 5, 4, 4,
+        '2025-07-03 17:00:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        50.0, 50.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (107, 6, 7, null, null,
+        '2025-07-03 19:00:00', 'CANCELLED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        0.0, 0.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (108, 4, 6, null, null,
+        '2025-07-03 20:30:00', 'IN_PROGRESS', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        55.0, 45.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (109, 5, 3, 3, 1,
+        '2025-07-03 16:00:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        60.0, 40.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (110, 2, 6, 2, 5,
+        '2025-07-03 18:30:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        40.0, 60.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (111, 4, 5, 0, 0,
+        '2025-07-03 15:00:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        50.0, 50.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (112, 7, 1, 6, 2,
+        '2025-07-03 13:30:00', 'COMPLETED', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        70.0, 30.0);
+
+INSERT INTO today_game_tb (id, home_team_id, away_team_id, home_result_score, away_result_score,
+                           game_time, game_status, stadium_id, broadcast_channel,
+                           home_prediction_score, away_prediction_score, total_prediction_score,
+                           home_win_per, away_win_per)
+VALUES (113, 3, 6, null, null,
+        '2025-07-03 21:00:00', 'IN_PROGRESS', 1, 'SPO_T',
+        0.0, 0.0, 0.0,
+        52.0, 48.0);
+
+
+
+INSERT INTO user_prediction_tb (id, user_id, game_id, team_id)
+VALUES (15, 1, 103, 2),
+       (16, 1, 104, 1),
+       (17, 1, 105, 2),
+       (18, 1, 106, 3),
+       (19, 1, 107, 6),
+       (20, 1, 108, 4),
+       (21, 1, 109, 5),
+       (22, 1, 110, 2),
+       (23, 1, 111, 4),
+       (24, 1, 112, 7),
+       (25, 1, 113, 3);
+

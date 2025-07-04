@@ -3,7 +3,9 @@ package com.example.ballkkaye.common.enums;
 public enum PredictionStatus {
     CORRECT("정답"),
     INCORRECT("오답"),
-    CANCELLED("경기 취소"); // 경기 취소 상태 추가
+    TIE("무승부"),
+    WAITING("대기 중"),
+    CLOSED("예측 마감");
 
     private final String value;
 
