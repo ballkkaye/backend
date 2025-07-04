@@ -5,9 +5,9 @@ import com.example.ballkkaye.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -16,14 +16,14 @@ public class ChatRoomUserController {
     private final ChatRoomUserService chatRoomUserService;
     private final HttpSession session;
 
-    @PostMapping("/s/api/chatroom/{id}")
+    @PostMapping("/s/api/chatrooms/{id}")
     public ResponseEntity<?> save(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = chatRoomUserService.save(id, sessionUser);
         return Resp.ok(respDTO);
     }
 
-    @PutMapping("/s/api/chatroom/user/{id}/delete")
+    @DeleteMapping("/s/api/chatrooms/user/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = chatRoomUserService.delete(id, sessionUser);

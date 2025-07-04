@@ -54,7 +54,7 @@ public class MatchController {
     }
 
     // 매칭 글 삭제
-    @PutMapping("/s/api/matches/{id}/delete")
+    @DeleteMapping("/s/api/matches/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = matchService.delete(id, sessionUser);

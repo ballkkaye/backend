@@ -28,6 +28,10 @@ public class ChatRoomUserService {
 
         Optional<ChatRoomUser> chatRoomUserOP = chatRoomUserRepository.findByUserIdAndChatRoomId(userPS.getId(), chatRoomId);
 
+        if (chatRoomPS.getDeleteStatus().equals(DeleteStatus.DELETED)) {
+            throw new RuntimeException("해당 자원이 존재하지 않습니다.");
+        }
+
         if (chatRoomUserOP.isPresent()) {
             ChatRoomUser existing = chatRoomUserOP.get();
             if (existing.getDeleteStatus().equals(DeleteStatus.DELETED)) {
