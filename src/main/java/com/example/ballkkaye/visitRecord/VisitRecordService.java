@@ -168,4 +168,27 @@ public class VisitRecordService {
 
         return detailDTO;
     }
+
+
+    @Transactional
+    public void delete(Integer visitRecordId, Integer sessionUserId) {
+        // 1. 직관기록 조회
+        VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(visitRecordId, sessionUserId)
+                .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다."));
+
+        // 2. 직관기록 이미지 조회
+        VisitRecordImage imagePS = visitRecordImageRepository
+                .findByVisitRecordId(visitRecordPS.getId())
+                .orElseThrow(() -> new RuntimeException("직관기록 이미지를 찾을 수 없습니다"));
+
+        // 권한 확인
+        if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
+            throw new RuntimeException("권한이 없습니다");
+        }
+
+        // 직관기록 삭제
+        visitRecordPS.delete();
+        // 이미지 삭제
+        imagePS.delete();
+    }
 }

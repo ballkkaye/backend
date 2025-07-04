@@ -107,4 +107,16 @@ public class VisitRecordController {
 
         return Resp.ok(respDTO);
     }
+
+    // 직관 기록 삭제
+    @DeleteMapping("/s/api/visitRecords/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        //User sessionUser = (User) session.getAttribute("sessionUser");
+
+        User sessionUser = userRepository.findByEmail("ssar@nate.com")
+                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
+
+        visitRecordService.delete(id, sessionUser.getId());
+        return Resp.ok(null);
+    }
 }
