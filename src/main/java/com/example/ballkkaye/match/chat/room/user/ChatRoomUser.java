@@ -26,8 +26,8 @@ public class ChatRoomUser {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(name = "delete_status", nullable = false)
     private DeleteStatus deleteStatus;
 
     @Column(nullable = false)
@@ -46,5 +46,9 @@ public class ChatRoomUser {
 
     public void delete() {
         this.deleteStatus = DeleteStatus.DELETED;
+    }
+
+    public void setDeleteStatus(DeleteStatus deleteStatus) {
+        this.deleteStatus = deleteStatus;
     }
 }
