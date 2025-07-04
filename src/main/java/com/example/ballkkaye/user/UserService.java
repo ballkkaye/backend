@@ -1,6 +1,5 @@
 package com.example.ballkkaye.user;
 
-import com.example.ballkkaye._core.util.Base64Util;
 import com.example.ballkkaye._core.util.GenerateNickname;
 import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye.common.enums.Gender;
@@ -140,13 +139,7 @@ public class UserService {
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
                 .orElseThrow(() -> new RuntimeException("해당 팀을 찾을 수 없습니다"));
 
-        String profileUrl = null;
-        if (reqDTO.getProfileImg() != null) {
-            profileUrl = Base64Util.saveBase64Image(reqDTO.getProfileImg());
-        }
-
-
-        userPS.updateUserInfo(teamPS, reqDTO.getNickname().trim(), profileUrl);
+        userPS.updateUserInfo(teamPS, reqDTO.getNickname().trim(), reqDTO.getProfileImg());
         UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
         return respDTO;
     }

@@ -1,6 +1,5 @@
 package com.example.ballkkaye.board;
 
-import com.example.ballkkaye._core.util.ImageUtil;
 import com.example.ballkkaye.board.image.BoardImage;
 import com.example.ballkkaye.board.image.BoardImageRepository;
 import com.example.ballkkaye.board.image.BoardImageResponse;
@@ -59,14 +58,20 @@ public class BoardService {
         boardRepository.save(board);
 
         // 5. 이미지 저장
-        List<BoardImageResponse.ItemDTO> imageUrls = ImageUtil.saveBase64Images(
-                base64Images,
-                board,
-                boardImageRepository
-        );
+        List<BoardImageResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (String img : reqDTO.getImages()) {
+            BoardImage boardImage = new BoardImage()
+                    .builder()
+                    .board(board)
+                    .deleteStatus(DeleteStatus.NOT_DELETED)
+                    .imgUrl(img)
+                    .build();
+            boardImageRepository.save(boardImage);
+            itemDTOS.add(new BoardImageResponse.ItemDTO(boardImage.getId(), boardImage.getImgUrl()));
+        }
 
         // 6. 응답 반환
-        return new BoardResponse.SaveDTO(board, imageUrls);
+        return new BoardResponse.SaveDTO(board, itemDTOS);
     }
 
     // 커뮤니티 게시글 수정
@@ -103,7 +108,15 @@ public class BoardService {
         }
 
         // 7. 새 이미지 저장
-        ImageUtil.saveBase64Images(reqDTO.getNewImages(), boardPS, boardImageRepository);
+        for (String img : reqDTO.getNewImages()) {
+            BoardImage boardImage = new BoardImage()
+                    .builder()
+                    .board(boardPS)
+                    .deleteStatus(DeleteStatus.NOT_DELETED)
+                    .imgUrl(img)
+                    .build();
+            boardImageRepository.save(boardImage);
+        }
 
         // 8. 게시글 update 성공
         boardPS.update(reqDTO.getTitle(), reqDTO.getContent(), teamPS);
@@ -263,6 +276,14 @@ public class BoardService {
                 .isPresent();
         Integer replyCount = boardLikeRepository.totalCount(board.getId());
 
+        // 2. 이미지 조회
+        List<BoardImage> images = boardImageRepository.findByBoardIdAndDeleteStatus(board, DeleteStatus.NOT_DELETED);
+
+        List<BoardImageResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (BoardImage image : images) {
+            itemDTOS.add(new BoardImageResponse.ItemDTO(image.getId(), image.getImgUrl()));
+        }
+
 
         BoardResponse.DetailDTO respDTO = new BoardResponse.DetailDTO(
                 board.getId(),
@@ -277,6 +298,7 @@ public class BoardService {
                 isBoardOwner,
                 isBoardLike,
                 replyCount,
+                itemDTOS,
                 parentReplyItemDTOs);
 
         return respDTO;

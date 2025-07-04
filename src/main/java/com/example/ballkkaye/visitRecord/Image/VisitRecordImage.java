@@ -1,6 +1,7 @@
 package com.example.ballkkaye.visitRecord.Image;
 
 import com.example.ballkkaye.common.enums.DeleteStatus;
+import com.example.ballkkaye.visitRecord.VisitRecord;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +19,8 @@ public class VisitRecordImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private Integer visitRecordId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private VisitRecord visitRecord;
 
     @Column(nullable = false)
     private String imageUrl;
@@ -33,17 +34,17 @@ public class VisitRecordImage {
 
 
     @Builder
-    public VisitRecordImage(Integer id, Integer visitRecordId, String imageUrl, DeleteStatus deleteStatus, Timestamp createdAt) {
+    public VisitRecordImage(Integer id, VisitRecord visitRecord, String imageUrl, DeleteStatus deleteStatus, Timestamp createdAt) {
         this.id = id;
-        this.visitRecordId = visitRecordId;
+        this.visitRecord = visitRecord;
         this.imageUrl = imageUrl;
         this.deleteStatus = deleteStatus;
         this.createdAt = createdAt;
     }
 
-    public void updateVisitRecordId(Integer newId) {
-        this.visitRecordId = newId;
-    }
+//    public void updateVisitRecordId(Integer newId) {
+//        this.visitRecordId = newId;
+//    }
 
     public void delete() {
         this.deleteStatus = DeleteStatus.DELETED;

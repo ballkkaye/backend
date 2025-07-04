@@ -91,9 +91,10 @@ public class BoardResponse {
         private Boolean isOwner;
         private Boolean isLike;
         private Integer LikeCount;
+        private List<BoardImageResponse.ItemDTO> images;
         private List<BoardReplyResponse.ParentItemDTO> replyItems;
 
-        public DetailDTO(Integer boardId, String nickname, String profileImageUrl, String relativeTime, String myTeamName, Integer teamCategoryId, String teamCategoryName, String title, String content, Boolean isOwner, Boolean isLike, Integer likeCount, List<BoardReplyResponse.ParentItemDTO> replyItems) {
+        public DetailDTO(Integer boardId, String nickname, String profileImageUrl, String relativeTime, String myTeamName, Integer teamCategoryId, String teamCategoryName, String title, String content, Boolean isOwner, Boolean isLike, Integer likeCount, List<BoardImageResponse.ItemDTO> images, List<BoardReplyResponse.ParentItemDTO> replyItems) {
             this.boardId = boardId;
             this.nickname = nickname;
             this.profileImageUrl = profileImageUrl;
@@ -106,6 +107,7 @@ public class BoardResponse {
             this.isOwner = isOwner;
             this.isLike = isLike;
             this.LikeCount = likeCount;
+            this.images = images;
             this.replyItems = replyItems;
         }
     }

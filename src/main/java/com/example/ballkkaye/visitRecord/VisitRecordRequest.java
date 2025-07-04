@@ -7,6 +7,8 @@ import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.user.User;
 import lombok.Data;
 
+import java.util.List;
+
 public class VisitRecordRequest {
 
     @Data
@@ -15,8 +17,15 @@ public class VisitRecordRequest {
         private Integer teamId;
         private Result result;
         private String content;
-        private String imageString;
+        private List<String> images;
 
+        public SaveDTO(Integer gameId, Integer teamId, Result result, String content, List<String> imageString) {
+            this.gameId = gameId;
+            this.teamId = teamId;
+            this.result = result;
+            this.content = content;
+            this.images = imageString;
+        }
 
         public VisitRecord toEntity(User user, Game game, Team team) {
             return VisitRecord.builder()
@@ -34,7 +43,7 @@ public class VisitRecordRequest {
     public static class UpdateDTO {
         private Result result;
         private String content;
-        private String imageString;
+        private List<String> remainImageUrls;
+        private List<String> newImages;
     }
-
 }
