@@ -2,8 +2,11 @@ package com.example.ballkkaye.user.userPrediction;
 
 import com.example.ballkkaye.common.enums.GameStatus;
 import com.example.ballkkaye.common.enums.PredictionStatus;
+import com.example.ballkkaye.user.User;
+import com.example.ballkkaye.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +18,7 @@ import java.util.List;
 public class UserPredictionService {
 
     private final UserPredictionRepository userPredictionRepository;
+    private final UserRepository userRepository;
 
     public List<UserPredictionResponse.TodayGameDTO> getTodayGames(Integer userId) {
         LocalDate today = LocalDate.now();
@@ -105,4 +109,19 @@ public class UserPredictionService {
 
         return myPredictions;
     }
+
+
+    @Transactional
+    public List<UserPredictionRequest.SaveDTO> save(Integer userId, List<UserPredictionRequest.SaveDTO> saveDTO) {
+        // 1. 유저가 존재하지 않으면 예외 처리
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+
+        // 2. Repository에 user 객체에서 ID만 넘기기
+        userPredictionRepository.saveAll(user.getId(), saveDTO);
+
+        // 3. 요청한 값 그대로 응답
+        return saveDTO;
+    }
+
 }
