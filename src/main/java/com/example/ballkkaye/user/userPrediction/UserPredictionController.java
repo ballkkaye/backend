@@ -6,9 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,16 +18,25 @@ public class UserPredictionController {
     private final UserPredictionService userPredictionService;
     private final HttpSession session;
 
-    @GetMapping("/api/predictions/today")
-    public List<UserPredictionResponse.TodayGameDTO> getTodayGames(@RequestParam Integer userId) {
-        return userPredictionService.getTodayGames(userId);
+    @GetMapping("/s/api/predictions/today")
+    public ResponseEntity<?> getTodayGames() {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        List<UserPredictionResponse.TodayGameDTO> respDTO = userPredictionService.getTodayGames(sessionUser.getId());
+        return Resp.ok(respDTO);
     }
 
-    @GetMapping("/s/api/user-predictions")
+    @GetMapping("/s/api/predictions")
     public ResponseEntity<?> findMyPredictions(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         List<UserPredictionResponse.MyPredictionDTO> respDTO = userPredictionService.findMyPredictions(sessionUser.getId(), date);
+        return Resp.ok(respDTO);
+    }
+
+    @PostMapping("/s/api/predictions")
+    public ResponseEntity<?> save(@RequestBody List<UserPredictionRequest.SaveDTO> requestDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        List<UserPredictionRequest.SaveDTO> respDTO = userPredictionService.save(sessionUser.getId(), requestDTO);
         return Resp.ok(respDTO);
     }
 
