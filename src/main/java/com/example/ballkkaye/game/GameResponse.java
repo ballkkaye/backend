@@ -31,9 +31,11 @@ public class GameResponse {
         @Data
         public static class ItemDTO {
             private Integer gameId;
-            private String homeTeamName;
+            private String homeTeamFullName;
+            private String homeTeamShortName;
             private Integer homeTeamScore;
-            private String awayTeamName;
+            private String awayTeamFullName;
+            private String awayTeamShortName;
             private Integer awayTeamScore;
             private String stadiumFullName;
             private String stadiumShortName;
@@ -41,14 +43,16 @@ public class GameResponse {
 
             public ItemDTO(Game game) {
                 this.gameId = game.getId();
-                this.homeTeamName = game.getHomeTeam().getTeamName();
+                this.homeTeamFullName = game.getHomeTeam().getTeamName();
+                this.homeTeamShortName = game.getHomeTeam().getTeamName().split(" ")[0];
                 this.homeTeamScore = game.getHomeResultScore();
-                this.awayTeamName = game.getAwayTeam().getTeamName();
+                this.awayTeamFullName = game.getAwayTeam().getTeamName();
+                this.awayTeamShortName = game.getAwayTeam().getTeamName().split(" ")[0];
                 this.awayTeamScore = game.getAwayResultScore();
                 this.stadiumFullName = game.getStadium().getStadiumName();
                 this.stadiumShortName = game.getStadium().getStadiumName().substring(0, 2);
                 this.gameDate = game.getGameTime().toLocalDateTime()
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        .format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
             }
         }
     }
