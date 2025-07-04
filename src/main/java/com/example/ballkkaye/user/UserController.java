@@ -56,9 +56,44 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    @GetMapping("/token")
-    public ResponseEntity<?> token() {
+    @GetMapping("/token/1")
+    public ResponseEntity<?> token1() {
         User userPS = userRepository.findById(1).orElse(null);
+        String newAccess = JwtUtil.create(userPS);
+        return Resp.ok(newAccess);
+    }
+
+    @GetMapping("/token/2")
+    public ResponseEntity<?> token2() {
+        User userPS = userRepository.findById(2).orElse(null);
+        String newAccess = JwtUtil.create(userPS);
+        return Resp.ok(newAccess);
+    }
+
+    @GetMapping("/token/3")
+    public ResponseEntity<?> token3() {
+        User userPS = userRepository.findById(3).orElse(null);
+        String newAccess = JwtUtil.create(userPS);
+        return Resp.ok(newAccess);
+    }
+
+    @GetMapping("/token/4")
+    public ResponseEntity<?> token4() {
+        User userPS = userRepository.findById(4).orElse(null);
+        String newAccess = JwtUtil.create(userPS);
+        return Resp.ok(newAccess);
+    }
+
+    @GetMapping("/token/5")
+    public ResponseEntity<?> token5() {
+        User userPS = userRepository.findById(5).orElse(null);
+        String newAccess = JwtUtil.create(userPS);
+        return Resp.ok(newAccess);
+    }
+
+    @GetMapping("/token/6")
+    public ResponseEntity<?> token6() {
+        User userPS = userRepository.findById(6).orElse(null);
         String newAccess = JwtUtil.create(userPS);
         return Resp.ok(newAccess);
     }

@@ -53,7 +53,7 @@ public class BoardController {
     }
 
     // 게시글 삭제
-    @PostMapping("/s/api/boards/{id}/delete")
+    @PutMapping("/s/api/boards/{id}/delete")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         boardService.delete(id, sessionUser);

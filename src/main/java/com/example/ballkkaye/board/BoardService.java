@@ -196,7 +196,7 @@ public class BoardService {
             String nickname = parentReply.getUser().getNickname();
             String profileImg = parentReply.getUser().getProfileUrl();
             String relativeTime = p.format(new Date(board.getCreatedAt().getTime()));
-            String myTeamName = parentReply.getUser().getTeam().getTeamName();
+            String myTeamName = parentReply.getUser().getTeam() == null ? null : parentReply.getUser().getTeam().getTeamName();
             String content = parentReply.getContent();
             Integer parentReplyId = parentReply.getParentReplyId() != null
                     ? parentReply.getParentReplyId().getId()
@@ -216,7 +216,7 @@ public class BoardService {
                 String childNickname = childReply.getUser().getNickname();
                 String childProfileImg = childReply.getUser().getProfileUrl();
                 String childRelativeTime = p.format(new Date(childReply.getCreatedAt().getTime()));
-                String childMyTeamName = childReply.getUser().getTeam().getTeamName();
+                String childMyTeamName = childReply.getUser().getTeam() == null ? null : childReply.getUser().getTeam().getTeamName();
                 String childContent = childReply.getContent();
                 Integer childParentReplyId = childReply.getParentReplyId() != null
                         ? childReply.getParentReplyId().getId()
