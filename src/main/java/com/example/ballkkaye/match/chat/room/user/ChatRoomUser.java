@@ -39,4 +39,8 @@ public class ChatRoomUser {
         this.user = user;
         this.deleteStatus = deleteStatus;
     }
+
+    public void delete() {
+        this.deleteStatus = DeleteStatus.DELETED;
+    }
 }

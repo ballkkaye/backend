@@ -52,4 +52,12 @@ public class MatchController {
         var respDTO = matchService.update(id, reqDTO, sessionUser);
         return Resp.ok(respDTO);
     }
+
+    // 매칭 글 삭제
+    @PutMapping("/s/api/matches/{id}/delete")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        var respDTO = matchService.delete(id, sessionUser);
+        return Resp.ok(respDTO);
+    }
 }
