@@ -2,6 +2,7 @@ package com.example.ballkkaye.board;
 
 import com.example.ballkkaye.board.image.BoardImageResponse;
 import com.example.ballkkaye.board.reply.BoardReplyResponse;
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.team.TeamResponse;
 import lombok.Data;
 
@@ -109,6 +110,15 @@ public class BoardResponse {
             this.LikeCount = likeCount;
             this.images = images;
             this.replyItems = replyItems;
+        }
+    }
+
+    @Data
+    public static class DeleteDTO {
+        private String deleteStatus;
+
+        public DeleteDTO() {
+            this.deleteStatus = DeleteStatus.DELETED.getLabel();
         }
     }
 }

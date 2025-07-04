@@ -116,7 +116,7 @@ public class MatchResponse {
             this.gameDate = match.getChatRoom().getGame().getGameTime().toString();
             this.gameDate = match.getChatRoom().getGame().getGameTime()
                     .toLocalDateTime()
-                    .format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             this.userNickname = match.getUser().getNickname();
             this.userTeamName = match.getUser().getTeam() == null ? null : match.getUser().getTeam().getTeamName();
             this.userProfileUrl = match.getUser().getProfileUrl();

@@ -56,7 +56,7 @@ public class BoardController {
     @DeleteMapping("/s/api/boards/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boardService.delete(id, sessionUser);
-        return Resp.ok(null);
+        var respDTO = boardService.delete(id, sessionUser);
+        return Resp.ok(respDTO);
     }
 }
