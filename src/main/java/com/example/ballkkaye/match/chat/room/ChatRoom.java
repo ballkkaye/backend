@@ -89,7 +89,7 @@ public class ChatRoom {
         this.preferredRegion = reqDTO.getPreferredRegion() == null ? this.preferredRegion : reqDTO.getPreferredRegion();
         this.isSameTeam = reqDTO.getIsSameTeam() == null ? this.isSameTeam : reqDTO.getIsSameTeam();
     }
-    
+
     public void delete() {
         this.deleteStatus = DeleteStatus.DELETED;
     }
