@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -101,7 +99,6 @@ public class VisitRecordService {
                 .map(VisitRecordResponse.ListDTO::new)
                 .toList();
     }
-
 
     public List<LocalDate> getHighlightDates(Integer sessionUserId, Integer year, Integer month) {
         LocalDate start = LocalDate.of(year, month, 1);

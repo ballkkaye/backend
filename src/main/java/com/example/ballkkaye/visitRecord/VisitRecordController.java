@@ -58,7 +58,6 @@ public class VisitRecordController {
         return Resp.ok(respDTO);
     }
 
-
     /**
      * GET /s/api/visitRecords/highlight-dates?year=2025&month=7
      */
@@ -70,6 +69,7 @@ public class VisitRecordController {
         List<LocalDate> dates = visitRecordService.getHighlightDates(sessionUser.getId(), year, month);
         return Resp.ok(dates);
     }
+
 
     // 직관기록 상세
     @GetMapping("/s/api/visit-records/{id}")

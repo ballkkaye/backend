@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -145,5 +146,32 @@ public class TodayGameRepository {
                         (String) row[9]
                 ))
                 .toList();
+    }
+
+    /**
+     * 특정 구장의 오늘 날짜 경기를 조회
+     * - stadiumId와 날짜(LocalDate)로 필터링
+     * - 예외 발생 시 Optional.empty() 반환
+     */
+    public Optional<TodayGame> findByStadiumIdAndDate(Integer stadiumId, LocalDate date) {
+        try {
+            LocalDateTime start = date.atStartOfDay();
+            LocalDateTime end = date.plusDays(1).atStartOfDay();
+
+            return em.createQuery("""
+                                SELECT tg FROM TodayGame tg
+                                WHERE tg.stadium.id = :stadiumId
+                                  AND tg.gameTime >= :start
+                                  AND tg.gameTime < :end
+                            """, TodayGame.class)
+                    .setParameter("stadiumId", stadiumId)
+                    .setParameter("start", Timestamp.valueOf(start))
+                    .setParameter("end", Timestamp.valueOf(end))
+                    .getResultStream()
+                    .findFirst();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 }
