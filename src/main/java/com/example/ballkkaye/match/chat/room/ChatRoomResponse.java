@@ -1,5 +1,6 @@
 package com.example.ballkkaye.match.chat.room;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -19,7 +20,6 @@ public class ChatRoomResponse {
         private Integer maxParticipants;
         private String preferredGender;
         private String preferredAge;
-        private String preferredRegion;
         private Boolean isSameTeam;
         private String createdAt;
 
@@ -34,12 +34,20 @@ public class ChatRoomResponse {
             this.maxParticipants = chatRoom.getMaxParticipants();
             this.preferredGender = chatRoom.getPreferredGender().getLabel();
             this.preferredAge = chatRoom.getPreferredAge().getName();
-            this.preferredRegion = chatRoom.getPreferredRegion().getName();
             this.isSameTeam = chatRoom.getIsSameTeam();
             Timestamp timestamp = chatRoom.getCreatedAt();
             if (timestamp != null) {
                 this.createdAt = timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             }
+        }
+    }
+
+    @Data
+    public static class DeleteDTO {
+        private DeleteStatus deleteStatus;
+
+        public DeleteDTO(DeleteStatus deleteStatus) {
+            this.deleteStatus = deleteStatus;
         }
     }
 }

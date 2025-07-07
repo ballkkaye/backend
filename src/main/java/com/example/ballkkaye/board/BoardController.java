@@ -44,19 +44,27 @@ public class BoardController {
         return Resp.ok(respDTO);
     }
 
-    // 게시글 상세보기 조회
+    // 게시글 상세보기 조회 (게시글 + 댓글)
     @GetMapping("/s/api/boards/{id}")
-    public ResponseEntity<?> detail(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getBoard(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        BoardResponse.DetailDTO respDTO = boardService.detail(id, sessionUser);
+        BoardResponse.DetailWithReplyDTO respDTO = boardService.getBoard(id, sessionUser);
         return Resp.ok(respDTO);
     }
 
     // 게시글 삭제
-    @PostMapping("/s/api/boards/{id}/delete")
+    @DeleteMapping("/s/api/boards/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boardService.delete(id, sessionUser);
-        return Resp.ok(null);
+        var respDTO = boardService.delete(id, sessionUser);
+        return Resp.ok(respDTO);
+    }
+
+    // 게시글 상세보기 (게시글)
+    @GetMapping("/s/api/boards/{id}/detail")
+    public ResponseEntity<?> detail(@PathVariable("id") Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        var respDTO = boardService.detail(id, sessionUser);
+        return Resp.ok(respDTO);
     }
 }

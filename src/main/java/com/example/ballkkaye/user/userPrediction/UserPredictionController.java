@@ -42,5 +42,4 @@ public class UserPredictionController {
         List<UserPredictionRequest.SaveDTO> respDTO = userPredictionService.save(sessionUser.getId(), requestDTO);
         return Resp.ok(respDTO);
     }
-
 }

@@ -1,6 +1,5 @@
 package com.example.ballkkaye.board;
 
-import com.example.ballkkaye._core.util.ImageUtil;
 import com.example.ballkkaye.board.image.BoardImage;
 import com.example.ballkkaye.board.image.BoardImageRepository;
 import com.example.ballkkaye.board.image.BoardImageResponse;
@@ -59,14 +58,20 @@ public class BoardService {
         boardRepository.save(board);
 
         // 5. 이미지 저장
-        List<BoardImageResponse.ItemDTO> imageUrls = ImageUtil.saveBase64Images(
-                base64Images,
-                board,
-                boardImageRepository
-        );
+        List<BoardImageResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (String img : reqDTO.getImages()) {
+            BoardImage boardImage = new BoardImage()
+                    .builder()
+                    .board(board)
+                    .deleteStatus(DeleteStatus.NOT_DELETED)
+                    .imgUrl(img)
+                    .build();
+            boardImageRepository.save(boardImage);
+            itemDTOS.add(new BoardImageResponse.ItemDTO(boardImage.getId(), boardImage.getImgUrl()));
+        }
 
         // 6. 응답 반환
-        return new BoardResponse.SaveDTO(board, imageUrls);
+        return new BoardResponse.SaveDTO(board, itemDTOS);
     }
 
     // 커뮤니티 게시글 수정
@@ -103,7 +108,15 @@ public class BoardService {
         }
 
         // 7. 새 이미지 저장
-        ImageUtil.saveBase64Images(reqDTO.getNewImages(), boardPS, boardImageRepository);
+        for (String img : reqDTO.getNewImages()) {
+            BoardImage boardImage = new BoardImage()
+                    .builder()
+                    .board(boardPS)
+                    .deleteStatus(DeleteStatus.NOT_DELETED)
+                    .imgUrl(img)
+                    .build();
+            boardImageRepository.save(boardImage);
+        }
 
         // 8. 게시글 update 성공
         boardPS.update(reqDTO.getTitle(), reqDTO.getContent(), teamPS);
@@ -165,7 +178,7 @@ public class BoardService {
     }
 
     // 게시글 상세보기
-    public BoardResponse.DetailDTO detail(Integer boardId, User sessionUser) {
+    public BoardResponse.DetailWithReplyDTO getBoard(Integer boardId, User sessionUser) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
         PrettyTime p = new PrettyTime(Locale.KOREAN);
@@ -183,7 +196,7 @@ public class BoardService {
             String nickname = parentReply.getUser().getNickname();
             String profileImg = parentReply.getUser().getProfileUrl();
             String relativeTime = p.format(new Date(board.getCreatedAt().getTime()));
-            String myTeamName = parentReply.getUser().getTeam().getTeamName();
+            String myTeamName = parentReply.getUser().getTeam() == null ? null : parentReply.getUser().getTeam().getTeamName();
             String content = parentReply.getContent();
             Integer parentReplyId = parentReply.getParentReplyId() != null
                     ? parentReply.getParentReplyId().getId()
@@ -203,7 +216,7 @@ public class BoardService {
                 String childNickname = childReply.getUser().getNickname();
                 String childProfileImg = childReply.getUser().getProfileUrl();
                 String childRelativeTime = p.format(new Date(childReply.getCreatedAt().getTime()));
-                String childMyTeamName = childReply.getUser().getTeam().getTeamName();
+                String childMyTeamName = childReply.getUser().getTeam() == null ? null : childReply.getUser().getTeam().getTeamName();
                 String childContent = childReply.getContent();
                 Integer childParentReplyId = childReply.getParentReplyId() != null
                         ? childReply.getParentReplyId().getId()
@@ -249,6 +262,8 @@ public class BoardService {
                     nickname,
                     profileImg,
                     relativeTime,
+                    parentReplyId,
+                    parentTagReplyId,
                     myTeamName,
                     content,
                     isParentReplyOwner,
@@ -263,8 +278,16 @@ public class BoardService {
                 .isPresent();
         Integer replyCount = boardLikeRepository.totalCount(board.getId());
 
+        // 2. 이미지 조회
+        List<BoardImage> images = boardImageRepository.findByBoardIdAndDeleteStatus(board, DeleteStatus.NOT_DELETED);
 
-        BoardResponse.DetailDTO respDTO = new BoardResponse.DetailDTO(
+        List<BoardImageResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (BoardImage image : images) {
+            itemDTOS.add(new BoardImageResponse.ItemDTO(image.getId(), image.getImgUrl()));
+        }
+
+
+        BoardResponse.DetailWithReplyDTO respDTO = new BoardResponse.DetailWithReplyDTO(
                 board.getId(),
                 board.getUser().getNickname(),
                 board.getUser().getProfileUrl(),
@@ -277,6 +300,7 @@ public class BoardService {
                 isBoardOwner,
                 isBoardLike,
                 replyCount,
+                itemDTOS,
                 parentReplyItemDTOs);
 
         return respDTO;
@@ -285,7 +309,7 @@ public class BoardService {
 
     // 게시글 삭제
     @Transactional
-    public void delete(Integer boardId, User sessionUser) {
+    public Object delete(Integer boardId, User sessionUser) {
         // 1. 존재하는 유저인지
         userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
@@ -303,5 +327,30 @@ public class BoardService {
         boardPS.delete();
 
         // 5. ok
+        return new BoardResponse.DeleteDTO();
+    }
+
+    public Object detail(Integer boardId, User sessionUser) {
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+        Board boardPS = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
+        Boolean isOwner = false;
+        Boolean isLike = boardLikeRepository.findByBoardIdAndUserId(boardId, userPS.getId()).isPresent();
+        Integer likeCount = boardLikeRepository.totalCount(boardId);
+        // 3. 게시글 주인이 맞는지
+        if (boardPS.getUser().getId() == userPS.getId()) {
+            isOwner = true;
+        }
+        List<BoardImage> boardImages = boardImageRepository.findByBoardIdAndDeleteStatus(boardPS, DeleteStatus.NOT_DELETED);
+        List<BoardImageResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        for (BoardImage image : boardImages) {
+            itemDTOS.add(new BoardImageResponse.ItemDTO(image.getId(), image.getImgUrl()));
+        }
+
+        PrettyTime p = new PrettyTime(Locale.KOREAN);
+        String relativeTime = p.format(new Date(boardPS.getCreatedAt().getTime()));
+        BoardResponse.DetailDTO respDTO = new BoardResponse.DetailDTO(boardPS, userPS, relativeTime, isOwner, isLike, likeCount, itemDTOS);
+        return respDTO;
     }
 }

@@ -2,7 +2,9 @@ package com.example.ballkkaye.board;
 
 import com.example.ballkkaye.board.image.BoardImageResponse;
 import com.example.ballkkaye.board.reply.BoardReplyResponse;
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.team.TeamResponse;
+import com.example.ballkkaye.user.User;
 import lombok.Data;
 
 import java.util.List;
@@ -78,6 +80,50 @@ public class BoardResponse {
     }
 
     @Data
+    public static class DetailWithReplyDTO {
+        private Integer boardId;
+        private String nickname;
+        private String profileImageUrl;
+        private String relativeTime;
+        private String myTeamName;
+        private Integer teamCategoryId;
+        private String teamCategoryName;
+        private String title;
+        private String content;
+        private Boolean isOwner;
+        private Boolean isLike;
+        private Integer likeCount;
+        private List<BoardImageResponse.ItemDTO> images;
+        private List<BoardReplyResponse.ParentItemDTO> replyItems;
+
+        public DetailWithReplyDTO(Integer boardId, String nickname, String profileImageUrl, String relativeTime, String myTeamName, Integer teamCategoryId, String teamCategoryName, String title, String content, Boolean isOwner, Boolean isLike, Integer likeCount, List<BoardImageResponse.ItemDTO> images, List<BoardReplyResponse.ParentItemDTO> replyItems) {
+            this.boardId = boardId;
+            this.nickname = nickname;
+            this.profileImageUrl = profileImageUrl;
+            this.relativeTime = relativeTime;
+            this.myTeamName = myTeamName;
+            this.teamCategoryId = teamCategoryId;
+            this.teamCategoryName = teamCategoryName;
+            this.title = title;
+            this.content = content;
+            this.isOwner = isOwner;
+            this.isLike = isLike;
+            this.likeCount = likeCount;
+            this.images = images;
+            this.replyItems = replyItems;
+        }
+    }
+
+    @Data
+    public static class DeleteDTO {
+        private String deleteStatus;
+
+        public DeleteDTO() {
+            this.deleteStatus = DeleteStatus.DELETED.getLabel();
+        }
+    }
+
+    @Data
     public static class DetailDTO {
         private Integer boardId;
         private String nickname;
@@ -90,23 +136,23 @@ public class BoardResponse {
         private String content;
         private Boolean isOwner;
         private Boolean isLike;
-        private Integer LikeCount;
-        private List<BoardReplyResponse.ParentItemDTO> replyItems;
+        private Integer likeCount;
+        private List<BoardImageResponse.ItemDTO> images;
 
-        public DetailDTO(Integer boardId, String nickname, String profileImageUrl, String relativeTime, String myTeamName, Integer teamCategoryId, String teamCategoryName, String title, String content, Boolean isOwner, Boolean isLike, Integer likeCount, List<BoardReplyResponse.ParentItemDTO> replyItems) {
-            this.boardId = boardId;
-            this.nickname = nickname;
-            this.profileImageUrl = profileImageUrl;
+        public DetailDTO(Board board, User user, String relativeTime, Boolean isOwner, Boolean isLike, Integer likeCount, List<BoardImageResponse.ItemDTO> images) {
+            this.boardId = board.getId();
+            this.nickname = user.getNickname();
+            this.profileImageUrl = user.getProfileUrl();
             this.relativeTime = relativeTime;
-            this.myTeamName = myTeamName;
-            this.teamCategoryId = teamCategoryId;
-            this.teamCategoryName = teamCategoryName;
-            this.title = title;
-            this.content = content;
+            this.myTeamName = user.getTeam().getTeamName();
+            this.teamCategoryId = board.getTeam().getId();
+            this.teamCategoryName = board.getTeam().getTeamName();
+            this.title = board.getTitle();
+            this.content = board.getContent();
             this.isOwner = isOwner;
             this.isLike = isLike;
-            this.LikeCount = likeCount;
-            this.replyItems = replyItems;
+            this.likeCount = likeCount;
+            this.images = images;
         }
     }
 }
