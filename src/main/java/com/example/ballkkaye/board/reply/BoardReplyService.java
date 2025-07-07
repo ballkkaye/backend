@@ -22,7 +22,6 @@ public class BoardReplyService {
     private final UserRepository userRepository;
     private final BoardReplyLikeRepository boardReplyLikeRepository;
 
-    // 댓글 등록
     @Transactional
     public Object save(Integer boardId, User sessionUser, BoardReplyRequest.SaveDTO reqDTO) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
