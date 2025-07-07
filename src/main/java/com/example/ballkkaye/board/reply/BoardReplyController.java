@@ -26,8 +26,8 @@ public class BoardReplyController {
     @DeleteMapping("/s/api/boards/reply/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boardReplyService.delete(id, sessionUser);
-        return Resp.ok(null);
+        var respDTO = boardReplyService.delete(id, sessionUser);
+        return Resp.ok(respDTO);
     }
 
     // 댓글 수정

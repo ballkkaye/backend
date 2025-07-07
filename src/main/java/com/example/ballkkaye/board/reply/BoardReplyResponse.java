@@ -1,6 +1,7 @@
 package com.example.ballkkaye.board.reply;
 
 import com.example.ballkkaye.board.Board;
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.user.User;
 import lombok.Data;
 
@@ -136,6 +137,15 @@ public class BoardReplyResponse {
             this.likeCount = replyLikeCount;
             this.content = boardReply.getContent();
             this.relativeTime = relativeTime;
+        }
+    }
+
+    @Data
+    public static class DeleteDTO {
+        private String deleteStatus;
+
+        public DeleteDTO() {
+            this.deleteStatus = DeleteStatus.DELETED.getLabel();
         }
     }
 }

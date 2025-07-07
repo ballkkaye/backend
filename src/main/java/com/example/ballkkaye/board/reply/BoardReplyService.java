@@ -60,7 +60,7 @@ public class BoardReplyService {
 
     // 댓글 삭제
     @Transactional
-    public void delete(Integer replyId, User sessionUser) {
+    public Object delete(Integer replyId, User sessionUser) {
         // 1. 존재하는 유저인지
         userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
@@ -76,7 +76,8 @@ public class BoardReplyService {
 
         // 4. 삭제
         boardReply.delete();
-
+        BoardReplyResponse.DeleteDTO respDTO = new BoardReplyResponse.DeleteDTO();
+        return respDTO;
     }
 
     @Transactional

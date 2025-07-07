@@ -133,8 +133,11 @@ public class UserService {
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
 
-        if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
-            throw new RuntimeException("이미 존재하는 닉네임");
+        // 요청 닉네임이 내 닉네임과 같거나 비어있으면 기존 닉네임 유지
+        if (!reqDTO.getNickname().equals(userPS.getNickname()) || reqDTO.getNickname().isEmpty()) {
+            if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
+                throw new RuntimeException("이미 존재하는 닉네임");
+            }
         }
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
                 .orElseThrow(() -> new RuntimeException("해당 팀을 찾을 수 없습니다"));
