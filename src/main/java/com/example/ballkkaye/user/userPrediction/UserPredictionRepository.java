@@ -1,6 +1,8 @@
 package com.example.ballkkaye.user.userPrediction;
 
 import com.example.ballkkaye.common.enums.GameStatus;
+import com.example.ballkkaye.game.today.TodayGame;
+import com.example.ballkkaye.user.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -169,12 +171,12 @@ public class UserPredictionRepository {
         return dtos;
     }
 
-    public boolean isExistsByUserIdAndGameId(Integer userId, Integer gameId) {
-        String sql = "SELECT COUNT(*) FROM user_prediction_tb WHERE user_id = :userId AND game_id = :gameId";
+    public boolean isExistsByUserIdAndGameId(User user, TodayGame todayGame) {
+        String jpql = "SELECT COUNT(up) FROM UserPrediction up WHERE up.user = :user AND up.game = :game";
 
-        Long count = (Long) em.createNativeQuery(sql)
-                .setParameter("userId", userId)
-                .setParameter("gameId", gameId)
+        Long count = em.createQuery(jpql, Long.class)
+                .setParameter("user", user)
+                .setParameter("game", todayGame)
                 .getSingleResult();
 
         return count > 0;

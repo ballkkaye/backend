@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -118,8 +120,9 @@ public class UserPredictionService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. User ID: " + userId));
 
-        // 저장할 UserPrediction 엔티티들을 담을 리스트
         List<UserPrediction> userPredictionsToSave = new ArrayList<>();
+        // 요청 내 중복 gameId 확인용 (새로 추가)
+        Set<Integer> gameIdsInCurrentRequest = new HashSet<>();
 
         // 예측 요청 목록을 순회하며 각 예측에 대한 유효성 검사 및 UserPrediction 엔티티 생성
         for (UserPredictionRequest.SaveDTO dto : saveDTO) {
@@ -131,14 +134,22 @@ public class UserPredictionService {
                 throw new IllegalArgumentException("경기 [ID: " + dto.getGameId() + "]에 대한 선택 팀 정보가 누락되었습니다.");
             }
 
-            // 3. 이미 예측한 경기가 있으면 예외 처리
-            if (userPredictionRepository.isExistsByUserIdAndGameId(user.getId(), dto.getGameId())) {
-                throw new IllegalArgumentException("경기 [ID: " + dto.getGameId() + "]는 이미 예측되었습니다. 중복 예측은 불가능합니다.");
+            if (!gameIdsInCurrentRequest.add(dto.getGameId())) {
+                throw new IllegalArgumentException("요청 내에 경기 [ID: " + dto.getGameId() + "]에 대한 중복 예측 요청이 있습니다. 한 요청에 같은 경기를 두 번 예측할 수 없습니다.");
             }
 
             // 4. TodayGame 엔티티 조회
             TodayGame todayGame = todayGameRepository.findByGameId(dto.getGameId())
                     .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 경기 ID입니다: " + dto.getGameId()));
+
+            // 3. 이미 예측한 경기가 있으면 예외 처리 (수정된 부분)
+            if (userPredictionRepository.isExistsByUserIdAndGameId(user, todayGame)) {
+                throw new IllegalArgumentException("경기 [ID: " + dto.getGameId() + "]는 이미 예측되었습니다. 중복 예측은 불가능합니다.");
+            }
+
+            if (todayGame.getGameTime().toLocalDateTime().isBefore(LocalDateTime.now())) {
+                throw new IllegalArgumentException("경기 [ID: " + dto.getGameId() + "]는 이미 시작되었거나 종료되었습니다. 현재 시간 이후에는 예측할 수 없습니다.");
+            }
 
             // 5. 선택한 팀이 해당 경기의 홈/원정 팀에 속하는지 확인
             if (!dto.getUserChoiceTeamId().equals(todayGame.getHomeTeam().getId()) &&
