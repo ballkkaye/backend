@@ -59,21 +59,6 @@ public class VisitRecordController {
     }
 
 
-    /**
-     * GET /s/api/visitRecords/highlight-dates?year=2025&month=7
-     */
-    // 달력에 하이라이트할 직관 날짜 조회
-    @GetMapping("/s/api/visitRecords/highlight-dates")
-    public ResponseEntity<?> getHighlightDates(@RequestParam Integer year,
-                                               @RequestParam Integer month) {
-        // 테스트용 유저 세팅
-        User sessionUser = userRepository.findByEmail("ssar@nate.com")
-                .orElseThrow(() -> new RuntimeException("테스트 유저가 없습니다"));
-
-        List<LocalDate> dates = visitRecordService.getHighlightDates(sessionUser.getId(), year, month);
-        return Resp.ok(dates);
-    }
-
     // 직관기록 상세
     @GetMapping("/s/api/visitRecords/{id}")
     public ResponseEntity<?> getDetail(@PathVariable("id") Integer id) {

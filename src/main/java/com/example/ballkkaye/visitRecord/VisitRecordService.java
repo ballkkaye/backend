@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,22 +161,6 @@ public class VisitRecordService {
 
         return visitRecords.stream()
                 .map(VisitRecordResponse.ListDTO::new)
-                .toList();
-    }
-
-
-    public List<LocalDate> getHighlightDates(Integer sessionUserId, Integer year, Integer month) {
-        LocalDate start = LocalDate.of(year, month, 1);
-        LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
-
-        Timestamp startTimestamp = Timestamp.valueOf(start.atStartOfDay());
-        Timestamp endTimestamp = Timestamp.valueOf(end.plusDays(1).atStartOfDay().minusSeconds(1));
-
-        List<Date> sqlDates = visitRecordRepository.findDistinctDatesByUserIdAndMonth(sessionUserId, startTimestamp, endTimestamp);
-
-
-        return sqlDates.stream()
-                .map(Date::toLocalDate)
                 .toList();
     }
 

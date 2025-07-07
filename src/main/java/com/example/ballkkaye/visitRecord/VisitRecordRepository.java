@@ -5,7 +5,6 @@ import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -81,19 +80,4 @@ public class VisitRecordRepository {
                 .getResultList();
     }
 
-
-    // 특정 유저가 해당 월에 직관 기록 목록을 작성한 날짜들만 중복 없이 조회 (NOT_DELETED 상태만)
-    public List<Date> findDistinctDatesByUserIdAndMonth(Integer userId, Timestamp start, Timestamp end) {
-        return em.createQuery("""
-                            select distinct cast(v.createdAt as date)
-                            from VisitRecord v
-                            where v.user.id = :userId
-                              and v.deleteStatus = 'NOT_DELETED'
-                              and v.createdAt between :start and :end
-                        """, Date.class)
-                .setParameter("userId", userId)
-                .setParameter("start", start)
-                .setParameter("end", end)
-                .getResultList();
-    }
 }

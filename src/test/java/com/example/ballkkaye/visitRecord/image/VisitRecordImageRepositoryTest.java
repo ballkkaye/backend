@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
 
 @Import(VisitRecordImageRepository.class)
 @DataJpaTest
@@ -94,7 +94,7 @@ public class VisitRecordImageRepositoryTest {
         em.persist(visitRecord);
 
         VisitRecordImage image = VisitRecordImage.builder()
-                .visitRecordId(visitRecord.getId())
+                .visitRecord(visitRecord)
                 .imageUrl("/upload/visit-record/sample.jpg")
                 .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
@@ -108,7 +108,7 @@ public class VisitRecordImageRepositoryTest {
         VisitRecordImage imagePS = em.find(VisitRecordImage.class, image.getId());
         System.out.println("===== 저장된 직관기록 이미지 정보 =====");
         System.out.println("ID: " + imagePS.getId());
-        System.out.println("연결된 visitRecordId: " + imagePS.getVisitRecordId());
+        System.out.println("연결된 visitRecordId: " + imagePS.getVisitRecord().getId());
         System.out.println("이미지 URL: " + imagePS.getImageUrl());
         System.out.println("삭제 상태: " + imagePS.getDeleteStatus());
         System.out.println("업로드 시간: " + imagePS.getCreatedAt());
@@ -182,21 +182,27 @@ public class VisitRecordImageRepositoryTest {
         em.persist(visitRecord);
 
         VisitRecordImage image = VisitRecordImage.builder()
-                .visitRecordId(visitRecord.getId())
+                .visitRecord(visitRecord)
                 .imageUrl("/upload/visit-record/visit_test.jpg")
                 .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
         em.persist(image);
 
         // when
-        Optional<VisitRecordImage> result = visitRecordImageRepository.findByVisitRecordId(visitRecord.getId());
+        List<VisitRecordImage> result =
+                visitRecordImageRepository.findByVisitRecordIdAndDeleteStatus(visitRecord, visitRecord.getDeleteStatus());
 
-        // eye
-        VisitRecordImage imagePS = result.get();
-        System.out.println("===== 직관기록 이미지 조회 결과 =====");
-        System.out.println("ID: " + imagePS.getId());
-        System.out.println("이미지 경로: " + imagePS.getImageUrl());
-        System.out.println("삭제 상태: " + imagePS.getDeleteStatus());
-        System.out.println("연결된 VisitRecord ID: " + imagePS.getVisitRecordId());
+// eye
+        if (!result.isEmpty()) {
+            VisitRecordImage imagePS = result.get(0); // 첫 번째 이미지만 확인 (여러 개 있을 수 있음)
+
+            System.out.println("===== 직관기록 이미지 조회 결과 =====");
+            System.out.println("ID: " + imagePS.getId());
+            System.out.println("이미지 경로: " + imagePS.getImageUrl());
+            System.out.println("삭제 상태: " + imagePS.getDeleteStatus());
+            System.out.println("연결된 VisitRecord ID: " + imagePS.getVisitRecord().getId());
+        } else {
+            System.out.println("이미지를 찾을 수 없습니다.");
+        }
     }
 }

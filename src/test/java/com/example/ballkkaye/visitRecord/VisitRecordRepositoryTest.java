@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
@@ -381,83 +380,5 @@ public class VisitRecordRepositoryTest {
 
     }
 
-
-    @Test
-    public void findDistinctDatesByUserIdAndMonth_test() {
-        em.flush();
-        em.clear();
-
-        // given
-        Stadium stadium = Stadium.builder()
-                .stadiumName("잠실야구장")
-                .location("서울 송파구")
-                .stadiumType(StadiumType.OUTDOOR)
-                .build();
-        em.persist(stadium);
-
-        Team homeTeam = Team.builder()
-                .teamName("LG 트윈스 테스트")
-                .stadium1(stadium)
-                .logoUrl("/img/logo/lg.png")
-                .build();
-        em.persist(homeTeam);
-
-        Team awayTeam = Team.builder()
-                .teamName("롯데 자이언츠 테스트")
-                .stadium1(stadium)
-                .logoUrl("/img/logo/lg.png")
-                .build();
-        em.persist(awayTeam);
-
-        Game game = Game.builder()
-                .stadium(stadium)
-                .homeTeam(homeTeam)
-                .awayTeam(awayTeam)
-                .homeWinPer(55.0)
-                .awayWinPer(45.0)
-                .homeResultScore(3)
-                .awayResultScore(2)
-                .gameTime(Timestamp.valueOf("2025-07-03 18:30:00"))
-                .build();
-        em.persist(game);
-
-        User user = User.builder()
-                .username("ssarssar123")
-                .email("ssar_test@nate.com")
-                .name("쌀테스트")
-                .nickname("ssar_test")
-                .password("1234")
-                .birthDate(LocalDate.of(1999, 9, 9))
-                .gender(Gender.MALE)
-                .phoneNumber("01012341234")
-                .providerType(ProviderType.BALLKKAYE)
-                .userRole(UserRole.USER)
-                .profileUrl("/img/profile/default.png")
-                .team(homeTeam)
-                .build();
-        em.persist(user);
-
-        VisitRecord visitRecord = VisitRecord.builder()
-                .game(game)
-                .team(homeTeam)
-                .user(user)
-                .result(Result.WIN)
-                .content("직관 너무 재밌었어요!")
-                .deleteStatus(DeleteStatus.NOT_DELETED)
-                .build();
-        em.persist(visitRecord);
-
-
-        Timestamp start = Timestamp.valueOf(LocalDate.of(2025, 7, 1).atStartOfDay());
-        Timestamp end = Timestamp.valueOf(LocalDate.of(2025, 7, 31).plusDays(1).atStartOfDay().minusSeconds(1));
-
-
-        // when
-        List<Date> dates = visitRecordRepository.findDistinctDatesByUserIdAndMonth(user.getId(), start, end);
-
-        // eye
-        System.out.println("===== 하이라이트 날짜 목록 =====");
-        dates.forEach(d -> System.out.println("날짜: " + d));
-    }
 
 }
