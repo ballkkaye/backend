@@ -36,6 +36,9 @@ public class VisitRecord {
     @Enumerated(EnumType.STRING)
     private Result result;
 
+    @Column
+    private String imgUrl;
+
     @Column(nullable = false)
     private String content;
 
@@ -50,12 +53,13 @@ public class VisitRecord {
     private Timestamp createdAt;
 
     @Builder
-    public VisitRecord(Integer id, User user, Game game, Team team, Result result, String content, DeleteStatus deleteStatus, Timestamp updatedAt, Timestamp createdAt) {
+    public VisitRecord(Integer id, User user, Game game, Team team, Result result, String imgUrl, String content, DeleteStatus deleteStatus, Timestamp updatedAt, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.game = game;
         this.team = team;
         this.result = result;
+        this.imgUrl = imgUrl;
         this.content = content;
         this.deleteStatus = deleteStatus;
         this.updatedAt = updatedAt;
@@ -65,5 +69,11 @@ public class VisitRecord {
 
     public void delete() {
         this.deleteStatus = DeleteStatus.DELETED;
+    }
+
+    public void update(Result result, String content, String imgUrl) {
+        this.result = result;
+        this.content = content;
+        this.imgUrl = imgUrl;
     }
 }

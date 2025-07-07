@@ -4,7 +4,6 @@ import com.example.ballkkaye.common.enums.DeleteStatus;
 import lombok.Data;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class VisitRecordResponse {
 
@@ -20,9 +19,9 @@ public class VisitRecordResponse {
         private String result;
         private String DeleteStatus;
         private String content;
-        private List<ItemDTO> images; // base64로 변환된 문자열
+        private String imgUrl;
 
-        public DTO(VisitRecord visitRecord, List<ItemDTO> images) {
+        public DTO(VisitRecord visitRecord) {
             this.id = visitRecord.getId();
             this.homeTeamName = visitRecord.getGame().getHomeTeam().getTeamName().split(" ")[0];
             this.awayTeamName = visitRecord.getGame().getAwayTeam().getTeamName().split(" ")[0];
@@ -36,7 +35,7 @@ public class VisitRecordResponse {
             this.result = visitRecord.getResult().getValue(); // "승", "패", "무"
             this.DeleteStatus = visitRecord.getDeleteStatus().getLabel(); // "정상", "삭제됨"
             this.content = visitRecord.getContent();
-            this.images = images;
+            this.imgUrl = visitRecord.getImgUrl();
         }
     }
 
@@ -76,9 +75,9 @@ public class VisitRecordResponse {
         private String stadiumName;
         private String result;
         private String content;
-        private List<ItemDTO> imageString; // base64로 변환된 문자열
+        private String imgUrl; // base64로 변환된 문자열
 
-        public DetailDTO(VisitRecord visitRecord, List<ItemDTO> imageString) {
+        public DetailDTO(VisitRecord visitRecord) {
             this.id = visitRecord.getId();
             this.homeScore = visitRecord.getGame().getHomeResultScore();
             this.awayScore = visitRecord.getGame().getAwayResultScore();
@@ -91,18 +90,7 @@ public class VisitRecordResponse {
             this.stadiumName = visitRecord.getGame().getStadium().getStadiumName();
             this.result = visitRecord.getResult().getValue(); // "승", "패", "무"
             this.content = visitRecord.getContent();
-            this.imageString = imageString;
-        }
-    }
-
-    @Data
-    public static class ItemDTO {
-        private Integer id;
-        private String imageUrl;
-
-        public ItemDTO(Integer id, String imageUrl) {
-            this.id = id;
-            this.imageUrl = imageUrl;
+            this.imgUrl = visitRecord.getImgUrl();
         }
     }
 
