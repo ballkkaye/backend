@@ -50,6 +50,7 @@ public class UserService {
         // 1. 유저 중복 확인
         User userPS = userRepository.findByEmail(userInfo.getEmail())
                 .orElseGet(() -> userRepository.findByPhoneNumber(userInfo.getMobile()).orElse(null));
+        Boolean isNewUser = false;
 
         if (userPS == null) {
             // 2. username 생성 (중복 방지용)
@@ -84,21 +85,21 @@ public class UserService {
                     .userRole(UserRole.USER)
                     .build();
             userRepository.save(user);
+            isNewUser = true;
             String myAccessToken = JwtUtil.create(user);
 
-            return new UserResponse.LoginDTO(user, myAccessToken);
+            return new UserResponse.LoginDTO(user, myAccessToken, isNewUser);
         }
         // 2. 로그인 처리 (토큰 발급 및 저장)
         String myAccessToken = JwtUtil.create(userPS);
-
-        return new UserResponse.LoginDTO(userPS, myAccessToken);
+        return new UserResponse.LoginDTO(userPS, myAccessToken, isNewUser);
     }
 
     @Transactional
     public Object additionalUserInfo(User sessionUser, UserRequest.@Valid AdditionalInfoDTO reqDTO) {
         // 유저 존재하는지 검사
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new RuntimeException("유저lawk를 찾을 수 없습니다"));
 
         // req로 들어온 팀이 존재하는지 검사
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
