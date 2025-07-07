@@ -1,6 +1,7 @@
 package com.example.ballkkaye.board.reply;
 
 import com.example.ballkkaye.board.Board;
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.user.User;
 import lombok.Data;
 
@@ -13,6 +14,8 @@ public class BoardReplyResponse {
         private String nickname;
         private String profileImg;
         private String relativeTime;
+        private Integer parentReplyId;
+        private Integer parentTagReplyId;
         private String myTeamName;
         private String content;
         private Boolean isOwner;
@@ -20,10 +23,12 @@ public class BoardReplyResponse {
         private Integer likeCount;
         private List<ChildItemDTO> childReplies;
 
-        public ParentItemDTO(Integer replyId, String nickname, String profileImg, String relativeTime, String myTeamName, String content, Boolean isOwner, Boolean isLike, Integer likeCount, List<ChildItemDTO> childReplies) {
+        public ParentItemDTO(Integer replyId, String nickname, String profileImg, String relativeTime, Integer parentReplyId, Integer parentTagReplyId, String myTeamName, String content, Boolean isOwner, Boolean isLike, Integer likeCount, List<ChildItemDTO> childReplies) {
             this.replyId = replyId;
             this.nickname = nickname;
             this.profileImg = profileImg;
+            this.parentReplyId = parentReplyId;
+            this.parentTagReplyId = parentTagReplyId;
             this.relativeTime = relativeTime;
             this.myTeamName = myTeamName;
             this.content = content;
@@ -132,6 +137,15 @@ public class BoardReplyResponse {
             this.likeCount = replyLikeCount;
             this.content = boardReply.getContent();
             this.relativeTime = relativeTime;
+        }
+    }
+
+    @Data
+    public static class DeleteDTO {
+        private String deleteStatus;
+
+        public DeleteDTO() {
+            this.deleteStatus = DeleteStatus.DELETED.getLabel();
         }
     }
 }

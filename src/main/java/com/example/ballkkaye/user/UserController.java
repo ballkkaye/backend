@@ -32,7 +32,7 @@ public class UserController {
     }
 
     // 유저닉네임 중복체크
-    @GetMapping("/api/users/check-nickname-available/{nickname}")
+    @GetMapping("/s/api/users/check-nickname-available/{nickname}")
     public ResponseEntity<?> checkUsernameAvailable(@PathVariable("nickname") String nickname) {
         Map<String, Object> respDTO = userService.checkUsernameAvailable(nickname);
         return Resp.ok(respDTO);
