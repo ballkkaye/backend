@@ -189,20 +189,15 @@ public class VisitRecordImageRepositoryTest {
         em.persist(image);
 
         // when
-        List<VisitRecordImage> result =
-                visitRecordImageRepository.findByVisitRecordIdAndDeleteStatus(visitRecord, visitRecord.getDeleteStatus());
+        List<VisitRecordImage> results = visitRecordImageRepository.findByVisitRecordIdAndDeleteStatus(visitRecord, DeleteStatus.NOT_DELETED);
 
-// eye
-        if (!result.isEmpty()) {
-            VisitRecordImage imagePS = result.get(0); // 첫 번째 이미지만 확인 (여러 개 있을 수 있음)
-
-            System.out.println("===== 직관기록 이미지 조회 결과 =====");
-            System.out.println("ID: " + imagePS.getId());
-            System.out.println("이미지 경로: " + imagePS.getImageUrl());
-            System.out.println("삭제 상태: " + imagePS.getDeleteStatus());
-            System.out.println("연결된 VisitRecord ID: " + imagePS.getVisitRecord().getId());
-        } else {
-            System.out.println("이미지를 찾을 수 없습니다.");
+        // eye
+        System.out.println("===== 직관기록 이미지 조회 결과 =====");
+        for (VisitRecordImage result : results) {
+            System.out.println("ID : " + result.getId());
+            System.out.println("이미지 경로 : " + result.getImageUrl());
+            System.out.println("삭제 상태 : " + result.getDeleteStatus());
+            System.out.println("직관기록 id : " + result.getVisitRecord().getId());
         }
     }
 }
