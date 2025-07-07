@@ -13,9 +13,10 @@ import java.util.List;
 public class TodayTeamRecordController {
     private final TodayTeamRecordService todayTeamRecordService;
 
-    @GetMapping("/api/today/team-records")
-    public ResponseEntity<?> getAllTodayTeamRecords() {
-        List<TodayTeamRecordResponse.DTO> respDTO = todayTeamRecordService.getAllTeamRecords();
+    // 팀 순위 호출
+    @GetMapping("/s/api/today/team-records")
+    public ResponseEntity<?> teamRecords() {
+        List<TodayTeamRecordResponse.DTO> respDTO = todayTeamRecordService.teamRecords();
         return Resp.ok(respDTO);
     }
 }
