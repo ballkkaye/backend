@@ -85,22 +85,12 @@ public class VisitRecordService {
     // 직관기록 목록
     public List<VisitRecordResponse.ListDTO> getList(Integer sessionUserId, LocalDate date, Integer year, Integer month) {
         List<VisitRecord> visitRecords;
-        System.out.println(date);
-        System.out.println(year);
-        System.out.println(month);
         if (date != null) {
-            System.out.println(1);
             visitRecords = visitRecordRepository.findAllByUserIdAndDate(sessionUserId, date);
-            System.out.println(2);
         } else if (year != null && month != null) {
-            System.out.println(3);
             LocalDate start = LocalDate.of(year, month, 1);
-            System.out.println(4);
             LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
             visitRecords = visitRecordRepository.findAllByUserIdAndMonth(sessionUserId, start, end);
-            System.out.println("createdAt: " + visitRecords.get(0).getCreatedAt());
-            System.out.println("start: " + start + ", end: " + end);
-
         } else {
             throw new IllegalArgumentException("날짜 또는 년월 정보가 필요합니다.");
         }
