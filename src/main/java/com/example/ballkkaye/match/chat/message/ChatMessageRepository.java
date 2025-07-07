@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ChatMessageRepository {
     private final EntityManager em;
+
+    public void save(ChatMessage message) {
+        em.persist(message);
+    }
 }

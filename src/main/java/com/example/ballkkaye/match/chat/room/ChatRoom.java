@@ -46,9 +46,6 @@ public class ChatRoom {
     @Column(nullable = false)
     private Boolean isSameTeam;
 
-    @Column
-    private Timestamp lastDisconnectedAt;
-
     @UpdateTimestamp
     private Timestamp updatedAt;
 
@@ -56,14 +53,15 @@ public class ChatRoom {
     private Timestamp createdAt;
 
     @Builder
-    public ChatRoom(Game game,
+    public ChatRoom(Integer id,
+                    Game game,
                     Team team,
                     Integer maxParticipants,
                     Gender preferredGender,
                     Age preferredAge,
                     DeleteStatus deleteStatus,
-                    Boolean isSameTeam,
-                    Timestamp lastDisconnectedAt) {
+                    Boolean isSameTeam) {
+        this.id = id;
         this.game = game;
         this.team = team;
         this.maxParticipants = maxParticipants;
@@ -71,7 +69,6 @@ public class ChatRoom {
         this.preferredAge = preferredAge;
         this.deleteStatus = deleteStatus;
         this.isSameTeam = isSameTeam;
-        this.lastDisconnectedAt = lastDisconnectedAt;
     }
 
     public void update(Game gamePS, Team teamPS, MatchRequest.UpdateDTO reqDTO) {

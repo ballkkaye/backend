@@ -64,4 +64,17 @@ public class ChatRoomUserRepository {
                 .setParameter(2, deleteStatus.name())
                 .getSingleResult()).longValue();
     }
+
+    public boolean existsByUserIdAndChatRoomId(Integer userId, Integer chatRoomId) {
+        Long count = em.createQuery("""
+                            SELECT COUNT(cru) FROM ChatRoomUser cru
+                            WHERE cru.user.id = :userId AND cru.chatRoom.id = :chatRoomId
+                            AND cru.deleteStatus = 'NOT_DELETED'
+                        """, Long.class)
+                .setParameter("userId", userId)
+                .setParameter("chatRoomId", chatRoomId)
+                .getSingleResult();
+
+        return count > 0;
+    }
 }

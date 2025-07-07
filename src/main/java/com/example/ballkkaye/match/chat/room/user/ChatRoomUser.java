@@ -33,6 +33,10 @@ public class ChatRoomUser {
     @Column(nullable = false)
     private Boolean isOwner;
 
+
+    @Column
+    private Timestamp lastDisconnectedAt;
+
     @CreationTimestamp
     private Timestamp createdAt;
 
@@ -50,5 +54,9 @@ public class ChatRoomUser {
 
     public void setDeleteStatus(DeleteStatus deleteStatus) {
         this.deleteStatus = deleteStatus;
+    }
+
+    public void updateLastDisconnectedAt() {
+        this.lastDisconnectedAt = new Timestamp(System.currentTimeMillis());
     }
 }

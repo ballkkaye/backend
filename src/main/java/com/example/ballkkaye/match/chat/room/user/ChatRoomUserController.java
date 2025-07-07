@@ -16,6 +16,7 @@ public class ChatRoomUserController {
     private final ChatRoomUserService chatRoomUserService;
     private final HttpSession session;
 
+    // 채팅방 입장
     @PostMapping("/s/api/chatrooms/{id}")
     public ResponseEntity<?> save(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -23,6 +24,7 @@ public class ChatRoomUserController {
         return Resp.ok(respDTO);
     }
 
+    // 채팅방 퇴장
     @DeleteMapping("/s/api/chatrooms/user/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
