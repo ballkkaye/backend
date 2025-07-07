@@ -37,4 +37,12 @@ public class BoardReplyController {
         var respDTO = boardReplyService.update(reqDTO, id, sessionUser);
         return Resp.ok(respDTO);
     }
+
+    // 특정 게시글 댓글 조회
+    @GetMapping("/s/api/boards/{id}/reply")
+    public ResponseEntity<?> detail(@PathVariable("id") Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        var respDTO = boardReplyService.detail(id, sessionUser);
+        return Resp.ok(respDTO);
+    }
 }

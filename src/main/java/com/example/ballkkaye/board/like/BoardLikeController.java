@@ -21,7 +21,7 @@ public class BoardLikeController {
     public ResponseEntity<?> save(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = boardLikeService.save(id, sessionUser);
-        return ResponseEntity.ok(respDTO);
+        return Resp.ok(respDTO);
     }
 
     // 좋아요 삭제
