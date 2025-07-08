@@ -44,4 +44,18 @@ public class BoardRepository {
 
         return query.getResultList();
     }
+
+
+    // 최신 게시글 5개 조회 (삭제되지 않은 글만)
+    public List<Board> findLatest5() {
+        return em.createQuery("""
+                            SELECT b FROM Board b
+                            JOIN FETCH b.user u
+                            LEFT JOIN FETCH b.team t
+                            WHERE b.deleteStatus = 'NOT_DELETED'
+                            ORDER BY b.createdAt DESC
+                        """, Board.class)
+                .setMaxResults(5)
+                .getResultList();
+    }
 }
