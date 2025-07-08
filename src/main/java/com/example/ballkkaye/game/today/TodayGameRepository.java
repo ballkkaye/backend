@@ -29,30 +29,42 @@ public class TodayGameRepository {
 
     // 오늘 경기의 예측 관련 원본 데이터를 조회
     public List<Object[]> findTodayGamePredictionData() {
+        LocalDate today = LocalDate.now(); // 오늘 날짜 (예: 2025-07-08)
+        LocalDateTime startOfDay = today.atStartOfDay(); // 오늘 0시 0분 0초 (예: 2025-07-08T00:00:00)
+        LocalDateTime endOfDay = today.plusDays(1).atStartOfDay().minusNanos(1);
+
+        // LocalDateTime을 Timestamp로 변환
+        Timestamp startTimestamp = Timestamp.valueOf(startOfDay);
+        Timestamp endTimestamp = Timestamp.valueOf(endOfDay);
+
         return em.createQuery("""
-                SELECT
-                    tg.game.id,
-                    homeTeam.teamName,
-                    awayTeam.teamName,
-                    homePitcher.player.name,
-                    awayPitcher.player.name,
-                    homePitcher.profileUrl,
-                    awayPitcher.profileUrl,
-                    tg.homePredictionScore,
-                    tg.awayPredictionScore,
-                    tg.totalPredictionScore,
-                    tg.homeWinPer,
-                    tg.awayWinPer
-                FROM TodayGame tg
-                JOIN tg.homeTeam homeTeam
-                JOIN tg.awayTeam awayTeam
-                LEFT JOIN TodayStartingPitcher homePitcher
-                    ON homePitcher.game.id = tg.game.id
-                    AND homePitcher.player.team.id = homeTeam.id
-                LEFT JOIN TodayStartingPitcher awayPitcher
-                    ON awayPitcher.game.id = tg.game.id
-                    AND awayPitcher.player.team.id = awayTeam.id
-                """, Object[].class).getResultList();
+                        SELECT
+                            tg.game.id,
+                            homeTeam.teamName,
+                            awayTeam.teamName,
+                            homePitcher.player.name,
+                            awayPitcher.player.name,
+                            homePitcher.profileUrl,
+                            awayPitcher.profileUrl,
+                            tg.homePredictionScore,
+                            tg.awayPredictionScore,
+                            tg.totalPredictionScore,
+                            tg.homeWinPer,
+                            tg.awayWinPer
+                        FROM TodayGame tg
+                        JOIN tg.homeTeam homeTeam
+                        JOIN tg.awayTeam awayTeam
+                        LEFT JOIN TodayStartingPitcher homePitcher
+                            ON homePitcher.game.id = tg.game.id
+                            AND homePitcher.player.team.id = homeTeam.id
+                        LEFT JOIN TodayStartingPitcher awayPitcher
+                            ON awayPitcher.game.id = tg.game.id
+                            AND awayPitcher.player.team.id = awayTeam.id
+                        WHERE tg.gameTime BETWEEN :startTimestamp AND :endTimestamp
+                        """, Object[].class)
+                .setParameter("startTimestamp", startTimestamp)
+                .setParameter("endTimestamp", endTimestamp)
+                .getResultList();
     }
 
     // 주어진 gameId로 TodayGame 객체 조회
