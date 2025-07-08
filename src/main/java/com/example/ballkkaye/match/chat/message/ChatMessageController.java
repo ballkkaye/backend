@@ -22,8 +22,7 @@ public class ChatMessageController {
     public ResponseEntity<?> sendMessage(@Payload ChatMessageRequest.DTO reqDTO) {
         User sessionUser = JwtUtil.verify(reqDTO.getAccessToken());
         var respDTO = chatMessageService.save(reqDTO, sessionUser);
-        String destination = "/sub/chat/" + reqDTO.getRoomId();
-        sms.convertAndSend(destination, reqDTO);
+        sms.convertAndSend("/sub/chat/" + reqDTO.getRoomId(), reqDTO);
         return Resp.ok(respDTO);
     }
 }
