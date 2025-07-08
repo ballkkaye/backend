@@ -1,5 +1,6 @@
 package com.example.ballkkaye.visitRecord;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.game.Game;
 import com.example.ballkkaye.game.GameRepository;
 import com.example.ballkkaye.team.Team;
@@ -62,9 +63,23 @@ public class VisitRecordService {
             throw new RuntimeException("권한이 없습니다");
         }
 
+        // 기존 직관기록 상태 변경
+        visitRecordPS.delete();
+
+        // 4. 새로운 직관기록 생성
+        VisitRecord newRecord = VisitRecord.builder()
+                .user(visitRecordPS.getUser())
+                .game(visitRecordPS.getGame())       // 기존 게임 그대로
+                .team(visitRecordPS.getTeam())       // 기존 팀 그대로
+                .result(reqDTO.getResult())
+                .content(reqDTO.getContent())
+                .imgUrl(reqDTO.getImgUrl())
+                .deleteStatus(DeleteStatus.NOT_DELETED)
+                .build();
+
         // 4. 새 기록 생성 후 저장
-        visitRecordPS.update(reqDTO.getResult(), reqDTO.getContent(), reqDTO.getImgUrl());
-        return new VisitRecordResponse.DTO(visitRecordPS);
+        visitRecordRepository.save(newRecord);
+        return new VisitRecordResponse.DTO(newRecord);
     }
 
 
