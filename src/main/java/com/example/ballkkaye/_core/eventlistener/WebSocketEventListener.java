@@ -27,7 +27,6 @@ public class WebSocketEventListener {
         Integer roomId = (Integer) sessionAttributes.get("roomId");
 
         if (sessionUser != null && roomId != null) {
-            // 여기서 컨트롤러 때리는 게 아니라, 서비스 호출
             chatRoomService.handleUserLeft(sessionUser, roomId);
         }
     }
