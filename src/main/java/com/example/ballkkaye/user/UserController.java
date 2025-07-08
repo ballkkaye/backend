@@ -60,6 +60,7 @@ public class UserController {
     public ResponseEntity<?> token1() {
         User userPS = userRepository.findById(1).orElse(null);
         String newAccess = JwtUtil.create(userPS);
+        System.out.println("유저 토큰 발급됨");
         return Resp.ok(newAccess);
     }
 

@@ -34,9 +34,11 @@ public class ChatRoom {
     private Integer maxParticipants;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Gender preferredGender;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Age preferredAge;
 
     @Column(nullable = false)

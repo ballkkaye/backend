@@ -33,61 +33,58 @@ public class ChatRoomUserService {
     // 채팅방 입장
     @Transactional
     public Object save(Integer chatRoomId, User sessionUser) {
-        // 유저 조회
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
-        // 채팅방 조회
         ChatRoom chatRoomPS = chatRoomRepository.findById(chatRoomId)
                 .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
 
-        // 채팅방 유저 조회
         Optional<ChatRoomUser> chatRoomUserOP = chatRoomUserRepository.findByUserIdAndChatRoomId(userPS.getId(), chatRoomId);
 
-        // 채팅방 나간 유저 조회 나간 유저가 다시 들어온거면 DeleteStatus 상태 업데이트
         if (chatRoomUserOP.isPresent()) {
             ChatRoomUser existing = chatRoomUserOP.get();
             if (existing.getDeleteStatus().equals(DeleteStatus.DELETED)) {
                 existing.setDeleteStatus(DeleteStatus.NOT_DELETED);
 
+                ChatMessage message = ChatMessage.builder()
+                        .chatRoom(chatRoomPS)
+                        .user(userPS)
+                        .content(userPS.getNickname() + "님이 입장하셨습니다.")
+                        .messageType(ChatConnectedType.ENTER)
+                        .build();
+                chatMessageRepository.save(message);
+
                 ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
                         chatRoomId,
                         userPS.getId(),
                         userPS.getNickname(),
-                        userPS.getNickname() + "님이 입장하셨습니다.",
-                        ChatConnectedType.ENTER
+                        message.getContent(),
+                        ChatConnectedType.ENTER,
+                        true,
+                        message.getCreatedAt()
                 );
 
                 messagingTemplate.convertAndSend("/sub/chat/" + chatRoomId, response);
-
                 return new ChatRoomUserResponse.SaveDTO(existing);
             } else {
                 throw new RuntimeException("이미 채팅방에 참여 중입니다.");
             }
         }
 
-        // isSameTeam 필터
-        if (chatRoomPS.getIsSameTeam()) {
-            if (!userPS.getTeam().getId().equals(chatRoomPS.getTeam().getId())) {
-                throw new RuntimeException("같은 팀 유저만 참여할 수 있습니다.");
-            }
+        if (chatRoomPS.getIsSameTeam() && !userPS.getTeam().getId().equals(chatRoomPS.getTeam().getId())) {
+            throw new RuntimeException("같은 팀 유저만 참여할 수 있습니다.");
         }
 
-        // 인원수 필터
         if (chatRoomUserRepository.countByChatRoomId(chatRoomId) >= chatRoomPS.getMaxParticipants()) {
             throw new RuntimeException("채팅방 인원이 가득 찼습니다.");
         }
 
-        // 성별 필터
-        if (!chatRoomPS.getPreferredGender().equals(Gender.NONE)) {
-            if (!chatRoomPS.getPreferredGender().equals(userPS.getGender())) {
-                throw new RuntimeException("채팅방 성별 조건과 일치하지 않습니다.");
-            }
+        if (!chatRoomPS.getPreferredGender().equals(Gender.NONE) &&
+                !chatRoomPS.getPreferredGender().equals(userPS.getGender())) {
+            throw new RuntimeException("채팅방 성별 조건과 일치하지 않습니다.");
         }
 
-        // 나이 필터
         if (!chatRoomPS.getPreferredAge().equals(Age.NONE)) {
             int userAge = Period.between(userPS.getBirthDate(), LocalDate.now()).getYears();
-
             boolean isAllowed = switch (chatRoomPS.getPreferredAge()) {
                 case UNDER_20 -> userAge < 20;
                 case FROM_20_TO_30 -> userAge >= 20 && userAge < 30;
@@ -95,12 +92,10 @@ public class ChatRoomUserService {
                 case OVER_40 -> userAge >= 40;
                 default -> true;
             };
-
             if (!isAllowed) {
                 throw new RuntimeException("입장 제한: 채팅방 연령 조건에 맞지 않습니다.");
             }
         }
-
 
         ChatRoomUser chatRoomUser = ChatRoomUser.builder()
                 .chatRoom(chatRoomPS)
@@ -108,22 +103,26 @@ public class ChatRoomUserService {
                 .isOwner(false)
                 .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
-
         chatRoomUserRepository.save(chatRoomUser);
 
-        // 입장 메시지 전송
-        ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(chatRoomId, userPS.getId(), userPS.getNickname(), userPS.getNickname() + "님이 입장하셨습니다.", ChatConnectedType.ENTER);
-
-        messagingTemplate.convertAndSend("/sub/chat/" + chatRoomId, response); // 실시간 전송
-
-        // DB 저장
         ChatMessage message = ChatMessage.builder()
                 .chatRoom(chatRoomPS)
                 .user(userPS)
-                .content(response.getMessage())
+                .content(userPS.getNickname() + "님이 입장하셨습니다.")
                 .messageType(ChatConnectedType.ENTER)
                 .build();
         chatMessageRepository.save(message);
+
+        ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
+                chatRoomId,
+                userPS.getId(),
+                userPS.getNickname(),
+                message.getContent(),
+                ChatConnectedType.ENTER,
+                true,
+                message.getCreatedAt()
+        );
+        messagingTemplate.convertAndSend("/sub/chat/" + chatRoomId, response);
         return new ChatRoomUserResponse.SaveDTO(chatRoomUser);
     }
 
@@ -135,36 +134,34 @@ public class ChatRoomUserService {
                 .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
         ChatRoomUser chatRoomUserPS = chatRoomUserRepository.findById(chatRoomUserId)
                 .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
-        chatRoomUserPS.delete();
         ChatRoom chatRoomPS = chatRoomRepository.findById(chatRoomUserPS.getChatRoom().getId())
                 .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
-        Integer countUser = chatRoomUserRepository.countByChatRoomIdAndDeleteStatus(chatRoomUserPS.getChatRoom().getId(), DeleteStatus.NOT_DELETED).intValue();
-        if (countUser == 0) {
+
+        chatRoomUserPS.delete();
+
+        if (chatRoomUserRepository.countByChatRoomIdAndDeleteStatus(chatRoomUserPS.getChatRoom().getId(), DeleteStatus.NOT_DELETED) == 0) {
             chatRoomPS.delete();
         }
 
-        // 퇴장 메시지 전송
+        ChatMessage message = ChatMessage.builder()
+                .chatRoom(chatRoomPS)
+                .user(userPS)
+                .content(userPS.getNickname() + "님이 퇴장하셨습니다.")
+                .messageType(ChatConnectedType.LEAVE)
+                .build();
+        chatMessageRepository.save(message);
+
         ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
                 chatRoomUserPS.getChatRoom().getId(),
                 userPS.getId(),
                 userPS.getNickname(),
-                userPS.getNickname() + "님이 퇴장하셨습니다.",
-                ChatConnectedType.LEAVE
-
+                message.getContent(),
+                ChatConnectedType.LEAVE,
+                true,
+                message.getCreatedAt()
         );
 
-        messagingTemplate.convertAndSend("/sub/chat/" + response.getChatRoomId(), response); // 실시간 전송
-
-        // DB 저장
-        ChatMessage leaveMessage = ChatMessage.builder()
-                .chatRoom(chatRoomPS)
-                .user(userPS)
-                .content(response.getMessage())
-                .messageType(ChatConnectedType.LEAVE)
-                .build();
-        chatMessageRepository.save(leaveMessage);
-
-
+        messagingTemplate.convertAndSend("/sub/chat/" + response.getChatRoomId(), response);
         return new ChatRoomUserResponse.DeleteDTO();
     }
 }

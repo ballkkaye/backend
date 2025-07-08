@@ -1,5 +1,6 @@
 package com.example.ballkkaye.match.chat.room.user;
 
+import com.example.ballkkaye._core.util.ChatSessionManager;
 import com.example.ballkkaye._core.util.Resp;
 import com.example.ballkkaye.user.User;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChatRoomUserController {
     private final ChatRoomUserService chatRoomUserService;
+    private final ChatSessionManager chatSessionManager;
     private final HttpSession session;
 
     // 채팅방 입장

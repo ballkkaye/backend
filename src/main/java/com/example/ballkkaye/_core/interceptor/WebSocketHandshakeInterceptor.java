@@ -28,9 +28,9 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
 
         if (request instanceof ServletServerHttpRequest servletRequest) {
             HttpServletRequest req = servletRequest.getServletRequest();
-            String token = req.getHeader("Authorization");
-//            String token = req.getParameter("token");
-            if (token == null || !token.startsWith("Bearer ")) {//
+//            String token = req.getHeader("Authorization");
+            String token = req.getParameter("token");
+            if (token == null) {//|| !token.startsWith("Bearer ")
                 System.out.println(false);
                 return false;
             }

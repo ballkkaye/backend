@@ -6,6 +6,7 @@ import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,5 +77,18 @@ public class ChatRoomUserRepository {
                 .getSingleResult();
 
         return count > 0;
+    }
+
+    public Timestamp findLastConnectedAt(Integer roomId, Integer userId) {
+        List<Timestamp> result = em.createQuery("""
+                            SELECT cru.lastDisconnectedAt
+                            FROM ChatRoomUser cru
+                            WHERE cru.chatRoom.id = :roomId AND cru.user.id = :userId
+                        """, Timestamp.class)
+                .setParameter("roomId", roomId)
+                .setParameter("userId", userId)
+                .getResultList();
+
+        return result.isEmpty() ? null : result.get(0);
     }
 }

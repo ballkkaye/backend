@@ -40,7 +40,7 @@ public class MatchService {
 
     // 동행글 작성
     @Transactional
-    public Object save(User sessionUser, MatchRequest.@Valid SaveDTO reqDTO) {
+    public Object save(User sessionUser, MatchRequest.SaveDTO reqDTO) {
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Game gamePS = gameRepository.findById(reqDTO.getGameId())
@@ -50,7 +50,8 @@ public class MatchService {
         if (gamePS.getGameTime().before(new Timestamp(System.currentTimeMillis()))) {
             throw new RuntimeException("이미 지난 경기는 매칭할 수 없습니다");
         }
-
+        System.out.println(reqDTO.getPreferredAge());
+        System.out.println(reqDTO.getPreferredGender());
         ChatRoom chatRoom = new ChatRoom().builder()
                 .game(gamePS)
                 .team(teamPS)
@@ -89,6 +90,12 @@ public class MatchService {
         ChatRoomResponse.DTO chatRoomDTO = new ChatRoomResponse.DTO(chatRoom);
         MatchResponse.DTO matchDTO = new MatchResponse.DTO(match);
         MatchResponse.SaveDTO respDTO = new MatchResponse.SaveDTO(chatRoomDTO, matchDTO);
+        System.out.println("===========================");
+        System.out.println("===========================");
+        System.out.println(chatRoomDTO.getId());
+        System.out.println(matchDTO.getId());
+        System.out.println("===========================");
+        System.out.println("===========================");
 
         return respDTO;
     }
