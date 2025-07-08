@@ -1,4 +1,4 @@
-package com.example.ballkkaye.main;
+package com.example.ballkkaye.home;
 
 
 import com.example.ballkkaye._core.util.TodayGameUtil;
@@ -15,18 +15,18 @@ import static com.example.ballkkaye._core.util.TodayGameUtil.round;
 
 @RequiredArgsConstructor
 @Service
-public class MainPageService {
+public class HomeService {
     private final TodayGameRepository todayGameRepository;
     private final BoardRepository boardRepository;
 
 
-    public MainPageResponse.DTO getMainPage() {
+    public HomeResponse.DTO getHome() {
         LocalDate today = LocalDate.now();
 
         // 1. 오늘의 경기
-        List<MainPageResponse.DTO.TodayGameDTO> todayGames =
+        List<HomeResponse.DTO.TodayGameDTO> todayGames =
                 todayGameRepository.findTodayGameList(today).stream()
-                        .map(game -> new MainPageResponse.DTO.TodayGameDTO(
+                        .map(game -> new HomeResponse.DTO.TodayGameDTO(
                                 game.getGameId(),
                                 GameStatus.valueOf(game.getGameStatus()),
                                 game.getGameTime(),
@@ -40,9 +40,9 @@ public class MainPageService {
                         )).toList();
 
         // 2. 승리 예측
-        List<MainPageResponse.DTO.WinPredictionDTO> predictions =
+        List<HomeResponse.DTO.WinPredictionDTO> predictions =
                 todayGameRepository.findTodayGamePredictionData().stream()
-                        .map(row -> new MainPageResponse.DTO.WinPredictionDTO(
+                        .map(row -> new HomeResponse.DTO.WinPredictionDTO(
                                 (Integer) row[0],  // gameId
                                 TodayGameUtil.simplifyTeamName((String) row[1]),  // homeTeamName → 앞 단어만
                                 TodayGameUtil.simplifyTeamName((String) row[2]),   // awayTeamName → 앞 단어만
@@ -58,14 +58,14 @@ public class MainPageService {
                         )).toList();
 
         // 3. 커뮤니티 최신글 5개
-        List<MainPageResponse.DTO.BoardDTO> boards =
+        List<HomeResponse.DTO.BoardDTO> boards =
                 boardRepository.findLatest5().stream()
-                        .map(b -> new MainPageResponse.DTO.BoardDTO(
+                        .map(b -> new HomeResponse.DTO.BoardDTO(
                                 b.getTitle(),
                                 b.getContent()
                         )).toList();
 
-        return new MainPageResponse.DTO(todayGames, predictions, boards);
+        return new HomeResponse.DTO(todayGames, predictions, boards);
     }
 
 

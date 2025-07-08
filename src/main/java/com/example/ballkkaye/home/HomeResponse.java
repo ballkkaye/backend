@@ -1,11 +1,11 @@
-package com.example.ballkkaye.main;
+package com.example.ballkkaye.home;
 
 import com.example.ballkkaye.common.enums.GameStatus;
 import lombok.Data;
 
 import java.util.List;
 
-public class MainPageResponse {
+public class HomeResponse {
 
     @Data
     public static class DTO {
@@ -116,5 +116,5 @@ public class MainPageResponse {
             this.boards = boards;
         }
     }
-    
+
 }
