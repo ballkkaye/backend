@@ -69,8 +69,7 @@ public class VisitRecordController {
         List<LocalDate> dates = visitRecordService.getHighlightDates(sessionUser.getId(), year, month);
         return Resp.ok(dates);
     }
-
-
+  
     // 직관기록 상세
     @GetMapping("/s/api/visit-records/{id}")
     public ResponseEntity<?> getDetail(@PathVariable("id") Integer id) {
