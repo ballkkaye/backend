@@ -22,4 +22,5 @@ public class ChatRoomController {
         var respDTO = chatRoomService.delete(id, sessionUser);
         return Resp.ok(respDTO);
     }
+
 }

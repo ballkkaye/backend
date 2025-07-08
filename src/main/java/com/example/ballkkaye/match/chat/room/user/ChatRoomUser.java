@@ -33,7 +33,6 @@ public class ChatRoomUser {
     @Column(nullable = false)
     private Boolean isOwner;
 
-
     @Column
     private Timestamp lastDisconnectedAt;
 

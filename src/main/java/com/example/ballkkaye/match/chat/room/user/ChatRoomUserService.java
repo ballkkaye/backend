@@ -49,29 +49,16 @@ public class ChatRoomUserService {
             if (existing.getDeleteStatus().equals(DeleteStatus.DELETED)) {
                 existing.setDeleteStatus(DeleteStatus.NOT_DELETED);
 
-                // 입장 메시지 전송
-                String actionMessage = userPS.getNickname() + "님이 입장하셨습니다.";
-
-                ChatMessageResponse.DTO response = new ChatMessageResponse.DTO();
-                response.setRoomId(chatRoomId);
-                response.setMessageType(ChatConnectedType.ENTER);
-                response.setSenderId(userPS.getId());
-                response.setSenderName(userPS.getNickname());
-                response.setMessage(actionMessage);
+                ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
+                        chatRoomId,
+                        userPS.getId(),
+                        userPS.getNickname(),
+                        userPS.getNickname() + "님이 입장하셨습니다.",
+                        ChatConnectedType.ENTER
+                );
 
                 messagingTemplate.convertAndSend("/sub/chat/" + chatRoomId, response);
 
-                return new ChatRoomUserResponse.SaveDTO(existing);
-            } else {
-                throw new RuntimeException("이미 채팅방에 참여 중입니다.");
-            }
-        }
-
-        // 이미 참여중인 인원 필터
-        if (chatRoomUserOP.isPresent()) {
-            ChatRoomUser existing = chatRoomUserOP.get();
-            if (existing.getDeleteStatus().equals(DeleteStatus.DELETED)) {
-                existing.setDeleteStatus(DeleteStatus.NOT_DELETED);
                 return new ChatRoomUserResponse.SaveDTO(existing);
             } else {
                 throw new RuntimeException("이미 채팅방에 참여 중입니다.");
@@ -125,19 +112,9 @@ public class ChatRoomUserService {
         chatRoomUserRepository.save(chatRoomUser);
 
         // 입장 메시지 전송
-        ChatMessageResponse.DTO response = new ChatMessageResponse.DTO();
-        response.setRoomId(chatRoomId);
-        response.setMessageType(ChatConnectedType.ENTER);
-        response.setSenderId(userPS.getId());
-        response.setSenderName(userPS.getNickname());
-        response.setMessage(userPS.getNickname() + "님이 입장하셨습니다.");
+        ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(chatRoomId, userPS.getId(), userPS.getNickname(), userPS.getNickname() + "님이 입장하셨습니다.", ChatConnectedType.ENTER);
 
         messagingTemplate.convertAndSend("/sub/chat/" + chatRoomId, response); // 실시간 전송
-        System.out.println(chatRoomId);
-        System.out.println(ChatConnectedType.ENTER);
-        System.out.println(userPS.getId());
-        System.out.println(userPS.getNickname());
-        System.out.println(userPS.getNickname() + "님이 입장하셨습니다.");
 
         // DB 저장
         ChatMessage message = ChatMessage.builder()
@@ -167,14 +144,16 @@ public class ChatRoomUserService {
         }
 
         // 퇴장 메시지 전송
-        ChatMessageResponse.DTO response = new ChatMessageResponse.DTO();
-        response.setRoomId(chatRoomUserPS.getChatRoom().getId());
-        response.setMessageType(ChatConnectedType.LEAVE);
-        response.setSenderId(userPS.getId());
-        response.setSenderName(userPS.getNickname());
-        response.setMessage(userPS.getNickname() + "님이 퇴장하셨습니다.");
+        ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
+                chatRoomUserPS.getChatRoom().getId(),
+                userPS.getId(),
+                userPS.getNickname(),
+                userPS.getNickname() + "님이 퇴장하셨습니다.",
+                ChatConnectedType.LEAVE
 
-        messagingTemplate.convertAndSend("/sub/chat/" + response.getRoomId(), response); // 실시간 전송
+        );
+
+        messagingTemplate.convertAndSend("/sub/chat/" + response.getChatRoomId(), response); // 실시간 전송
 
         // DB 저장
         ChatMessage leaveMessage = ChatMessage.builder()

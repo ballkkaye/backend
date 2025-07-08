@@ -110,6 +110,7 @@ public class UserService {
         }
         // updateNicknameAndTeam 함수 호출해서 응원팀, 닉네임 업데이트
         userPS.additionalUserInfo(teamPS, reqDTO.getNickname().trim());
+        String myAccessToken = JwtUtil.create(userPS);
 
         UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
         return respDTO;
