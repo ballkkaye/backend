@@ -7,7 +7,7 @@ public class ChatMessageRequest {
 
     @Data
     public static class DTO {
-        private Integer roomId;
+        private Integer chatRoomId;
         private String message;
         private String accessToken;
         private ChatConnectedType messageType;  // e.g., "TALK", "ENTER", "LEAVE"

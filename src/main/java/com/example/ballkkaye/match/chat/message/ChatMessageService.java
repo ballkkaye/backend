@@ -19,8 +19,8 @@ public class ChatMessageService {
     private final ChatRoomUserRepository chatRoomUserRepository;
 
     @Transactional
-    public Object save(ChatMessageRequest.DTO reqDTO, User sessionUser) {
-        ChatRoom chatRoomPS = chatRoomRepository.findById(reqDTO.getRoomId())
+    public ChatMessageResponse.DTO save(ChatMessageRequest.DTO reqDTO, User sessionUser) {
+        ChatRoom chatRoomPS = chatRoomRepository.findById(reqDTO.getChatRoomId())
                 .orElseThrow(() -> new RuntimeException("채팅방 없음"));
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저 없음"));
@@ -36,7 +36,7 @@ public class ChatMessageService {
 
         chatMessageRepository.save(message);
         ChatMessageResponse.DTO respDTO = new ChatMessageResponse.DTO(
-                reqDTO.getRoomId(), userPS.getId(), userPS.getNickname(), reqDTO.getMessage(), reqDTO.getMessageType()
+                reqDTO.getChatRoomId(), userPS.getId(), userPS.getNickname(), reqDTO.getMessage(), reqDTO.getMessageType()
         );
         return respDTO;
     }
