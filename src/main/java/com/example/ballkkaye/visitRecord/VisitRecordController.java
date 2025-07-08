@@ -58,19 +58,6 @@ public class VisitRecordController {
         return Resp.ok(respDTO);
     }
 
-
-    /**
-     * GET /s/api/visitRecords/highlight-dates?year=2025&month=7
-     */
-    // 달력에 하이라이트할 직관 날짜 조회
-    @GetMapping("/s/api/visit-records/highlight-dates")
-    public ResponseEntity<?> getHighlightDates(@RequestParam Integer year,
-                                               @RequestParam Integer month) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        List<LocalDate> dates = visitRecordService.getHighlightDates(sessionUser.getId(), year, month);
-        return Resp.ok(dates);
-    }
-
     // 직관기록 상세
     @GetMapping("/s/api/visit-records/{id}")
     public ResponseEntity<?> getDetail(@PathVariable("id") Integer id) {

@@ -1,5 +1,6 @@
 package com.example.ballkkaye.player.hitterLineup.today;
 
+import com.example.ballkkaye._core.util.Resp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class TodayHitterLineupController {
             @RequestParam Integer teamId
     ) {
         TodayHitterLineupResponse.DTO respDTO = todayHitterLineUpService.getMatchupDetailsByGameId(gameId, teamId);
-        return ResponseEntity.ok(respDTO);
+        return Resp.ok(respDTO);
     }
 
 

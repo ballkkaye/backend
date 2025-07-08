@@ -1,5 +1,9 @@
 package com.example.ballkkaye.visitRecord;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi403;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.game.Game;
 import com.example.ballkkaye.game.GameRepository;
 import com.example.ballkkaye.team.Team;
@@ -10,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,17 +31,17 @@ public class VisitRecordService {
     public VisitRecordResponse.DTO save(VisitRecordRequest.SaveDTO reqDTO, User sessionUser) {
         // user 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("유저를 찾을 수 없습니다"));
 
 
         // game 조회
         Game gamePS = gameRepository.findById(reqDTO.getGameId())
-                .orElseThrow(() -> new RuntimeException("게임을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("게임을 찾을 수 없습니다"));
 
 
         // team조회
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new RuntimeException("팀을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("팀을 찾을 수 없습니다"));
 
         // 직관기록 저장
         VisitRecord visitRecord = reqDTO.toEntity(userPS, gamePS, teamPS, reqDTO.getImgUrl());
@@ -55,30 +57,30 @@ public class VisitRecordService {
     public VisitRecordResponse.DTO update(VisitRecordRequest.UpdateDTO reqDTO, Integer id, Integer sessionUserId) {
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(id, sessionUserId)
-                .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("직관기록을 찾을 수 없습니다"));
 
         // 권한 확인
         if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
-            throw new RuntimeException("권한이 없습니다");
+            throw new ExceptionApi403("권한이 없습니다");
         }
+
+        // 기존 직관기록 상태 변경
+        visitRecordPS.delete();
+
+        // 4. 새로운 직관기록 생성
+        VisitRecord newRecord = VisitRecord.builder()
+                .user(visitRecordPS.getUser())
+                .game(visitRecordPS.getGame())       // 기존 게임 그대로
+                .team(visitRecordPS.getTeam())       // 기존 팀 그대로
+                .result(reqDTO.getResult())
+                .content(reqDTO.getContent())
+                .imgUrl(reqDTO.getImgUrl())
+                .deleteStatus(DeleteStatus.NOT_DELETED)
+                .build();
 
         // 4. 새 기록 생성 후 저장
-        visitRecordPS.update(reqDTO.getResult(), reqDTO.getContent(), reqDTO.getImgUrl());
-        return new VisitRecordResponse.DTO(visitRecordPS);
-    }
-
-
-    public VisitRecordResponse.DTO getOne(Integer id, Integer sessionUserId) {
-        // 1. 직관기록 조회
-        VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(id, sessionUserId)
-                .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다"));
-
-        if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
-            throw new RuntimeException("권한이 없습니다");
-        }
-
-
-        return new VisitRecordResponse.DTO(visitRecordPS);
+        visitRecordRepository.save(newRecord);
+        return new VisitRecordResponse.DTO(newRecord);
     }
 
 
@@ -93,7 +95,7 @@ public class VisitRecordService {
             visitRecords = visitRecordRepository.findAllByUserIdAndMonth(sessionUserId, start, end);
 
         } else {
-            throw new IllegalArgumentException("날짜 또는 년월 정보가 필요합니다.");
+            throw new ExceptionApi400("날짜 또는 년월 정보가 필요합니다.");
         }
 
 
@@ -102,29 +104,14 @@ public class VisitRecordService {
                 .toList();
     }
 
-    public List<LocalDate> getHighlightDates(Integer sessionUserId, Integer year, Integer month) {
-        LocalDate start = LocalDate.of(year, month, 1);
-        LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
-
-        Timestamp startTimestamp = Timestamp.valueOf(start.atStartOfDay());
-        Timestamp endTimestamp = Timestamp.valueOf(end.plusDays(1).atStartOfDay().minusSeconds(1));
-
-        List<Date> sqlDates = visitRecordRepository.findDistinctDatesByUserIdAndMonth(sessionUserId, startTimestamp, endTimestamp);
-
-
-        return sqlDates.stream()
-                .map(Date::toLocalDate)
-                .toList();
-    }
-
 
     // 직관기록 상세보기
     public VisitRecordResponse.DetailDTO getDetail(Integer visitRecordId, Integer sessionUserId) {
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(visitRecordId, sessionUserId)
-                .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("직관기록을 찾을 수 없습니다."));
         if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
-            throw new RuntimeException("권한이 없습니다");
+            throw new ExceptionApi403("권한이 없습니다");
         }
 
         VisitRecordResponse.DetailDTO detailDTO = new VisitRecordResponse.DetailDTO(visitRecordPS);
@@ -138,10 +125,10 @@ public class VisitRecordService {
     public Object delete(Integer visitRecordId, Integer sessionUserId) {
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(visitRecordId, sessionUserId)
-                .orElseThrow(() -> new RuntimeException("직관기록을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("직관기록을 찾을 수 없습니다."));
         // 권한 확인
         if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
-            throw new RuntimeException("권한이 없습니다");
+            throw new ExceptionApi403("권한이 없습니다");
         }
 
         // 직관기록 삭제
