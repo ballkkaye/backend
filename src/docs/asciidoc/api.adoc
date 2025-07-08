@@ -2,8 +2,8 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
-:user: user-controller-test
-:post: post-controller-test
+:todayHitterLineup: today-hitter-lineup-controller-test
+
 
 = REST API
 :toc: left
@@ -60,3 +60,12 @@ include::{snippets}/{post}/find_전체_테스트/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{post}/find_전체_테스트/http-response.adoc[]
+
+
+== 예측
+=== 1. 상대전적
+===== Request Example
+include::{snippets}/{todayHitterLineup}/getMatchupDetails_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{todayHitterLineup}/getMatchupDetails_test/http-response.adoc[]
