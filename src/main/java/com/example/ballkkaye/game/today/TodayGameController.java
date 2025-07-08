@@ -18,14 +18,14 @@ public class TodayGameController {
     private final TodayGameService todayGameService;
 
     // 승리예측 1
-    @GetMapping("/api/today/games/prediction")
-    public ResponseEntity<?> getTodayPredictions() {
+    @GetMapping("/s/api/today-games/prediction")
+    public ResponseEntity<?> getTodayGamePredictions() {
         List<TodayGameResponse.PredictionDTO> respDTO = todayGameService.getTodayGamePredictions();
         return Resp.ok(respDTO);
     }
 
     // 날짜 기반 오늘 경기 목록 조회
-    @GetMapping("/api/today/games")
+    @GetMapping("/s/api/today-games")
     public ResponseEntity<?> getTodayGames(
             @RequestParam("date")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date

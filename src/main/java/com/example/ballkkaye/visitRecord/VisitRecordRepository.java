@@ -65,22 +65,21 @@ public class VisitRecordRepository {
     // NOT_DELETED 상태의 특정 날짜에 해당하는 직관 기록 목록 조회
     public List<VisitRecord> findAllByUserIdAndDate(Integer userId, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
-        LocalDateTime endOfDay = date.plusDays(1).atStartOfDay().minusSeconds(1);
+        LocalDateTime exclusiveEnd = date.plusDays(1).atStartOfDay();
 
         return em.createQuery("""
                             select v from VisitRecord v
                             join fetch v.user
                             where v.user.id = :userId
-                            and v.deleteStatus = 'NOT_DELETED'
-                            and v.createdAt between :start and :end
+                              and v.deleteStatus = 'NOT_DELETED'
+                              and v.createdAt >= :start and v.createdAt < :end
                             order by v.id desc
                         """, VisitRecord.class)
                 .setParameter("userId", userId)
                 .setParameter("start", Timestamp.valueOf(startOfDay))
-                .setParameter("end", Timestamp.valueOf(endOfDay))
+                .setParameter("end", Timestamp.valueOf(exclusiveEnd))
                 .getResultList();
     }
-
 
     // 특정 유저가 해당 월에 직관 기록 목록을 작성한 날짜들만 중복 없이 조회 (NOT_DELETED 상태만)
     public List<Date> findDistinctDatesByUserIdAndMonth(Integer userId, Timestamp start, Timestamp end) {

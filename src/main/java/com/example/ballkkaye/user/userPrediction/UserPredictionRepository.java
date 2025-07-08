@@ -1,6 +1,8 @@
 package com.example.ballkkaye.user.userPrediction;
 
 import com.example.ballkkaye.common.enums.GameStatus;
+import com.example.ballkkaye.game.today.TodayGame;
+import com.example.ballkkaye.user.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,14 +18,15 @@ public class UserPredictionRepository {
 
     private final EntityManager em;
 
-    public UserPrediction save(UserPrediction userPrediction) {
-        em.persist(userPrediction);
-        return userPrediction;
+    public void saveAll(List<UserPrediction> userPredictions) {
+        for (UserPrediction prediction : userPredictions) {
+            em.persist(prediction);
+        }
     }
 
     public List<UserPredictionResponse.TodayGameDTO> findTodayGamesForPrediction(LocalDate today, Integer userId) {
         String sql = "SELECT\n" +
-                "  g.id,\n" +
+                "  g.game_id,\n" +
                 "  g.game_time,\n" +
                 "  ht.id,\n" +
                 "  ht.team_name,\n" +
@@ -79,7 +82,7 @@ public class UserPredictionRepository {
     public List<UserPredictionResponse.MyPredictionDTO> findMyPredictions(Integer userId, LocalDate date) {
         String sql = """
                 SELECT
-                    tg.id AS gameId,
+                    tg.game_id AS gameId,
                     tg.game_time AS gameTime,
                 
                     ht.id AS homeTeamId,
@@ -136,14 +139,12 @@ public class UserPredictionRepository {
             Timestamp gameTime = (Timestamp) row[1];
             dto.setGameTime(gameTime.toLocalDateTime().toLocalTime().toString());
 
-            // home team
             UserPredictionResponse.TeamDTO homeTeam = new UserPredictionResponse.TeamDTO();
             homeTeam.setTeamId((Integer) row[2]);
             homeTeam.setTeamName((String) row[3]);
             homeTeam.setLogoUrl((String) row[4]);
             dto.setHomeTeam(homeTeam);
 
-            // away team
             UserPredictionResponse.TeamDTO awayTeam = new UserPredictionResponse.TeamDTO();
             awayTeam.setTeamId((Integer) row[5]);
             awayTeam.setTeamName((String) row[6]);
@@ -170,19 +171,14 @@ public class UserPredictionRepository {
         return dtos;
     }
 
-    public void saveAll(Integer userId, List<UserPredictionRequest.SaveDTO> dtos) {
-        String sql = """
-                    INSERT INTO user_prediction_tb (user_id, game_id, team_id, result, created_at)
-                    VALUES (:userId, :gameId, :teamId, NULL, NOW())
-                """;
+    public boolean isExistsByUserIdAndGameId(User user, TodayGame todayGame) {
+        String jpql = "SELECT COUNT(up) FROM UserPrediction up WHERE up.user = :user AND up.game = :game";
 
-        for (UserPredictionRequest.SaveDTO dto : dtos) {
-            em.createNativeQuery(sql)
-                    .setParameter("userId", userId)
-                    .setParameter("gameId", dto.getGameId())
-                    .setParameter("teamId", dto.getUserChoiceTeamId())
-                    .executeUpdate();
-        }
+        Long count = em.createQuery(jpql, Long.class)
+                .setParameter("user", user)
+                .setParameter("game", todayGame)
+                .getSingleResult();
+
+        return count > 0;
     }
-
 }

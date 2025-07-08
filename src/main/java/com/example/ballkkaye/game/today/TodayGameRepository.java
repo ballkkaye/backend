@@ -1,12 +1,14 @@
 package com.example.ballkkaye.game.today;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,20 +18,19 @@ public class TodayGameRepository {
 
     private final EntityManager em;
 
+
+    // 여러 개의 TodayGame 객체를 데이터베이스에 저장
     public void save(List<TodayGame> games) {
         for (TodayGame game : games) {
             em.persist(game);
         }
     }
 
-    public Optional<TodayGame> findById(Integer id) {
-        TodayGame todayGame = em.find(TodayGame.class, id);
-        return Optional.ofNullable(todayGame);
-    }
 
-    public List<TodayGameResponse.PredictionDTO> findTodayGameWithPitcherInfo() {
-        List<Object[]> results = em.createQuery("""
-                SELECT 
+    // 오늘 경기의 예측 관련 원본 데이터를 조회
+    public List<Object[]> findTodayGamePredictionData() {
+        return em.createQuery("""
+                SELECT
                     tg.game.id,
                     homeTeam.teamName,
                     awayTeam.teamName,
@@ -52,75 +53,55 @@ public class TodayGameRepository {
                     ON awayPitcher.game.id = tg.game.id
                     AND awayPitcher.player.team.id = awayTeam.id
                 """, Object[].class).getResultList();
-
-        List<TodayGameResponse.PredictionDTO> dtoList = new ArrayList<>();
-        for (Object[] row : results) {
-            TodayGameResponse.PredictionDTO dto = new TodayGameResponse.PredictionDTO(
-                    (Integer) row[0], // gameId
-                    (String) row[1],  // homeTeamName
-                    (String) row[2],  // awayTeamName
-                    (String) row[3],  // homePitcherName
-                    (String) row[4],  // awayPitcherName
-                    (String) row[5],  // homePitcherProfileUrl
-                    (String) row[6],  // awayPitcherProfileUrl
-                    round((Double) row[7]), // homePredictionScore
-                    round((Double) row[8]), // awayPredictionScore
-                    round((Double) row[9]), // totalPredictionScore
-                    round((Double) row[10]), // homeWinPercent
-                    round((Double) row[11])  // awayWinPercent
-            );
-            dtoList.add(dto);
-        }
-        return dtoList;
     }
 
-    private double round(Double value) {
-        if (value == null) return 0.0;
-        return Math.round(value * 10) / 10.0;
-    }
-
+    // 주어진 gameId로 TodayGame 객체 조회
     public Optional<TodayGame> findByGameId(Integer gameId) {
-        return em.createQuery(
-                        "SELECT tg FROM TodayGame tg WHERE tg.game.id = :gameId", TodayGame.class)
-                .setParameter("gameId", gameId)
-                .getResultStream()
-                .findFirst();
+        String jpql = "SELECT tg FROM TodayGame tg WHERE tg.game.id = :gameId";
+        TypedQuery<TodayGame> query = em.createQuery(jpql, TodayGame.class);
+        query.setParameter("gameId", gameId);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
+
+    // 특정 날짜에 대한 모든 경기의 간략한 정보 조회
     public List<TodayGameResponse.ItemDTO> findTodayGameList(LocalDate date) {
         String sql = """
                 SELECT
-                    g.id AS game_id,
+                    g.game_id AS today_game_id,
                     g.game_status,
                     FORMATDATETIME(g.game_time, 'HH:mm') AS game_time,
                     s.stadium_name,
                     g.broadcast_channel,
-                    home_pitcher.name AS home_pitcher_name,
-                    home_pitcher.profile_url AS home_pitcher_img,
-                    away_pitcher.name AS away_pitcher_name,
-                    away_pitcher.profile_url AS away_pitcher_img,
-                    t.ticket_link AS ticket_link
-                FROM game_tb g
+                    home_pitcher.name AS home_pitcher_name,       
+                    ht.logo_url AS home_team_logo_url,            
+                    away_pitcher.name AS away_pitcher_name,      
+                    at.logo_url AS away_team_logo_url,           
+                    ht.ticket_link AS ticket_link
+                FROM today_game_tb g
                 JOIN stadium_tb s ON g.stadium_id = s.id
+                LEFT JOIN team_tb ht ON g.home_team_id = ht.id
+                LEFT JOIN team_tb at ON g.away_team_id = at.id
                 LEFT JOIN (
-                    SELECT tsp.game_id, p.name, tsp.profile_url
+                    SELECT tsp.game_id, p.name
                     FROM today_starting_pitcher_tb tsp
-                    JOIN player_tb p ON p.id = tsp.player_id
-                    WHERE p.team_id IN (
-                        SELECT g2.home_team_id FROM game_tb g2 WHERE g2.id = tsp.game_id
-                    )
-                ) home_pitcher ON home_pitcher.game_id = g.id
+                    JOIN player_tb p ON tsp.player_id = p.id
+                    JOIN game_tb gg ON tsp.game_id = gg.id
+                    WHERE gg.home_team_id = p.team_id
+                ) home_pitcher ON home_pitcher.game_id = g.game_id
                 LEFT JOIN (
-                    SELECT tsp.game_id, p.name, tsp.profile_url
+                    SELECT tsp.game_id, p.name
                     FROM today_starting_pitcher_tb tsp
-                    JOIN player_tb p ON p.id = tsp.player_id
-                    WHERE p.team_id IN (
-                        SELECT g2.away_team_id FROM game_tb g2 WHERE g2.id = tsp.game_id
-                    )
-                ) away_pitcher ON away_pitcher.game_id = g.id
-                LEFT JOIN team_tb t ON t.id = g.home_team_id
+                    JOIN player_tb p ON tsp.player_id = p.id
+                    JOIN game_tb gg ON tsp.game_id = gg.id
+                    WHERE gg.away_team_id = p.team_id
+                ) away_pitcher ON away_pitcher.game_id = g.game_id
                 WHERE g.game_time >= :start AND g.game_time < :end
-                ORDER BY g.game_time ASC
+                ORDER BY g.game_id ASC
                 """;
 
         LocalDateTime start = date.atStartOfDay();
@@ -133,17 +114,44 @@ public class TodayGameRepository {
 
         return rows.stream()
                 .map(row -> new TodayGameResponse.ItemDTO(
-                        (Integer) row[0],
-                        (String) row[1],
-                        (String) row[2],
-                        (String) row[3],
-                        (String) row[4],
-                        (String) row[5],
-                        (String) row[6],
-                        (String) row[7],
-                        (String) row[8],
-                        (String) row[9]
+                        (Integer) row[0], // game_id
+                        (String) row[1],  // game_status
+                        (String) row[2],  // game_time
+                        (String) row[3],  // stadium_name
+                        (String) row[4],  // broadcast_channel
+                        (String) row[5],  // home_pitcher_name
+                        (String) row[6],  // home_team_logo
+                        (String) row[7],  // away_pitcher_name
+                        (String) row[8],  // away_team_logo
+                        (String) row[9]   // ticket_link
                 ))
                 .toList();
+    }
+
+    /**
+     * 특정 구장의 오늘 날짜 경기를 조회
+     * - stadiumId와 날짜(LocalDate)로 필터링
+     * - 예외 발생 시 Optional.empty() 반환
+     */
+    public Optional<TodayGame> findByStadiumIdAndDate(Integer stadiumId, LocalDate date) {
+        try {
+            LocalDateTime start = date.atStartOfDay();
+            LocalDateTime end = date.plusDays(1).atStartOfDay();
+
+            return em.createQuery("""
+                                SELECT tg FROM TodayGame tg
+                                WHERE tg.stadium.id = :stadiumId
+                                  AND tg.gameTime >= :start
+                                  AND tg.gameTime < :end
+                            """, TodayGame.class)
+                    .setParameter("stadiumId", stadiumId)
+                    .setParameter("start", Timestamp.valueOf(start))
+                    .setParameter("end", Timestamp.valueOf(end))
+                    .getResultStream()
+                    .findFirst();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 }

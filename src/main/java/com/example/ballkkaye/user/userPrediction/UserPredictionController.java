@@ -18,13 +18,15 @@ public class UserPredictionController {
     private final UserPredictionService userPredictionService;
     private final HttpSession session;
 
+    // 유저 예측 화면 진입
     @GetMapping("/s/api/predictions/today")
-    public ResponseEntity<?> getTodayGames() {
+    public ResponseEntity<?> todayGames() {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        List<UserPredictionResponse.TodayGameDTO> respDTO = userPredictionService.getTodayGames(sessionUser.getId());
+        List<UserPredictionResponse.TodayGameDTO> respDTO = userPredictionService.todayGames(sessionUser.getId());
         return Resp.ok(respDTO);
     }
 
+    // 유저 예측 완료 후 화면
     @GetMapping("/s/api/predictions")
     public ResponseEntity<?> findMyPredictions(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
@@ -33,6 +35,7 @@ public class UserPredictionController {
         return Resp.ok(respDTO);
     }
 
+    // 유저 예측 저장
     @PostMapping("/s/api/predictions")
     public ResponseEntity<?> save(@RequestBody List<UserPredictionRequest.SaveDTO> requestDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
