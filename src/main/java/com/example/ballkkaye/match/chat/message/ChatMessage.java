@@ -42,11 +42,15 @@ public class ChatMessage {
     private Timestamp createdAt;
 
     @Builder
-    public ChatMessage(ChatRoom chatRoom, User user, String content, ChatConnectedType messageType) {
+    public ChatMessage(ChatRoom chatRoom, User user, String content, ChatConnectedType messageType, DeleteStatus deleteStatus) {
         this.chatRoom = chatRoom;
         this.user = user;
         this.content = content;
         this.messageType = messageType;
-        this.deleteStatus = DeleteStatus.NOT_DELETED;
+        this.deleteStatus = deleteStatus;
+    }
+
+    public void delete() {
+        this.deleteStatus = DeleteStatus.DELETED;
     }
 }

@@ -2,6 +2,7 @@ package com.example.ballkkaye.match.chat.message;
 
 import com.example.ballkkaye._core.util.ChatSessionManager;
 import com.example.ballkkaye.common.enums.ChatConnectedType;
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.match.chat.room.ChatRoom;
 import com.example.ballkkaye.match.chat.room.ChatRoomRepository;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUser;
@@ -41,11 +42,13 @@ public class ChatMessageService {
                 .user(userPS)
                 .content(reqDTO.getMessage())
                 .messageType(reqDTO.getMessageType())
+                .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
 
         chatMessageRepository.save(message);
 
         return new ChatMessageResponse.DTO(
+                message.getId(),
                 reqDTO.getChatRoomId(),
                 userPS.getId(),
                 userPS.getNickname(),
@@ -69,6 +72,7 @@ public class ChatMessageService {
         ChatConnectedType type = isNew ? ChatConnectedType.AUTH_SUCCESS : ChatConnectedType.AUTH_FAIL;
 
         return new ChatMessageResponse.DTO(
+                null,
                 reqDTO.getRoomId(),
                 sessionUser.getId(),
                 sessionUser.getUsername(),
@@ -93,6 +97,7 @@ public class ChatMessageService {
 
         return messages.stream()
                 .map(m -> new ChatMessageResponse.DTO(
+                        m.getId(),
                         m.getChatRoom().getId(),
                         m.getUser().getId(),
                         m.getUser().getNickname(),
@@ -102,6 +107,23 @@ public class ChatMessageService {
                         m.getCreatedAt()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Object delete(Integer chatMessageId, User sessionUser) {
+        // 채팅 조회
+        ChatMessage chatMessagePS = chatMessageRepository.findById(chatMessageId)
+                .orElseThrow(() -> new RuntimeException("해당 자원이 없습니다."));
+
+        // 권한 조회
+        if (!chatMessagePS.getUser().getId().equals(sessionUser.getId())) {
+            throw new RuntimeException("권한이 없습니다.");
+        }
+        if (chatMessagePS.getDeleteStatus() == DeleteStatus.DELETED) {
+            throw new RuntimeException("해당 자원이 없습니다.");
+        }
+        chatMessagePS.delete();
+        return new ChatMessageResponse.DeleteDTO(DeleteStatus.DELETED);
     }
 }
 

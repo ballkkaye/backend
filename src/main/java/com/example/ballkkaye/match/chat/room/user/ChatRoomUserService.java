@@ -50,10 +50,12 @@ public class ChatRoomUserService {
                         .user(userPS)
                         .content(userPS.getNickname() + "님이 입장하셨습니다.")
                         .messageType(ChatConnectedType.ENTER)
+                        .deleteStatus(DeleteStatus.NOT_DELETED)
                         .build();
                 chatMessageRepository.save(message);
 
                 ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
+                        message.getId(),
                         chatRoomId,
                         userPS.getId(),
                         userPS.getNickname(),
@@ -110,10 +112,12 @@ public class ChatRoomUserService {
                 .user(userPS)
                 .content(userPS.getNickname() + "님이 입장하셨습니다.")
                 .messageType(ChatConnectedType.ENTER)
+                .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
         chatMessageRepository.save(message);
 
         ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
+                message.getId(),
                 chatRoomId,
                 userPS.getId(),
                 userPS.getNickname(),
@@ -148,10 +152,12 @@ public class ChatRoomUserService {
                 .user(userPS)
                 .content(userPS.getNickname() + "님이 퇴장하셨습니다.")
                 .messageType(ChatConnectedType.LEAVE)
+                .deleteStatus(DeleteStatus.NOT_DELETED)
                 .build();
         chatMessageRepository.save(message);
 
         ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
+                message.getId(),
                 chatRoomUserPS.getChatRoom().getId(),
                 userPS.getId(),
                 userPS.getNickname(),

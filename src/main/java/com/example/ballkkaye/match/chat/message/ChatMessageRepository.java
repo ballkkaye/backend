@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -36,5 +37,10 @@ public class ChatMessageRepository {
                         """, ChatMessage.class)
                 .setParameter("roomId", roomId)
                 .getResultList();
+    }
+
+    public Optional<ChatMessage> findById(Integer chatMessageId) {
+        ChatMessage chatMessage = em.find(ChatMessage.class, chatMessageId);
+        return Optional.ofNullable(chatMessage);
     }
 }

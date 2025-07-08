@@ -5,6 +5,7 @@ import com.example.ballkkaye.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,13 @@ public class ChatMessageRestController {
     public ResponseEntity<?> getMessages(@PathVariable Integer roomId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = chatMessageService.getMessages(roomId, sessionUser);
+        return Resp.ok(respDTO);
+    }
+
+    @DeleteMapping("/s/api/chatrooms/messages/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        var respDTO = chatMessageService.delete(id, sessionUser);
         return Resp.ok(respDTO);
     }
 }
