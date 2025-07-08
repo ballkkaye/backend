@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.ballkkaye._core.util.TodayGameUtil.round;
+
 @RequiredArgsConstructor
 @Service
 public class TodayGameService {
@@ -24,8 +26,8 @@ public class TodayGameService {
                     (String) row[2],  // awayTeamName
                     (String) row[3],  // homePitcherName
                     (String) row[4],  // awayPitcherName
-                    (String) row[5],  // homePitcherProfileUrl
-                    (String) row[6],  // awayPitcherProfileUrl
+                    (String) row[5],  // homeTeamLogoUrl
+                    (String) row[6],  // awayTeamLogoUrl
                     round((Double) row[7]), // homePredictionScore
                     round((Double) row[8]), // awayPredictionScore
                     round((Double) row[9]), // totalPredictionScore
@@ -35,11 +37,6 @@ public class TodayGameService {
             PredictionDTO.add(dto);
         }
         return PredictionDTO;
-    }
-
-    private double round(Double value) {
-        if (value == null) return 0.0;
-        return Math.round(value * 10) / 10.0;
     }
 
     // 날짜 기반 오늘 경기 리스트 조회

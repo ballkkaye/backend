@@ -62,15 +62,15 @@ public class TodayGameResponse {
         private String stadiumName;
         private String broadcastChannel;
         private String homePitcherName;
-        private String homePitcherImg;
+        private String homeTeamLogoUrl;
         private String awayPitcherName;
-        private String awayPitcherImg;
+        private String awayTeamLogoUrl;
         private String ticketLink;
 
         public ItemDTO(Integer gameId, String gameStatus, String gameTime,
                        String stadiumName, String broadcastChannel,
-                       String homePitcherName, String homePitcherImg,
-                       String awayPitcherName, String awayPitcherImg,
+                       String homePitcherName, String homeTeamLogoUrl,
+                       String awayPitcherName, String awayTeamLogoUrl,
                        String ticketLink) {
             this.gameId = gameId;
             this.gameStatus = gameStatus;
@@ -78,9 +78,9 @@ public class TodayGameResponse {
             this.stadiumName = stadiumName;
             this.broadcastChannel = broadcastChannel;
             this.homePitcherName = homePitcherName;
-            this.homePitcherImg = homePitcherImg;
+            this.homeTeamLogoUrl = homeTeamLogoUrl;
             this.awayPitcherName = awayPitcherName;
-            this.awayPitcherImg = awayPitcherImg;
+            this.awayTeamLogoUrl = awayTeamLogoUrl;
             this.ticketLink = ticketLink;
         }
     }
