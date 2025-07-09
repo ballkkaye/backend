@@ -22,7 +22,6 @@ public class ChatMessageController {
     @MessageMapping("/chat/send")
     public ResponseEntity<?> sendMessage(@Payload ChatMessageRequest.DTO reqDTO,
                                          SimpMessageHeaderAccessor headerAccessor) {
-        System.out.println("========== /chat/send 호출됨 ==========");
         User sessionUser = (User) headerAccessor.getSessionAttributes().get("sessionUser");
         ChatMessageResponse.DTO respDTO = chatMessageService.save(reqDTO, sessionUser);
         sms.convertAndSend("/sub/chat/" + respDTO.getChatRoomId(), respDTO);

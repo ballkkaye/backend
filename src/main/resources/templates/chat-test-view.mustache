@@ -94,9 +94,9 @@
 		<option value="OVER_40">40대 이상</option>
 	</select><br>
 	<input type="number" id="gameIdInput" placeholder="Game ID" value=446>
-	<input type="number" id="teamIdInput" placeholder="Team ID" value=1>
+	<input type="number" id="teamIdInput" placeholder="Team ID" value=2>
 	<input type="number" id="maxParticipantsInput" placeholder="최대 인원" value=5>
-	<label><input type="checkbox" id="sameTeamCheckbox" checked> 동일팀만</label>
+	<label><input type="checkbox" id="sameTeamCheckbox"> 동일팀만</label>
 	<button onclick="createMatch()">매치 생성</button>
 	<input type="number" id="chatRoomIdInput" placeholder="입장할 채팅방 ID" value="">
 	<button onclick="enterChatRoom()">채팅방 입장</button>
@@ -181,7 +181,7 @@
 	}
 
 	function connectWebSocket() {
-		console.log("웹소켓 연결 시작 (SockJS /connect 호출됨)");
+		console.log("웹소켓 연결 시작 (/connect 호출됨)");
 
 		if (!currentToken) return alert("먼저 토큰 발급 필요");
 
@@ -191,39 +191,38 @@
 		currentChatRoomId = roomIdInput;
 
 		enterChatRoom().then(() => {
-			const socket = new SockJS(`/connect?token=${currentToken}&roomId=${currentChatRoomId}`);
+			const socket = new WebSocket("ws://localhost:8080/connect");
 			stompClient = Stomp.over(socket);
 
-			stompClient.connect({}, function (frame) {
-				updateConnectionStatus(true);
-				addMessage("other", "웹소켓에 연결되었습니다.");
+			stompClient.connect(
+					{
+						Authorization: `Bearer ${currentToken}`
+					},
+					function (frame) {
+						updateConnectionStatus(true);
+						addMessage("other", "웹소켓에 연결되었습니다.");
 
-				// 인증 메시지
-				stompClient.send("/pub/chat/auth", {}, JSON.stringify({
-					type: "AUTH",
-					token: currentToken,
-					roomId: currentChatRoomId
-				}));
+						if (subscription) subscription.unsubscribe();
+						subscription = stompClient.subscribe(`/sub/chat/${currentChatRoomId}`, function (message) {
+							const msg = JSON.parse(message.body); // 받은 메시지를 파싱
+							const sender = msg.senderNickname || "익명";
+							const content = msg.content || "";
 
-				// 구독
-				if (subscription) subscription.unsubscribe();
-				subscription = stompClient.subscribe(`/sub/chat/${currentChatRoomId}`, function (message) {
-					const msg = JSON.parse(message.body);
-					const userId = parseJwt(currentToken).id;
+							addMessage("other", `[${sender}] ${content}`);
+						});
 
-					// 메시지 처리
-					if (msg.type === "AUTH_SUCCESS") addMessage("other", "인증 성공");
-					else if (msg.type === "AUTH_FAIL") {
-						addMessage("other", "인증 실패");
-						stompClient.disconnect(() => updateConnectionStatus(false));
-					} else if (msg.messageType === "TALK") addMessage(msg.senderId === userId ? 'own' : 'other', msg.message);
-					else if (msg.messageType === "ENTER") addMessage("other", `${msg.senderName} 님이 입장했습니다.`);
-					else if (msg.messageType === "LEAVE") addMessage("other", `${msg.senderName} 님이 퇴장했습니다.`);
-				});
-			}, (error) => {
-				updateConnectionStatus(false);
-				addMessage("other", "웹소켓 연결 실패");
-			});
+						// 인증 메시지
+						stompClient.send("/pub/chat/auth", {}, JSON.stringify({
+							type: "AUTH",
+							token: currentToken,
+							roomId: currentChatRoomId
+						}));
+					},
+					function (error) {
+						updateConnectionStatus(false);
+						addMessage("other", "웹소켓 연결 실패");
+					}
+			);
 		});
 	}
 
@@ -297,6 +296,12 @@
 
 	window.getToken = getToken;
 	window.setToken = setToken;
+	window.connectWebSocket = connectWebSocket;
+	window.disconnectWebSocket = disconnectWebSocket;
+	window.sendMessage = sendMessage;
+	window.enterChatRoom = enterChatRoom;
+	window.leaveChatRoom = leaveChatRoom;
+
 </script>
 </body>
 </html>
