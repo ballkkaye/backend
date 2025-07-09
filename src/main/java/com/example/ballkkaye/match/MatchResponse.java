@@ -73,6 +73,8 @@ public class MatchResponse {
         private String participationInfo;
         private String relativeTime;
         private Integer matchId;
+        private Integer teamId;
+        private String teamName;
 
         public Item(Match match, String participationInfo, String relativeTime) {
             this.homeTeamName = match.getChatRoom().getGame().getHomeTeam().getTeamName();
@@ -84,6 +86,8 @@ public class MatchResponse {
             this.participationInfo = participationInfo + "/" + match.getChatRoom().getMaxParticipants().toString();
             this.relativeTime = relativeTime;
             this.matchId = match.getId();
+            this.teamId = match.getChatRoom().getTeam().getId();
+            this.teamName = match.getChatRoom().getTeam().getTeamName();
         }
     }
 
@@ -102,6 +106,8 @@ public class MatchResponse {
         private String content;
         private String gender;
         private String age;
+        private Integer teamId;
+        private String teamName;
         private Boolean isSameTeam;
         private String participationInfo;
         private Boolean isLike;
@@ -126,6 +132,8 @@ public class MatchResponse {
             this.content = match.getContent();
             this.gender = match.getChatRoom().getPreferredGender().getLabel();
             this.age = match.getChatRoom().getPreferredAge().getName();
+            this.teamId = match.getChatRoom().getTeam().getId();
+            this.teamName = match.getChatRoom().getTeam().getTeamName();
             this.isSameTeam = match.getChatRoom().getIsSameTeam();
             this.participationInfo = countUser + "/" + match.getChatRoom().getMaxParticipants().toString();
             this.isLike = isLike;

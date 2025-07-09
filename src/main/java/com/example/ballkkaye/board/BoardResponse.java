@@ -18,13 +18,21 @@ public class BoardResponse {
         private Integer teamId;
         private List<BoardImageResponse.ItemDTO> imagesUrl;
         private String content;
+        private String nickname;
+        private String relativeTime;
+        private Integer likeCount;
+        private Integer replyCount;
 
-        public SaveDTO(Board board, List<BoardImageResponse.ItemDTO> imagesUrl) {
+        public SaveDTO(Board board, List<BoardImageResponse.ItemDTO> imagesUrl, String relativeTime) {
             this.boardId = board.getId();
             this.title = board.getTitle();
             this.teamId = board.getTeam().getId();
             this.content = board.getContent();
             this.imagesUrl = imagesUrl;
+            this.nickname = board.getUser().getNickname();
+            this.likeCount = 0;
+            this.replyCount = 0;
+            this.relativeTime = relativeTime;
         }
     }
 
