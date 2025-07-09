@@ -50,8 +50,10 @@ public class MatchService {
         if (gamePS.getGameTime().before(new Timestamp(System.currentTimeMillis()))) {
             throw new RuntimeException("이미 지난 경기는 매칭할 수 없습니다");
         }
-        System.out.println(reqDTO.getPreferredAge());
-        System.out.println(reqDTO.getPreferredGender());
+        if (gamePS.getAwayTeam().getId() != reqDTO.getTeamId() && gamePS.getHomeTeam().getId() != reqDTO.getTeamId()) {
+            throw new RuntimeException("해당 자원을 찾을 수 없습니다.");
+        }
+
         ChatRoom chatRoom = new ChatRoom().builder()
                 .game(gamePS)
                 .team(teamPS)
@@ -123,6 +125,7 @@ public class MatchService {
         return respDTO;
     }
 
+    // 매칭글 상세보기
     public Object getDetail(Integer matchId, User sessionUser) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         Match matchPS = matchRepository.findById(matchId)
