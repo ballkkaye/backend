@@ -75,6 +75,7 @@ public class ChatRoomService {
 
         for (ChatRoomUser chatRoomUser : userChatRooms) {
             List<ChatRoomUserResponse.ProfileImgDTO> profileImages = new ArrayList<>();
+            Boolean isOwner = chatRoomUser.getIsOwner();
 
             // 채팅 참여중인 유저들 조회
             List<ChatRoomUser> chatRoomParticipants = chatRoomUserRepository.findByChatRoomIdAndDeleteStatus(chatRoomUser.getChatRoom().getId());
@@ -97,7 +98,7 @@ public class ChatRoomService {
                 latestMessageTime = p.format(new Date(chatMessagePS.getCreatedAt().getTime()));
                 latestMessageContent = chatMessagePS.getContent();
             }
-            ChatRoomResponse.ItemDTO dto = new ChatRoomResponse.ItemDTO(chatRoom.getId(), matchPS.getTitle(), latestMessageTime, latestMessageContent, profileImages);
+            ChatRoomResponse.ItemDTO dto = new ChatRoomResponse.ItemDTO(chatRoom.getId(), matchPS.getTitle(), latestMessageTime, latestMessageContent, profileImages, isOwner);
             respDTO.add(dto);
         }
         return respDTO;

@@ -59,7 +59,7 @@ public class ChatMessageRepository {
                 .setParameter("status", DeleteStatus.NOT_DELETED)
                 .setMaxResults(1) // 한 건만 조회
                 .getResultList();
-
+        
         return result.isEmpty() ? null : result.get(0);
     }
 }

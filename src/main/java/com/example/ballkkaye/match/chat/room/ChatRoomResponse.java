@@ -57,16 +57,18 @@ public class ChatRoomResponse {
     public static class ItemDTO {
         private Integer chatRoomId;
         private String chatRoomTitle;
+        private Boolean isChatRoomOwner;
         private String relativeTime;
         private String content;
         private List<ChatRoomUserResponse.ProfileImgDTO> userProfileImgs;
 
-        public ItemDTO(Integer chatRoomId, String chatRoomTitle, String relativeTime, String content, List<ChatRoomUserResponse.ProfileImgDTO> imgUrl) {
+        public ItemDTO(Integer chatRoomId, String chatRoomTitle, String relativeTime, String content, List<ChatRoomUserResponse.ProfileImgDTO> imgUrl, Boolean isChatRoomOwner) {
             this.chatRoomId = chatRoomId;
             this.chatRoomTitle = chatRoomTitle;
             this.relativeTime = relativeTime;
             this.content = content;
             this.userProfileImgs = imgUrl;
+            this.isChatRoomOwner = isChatRoomOwner;
         }
     }
 }
