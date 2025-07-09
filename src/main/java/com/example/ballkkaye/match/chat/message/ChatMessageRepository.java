@@ -18,8 +18,7 @@ public class ChatMessageRepository {
         em.persist(message);
     }
 
-    public List<ChatMessage> findByRoomIdAndCreatedAtAfter(Integer roomId, Timestamp timestamp, Integer page) {
-        int pageSize = 50;
+    public List<ChatMessage> findByRoomIdAndCreatedAtAfter(Integer roomId, Timestamp timestamp) {
 
         return em.createQuery("""
                             SELECT m FROM ChatMessage m
@@ -29,8 +28,6 @@ public class ChatMessageRepository {
                         """, ChatMessage.class)
                 .setParameter("roomId", roomId)
                 .setParameter("timestamp", timestamp)
-                .setFirstResult(page * pageSize)
-                .setMaxResults(pageSize)
                 .getResultList();
     }
 
@@ -59,7 +56,7 @@ public class ChatMessageRepository {
                 .setParameter("status", DeleteStatus.NOT_DELETED)
                 .setMaxResults(1) // 한 건만 조회
                 .getResultList();
-        
+
         return result.isEmpty() ? null : result.get(0);
     }
 }

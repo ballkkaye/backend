@@ -5,7 +5,10 @@ import com.example.ballkkaye.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,10 +19,9 @@ public class ChatMessageRestController {
 
     // 메세지 목록 조회
     @GetMapping("/s/api/chatrooms/{roomId}/messages")
-    public ResponseEntity<?> getMessages(@PathVariable Integer roomId,
-                                         @RequestParam(required = false, value = "page", defaultValue = "0") Integer page) {
+    public ResponseEntity<?> getMessages(@PathVariable Integer roomId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        var respDTO = chatMessageService.getMessages(roomId, sessionUser, page);
+        var respDTO = chatMessageService.getMessages(roomId, sessionUser);
         return Resp.ok(respDTO);
     }
 

@@ -88,15 +88,15 @@ public class ChatMessageService {
 
 
     // 메시지 List로 반환
-    public List<ChatMessageResponse.DTO> getMessages(Integer roomId, User sessionUser, Integer page) {
+    public List<ChatMessageResponse.DTO> getMessages(Integer roomId, User sessionUser) {
         chatRoomUserRepository.findByUserIdAndChatRoomId(sessionUser.getId(), roomId)
                 .orElseThrow(() -> new RuntimeException("권한 없음"));
 
 
         Timestamp connectedAt = chatRoomUserRepository.findCreatedAt(roomId, sessionUser.getId());
 
-        List<ChatMessage> messages = chatMessageRepository.findByRoomIdAndCreatedAtAfter(roomId, connectedAt, page);
-            
+        List<ChatMessage> messages = chatMessageRepository.findByRoomIdAndCreatedAtAfter(roomId, connectedAt);
+
         return messages.stream()
                 .map(m -> new ChatMessageResponse.DTO(
                         m.getId(),
