@@ -91,4 +91,15 @@ public class ChatRoomUserRepository {
 
         return result.isEmpty() ? null : result.get(0);
     }
+
+
+    public List<ChatRoomUser> findByUserId(Integer userId) {
+        String q = "SELECT cru FROM ChatRoomUser cru " +
+                "WHERE cru.user.id = :userId AND cru.deleteStatus = :status";
+
+        return em.createQuery(q, ChatRoomUser.class)
+                .setParameter("userId", userId)
+                .setParameter("status", DeleteStatus.NOT_DELETED)
+                .getResultList();
+    }
 }

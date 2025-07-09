@@ -1,5 +1,6 @@
 package com.example.ballkkaye.match.chat.message;
 
+import com.example.ballkkaye.common.enums.DeleteStatus;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -46,5 +47,19 @@ public class ChatMessageRepository {
     public Optional<ChatMessage> findById(Integer chatMessageId) {
         ChatMessage chatMessage = em.find(ChatMessage.class, chatMessageId);
         return Optional.ofNullable(chatMessage);
+    }
+
+    public ChatMessage findLatestByChatRoomIdAndDeleteStatus(Integer chatRoomId) {
+        String q = "SELECT cm FROM ChatMessage cm " +
+                "WHERE cm.chatRoom.id = :chatRoomId AND cm.deleteStatus = :status " +
+                "ORDER BY cm.id DESC"; // 최신순 정렬
+
+        List<ChatMessage> result = em.createQuery(q, ChatMessage.class)
+                .setParameter("chatRoomId", chatRoomId)
+                .setParameter("status", DeleteStatus.NOT_DELETED)
+                .setMaxResults(1) // 한 건만 조회
+                .getResultList();
+
+        return result.isEmpty() ? null : result.get(0);
     }
 }
