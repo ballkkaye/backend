@@ -14,7 +14,7 @@ public class JwtUtil {
                 .withSubject("refresh-token ")
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .withClaim("id", user.getId())
-                .withClaim("nickname", user.getNickname())
+                .withClaim("username", user.getUsername())
                 .withClaim("userrole", user.getUserRole().toString())
                 .sign(Algorithm.HMAC512("ballkkaye"));
         return jwt;
@@ -25,7 +25,7 @@ public class JwtUtil {
                 .withSubject("access-token")
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .withClaim("id", user.getId())
-                .withClaim("nickname", user.getNickname())
+                .withClaim("username", user.getUsername())
                 .withClaim("userrole", user.getUserRole().toString())
                 .sign(Algorithm.HMAC512("ballkkaye"));
         return jwt;
@@ -34,13 +34,13 @@ public class JwtUtil {
     public static User verify(String jwt) {
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512("ballkkaye")).build().verify(jwt);
         int id = decodedJWT.getClaim("id").asInt();
-        String nickname = decodedJWT.getClaim("nickname").asString();
+        String username = decodedJWT.getClaim("username").asString();
         String role = decodedJWT.getClaim("userrole").asString();
         UserRole userRole = UserRole.valueOf(role);
 
         return User.builder()
                 .id(id)
-                .nickname(nickname)
+                .username(username)
                 .userRole(userRole)
                 .build();
     }

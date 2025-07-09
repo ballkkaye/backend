@@ -1,5 +1,6 @@
 package com.example.ballkkaye.player.hitterLineup.today;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.HitterLineupUtil;
 import com.example.ballkkaye.game.Game;
 import com.example.ballkkaye.game.GameRepository;
@@ -21,7 +22,7 @@ public class TodayHitterLineupService {
 
     public TodayHitterLineupResponse.DTO getMatchupDetailsByGameId(Integer gameId, Integer teamId) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new RuntimeException("경기 정보 없음"));
+                .orElseThrow(() -> new ExceptionApi404("경기 정보가 없습니다"));
 
         // 선택한 팀 기준으로 타자 팀/상대 투수 팀 결정
         Team hitterTeam;
@@ -39,11 +40,14 @@ public class TodayHitterLineupService {
                 .findByGameIdAndTeam(gameId, pitcherTeam.getTeamName())
                 .stream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("선발투수 정보 없음"));
+                .orElseThrow(() -> new ExceptionApi404("선발투수 정보가 없습니다."));
 
         // 선택한 팀 기준으로 타자 라인업 조회 (Today 기준)
         List<TodayHitterLineup> hitterLineups = todayHitterLineUpRepository.findByGameIdAndTeamId(gameId, hitterTeam.getId());
 
+        if (hitterLineups.isEmpty()) {
+            throw new ExceptionApi404("타자 라인업 정보가 없습니다.");
+        }
 
         // HitterInfo 리스트 변환
         List<TodayHitterLineupResponse.DTO.HitterInfo> hitterDTOs = hitterLineups.stream()

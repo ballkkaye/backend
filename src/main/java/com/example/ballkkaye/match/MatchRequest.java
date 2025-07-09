@@ -31,6 +31,7 @@ public class MatchRequest {
 
     @Data
     public static class UpdateDTO {
+        
         private String title;
         private String content;
         private Integer gameId;
