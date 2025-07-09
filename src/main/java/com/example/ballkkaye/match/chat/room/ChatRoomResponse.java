@@ -50,4 +50,6 @@ public class ChatRoomResponse {
             this.deleteStatus = deleteStatus;
         }
     }
+
+
 }

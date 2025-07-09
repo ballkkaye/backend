@@ -64,4 +64,5 @@ public class ChatRoomUserRepository {
                 .setParameter(2, deleteStatus.name())
                 .getSingleResult()).longValue();
     }
+
 }

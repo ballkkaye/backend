@@ -25,4 +25,6 @@ public class ChatRoomUserResponse {
             this.deleteStatus = DeleteStatus.DELETED.getLabel();
         }
     }
+
+
 }

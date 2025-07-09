@@ -15,6 +15,7 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
     private final HttpSession session;
 
+    // 채팅방 삭제
     @DeleteMapping("/s/api/chatrooms/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");

@@ -1,5 +1,6 @@
 package com.example.ballkkaye.user;
 
+import com.example.ballkkaye.common.enums.UserRole;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,17 @@ public class UserRepository {
             return Optional.ofNullable(user);
         } catch (NoResultException e) {
             return Optional.empty();
+        }
+    }
+
+    public User findByUsernameAndRole(String username, UserRole role) {
+        try {
+            return em.createQuery("select u from User u where u.username = :username and u.userRole = :role", User.class)
+                    .setParameter("username", username)
+                    .setParameter("role", role)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
         }
     }
 }
