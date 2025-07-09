@@ -191,7 +191,8 @@
 		currentChatRoomId = roomIdInput;
 
 		enterChatRoom().then(() => {
-			const socket = new WebSocket("ws://localhost:8080/connect");
+			const socket = new WebSocket(`ws://localhost:8080/connect?token=${currentToken}&roomId=${currentChatRoomId}`);
+
 			stompClient = Stomp.over(socket);
 
 			stompClient.connect(

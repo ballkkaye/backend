@@ -47,9 +47,6 @@ public class ChatMessageService {
 
         chatMessageRepository.save(message);
 
-        System.out.println("=====================");
-        System.out.println("저장완료");
-        System.out.println("=====================");
         return new ChatMessageResponse.DTO(
                 message.getId(),
                 reqDTO.getChatRoomId(),

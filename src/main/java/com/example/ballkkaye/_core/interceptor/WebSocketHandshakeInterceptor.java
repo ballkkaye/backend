@@ -27,13 +27,18 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
             Map<String, Object> attributes) {
 
         String authHeader = request.getHeaders().getFirst("Authorization");
+        String token = null;
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return false;
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            token = authHeader.replace("Bearer ", "");
+        } else if (request instanceof ServletServerHttpRequest servletRequest) {
+            HttpServletRequest req = servletRequest.getServletRequest();
+            token = req.getParameter("token");
         }
 
         try {
-            String token = authHeader.replace("Bearer ", "");
+            if (token == null) return false;
+
             User user = JwtUtil.verify(token);
 
             if (request instanceof ServletServerHttpRequest servletRequest) {
