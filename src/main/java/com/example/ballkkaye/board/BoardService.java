@@ -39,6 +39,7 @@ public class BoardService {
     // 커뮤니티 게시글 등록
     @Transactional
     public BoardResponse.SaveDTO save(BoardRequest.SaveDTO reqDTO, User sessionUser) {
+        PrettyTime p = new PrettyTime(Locale.KOREAN);
         // 1. user 조회
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
@@ -71,7 +72,7 @@ public class BoardService {
         }
 
         // 6. 응답 반환
-        return new BoardResponse.SaveDTO(board, itemDTOS);
+        return new BoardResponse.SaveDTO(board, itemDTOS, p.format(new Date(board.getCreatedAt().getTime())));
     }
 
     // 커뮤니티 게시글 수정
