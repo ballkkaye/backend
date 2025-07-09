@@ -1,14 +1,13 @@
 package com.example.ballkkaye.game.today;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,22 +17,12 @@ public class TodayGameRepository {
 
     private final EntityManager em;
 
-
-    // 여러 개의 TodayGame 객체를 데이터베이스에 저장
-    public void save(List<TodayGame> games) {
-        for (TodayGame game : games) {
-            em.persist(game);
-        }
-    }
-
-
     // 오늘 경기의 예측 관련 원본 데이터를 조회
     public List<Object[]> findTodayGamePredictionData() {
-        LocalDate today = LocalDate.now(); // 오늘 날짜 (예: 2025-07-08)
-        LocalDateTime startOfDay = today.atStartOfDay(); // 오늘 0시 0분 0초 (예: 2025-07-08T00:00:00)
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.plusDays(1).atStartOfDay().minusNanos(1);
 
-        // LocalDateTime을 Timestamp로 변환
         Timestamp startTimestamp = Timestamp.valueOf(startOfDay);
         Timestamp endTimestamp = Timestamp.valueOf(endOfDay);
 
@@ -67,58 +56,45 @@ public class TodayGameRepository {
                 .getResultList();
     }
 
-    // 주어진 gameId로 TodayGame 객체 조회
-    public Optional<TodayGame> findByGameId(Integer gameId) {
-        String jpql = "SELECT tg FROM TodayGame tg WHERE tg.game.id = :gameId";
-        TypedQuery<TodayGame> query = em.createQuery(jpql, TodayGame.class);
-        query.setParameter("gameId", gameId);
-        try {
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
-    }
-
-
     // 특정 날짜에 대한 모든 경기의 간략한 정보 조회
     public List<TodayGameResponse.ItemDTO> findTodayGameList(LocalDate date) {
         String sql = """
-                SELECT
-                    g.game_id AS today_game_id,
-                    g.game_status,
-                    FORMATDATETIME(g.game_time, 'HH:mm') AS game_time,
-                    s.stadium_name,
-                    g.broadcast_channel,
-                    home_pitcher.name AS home_pitcher_name,
-                    home_pitcher.profile_url AS home_pitcher_img,
-                    away_pitcher.name AS away_pitcher_name,
-                    away_pitcher.profile_url AS away_pitcher_img,
-                    t.ticket_link AS ticket_link
-                FROM today_game_tb g
-                JOIN stadium_tb s ON g.stadium_id = s.id
-                LEFT JOIN (
                     SELECT
-                        tsp.game_id,
-                        p.name,
-                        tsp.profile_url
-                    FROM today_starting_pitcher_tb tsp
-                    JOIN player_tb p ON p.id = tsp.player_id
-                    JOIN game_tb original_game ON original_game.id = tsp.game_id
-                    WHERE original_game.home_team_id = p.team_id
-                ) home_pitcher ON home_pitcher.game_id = g.game_id 
-                LEFT JOIN (
-                    SELECT
-                        tsp.game_id,
-                        p.name,
-                        tsp.profile_url
-                    FROM today_starting_pitcher_tb tsp
-                    JOIN player_tb p ON p.id = tsp.player_id
-                    JOIN game_tb original_game ON original_game.id = tsp.game_id
-                    WHERE original_game.away_team_id = p.team_id
-                ) away_pitcher ON away_pitcher.game_id = g.game_id
-                LEFT JOIN team_tb t ON t.id = g.home_team_id
-                WHERE g.game_time >= :start AND g.game_time < :end
-                ORDER BY g.game_id ASC
+                        g.game_id AS today_game_id,
+                        g.game_status,
+                        g.game_time,
+                        s.stadium_name,
+                        g.broadcast_channel,
+                        home_pitcher.name AS home_pitcher_name,
+                        home_pitcher.profile_url AS home_pitcher_img,
+                        away_pitcher.name AS away_pitcher_name,
+                        away_pitcher.profile_url AS away_pitcher_img,
+                        t.ticket_link AS ticket_link
+                    FROM today_game_tb g
+                    JOIN stadium_tb s ON g.stadium_id = s.id
+                    LEFT JOIN (
+                        SELECT
+                            tsp.game_id,
+                            p.name,
+                            tsp.profile_url
+                        FROM today_starting_pitcher_tb tsp
+                        JOIN player_tb p ON p.id = tsp.player_id
+                        JOIN game_tb original_game ON original_game.id = tsp.game_id
+                        WHERE original_game.home_team_id = p.team_id
+                    ) home_pitcher ON home_pitcher.game_id = g.game_id 
+                    LEFT JOIN (
+                        SELECT
+                            tsp.game_id,
+                            p.name,
+                            tsp.profile_url
+                        FROM today_starting_pitcher_tb tsp
+                        JOIN player_tb p ON p.id = tsp.player_id
+                        JOIN game_tb original_game ON original_game.id = tsp.game_id
+                        WHERE original_game.away_team_id = p.team_id
+                    ) away_pitcher ON away_pitcher.game_id = g.game_id
+                    LEFT JOIN team_tb t ON t.id = g.home_team_id
+                    WHERE g.game_time >= :start AND g.game_time < :end
+                    ORDER BY g.game_id ASC
                 """;
 
         LocalDateTime start = date.atStartOfDay();
@@ -129,19 +105,39 @@ public class TodayGameRepository {
                 .setParameter("end", end)
                 .getResultList();
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
         return rows.stream()
-                .map(row -> new TodayGameResponse.ItemDTO(
-                        (Integer) row[0],
-                        (String) row[1],
-                        (String) row[2],
-                        (String) row[3],
-                        (String) row[4],
-                        (String) row[5],
-                        (String) row[6],
-                        (String) row[7],
-                        (String) row[8],
-                        (String) row[9]
-                ))
+                .map(row -> {
+                    Integer gameId = (Integer) row[0];
+                    String gameStatus = (String) row[1];
+
+                    String gameTime;
+                    Object rawGameTime = row[2];
+
+                    if (rawGameTime instanceof Timestamp ts) {
+                        gameTime = ts.toLocalDateTime().format(formatter);
+                    } else if (rawGameTime instanceof LocalDateTime ldt) {
+                        gameTime = ldt.format(formatter);
+                    } else if (rawGameTime instanceof String str) {
+                        gameTime = str;
+                    } else {
+                        gameTime = rawGameTime.toString();
+                    }
+
+                    return new TodayGameResponse.ItemDTO(
+                            gameId,
+                            gameStatus,
+                            gameTime,
+                            (String) row[3],
+                            (String) row[4],
+                            (String) row[5],
+                            (String) row[6],
+                            (String) row[7],
+                            (String) row[8],
+                            (String) row[9]
+                    );
+                })
                 .toList();
     }
 

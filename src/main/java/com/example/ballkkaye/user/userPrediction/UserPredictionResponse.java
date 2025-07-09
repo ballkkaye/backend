@@ -4,8 +4,6 @@ import com.example.ballkkaye.common.enums.GameStatus;
 import com.example.ballkkaye.common.enums.PredictionStatus;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class UserPredictionResponse {
 
@@ -48,6 +46,5 @@ public class UserPredictionResponse {
         private Integer awayVoteRate;
 
         private GameStatus gameStatus;
-        private LocalDateTime updatedAt;
     }
 }

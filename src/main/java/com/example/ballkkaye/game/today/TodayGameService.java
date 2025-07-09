@@ -49,6 +49,5 @@ public class TodayGameService {
     // 날짜 기반 오늘 경기 리스트 조회
     public List<TodayGameResponse.ItemDTO> getTodayGames(LocalDate date) {
         return todayGameRepository.findTodayGameList(date);
-//        2025-02-02 날짜 파싱해서 넘겨주자
     }
 }

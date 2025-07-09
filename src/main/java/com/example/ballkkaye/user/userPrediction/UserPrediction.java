@@ -1,7 +1,7 @@
 package com.example.ballkkaye.user.userPrediction;
 
 import com.example.ballkkaye.common.enums.PredictionStatus;
-import com.example.ballkkaye.game.today.TodayGame;
+import com.example.ballkkaye.game.Game;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.user.User;
 import jakarta.persistence.*;
@@ -27,7 +27,7 @@ public class UserPrediction {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "game_id")
-    private TodayGame game;
+    private Game game;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "team_id")
@@ -41,7 +41,7 @@ public class UserPrediction {
     private Timestamp createdAt;
 
     @Builder
-    public UserPrediction(User user, TodayGame game, Team userChoiceTeam, PredictionStatus result) {
+    public UserPrediction(User user, Game game, Team userChoiceTeam, PredictionStatus result) {
         this.user = user;
         this.game = game;
         this.userChoiceTeam = userChoiceTeam;
