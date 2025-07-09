@@ -19,7 +19,7 @@ public class TodayGameController {
 
     // 승리예측 1
     @GetMapping("/s/api/today-games/prediction")
-    public ResponseEntity<?> getTodayPredictions() {
+    public ResponseEntity<?> getTodayGamePredictions() {
         List<TodayGameResponse.PredictionDTO> respDTO = todayGameService.getTodayGamePredictions();
         return Resp.ok(respDTO);
     }
