@@ -21,6 +21,7 @@ public class ChatRoomUserController {
     // 채팅방 입장
     @PostMapping("/s/api/chatrooms/{id}")
     public ResponseEntity<?> save(@PathVariable("id") Integer id) {
+        System.out.println("===============채팅방 입장 호출===============");
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = chatRoomUserService.save(id, sessionUser);
         return Resp.ok(respDTO);
@@ -29,6 +30,7 @@ public class ChatRoomUserController {
     // 채팅방 퇴장
     @DeleteMapping("/s/api/chatrooms/user/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        System.out.println("===============채팅방 퇴장 호출===============");
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = chatRoomUserService.delete(id, sessionUser);
         return Resp.ok(respDTO);

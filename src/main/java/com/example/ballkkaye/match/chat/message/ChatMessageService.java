@@ -47,6 +47,9 @@ public class ChatMessageService {
 
         chatMessageRepository.save(message);
 
+        System.out.println("=====================");
+        System.out.println("저장완료");
+        System.out.println("=====================");
         return new ChatMessageResponse.DTO(
                 message.getId(),
                 reqDTO.getChatRoomId(),
@@ -85,16 +88,15 @@ public class ChatMessageService {
 
 
     // 메시지 List로 반환
-    public List<ChatMessageResponse.DTO> getMessages(Integer roomId, User sessionUser) {
-        Timestamp lastConnectedAt = chatRoomUserRepository.findLastConnectedAt(roomId, sessionUser.getId());
+    public List<ChatMessageResponse.DTO> getMessages(Integer roomId, User sessionUser, Integer page) {
+        chatRoomUserRepository.findByUserIdAndChatRoomId(sessionUser.getId(), roomId)
+                .orElseThrow(() -> new RuntimeException("권한 없음"));
 
-        List<ChatMessage> messages;
-        if (lastConnectedAt == null) {
-            messages = chatMessageRepository.findAllByRoomId(roomId);
-        } else {
-            messages = chatMessageRepository.findAllByRoomIdAndCreatedAtAfter(roomId, lastConnectedAt);
-        }
 
+        Timestamp connectedAt = chatRoomUserRepository.findCreatedAt(roomId, sessionUser.getId());
+
+        List<ChatMessage> messages = chatMessageRepository.findByRoomIdAndCreatedAtAfter(roomId, connectedAt, page);
+            
         return messages.stream()
                 .map(m -> new ChatMessageResponse.DTO(
                         m.getId(),

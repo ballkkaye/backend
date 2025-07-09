@@ -18,6 +18,9 @@ public class BoardResponse {
         private Integer teamId;
         private List<BoardImageResponse.ItemDTO> imagesUrl;
         private String content;
+        private String nickname;
+        private String relativeTime;
+        private Integer likeCount;
 
         public SaveDTO(Board board, List<BoardImageResponse.ItemDTO> imagesUrl) {
             this.boardId = board.getId();

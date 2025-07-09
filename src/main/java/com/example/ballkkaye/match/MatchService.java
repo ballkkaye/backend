@@ -90,12 +90,6 @@ public class MatchService {
         ChatRoomResponse.DTO chatRoomDTO = new ChatRoomResponse.DTO(chatRoom);
         MatchResponse.DTO matchDTO = new MatchResponse.DTO(match);
         MatchResponse.SaveDTO respDTO = new MatchResponse.SaveDTO(chatRoomDTO, matchDTO);
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println(chatRoomDTO.getId());
-        System.out.println(matchDTO.getId());
-        System.out.println("===========================");
-        System.out.println("===========================");
 
         return respDTO;
     }

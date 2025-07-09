@@ -5,10 +5,7 @@ import com.example.ballkkaye.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,13 +14,16 @@ public class ChatMessageRestController {
     private final ChatMessageService chatMessageService;
     private final HttpSession session;
 
+    // 메세지 목록 조회
     @GetMapping("/s/api/chatrooms/{roomId}/messages")
-    public ResponseEntity<?> getMessages(@PathVariable Integer roomId) {
+    public ResponseEntity<?> getMessages(@PathVariable Integer roomId,
+                                         @RequestParam(required = false, value = "page", defaultValue = "0") Integer page) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        var respDTO = chatMessageService.getMessages(roomId, sessionUser);
+        var respDTO = chatMessageService.getMessages(roomId, sessionUser, page);
         return Resp.ok(respDTO);
     }
 
+    // 메세지 삭제
     @DeleteMapping("/s/api/chatrooms/messages/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");

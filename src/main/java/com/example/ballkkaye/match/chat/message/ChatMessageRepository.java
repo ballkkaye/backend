@@ -17,15 +17,19 @@ public class ChatMessageRepository {
         em.persist(message);
     }
 
-    public List<ChatMessage> findAllByRoomIdAndCreatedAtAfter(Integer roomId, Timestamp timestamp) {
+    public List<ChatMessage> findByRoomIdAndCreatedAtAfter(Integer roomId, Timestamp timestamp, Integer page) {
+        int pageSize = 50;
+
         return em.createQuery("""
                             SELECT m FROM ChatMessage m
                             WHERE m.chatRoom.id = :roomId
                             AND m.createdAt > :timestamp
-                            ORDER BY m.id ASC
+                            ORDER BY m.id DESC
                         """, ChatMessage.class)
                 .setParameter("roomId", roomId)
                 .setParameter("timestamp", timestamp)
+                .setFirstResult(page * pageSize)
+                .setMaxResults(pageSize)
                 .getResultList();
     }
 

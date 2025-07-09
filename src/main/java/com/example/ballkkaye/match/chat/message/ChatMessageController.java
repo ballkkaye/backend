@@ -1,6 +1,5 @@
 package com.example.ballkkaye.match.chat.message;
 
-import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye._core.util.Resp;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUserRequest;
 import com.example.ballkkaye.user.User;
@@ -21,8 +20,10 @@ public class ChatMessageController {
 
     @SendTo("/sub/chat")
     @MessageMapping("/chat/send")
-    public ResponseEntity<?> sendMessage(@Payload ChatMessageRequest.DTO reqDTO) {
-        User sessionUser = JwtUtil.verify(reqDTO.getAccessToken());
+    public ResponseEntity<?> sendMessage(@Payload ChatMessageRequest.DTO reqDTO,
+                                         SimpMessageHeaderAccessor headerAccessor) {
+        System.out.println("========== /chat/send 호출됨 ==========");
+        User sessionUser = (User) headerAccessor.getSessionAttributes().get("sessionUser");
         ChatMessageResponse.DTO respDTO = chatMessageService.save(reqDTO, sessionUser);
         sms.convertAndSend("/sub/chat/" + respDTO.getChatRoomId(), respDTO);
         return Resp.ok(respDTO);
@@ -31,10 +32,8 @@ public class ChatMessageController {
     @MessageMapping("/chat/auth")
     public void handleAuth(@Payload ChatRoomUserRequest.AuthDTO reqDTO,
                            SimpMessageHeaderAccessor headerAccessor) {
-
-        User sessionUser = JwtUtil.verify(reqDTO.getToken());
+        User sessionUser = (User) headerAccessor.getSessionAttributes().get("sessionUser");
         var respDTO = chatMessageService.handleAuth(reqDTO, sessionUser);
-
 
         sms.convertAndSend("/sub/chat/" + reqDTO.getRoomId(), respDTO);
     }

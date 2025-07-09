@@ -28,35 +28,36 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
 
         if (request instanceof ServletServerHttpRequest servletRequest) {
             HttpServletRequest req = servletRequest.getServletRequest();
-//            String token = req.getHeader("Authorization");
+
+            // 1. JWT 토큰 파라미터 추출
             String token = req.getParameter("token");
-            if (token == null) {//|| !token.startsWith("Bearer ")
-                System.out.println(false);
+            if (token == null) {
                 return false;
             }
-            System.out.println(true);
-            token = token.replace("Bearer ", "");
-            try {
-                User user = JwtUtil.verify(token);
-                attributes.put("sessionUser", user);
 
+            try {
+                // 2. 토큰 검증 및 유저 파싱
+                token = token.replace("Bearer ", "");
+                User user = JwtUtil.verify(token);
+
+                // 3. 채팅방 참여 확인
                 String roomIdParam = req.getParameter("roomId");
                 if (roomIdParam != null) {
-                    try {
-                        Integer roomId = Integer.parseInt(roomIdParam);
-
-                        boolean exists = chatRoomUserRepository.existsByUserIdAndChatRoomId(user.getId(), roomId);
-                        if (!exists) return false;
-                        attributes.put("roomId", roomId);
-                    } catch (NumberFormatException ignored) {
-                    }
+                    Integer roomId = Integer.parseInt(roomIdParam);
+                    boolean exists = chatRoomUserRepository.existsByUserIdAndChatRoomId(user.getId(), roomId);
+                    if (!exists) return false;
+                    attributes.put("roomId", roomId);
                 }
 
+                // 4. WebSocket 세션에 사용자 정보 저장
+                attributes.put("sessionUser", user);
                 return true;
+
             } catch (Exception e) {
                 return false;
             }
         }
+
         return false;
     }
 

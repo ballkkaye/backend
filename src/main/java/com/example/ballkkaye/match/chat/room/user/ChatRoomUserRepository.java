@@ -79,9 +79,9 @@ public class ChatRoomUserRepository {
         return count > 0;
     }
 
-    public Timestamp findLastConnectedAt(Integer roomId, Integer userId) {
+    public Timestamp findCreatedAt(Integer roomId, Integer userId) {
         List<Timestamp> result = em.createQuery("""
-                            SELECT cru.lastDisconnectedAt
+                            SELECT cru.createdAt
                             FROM ChatRoomUser cru
                             WHERE cru.chatRoom.id = :roomId AND cru.user.id = :userId
                         """, Timestamp.class)
