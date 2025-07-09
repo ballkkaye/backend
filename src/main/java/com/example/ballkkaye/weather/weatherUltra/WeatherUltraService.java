@@ -1,5 +1,6 @@
 package com.example.ballkkaye.weather.weatherUltra;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.WeatherUtil;
 import com.example.ballkkaye.common.enums.RainoutLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class WeatherUltraService {
         List<WeatherUltra> forecasts = weatherUltraRepository.findTodayForecastByStadiumId(stadiumId);
 
         if (forecasts.isEmpty()) {
-            throw new RuntimeException("해당 구장의 예보 데이터가 존재하지 않습니다.");
+            throw new ExceptionApi404("해당 구장의 예보 데이터가 존재하지 않습니다.");
         }
 
         // 예보에 포함된 구장의 위치 정보 (ex. 서울시 송파구 등)

@@ -77,34 +77,29 @@ public class TodayGameRepository {
                     FORMATDATETIME(g.game_time, 'HH:mm') AS game_time,
                     s.stadium_name,
                     g.broadcast_channel,
-                    home_pitcher.name AS home_pitcher_name,
-                    home_pitcher.profile_url AS home_pitcher_img,
-                    away_pitcher.name AS away_pitcher_name,
-                    away_pitcher.profile_url AS away_pitcher_img,
-                    t.ticket_link AS ticket_link
+                    home_pitcher.name AS home_pitcher_name,       
+                    ht.logo_url AS home_team_logo_url,            
+                    away_pitcher.name AS away_pitcher_name,      
+                    at.logo_url AS away_team_logo_url,           
+                    ht.ticket_link AS ticket_link
                 FROM today_game_tb g
                 JOIN stadium_tb s ON g.stadium_id = s.id
+                LEFT JOIN team_tb ht ON g.home_team_id = ht.id
+                LEFT JOIN team_tb at ON g.away_team_id = at.id
                 LEFT JOIN (
-                    SELECT
-                        tsp.game_id,
-                        p.name,
-                        tsp.profile_url
+                    SELECT tsp.game_id, p.name
                     FROM today_starting_pitcher_tb tsp
-                    JOIN player_tb p ON p.id = tsp.player_id
-                    JOIN game_tb original_game ON original_game.id = tsp.game_id
-                    WHERE original_game.home_team_id = p.team_id
-                ) home_pitcher ON home_pitcher.game_id = g.game_id 
+                    JOIN player_tb p ON tsp.player_id = p.id
+                    JOIN game_tb gg ON tsp.game_id = gg.id
+                    WHERE gg.home_team_id = p.team_id
+                ) home_pitcher ON home_pitcher.game_id = g.game_id
                 LEFT JOIN (
-                    SELECT
-                        tsp.game_id,
-                        p.name,
-                        tsp.profile_url
+                    SELECT tsp.game_id, p.name
                     FROM today_starting_pitcher_tb tsp
-                    JOIN player_tb p ON p.id = tsp.player_id
-                    JOIN game_tb original_game ON original_game.id = tsp.game_id
-                    WHERE original_game.away_team_id = p.team_id
+                    JOIN player_tb p ON tsp.player_id = p.id
+                    JOIN game_tb gg ON tsp.game_id = gg.id
+                    WHERE gg.away_team_id = p.team_id
                 ) away_pitcher ON away_pitcher.game_id = g.game_id
-                LEFT JOIN team_tb t ON t.id = g.home_team_id
                 WHERE g.game_time >= :start AND g.game_time < :end
                 ORDER BY g.game_id ASC
                 """;
@@ -119,16 +114,16 @@ public class TodayGameRepository {
 
         return rows.stream()
                 .map(row -> new TodayGameResponse.ItemDTO(
-                        (Integer) row[0],
-                        (String) row[1],
-                        (String) row[2],
-                        (String) row[3],
-                        (String) row[4],
-                        (String) row[5],
-                        (String) row[6],
-                        (String) row[7],
-                        (String) row[8],
-                        (String) row[9]
+                        (Integer) row[0], // game_id
+                        (String) row[1],  // game_status
+                        (String) row[2],  // game_time
+                        (String) row[3],  // stadium_name
+                        (String) row[4],  // broadcast_channel
+                        (String) row[5],  // home_pitcher_name
+                        (String) row[6],  // home_team_logo
+                        (String) row[7],  // away_pitcher_name
+                        (String) row[8],  // away_team_logo
+                        (String) row[9]   // ticket_link
                 ))
                 .toList();
     }

@@ -64,6 +64,7 @@ public class UserResponse {
         private String name;
         private String nickname;
         private Integer teamId;
+        private String teamName;
         private String phoneNumber;
         private String email;
         private String birthDate;
@@ -77,6 +78,7 @@ public class UserResponse {
             this.name = user.getName();
             this.nickname = user.getNickname();
             this.teamId = user.getTeam() == null ? null : user.getTeam().getId();
+            this.teamName = user.getTeam() == null ? null : user.getTeam().getTeamName();
             this.phoneNumber = user.getPhoneNumber();
             this.email = user.getEmail();
             this.birthDate = user.getBirthDate().toString();
