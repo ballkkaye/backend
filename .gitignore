@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+# Firebase 키 비공개 처리
+src/main/resources/firebase/firebase-service-key.json
