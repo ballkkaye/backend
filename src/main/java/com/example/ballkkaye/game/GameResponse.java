@@ -31,9 +31,11 @@ public class GameResponse {
         @Data
         public static class ItemDTO {
             private Integer gameId;
+            private Integer homeTeamId;
             private String homeTeamFullName;
             private String homeTeamShortName;
             private Integer homeTeamScore;
+            private Integer awayTeamId;
             private String awayTeamFullName;
             private String awayTeamShortName;
             private Integer awayTeamScore;
@@ -43,9 +45,11 @@ public class GameResponse {
 
             public ItemDTO(Game game) {
                 this.gameId = game.getId();
+                this.homeTeamId = game.getHomeTeam().getId();
                 this.homeTeamFullName = game.getHomeTeam().getTeamName();
                 this.homeTeamShortName = game.getHomeTeam().getTeamName().split(" ")[0];
                 this.homeTeamScore = game.getHomeResultScore();
+                this.awayTeamId = game.getAwayTeam().getId();
                 this.awayTeamFullName = game.getAwayTeam().getTeamName();
                 this.awayTeamShortName = game.getAwayTeam().getTeamName().split(" ")[0];
                 this.awayTeamScore = game.getAwayResultScore();
