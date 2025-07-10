@@ -59,7 +59,7 @@ public class TodayGameResponse {
         private Integer gameId;
         private String gameStatus;
         private String gameTime;
-        private String stadiumName;
+        private String stadiumShortName;
         private String broadcastChannel;
         private String homePitcherName;
         private String homeTeamLogoUrl;
@@ -68,14 +68,14 @@ public class TodayGameResponse {
         private String ticketLink;
 
         public ItemDTO(Integer gameId, String gameStatus, String gameTime,
-                       String stadiumName, String broadcastChannel,
+                       String stadiumShortName, String broadcastChannel,
                        String homePitcherName, String homeTeamLogoUrl,
                        String awayPitcherName, String awayTeamLogoUrl,
                        String ticketLink) {
             this.gameId = gameId;
             this.gameStatus = gameStatus;
             this.gameTime = gameTime;
-            this.stadiumName = stadiumName;
+            this.stadiumShortName = stadiumShortName.substring(0, 2);
             this.broadcastChannel = broadcastChannel;
             this.homePitcherName = homePitcherName;
             this.homeTeamLogoUrl = homeTeamLogoUrl;
