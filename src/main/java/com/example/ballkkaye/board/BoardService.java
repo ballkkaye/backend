@@ -20,7 +20,6 @@ import com.example.ballkkaye.team.record.TeamRecordRepository;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.stereotype.Service;
@@ -80,7 +79,7 @@ public class BoardService {
 
     // 커뮤니티 게시글 수정
     @Transactional
-    public BoardResponse.UpdateDTO update(BoardRequest.@Valid UpdateDTO reqDTO, User sessionUser, Integer boardId) {
+    public BoardResponse.UpdateDTO update(BoardRequest.UpdateDTO reqDTO, User sessionUser, Integer boardId) {
         // 1. user 조회
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
