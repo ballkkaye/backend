@@ -1,5 +1,8 @@
 package com.example.ballkkaye.board.reply;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi403;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye.board.Board;
 import com.example.ballkkaye.board.BoardRepository;
 import com.example.ballkkaye.board.reply.like.BoardReplyLikeRepository;
@@ -28,24 +31,24 @@ public class BoardReplyService {
     public Object save(Integer boardId, User sessionUser, BoardReplyRequest.SaveDTO reqDTO) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         Board boardPS = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         BoardReply parentReply = null;
         BoardReply tagReply = null;
         if (reqDTO.getParentReplyId() != null) {
             parentReply = boardReplyRepository.findById(reqDTO.getParentReplyId())
-                    .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                    .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         }
 
         if (reqDTO.getTagReplyId() != null) {
             tagReply = boardReplyRepository.findById(reqDTO.getTagReplyId())
-                    .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                    .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         }
         if (parentReply != null && parentReply.getParentReplyId() != null) {
-            throw new RuntimeException("잘못된 접근");
+            throw new ExceptionApi400("잘못된 요청입니다.");
         }
 
         BoardReply boardReply = new BoardReply(boardPS, sessionUser, parentReply, tagReply, DeleteStatus.NOT_DELETED, reqDTO.getContent());
@@ -62,15 +65,15 @@ public class BoardReplyService {
     public Object delete(Integer replyId, User sessionUser) {
         // 1. 존재하는 유저인지
         userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 2. 존재하는 댓글인지 확인
         BoardReply boardReply = boardReplyRepository.findById(replyId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 3. 주인인지 확인
         if (boardReply.getUser().getId() != sessionUser.getId()) {
-            throw new RuntimeException("해당 기능에 대한 권한이 없습니다.");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         // 4. 삭제
@@ -84,16 +87,16 @@ public class BoardReplyService {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
 
         BoardReply boardReplyPS = boardReplyRepository.findById(replyId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 3. 주인인지 확인
         if (boardReplyPS.getUser().getId() != sessionUser.getId()) {
-            throw new RuntimeException("해당 기능에 대한 권한이 없습니다.");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         // 존재하는 댓글인지 조회(tagReplyId)
         BoardReply tagReplyPS = boardReplyRepository.findById(replyId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 4. 업데이트
         boardReplyPS.update(reqDTO.getContent(), tagReplyPS);
@@ -109,10 +112,10 @@ public class BoardReplyService {
 
     public Object detail(Integer boardId, User sessionUser) {
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         Board boardPS = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         PrettyTime p = new PrettyTime(Locale.KOREAN);
 

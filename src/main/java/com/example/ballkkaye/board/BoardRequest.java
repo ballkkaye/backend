@@ -3,6 +3,10 @@ package com.example.ballkkaye.board;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.user.User;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
@@ -11,9 +15,17 @@ public class BoardRequest {
 
     @Data
     public static class SaveDTO {
+        @NotEmpty(message = "제목은 필수 입력입니다.")
         private String title;
+
+        @Min(value = 1, message = "팀 ID는 1 이상이어야 합니다.")
+        @Max(value = 10, message = "팀 ID는 10 이하여야 합니다.")
         private Integer teamId;
+
+        @Size(max = 10, message = "이미지는 최대 10개까지 첨부할 수 있습니다.")
         private List<String> images;
+
+        @Size(max = 1000, message = "내용은 1000자 이내로 작성해주세요.")
         private String content;
 
         public SaveDTO(String title, Integer teamId, List<String> images, String content) {
@@ -36,9 +48,17 @@ public class BoardRequest {
 
     @Data
     public static class UpdateDTO {
+        @NotEmpty(message = "제목은 필수 입력입니다.")
         private String title;
+
+
+        @Min(value = 1, message = "팀 ID는 1 이상이어야 합니다.")
+        @Max(value = 10, message = "팀 ID는 10 이하여야 합니다.")
         private Integer teamId;
+
+        @Size(max = 1000, message = "내용은 1000자 이내로 작성해주세요.")
         private String content;
+
         private List<String> remainImageUrls;
         private List<String> newImages;
 
