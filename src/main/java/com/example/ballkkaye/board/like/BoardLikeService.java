@@ -1,5 +1,8 @@
 package com.example.ballkkaye.board.like;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi403;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye.board.Board;
 import com.example.ballkkaye.board.BoardRepository;
 import com.example.ballkkaye.common.enums.DeleteStatus;
@@ -21,20 +24,20 @@ public class BoardLikeService {
     public Object save(Integer boardId, User sessionUser) {
         // 1. user 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 2. 게시글이 존재하는지 확인
         Board boardPS = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 3. 게시글 삭제 되었는지 확인
         if (boardPS.getDeleteStatus().equals(DeleteStatus.DELETED)) {
-            throw new RuntimeException("해당 자원을 찾을 수 없습니다.");
+            throw new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
         }
 
         // 4. 이미 존재하는 좋아요인지 검색
         if (boardLikeRepository.findByBoardIdAndUserId(boardId, userPS.getId()).isPresent()) {
-            throw new RuntimeException("이미 좋아요 한 게시물입니다.");
+            throw new ExceptionApi400("잘못된 요청입니다.");
         }
 
         // 5. 없으면 저장
@@ -54,15 +57,15 @@ public class BoardLikeService {
     public BoardLikeResponse.DeleteDTO delete(Integer likeId, User sessionUser) {
         // 1. user 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 2. board/like 조회
         BoardLike boardLikePS = boardLikeRepository.findById(likeId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 3. 주인인지 확인
         if (boardLikePS.getUser().getId() != userPS.getId()) {
-            throw new RuntimeException("해당 기능에 대한 권한이 없습니다.");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         // 4. 좋아요 삭제
