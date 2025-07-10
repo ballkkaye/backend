@@ -1,5 +1,6 @@
 package com.example.ballkkaye.board.reply;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -8,6 +9,8 @@ public class BoardReplyRequest {
     public static class SaveDTO {
         private Integer parentReplyId;
         private Integer tagReplyId;
+
+        @NotBlank(message = "내용은 필수 입력입니다.")
         @Size(max = 300, message = "내용은 300자 이내로 작성해주세요.")
         private String content;
 
@@ -21,6 +24,8 @@ public class BoardReplyRequest {
     @Data
     public static class UpdateDTO {
         private Integer tagReplyId;
+
+        @NotBlank(message = "내용은 필수 입력입니다.")
         @Size(max = 300, message = "내용은 300자 이내로 작성해주세요.")
         private String content;
 
@@ -29,4 +34,5 @@ public class BoardReplyRequest {
             this.content = content;
         }
     }
+
 }
