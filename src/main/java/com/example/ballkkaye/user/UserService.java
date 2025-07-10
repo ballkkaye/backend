@@ -7,7 +7,6 @@ import com.example.ballkkaye.common.enums.ProviderType;
 import com.example.ballkkaye.common.enums.UserRole;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.team.TeamRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.HttpEntity;
@@ -96,7 +95,7 @@ public class UserService {
     }
 
     @Transactional
-    public Object additionalUserInfo(User sessionUser, UserRequest.@Valid AdditionalInfoDTO reqDTO) {
+    public Object additionalUserInfo(User sessionUser, UserRequest.AdditionalInfoDTO reqDTO) {
         // 유저 존재하는지 검사
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("유저lawk를 찾을 수 없습니다"));
