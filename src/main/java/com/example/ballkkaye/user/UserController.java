@@ -19,7 +19,7 @@ public class UserController {
     // oauth로그인
     @PostMapping("/oauth/login")
     public ResponseEntity<?> naverOauthLogin(@RequestBody @Valid UserRequest.LoginDTO reqDTO) {
-        var respDTO = userService.naverOauthLogin(reqDTO.getAccessToken());
+        var respDTO = userService.naverOauthLogin(reqDTO.getAccessToken(), reqDTO.getFcmToken());
         return Resp.ok(respDTO);
     }
 
@@ -56,9 +56,17 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    @GetMapping("/token/1")
-    public ResponseEntity<?> token1() {
-        User userPS = userRepository.findById(1).orElse(null);
+    // fcm 토큰 갱신용 임시 컨트롤러 - 하드코딩
+    @PostMapping("/token/1")
+    public ResponseEntity<?> updateFcmTokenHardcoded(@RequestBody UserRequest.FcmTokenUpdateDTO reqDTO) {
+        User userPS = userRepository.findById(1).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+
+        // 토큰이 비어있지 않으면 갱신
+        if (reqDTO.getFcmToken() != null && !reqDTO.getFcmToken().isBlank()) {
+            userService.updateFcmToken(userPS, reqDTO.getFcmToken());
+        }
+
+        // 새로운 JWT 발급
         String newAccess = JwtUtil.create(userPS);
         return Resp.ok(newAccess);
     }

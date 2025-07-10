@@ -62,13 +62,16 @@ public class User {
     @Column(nullable = false)
     private UserRole userRole; //
 
+    @Column
+    private String fcmToken;
+
     @CreationTimestamp
     private Timestamp createdAt; //
 
     @Builder
     public User(Integer id, String username, String password, String name, String nickname, Team team,
                 String phoneNumber, String email, LocalDate birthDate, Gender gender,
-                String profileUrl, ProviderType providerType, UserRole userRole, Timestamp createdAt) {
+                String profileUrl, ProviderType providerType, UserRole userRole, String fcmToken, Timestamp createdAt) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -82,6 +85,7 @@ public class User {
         this.profileUrl = profileUrl;
         this.providerType = providerType;
         this.userRole = userRole;
+        this.fcmToken = fcmToken;
         this.createdAt = createdAt;
     }
 
@@ -94,5 +98,9 @@ public class User {
         this.nickname = nickname == null ? this.nickname : nickname;
         this.team = team == null ? this.team : team;
         this.profileUrl = profileUrl == null ? this.profileUrl : profileUrl;
+    }
+
+    public void updateFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }
