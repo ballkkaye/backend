@@ -198,7 +198,7 @@ public class UserService {
     @Transactional
     public void updateFcmToken(User sessionUser, String fcmToken) {
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         userPS.updateFcmToken(fcmToken); // 엔티티 내부의 setter 또는 메서드로 업데이트
     }

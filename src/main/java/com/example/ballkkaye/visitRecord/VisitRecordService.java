@@ -31,17 +31,17 @@ public class VisitRecordService {
     public VisitRecordResponse.DTO save(VisitRecordRequest.SaveDTO reqDTO, User sessionUser) {
         // user 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new ExceptionApi404("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
 
         // game 조회
         Game gamePS = gameRepository.findById(reqDTO.getGameId())
-                .orElseThrow(() -> new ExceptionApi404("게임을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
 
         // team조회
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new ExceptionApi404("팀을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 직관기록 저장
         VisitRecord visitRecord = reqDTO.toEntity(userPS, gamePS, teamPS, reqDTO.getImgUrl());
@@ -57,11 +57,11 @@ public class VisitRecordService {
     public VisitRecordResponse.DTO update(VisitRecordRequest.UpdateDTO reqDTO, Integer id, Integer sessionUserId) {
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(id, sessionUserId)
-                .orElseThrow(() -> new ExceptionApi404("직관기록을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 권한 확인
         if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
-            throw new ExceptionApi403("권한이 없습니다");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         // 기존 직관기록 상태 변경
@@ -109,9 +109,9 @@ public class VisitRecordService {
     public VisitRecordResponse.DetailDTO getDetail(Integer visitRecordId, Integer sessionUserId) {
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(visitRecordId, sessionUserId)
-                .orElseThrow(() -> new ExceptionApi404("직관기록을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
-            throw new ExceptionApi403("권한이 없습니다");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         VisitRecordResponse.DetailDTO detailDTO = new VisitRecordResponse.DetailDTO(visitRecordPS);
@@ -125,10 +125,10 @@ public class VisitRecordService {
     public Object delete(Integer visitRecordId, Integer sessionUserId) {
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(visitRecordId, sessionUserId)
-                .orElseThrow(() -> new ExceptionApi404("직관기록을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         // 권한 확인
         if (!visitRecordPS.getUser().getId().equals(sessionUserId)) {
-            throw new ExceptionApi403("권한이 없습니다");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         // 직관기록 삭제
