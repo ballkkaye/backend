@@ -26,5 +26,12 @@ public class TodayHitterLineupRepository {
                 .setParameter("teamId", teamId)
                 .getResultList();
     }
+
+    // 전체 저장
+    public void saveAll(List<TodayHitterLineup> todayHitterLineups) {
+        for (TodayHitterLineup t : todayHitterLineups) {
+            em.persist(t);
+        }
+    }
 }
 
