@@ -26,7 +26,7 @@ public class TodayHitterLineupControllerTest extends MyRestDoc {
 
 
     @Test
-    public void getMatchupDetails_test() throws Exception {
+    public void get_matchup_details_test() throws Exception {
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders

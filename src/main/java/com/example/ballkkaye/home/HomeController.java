@@ -12,6 +12,7 @@ public class HomeController {
     private final HomeService mainPageService;
 
 
+    // 홈 화면
     @GetMapping("/api/home")
     public ResponseEntity<?> getHome() {
         HomeResponse.DTO respDTO = mainPageService.getHome();
