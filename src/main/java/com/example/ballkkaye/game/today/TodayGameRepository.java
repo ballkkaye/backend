@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,19 +56,19 @@ public class TodayGameRepository {
     }
 
     // 특정 날짜에 대한 모든 경기의 간략한 정보 조회
-    public List<TodayGameResponse.ItemDTO> findTodayGameList(LocalDate date) {
+    public List<Object[]> findTodayGameList(LocalDate today) {
         String sql = """
                     SELECT
-                        g.game_id AS today_game_id,
+                        g.game_id,
                         g.game_status,
                         g.game_time,
-                        s.stadium_name,
+                        s.stadium_name, -- 여기 명시적으로 구장 이름 가져오기
                         g.broadcast_channel,
                         home_pitcher.name AS home_pitcher_name,
                         home_pitcher.profile_url AS home_pitcher_img,
                         away_pitcher.name AS away_pitcher_name,
                         away_pitcher.profile_url AS away_pitcher_img,
-                        t.ticket_link AS ticket_link
+                        t.ticket_link
                     FROM today_game_tb g
                     JOIN stadium_tb s ON g.stadium_id = s.id
                     LEFT JOIN (
@@ -79,8 +78,8 @@ public class TodayGameRepository {
                             tsp.profile_url
                         FROM today_starting_pitcher_tb tsp
                         JOIN player_tb p ON p.id = tsp.player_id
-                        JOIN game_tb original_game ON original_game.id = tsp.game_id
-                        WHERE original_game.home_team_id = p.team_id
+                        JOIN game_tb og ON og.id = tsp.game_id
+                        WHERE og.home_team_id = p.team_id
                     ) home_pitcher ON home_pitcher.game_id = g.game_id 
                     LEFT JOIN (
                         SELECT
@@ -89,56 +88,21 @@ public class TodayGameRepository {
                             tsp.profile_url
                         FROM today_starting_pitcher_tb tsp
                         JOIN player_tb p ON p.id = tsp.player_id
-                        JOIN game_tb original_game ON original_game.id = tsp.game_id
-                        WHERE original_game.away_team_id = p.team_id
+                        JOIN game_tb og ON og.id = tsp.game_id
+                        WHERE og.away_team_id = p.team_id
                     ) away_pitcher ON away_pitcher.game_id = g.game_id
                     LEFT JOIN team_tb t ON t.id = g.home_team_id
                     WHERE g.game_time >= :start AND g.game_time < :end
                     ORDER BY g.game_id ASC
                 """;
 
-        LocalDateTime start = date.atStartOfDay();
-        LocalDateTime end = date.plusDays(1).atStartOfDay();
+        LocalDateTime start = today.atStartOfDay();
+        LocalDateTime end = today.plusDays(1).atStartOfDay();
 
-        List<Object[]> rows = em.createNativeQuery(sql)
+        return em.createNativeQuery(sql)
                 .setParameter("start", start)
                 .setParameter("end", end)
                 .getResultList();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        return rows.stream()
-                .map(row -> {
-                    Integer gameId = (Integer) row[0];
-                    String gameStatus = (String) row[1];
-
-                    String gameTime;
-                    Object rawGameTime = row[2];
-
-                    if (rawGameTime instanceof Timestamp ts) {
-                        gameTime = ts.toLocalDateTime().format(formatter);
-                    } else if (rawGameTime instanceof LocalDateTime ldt) {
-                        gameTime = ldt.format(formatter);
-                    } else if (rawGameTime instanceof String str) {
-                        gameTime = str;
-                    } else {
-                        gameTime = rawGameTime.toString();
-                    }
-
-                    return new TodayGameResponse.ItemDTO(
-                            gameId,
-                            gameStatus,
-                            gameTime,
-                            (String) row[3],
-                            (String) row[4],
-                            (String) row[5],
-                            (String) row[6],
-                            (String) row[7],
-                            (String) row[8],
-                            (String) row[9]
-                    );
-                })
-                .toList();
     }
 
     /**
@@ -166,5 +130,11 @@ public class TodayGameRepository {
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+
+    // 오늘의 경기 저장
+    public TodayGame save(TodayGame todayGame) {
+        em.persist(todayGame);
+        return todayGame;
     }
 }

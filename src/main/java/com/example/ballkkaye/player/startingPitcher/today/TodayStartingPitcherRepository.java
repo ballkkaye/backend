@@ -37,4 +37,9 @@ public class TodayStartingPitcherRepository {
                 .setParameter("teamName", teamName)
                 .getResultList();
     }
+
+    public TodayStartingPitcher save(TodayStartingPitcher todayStartingPitcher) {
+        em.persist(todayStartingPitcher);
+        return todayStartingPitcher;
+    }
 }

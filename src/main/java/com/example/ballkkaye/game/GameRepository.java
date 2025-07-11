@@ -52,4 +52,10 @@ public class GameRepository {
         String sql = "SELECT DISTINCT FORMATDATETIME(game_time, 'yyyy-MM-dd') FROM game_tb";
         return em.createNativeQuery(sql).getResultList();
     }
+
+    // 경기 단건 저장
+    public Game save(Game game) {
+        em.persist(game);
+        return game;
+    }
 }
