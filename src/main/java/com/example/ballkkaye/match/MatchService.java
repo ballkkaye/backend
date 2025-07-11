@@ -1,5 +1,8 @@
 package com.example.ballkkaye.match;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi403;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye.common.enums.Age;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.common.enums.Gender;
@@ -15,7 +18,6 @@ import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.team.TeamRepository;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.stereotype.Service;
@@ -42,16 +44,16 @@ public class MatchService {
     @Transactional
     public Object save(User sessionUser, MatchRequest.SaveDTO reqDTO) {
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         Game gamePS = gameRepository.findById(reqDTO.getGameId())
-                .orElseThrow(() -> new RuntimeException("Game not found"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         if (gamePS.getGameTime().before(new Timestamp(System.currentTimeMillis()))) {
-            throw new RuntimeException("이미 지난 경기는 매칭할 수 없습니다");
+            throw new ExceptionApi400("잘못된 요청입니다.");
         }
         if (gamePS.getAwayTeam().getId() != reqDTO.getTeamId() && gamePS.getHomeTeam().getId() != reqDTO.getTeamId()) {
-            throw new RuntimeException("해당 자원을 찾을 수 없습니다.");
+            throw new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
         }
 
         ChatRoom chatRoom = new ChatRoom().builder()
@@ -68,7 +70,7 @@ public class MatchService {
 
         var chatReeomUser = chatRoomUserRepository.findByUserIdAndChatRoomId(userPS.getId(), chatRoom.getId());
         if (chatReeomUser.isPresent()) {
-            throw new RuntimeException("이미 해당 채팅방에 참여중입니다.");
+            throw new ExceptionApi400("잘못된 요청입니다.");
         }
 
         chatRoomUserRepository.save(
@@ -103,7 +105,8 @@ public class MatchService {
         String selectedTimeName = null;
         String selectedAge = age == null ? null : age.getName();
         if (teamId != null) {
-            Team team = teamRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
+            Team team = teamRepository.findById(teamId)
+                    .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
             selectedTimeName = team.getTeamName();
         }
 
@@ -129,7 +132,7 @@ public class MatchService {
     public Object getDetail(Integer matchId, User sessionUser) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         Match matchPS = matchRepository.findById(matchId)
-                .orElseThrow(() -> new RuntimeException("Match not found"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         String relativeTime = p.format(new Date(matchPS.getCreatedAt().getTime()));
         Boolean isOwner = false;
         if (matchPS.getUser().getId().equals(sessionUser.getId())) {
@@ -147,7 +150,7 @@ public class MatchService {
 
     // 매칭글 수정
     @Transactional
-    public Object update(Integer matchId, MatchRequest.@Valid UpdateDTO reqDTO, User sessionUser) {
+    public Object update(Integer matchId, MatchRequest.UpdateDTO reqDTO, User sessionUser) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         Match matchPS = null;
         Game gamePS = null;
@@ -155,32 +158,33 @@ public class MatchService {
 
         // 매칭글 조회
         if (!(matchId == null)) {
-            matchPS = matchRepository.findById(matchId).orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+            matchPS = matchRepository.findById(matchId)
+                    .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         }
 
         // 매칭글 삭제 여부 확인
         if (matchPS.getDeleteStatus() == DeleteStatus.DELETED) {
-            throw new RuntimeException("해당 자원을 찾을 수 없습니다.");
+            throw new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
         }
 
         // 매칭글 권한 조회
         if (!(matchPS.getUser().getId().equals(sessionUser.getId()))) {
-            throw new RuntimeException("해당 자원에 대한 권한이 없습니다.");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         // 수정 정보 조회
         // 수정하려는 game이 없으면 or 선택한 게임이 이미 끝난 경기이면
         if (!(reqDTO.getGameId() == null)) {
             gamePS = gameRepository.findById(reqDTO.getGameId())
-                    .orElseThrow(() -> new RuntimeException("Game not found"));
+                    .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
             if (gamePS.getGameTime().before(new Timestamp(System.currentTimeMillis()))) {
-                throw new RuntimeException("해당 자원을 찾을 수 없습니다.");
+                throw new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
             }
         }
 
         // 채팅방 조회
         ChatRoom chatRoomPS = chatRoomRepository.findById(matchPS.getChatRoom().getId())
-                .orElseThrow(() -> new RuntimeException("ChatRoom not found"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         if (chatRoomPS.getDeleteStatus().equals(DeleteStatus.DELETED)) {
             throw new RuntimeException("해당 자원을 찾을 수 없습니다.");
         }
@@ -188,7 +192,7 @@ public class MatchService {
         // 조회한 팀이 없으면 throw
         if (!(reqDTO.getTeamId() == null)) {
             teamPS = teamRepository.findById(reqDTO.getTeamId())
-                    .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                    .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         }
         String relativeTime = p.format(new Date(matchPS.getCreatedAt().getTime()));
 
@@ -214,16 +218,15 @@ public class MatchService {
     public Object delete(Integer matchId, User sessionUser) {
         // 매칭글 조회
         Match matchPS = matchRepository.findById(matchId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
-
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         // 매칭글에 대한 권한 조회
         if (!(matchPS.getUser().getId().equals(sessionUser.getId()))) {
-            throw new RuntimeException("해당 자원에 대한 권한이 없습니다.");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         // 채팅방도 함께 삭제해야 함.
         ChatRoom chatRoomPS = chatRoomRepository.findById(matchPS.getChatRoom().getId())
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 채팅방 유저 목록 조회
         List<ChatRoomUser> chatRoomUsersPS = chatRoomUserRepository.findByChatRoomIdAndDeleteStatus(matchPS.getChatRoom().getId());

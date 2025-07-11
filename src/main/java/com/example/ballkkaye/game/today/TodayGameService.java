@@ -14,11 +14,15 @@ import static com.example.ballkkaye._core.util.TodayGameUtil.round;
 public class TodayGameService {
     private final TodayGameRepository todayGameRepository;
 
-    // 유저 예측 결과 조회용
+    // 승리 예측 1 화면
     public List<TodayGameResponse.PredictionDTO> getTodayGamePredictions() {
         List<Object[]> results = todayGameRepository.findTodayGamePredictionData();
 
-        List<TodayGameResponse.PredictionDTO> PredictionDTO = new ArrayList<>();
+        if (results == null || results.isEmpty()) {
+            throw new RuntimeException("오늘의 경기가 없습니다.");
+        }
+
+        List<TodayGameResponse.PredictionDTO> predictionDTO = new ArrayList<>();
         for (Object[] row : results) {
             TodayGameResponse.PredictionDTO dto = new TodayGameResponse.PredictionDTO(
                     (Integer) row[0], // gameId
@@ -34,9 +38,9 @@ public class TodayGameService {
                     round((Double) row[10]), // homeWinPercent
                     round((Double) row[11])  // awayWinPercent
             );
-            PredictionDTO.add(dto);
+            predictionDTO.add(dto);
         }
-        return PredictionDTO;
+        return predictionDTO;
     }
 
     // 날짜 기반 오늘 경기 리스트 조회

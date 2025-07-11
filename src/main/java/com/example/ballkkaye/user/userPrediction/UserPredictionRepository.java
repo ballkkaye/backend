@@ -1,8 +1,6 @@
 package com.example.ballkkaye.user.userPrediction;
 
 import com.example.ballkkaye.common.enums.GameStatus;
-import com.example.ballkkaye.game.today.TodayGame;
-import com.example.ballkkaye.user.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -26,7 +24,7 @@ public class UserPredictionRepository {
 
     public List<UserPredictionResponse.TodayGameDTO> findTodayGamesForPrediction(LocalDate today, Integer userId) {
         String sql = "SELECT\n" +
-                "  g.game_id,\n" +
+                "  g.id,\n" +
                 "  g.game_time,\n" +
                 "  ht.id,\n" +
                 "  ht.team_name,\n" +
@@ -36,7 +34,7 @@ public class UserPredictionRepository {
                 "  at.logo_url,\n" +
                 "  (SELECT COUNT(*) FROM user_prediction_tb up1 WHERE up1.game_id = g.id AND up1.team_id = g.home_team_id),\n" +
                 "  (SELECT COUNT(*) FROM user_prediction_tb up2 WHERE up2.game_id = g.id AND up2.team_id = g.away_team_id)\n" +
-                "FROM today_game_tb g\n" +
+                "FROM game_tb g\n" +
                 "JOIN team_tb ht ON g.home_team_id = ht.id\n" +
                 "JOIN team_tb at ON g.away_team_id = at.id\n" +
                 "WHERE CAST(g.game_time AS DATE) = :today\n" +
@@ -82,43 +80,43 @@ public class UserPredictionRepository {
     public List<UserPredictionResponse.MyPredictionDTO> findMyPredictions(Integer userId, LocalDate date) {
         String sql = """
                 SELECT
-                    tg.game_id AS gameId,
-                    tg.game_time AS gameTime,
+                            g.id AS gameId,
+                            g.game_time AS gameTime,
                 
-                    ht.id AS homeTeamId,
-                    ht.team_name AS homeTeamName,
-                    ht.logo_url AS homeTeamLogo,
+                            ht.id AS homeTeamId,
+                            ht.team_name AS homeTeamName,
+                            ht.logo_url AS homeTeamLogo,
                 
-                    at.id AS awayTeamId,
-                    at.team_name AS awayTeamName,
-                    at.logo_url AS awayTeamLogo,
+                            at.id AS awayTeamId,
+                            at.team_name AS awayTeamName,
+                            at.logo_url AS awayTeamLogo,
                 
-                    tg.home_result_score AS homeScore,
-                    tg.away_result_score AS awayScore,
+                            g.home_result_score AS homeScore,
+                            g.away_result_score AS awayScore,
                 
-                    up.team_id AS userChoiceTeamId,
-                    tg.game_status AS gameStatus,
-                    tg.updated_at AS updatedAt,
+                            up.team_id AS userChoiceTeamId,
+                            g.game_status AS gameStatus,
                 
-                    ROUND(SUM(CASE WHEN up_total.team_id = tg.home_team_id THEN 1 ELSE 0 END) * 100.0 / COUNT(up_total.game_id), 0) AS homeVoteRate,
-                    ROUND(SUM(CASE WHEN up_total.team_id = tg.away_team_id THEN 1 ELSE 0 END) * 100.0 / COUNT(up_total.game_id), 0) AS awayVoteRate
+                            ROUND(SUM(CASE WHEN up_total.team_id = g.home_team_id THEN 1 ELSE 0 END) * 100.0 / COUNT(up_total.game_id), 0) AS homeVoteRate,
+                            ROUND(SUM(CASE WHEN up_total.team_id = g.away_team_id THEN 1 ELSE 0 END) * 100.0 / COUNT(up_total.game_id), 0) AS awayVoteRate
                 
-                FROM user_prediction_tb up
-                JOIN today_game_tb tg ON up.game_id = tg.id
-                JOIN team_tb ht ON tg.home_team_id = ht.id
-                JOIN team_tb at ON tg.away_team_id = at.id
-                LEFT JOIN user_prediction_tb up_total ON up_total.game_id = tg.id
-                WHERE up.user_id = :userId
-                  AND tg.game_time BETWEEN :startDate AND :endDate
-                GROUP BY
-                    tg.id, tg.game_time,
-                    ht.id, ht.team_name, ht.logo_url,
-                    at.id, at.team_name, at.logo_url,
-                    tg.home_result_score, tg.away_result_score,
-                    up.team_id,
-                    tg.game_status,
-                    tg.updated_at
-                    ;
+                        FROM user_prediction_tb up
+                        JOIN game_tb g ON up.game_id = g.id
+                        JOIN team_tb ht ON g.home_team_id = ht.id
+                        JOIN team_tb at ON g.away_team_id = at.id
+                        LEFT JOIN user_prediction_tb up_total ON up_total.game_id = g.id
+                
+                        WHERE up.user_id = :userId
+                          AND g.game_time BETWEEN :startDate AND :endDate
+                
+                        GROUP BY
+                            g.id, g.game_time,
+                            ht.id, ht.team_name, ht.logo_url,
+                            at.id, at.team_name, at.logo_url,
+                            g.home_result_score, g.away_result_score,
+                            up.team_id,
+                            g.game_status
+                      ;
                 """;
 
         java.time.LocalDateTime startDate = date.atStartOfDay();
@@ -160,25 +158,22 @@ public class UserPredictionRepository {
             dto.setGameStatus(GameStatus.valueOf(gameStatusStr));
             dto.setPredictionStatus(null);
 
-            Timestamp updatedAt = (Timestamp) row[12];
-            dto.setHomeVoteRate(row[13] != null ? ((Number) row[13]).intValue() : null);
-            dto.setAwayVoteRate(row[14] != null ? ((Number) row[14]).intValue() : null);
-
-            dto.setUpdatedAt(updatedAt != null ? updatedAt.toLocalDateTime() : null);
-
+            dto.setHomeVoteRate(row[12] != null ? ((Number) row[12]).intValue() : null);
+            dto.setAwayVoteRate(row[13] != null ? ((Number) row[13]).intValue() : null);
             dtos.add(dto);
         }
         return dtos;
     }
 
-    public boolean isExistsByUserIdAndGameId(User user, TodayGame todayGame) {
-        String jpql = "SELECT COUNT(up) FROM UserPrediction up WHERE up.user = :user AND up.game = :game";
+    public boolean isExistsByUserIdAndGameId(Integer userId, Integer gameId) {
+        String jpql = "SELECT COUNT(up) FROM UserPrediction up WHERE up.user.id = :userId AND up.game.id = :gameId";
 
         Long count = em.createQuery(jpql, Long.class)
-                .setParameter("user", user)
-                .setParameter("game", todayGame)
+                .setParameter("userId", userId)
+                .setParameter("gameId", gameId)
                 .getSingleResult();
 
         return count > 0;
     }
+
 }

@@ -32,7 +32,7 @@ public class Game {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Team homeTeam;
 
-    @Column
+    @Column(name = "game_status")
     @Enumerated(EnumType.STRING)
     private GameStatus gameStatus;
 
