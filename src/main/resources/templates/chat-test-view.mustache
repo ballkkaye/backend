@@ -206,8 +206,8 @@
 						if (subscription) subscription.unsubscribe();
 						subscription = stompClient.subscribe(`/sub/chat/${currentChatRoomId}`, function (message) {
 							const msg = JSON.parse(message.body); // 받은 메시지를 파싱
-							const sender = msg.senderNickname || "익명";
-							const content = msg.content || "";
+							const sender = msg.senderName || "익명";
+							const content = msg.message || "";
 
 							addMessage("other", `[${sender}] ${content}`);
 						});
