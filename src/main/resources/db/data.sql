@@ -98,21 +98,21 @@ VALUES (1, NULL, 'LG 트윈스', 'https://upload.wikimedia.org/wikipedia/ko/4/4f
 -- 5.user_tb
 INSERT INTO user_tb
 (username, password, name, nickname, team_id, phone_number, email, birth_date, gender, profile_url, provider_type,
- user_role)
+ user_role, fcm_token)
 VALUES ('ssar123', '1234', '쌀', 'ssar', 1, '01011112222', 'ssar@nate.com', '1999-09-09', 'MALE', '/img/profile.png',
-        'BALLKKAYE', 'USER'),
+        'BALLKKAYE', 'USER', '1111'),
        ('cos123', '1234', '코스', 'cos', 2, '01022223333', 'cos@nate.com', '2000-01-01', 'FEMALE', '/img/profile.png',
-        'BALLKKAYE', 'USER'),
+        'BALLKKAYE', 'USER', '2222'),
        ('love123', '1234', '러브', 'love', 3, '01033334444', 'love@nate.com', '1998-08-08', 'MALE', '/img/profile.png',
-        'BALLKKAYE', 'USER'),
+        'BALLKKAYE', 'USER', '3333'),
        ('haha123', '1234', '하하', 'haha', NULL, '01044445555', 'haha@nate.com', '1997-07-07', 'FEMALE',
-        '/img/profile.png', 'BALLKKAYE', 'ADMIN'),
+        '/img/profile.png', 'BALLKKAYE', 'ADMIN', null),
        ('harim123', '1234', '백하림', 'harim', 4, '01055556666', 'harim@example.com', '1995-05-05', 'MALE',
-        '/img/profile.png', 'BALLKKAYE', 'USER'),
+        '/img/profile.png', 'BALLKKAYE', 'USER', '4444'),
        ('jungwon123', '1234', '김정원', 'jungwon', 5, '01066667777', 'jungwon@example.com', '1996-06-06', 'MALE',
-        '/img/profile.png', 'BALLKKAYE', 'USER'),
+        '/img/profile.png', 'BALLKKAYE', 'USER', '5555'),
        ('misook123', '1234', '김미숙', 'misook', 6, '01077778888', 'misook@example.com', '1994-04-04', 'FEMALE',
-        '/img/profile.png', 'BALLKKAYE', 'USER');
+        '/img/profile.png', 'BALLKKAYE', 'USER', '6666');
 
 
 -- 6.game_tb

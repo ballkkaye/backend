@@ -33,7 +33,7 @@ public class UserService {
     private final TeamRepository teamRepository;
 
     @Transactional
-    public Object naverOauthLogin(String accessToken) {
+    public Object naverOauthLogin(String accessToken, String fcmToken) {
         String url = "https://openapi.naver.com/v1/nid/me";
 
         HttpHeaders headers = new HttpHeaders();
@@ -84,13 +84,21 @@ public class UserService {
                     .profileUrl(userInfo.getProfile_image())
                     .providerType(ProviderType.NAVER)
                     .userRole(UserRole.USER)
+                    .fcmToken(fcmToken != null && !fcmToken.isBlank() ? fcmToken : null)
                     .build();
+
             userRepository.save(user);
             isNewUser = true;
             String myAccessToken = JwtUtil.create(user);
 
             return new UserResponse.LoginDTO(user, myAccessToken, isNewUser);
         }
+
+        // 기존 유저라면 fcmToken 갱신
+        if (fcmToken != null && !fcmToken.isBlank()) {
+            userPS.updateFcmToken(fcmToken);
+        }
+
         // 2. 로그인 처리 (토큰 발급 및 저장)
         String myAccessToken = JwtUtil.create(userPS);
         return new UserResponse.LoginDTO(userPS, myAccessToken, isNewUser);
@@ -184,5 +192,14 @@ public class UserService {
 
         UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
         return respDTO;
+    }
+
+    // 로그인 시 FcmToken 업데이트 - 하드코딩용
+    @Transactional
+    public void updateFcmToken(User sessionUser, String fcmToken) {
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+
+        userPS.updateFcmToken(fcmToken); // 엔티티 내부의 setter 또는 메서드로 업데이트
     }
 }
