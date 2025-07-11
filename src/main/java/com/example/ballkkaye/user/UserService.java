@@ -1,5 +1,7 @@
 package com.example.ballkkaye.user;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.GenerateNickname;
 import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye.common.enums.Gender;
@@ -102,63 +104,91 @@ public class UserService {
         return new UserResponse.LoginDTO(userPS, myAccessToken, isNewUser);
     }
 
+    // 유저 회원 가입 후 추가 정보 입력 유저 응원팀 id + 유저 닉네임
     @Transactional
-    public Object additionalUserInfo(User sessionUser, UserRequest.AdditionalInfoDTO reqDTO) {
-        // 유저 존재하는지 검사
+    public Object getAdditionalUserInfo(User sessionUser, UserRequest.AdditionalInfoDTO reqDTO) {
+        // 1. 유저 존재하는지 검사
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저lawk를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
-        // req로 들어온 팀이 존재하는지 검사
+        // 2. 팀 존재 검사
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new RuntimeException("해당 팀을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
-        // 닉네임 중복 검사
-        if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
-            throw new RuntimeException("이미 존재하는 닉네임");
+        // 3. 닉네임 처리 공백이나 빈칸이 들어와도 null로
+        String rawNickname = reqDTO.getNickname();
+        String nickname = (rawNickname != null && !rawNickname.trim().isBlank()) ? rawNickname.trim() : null;
+
+        // 닉네임이 null이 아닌 경우만 중복 검사
+        if (nickname != null && userRepository.findByNickname(nickname).isPresent()) {
+            throw new ExceptionApi400("이미 존재하는 닉네임입니다.");
         }
-        // updateNicknameAndTeam 함수 호출해서 응원팀, 닉네임 업데이트
-        userPS.additionalUserInfo(teamPS, reqDTO.getNickname().trim());
 
-        UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
-        return respDTO;
+        // 닉네임과 팀 정보 업데이트 (nickname이 null이면 닉네임은 유지)
+        userPS.additionalUserInfo(teamPS, nickname);
+
+        return new UserResponse.DTO(userPS);
     }
 
-    public Map<String, Object> checkUsernameAvailable(String nickname) {
-        Optional<User> userOP = userRepository.findByNickname(nickname);
+    // 유저 닉네임 중복체크
+    public Map<String, Object> checkUserNicknameAvailable(String nickname) {
         Map<String, Object> respDTO = new HashMap<>();
 
+        // 1. 유저네임 "" 또는 " " 일시 FALSE 반환
+        if (nickname == null || nickname.trim().isEmpty()) {
+            respDTO.put("available", false);
+            return respDTO;
+        }
+
+        // 2. 닉네임으로 조회
+        Optional<User> userOP = userRepository.findByNickname(nickname.trim());
+
+        // 3. 가능 불가능 여부 반환
         if (userOP.isPresent()) {
             respDTO.put("available", false);
         } else {
             respDTO.put("available", true);
         }
+
         return respDTO;
     }
 
     // 유저 정보 수정
     @Transactional
     public Object update(UserRequest.UpdateDTO reqDTO, User sessionUser) {
+        // 1. 유저 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
-        // 요청 닉네임이 내 닉네임과 같거나 비어있으면 기존 닉네임 유지
-        if (!reqDTO.getNickname().equals(userPS.getNickname()) || reqDTO.getNickname().isEmpty()) {
-            if (userRepository.findByNickname(reqDTO.getNickname()).isPresent()) {
-                throw new RuntimeException("이미 존재하는 닉네임");
+        // 2. nickname, profileImg "" , " " 들어올 경우 null 로 치환
+        String nickname = (reqDTO.getNickname() == null || reqDTO.getNickname().trim().isBlank())
+                ? null : reqDTO.getNickname().trim();
+        String profileImg = (reqDTO.getProfileImg() == null || reqDTO.getProfileImg().trim().isBlank())
+                ? null : reqDTO.getProfileImg().trim();
+
+        // 3. 닉네임 중복 검사 (null 아니고, 기존 닉네임과 다를 때만 검사)
+        if (nickname != null && !nickname.equals(userPS.getNickname())) {
+            if (userRepository.findByNickname(nickname).isPresent()) {
+                throw new ExceptionApi400("이미 존재하는 닉네임입니다.");
             }
         }
-        Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new RuntimeException("해당 팀을 찾을 수 없습니다"));
 
-        userPS.updateUserInfo(teamPS, reqDTO.getNickname().trim(), reqDTO.getProfileImg());
-        UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
-        return respDTO;
+        // 4. 팀 조회
+        Team teamPS = teamRepository.findById(reqDTO.getTeamId())
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
+
+        // 5. 업데이트 - updateUserInfo 해당 매개변수 null 일 경우 기존 자원 사용
+        userPS.updateUserInfo(teamPS, nickname, profileImg);
+
+        // 6. DTO 객체 생성하고 반환
+        return new UserResponse.DTO(userPS);
     }
+
 
     // 유저 정보 조회
     public Object getUser(User sessionUser) {
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         UserResponse.DTO respDTO = new UserResponse.DTO(userPS);
         return respDTO;
