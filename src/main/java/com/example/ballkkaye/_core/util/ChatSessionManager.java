@@ -15,10 +15,10 @@ public class ChatSessionManager {
         roomSubscribers.putIfAbsent(chatRoomId, ConcurrentHashMap.newKeySet());
         Set<Integer> users = roomSubscribers.get(chatRoomId);
         if (users.contains(userId)) {
-            return false; // 이미 구독함
+            return false;
         }
         users.add(userId);
-        return true; // 새로 구독함
+        return true;
     }
 
     public synchronized void removeSubscriber(Integer chatRoomId, Integer userId) {

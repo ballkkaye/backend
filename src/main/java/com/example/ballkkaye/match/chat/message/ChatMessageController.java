@@ -1,6 +1,8 @@
 package com.example.ballkkaye.match.chat.message;
 
+import com.example.ballkkaye._core.util.ChatSessionManager;
 import com.example.ballkkaye._core.util.Resp;
+import com.example.ballkkaye.common.enums.ChatConnectedType;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUserRequest;
 import com.example.ballkkaye.user.User;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 public class ChatMessageController {
     private final ChatMessageService chatMessageService;
     private final SimpMessagingTemplate sms;
+    private final ChatSessionManager chatSessionManager;
 
     @SendTo("/sub/chat")
     @MessageMapping("/chat/send")
@@ -36,4 +39,28 @@ public class ChatMessageController {
 
         sms.convertAndSend("/sub/chat/" + reqDTO.getRoomId(), respDTO);
     }
+
+    @MessageMapping("/chat/unsubscribe")
+    public void handleUnsubscribe(@Payload ChatRoomUserRequest.AuthDTO reqDTO,
+                                  SimpMessageHeaderAccessor headerAccessor) {
+        User sessionUser = (User) headerAccessor.getSessionAttributes().get("sessionUser");
+        if (sessionUser == null || reqDTO.getRoomId() == null) return;
+
+        // ChatSessionManager에서 유저 제거
+        chatSessionManager.removeSubscriber(reqDTO.getRoomId(), sessionUser.getId());
+
+        // 퇴장 메시지 전송
+        ChatMessageResponse.DTO response = new ChatMessageResponse.DTO(
+                null,
+                reqDTO.getRoomId(),
+                sessionUser.getId(),
+                sessionUser.getNickname(),
+                sessionUser.getNickname() + "님이 퇴장하셨습니다.",
+                ChatConnectedType.LEAVE,
+                false,
+                null
+        );
+        sms.convertAndSend("/sub/chat/" + reqDTO.getRoomId(), response);
+    }
+
 }
