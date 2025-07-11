@@ -28,7 +28,7 @@ public class ChatMessageService {
     private final ChatRoomUserRepository chatRoomUserRepository;
     private final ChatSessionManager chatSessionManager;
 
-    @Transactional
+    @Transactional // TODO 유효성 검사 로직 추가해야 됨
     public ChatMessageResponse.DTO save(ChatMessageRequest.DTO reqDTO, User sessionUser) {
         ChatRoom chatRoomPS = chatRoomRepository.findById(reqDTO.getChatRoomId())
                 .orElseThrow(() -> new RuntimeException("채팅방 없음"));
