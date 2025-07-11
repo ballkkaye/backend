@@ -1,5 +1,7 @@
 package com.example.ballkkaye.user.userPrediction;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye.common.enums.GameStatus;
 import com.example.ballkkaye.common.enums.PredictionStatus;
 import com.example.ballkkaye.game.Game;
@@ -111,7 +113,7 @@ public class UserPredictionService {
     @Transactional
     public List<UserPredictionRequest.SaveDTO> save(Integer userId, List<UserPredictionRequest.SaveDTO> saveDTOs) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. User ID: " + userId));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         LocalDateTime now = LocalDateTime.now();
         Set<Integer> gameIdsInCurrentRequest = new HashSet<>();
@@ -136,18 +138,18 @@ public class UserPredictionService {
             }
 
             Game game = gameRepository.findById(gameId)
-                    .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 경기 ID입니다: " + gameId));
+                    .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
             if (game.getGameTime().toLocalDateTime().isBefore(now)) {
-                throw new IllegalArgumentException("경기 [ID: " + gameId + "]는 이미 시작되었거나 종료되었습니다.");
+                throw new ExceptionApi400("잘못된 요청입니다.");
             }
 
             if (!teamId.equals(game.getHomeTeam().getId()) && !teamId.equals(game.getAwayTeam().getId())) {
-                throw new IllegalArgumentException("선택 팀 [ID: " + teamId + "]은 해당 경기의 팀이 아닙니다.");
+                throw new ExceptionApi400("잘못된 요청입니다.");
             }
 
             if (game.getGameStatus() != GameStatus.SCHEDULED) {
-                throw new IllegalArgumentException("경기 [ID: " + gameId + "]는 예측 가능한 상태가 아닙니다.");
+                throw new ExceptionApi400("잘못된 요청입니다.");
             }
 
             Team chosenTeam = teamId.equals(game.getHomeTeam().getId()) ? game.getHomeTeam() : game.getAwayTeam();
