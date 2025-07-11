@@ -29,11 +29,14 @@ public class UserPredictionController {
     // 유저 예측 완료 후 화면
     @GetMapping("/s/api/predictions")
     public ResponseEntity<?> findMyPredictions(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+            @RequestParam(value = "date", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        List<UserPredictionResponse.MyPredictionDTO> respDTO = userPredictionService.findMyPredictions(sessionUser.getId(), date);
+        List<UserPredictionResponse.MyPredictionDTO> respDTO =
+                userPredictionService.findMyPredictions(sessionUser.getId(), date);
         return Resp.ok(respDTO);
     }
+
 
     // 유저 예측 저장
     @PostMapping("/s/api/predictions")

@@ -60,6 +60,9 @@ public class UserPredictionService {
     }
 
     public List<UserPredictionResponse.MyPredictionDTO> findMyPredictions(Integer userId, LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now();
+        }
         List<UserPredictionResponse.MyPredictionDTO> MyPredictionDTO =
                 userPredictionRepository.findMyPredictions(userId, date);
 

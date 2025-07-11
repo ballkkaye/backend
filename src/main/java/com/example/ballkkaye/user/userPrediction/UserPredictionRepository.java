@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,8 +98,9 @@ public class UserPredictionRepository {
                             up.team_id AS userChoiceTeamId,
                             g.game_status AS gameStatus,
                 
-                            ROUND(SUM(CASE WHEN up_total.team_id = g.home_team_id THEN 1 ELSE 0 END) * 100.0 / COUNT(up_total.game_id), 0) AS homeVoteRate,
-                            ROUND(SUM(CASE WHEN up_total.team_id = g.away_team_id THEN 1 ELSE 0 END) * 100.0 / COUNT(up_total.game_id), 0) AS awayVoteRate
+                            CAST(ROUND(SUM(CASE WHEN up_total.team_id = g.home_team_id THEN 1 ELSE 0 END) * 100.0 / COUNT(up_total.game_id), 0) AS INT) AS homeVoteRate,
+                            CAST(ROUND(SUM(CASE WHEN up_total.team_id = g.away_team_id THEN 1 ELSE 0 END) * 100.0 / COUNT(up_total.game_id), 0) AS INT) AS awayVoteRate
+                
                 
                         FROM user_prediction_tb up
                         JOIN game_tb g ON up.game_id = g.id
@@ -107,7 +109,8 @@ public class UserPredictionRepository {
                         LEFT JOIN user_prediction_tb up_total ON up_total.game_id = g.id
                 
                         WHERE up.user_id = :userId
-                          AND g.game_time BETWEEN :startDate AND :endDate
+                          AND g.game_time >= :startDate
+                          AND g.game_time < :endDate
                 
                         GROUP BY
                             g.id, g.game_time,
@@ -119,8 +122,9 @@ public class UserPredictionRepository {
                       ;
                 """;
 
-        java.time.LocalDateTime startDate = date.atStartOfDay();
-        java.time.LocalDateTime endDate = date.plusDays(1).atStartOfDay().minusNanos(1);
+        LocalDateTime startDate = date.atStartOfDay();         // 2025-07-10 00:00:00
+        LocalDateTime endDate = date.plusDays(1).atStartOfDay(); // 2025-07-11 00:00:00 (포함 안 함)
+
 
         List<Object[]> results = em.createNativeQuery(sql)
                 .setParameter("userId", userId)

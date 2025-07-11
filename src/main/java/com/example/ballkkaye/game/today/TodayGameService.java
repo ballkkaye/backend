@@ -20,8 +20,12 @@ public class TodayGameService {
 
     // 승리 예측 1 화면
     public List<TodayGameResponse.PredictionDTO> getTodayGamePredictions(LocalDate today) {
+        //
+        if (today == null) {
+            today = LocalDate.now();
+        }
         // 1. 오늘 날짜 기준으로 게임 데이터 Object[] 형태로 조회
-        List<Object[]> rows = todayGameRepository.findTodayGameList(today);
+        List<Object[]> rows = todayGameRepository.findTodayGamePredictionData(today);
 
         List<TodayGameResponse.PredictionDTO> predictions = new ArrayList<>();
 
@@ -60,6 +64,9 @@ public class TodayGameService {
 
     // 날짜 기반 오늘 경기 리스트 조회
     public List<TodayGameResponse.ItemDTO> getTodayGames(LocalDate today) {
+        if (today == null) {
+            today = LocalDate.now();
+        }
         List<Object[]> rows = todayGameRepository.findTodayGameList(today);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");

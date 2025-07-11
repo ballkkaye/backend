@@ -68,7 +68,7 @@ public class HomeService {
 
         // 2. 승리 예측
         List<HomeResponse.DTO.WinPredictionDTO> predictions =
-                todayGameRepository.findTodayGamePredictionData().stream()
+                todayGameRepository.findTodayGamePredictionData(today).stream()
                         .map(row -> new HomeResponse.DTO.WinPredictionDTO(
                                 (Integer) row[0],  // gameId
                                 TodayGameUtil.simplifyTeamName((String) row[1]),  // homeTeamName → 앞 단어만

@@ -17,8 +17,8 @@ public class TodayGameRepository {
     private final EntityManager em;
 
     // 오늘 경기의 예측 관련 원본 데이터를 조회
-    public List<Object[]> findTodayGamePredictionData() {
-        LocalDate today = LocalDate.now();
+    public List<Object[]> findTodayGamePredictionData(LocalDate today) {
+        today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.plusDays(1).atStartOfDay().minusNanos(1);
 
