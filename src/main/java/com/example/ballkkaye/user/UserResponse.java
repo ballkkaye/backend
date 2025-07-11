@@ -62,6 +62,7 @@ public class UserResponse {
 
     @Data
     public static class DTO {
+        private Integer userId;
         private String username;
         private String name;
         private String nickname;
@@ -76,6 +77,7 @@ public class UserResponse {
         private String userRole;
 
         public DTO(User user) {
+            this.userId = user.getId();
             this.username = user.getUsername();
             this.name = user.getName();
             this.nickname = user.getNickname();
