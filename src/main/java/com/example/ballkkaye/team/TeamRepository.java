@@ -22,4 +22,9 @@ public class TeamRepository {
         String q = "SELECT t FROM Team t";
         return em.createQuery(q, Team.class).getResultList();
     }
+
+    public Team save(Team team) {
+        em.persist(team);
+        return team;
+    }
 }

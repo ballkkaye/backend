@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Repository
 public class PlayerRepository {
@@ -14,5 +16,11 @@ public class PlayerRepository {
     public Player save(Player player) {
         em.persist(player);
         return player;
+    }
+
+    public void saveAll(List<Player> players) {
+        for (Player p : players) {
+            em.persist(p);
+        }
     }
 }

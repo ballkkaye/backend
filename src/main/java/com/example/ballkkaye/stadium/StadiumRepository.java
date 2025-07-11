@@ -24,4 +24,10 @@ public class StadiumRepository {
     public Optional<Stadium> findById(Integer stadiumId) {
         return Optional.ofNullable(em.find(Stadium.class, stadiumId));
     }
+
+    // 구장 저장
+    public Stadium save(Stadium stadium) {
+        em.persist(stadium);
+        return stadium;
+    }
 }
