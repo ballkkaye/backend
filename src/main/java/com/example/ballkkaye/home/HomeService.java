@@ -30,7 +30,7 @@ public class HomeService {
                                 game.getGameId(),
                                 GameStatus.valueOf(game.getGameStatus()),
                                 game.getGameTime(),
-                                TodayGameUtil.simplifyStadiumName(game.getStadiumName()),
+                                TodayGameUtil.simplifyStadiumName(game.getStadiumShortName()),
                                 game.getBroadcastChannel(),
                                 game.getHomePitcherName(),
                                 game.getHomeTeamLogoUrl(),

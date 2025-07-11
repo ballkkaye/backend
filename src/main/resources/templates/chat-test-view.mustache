@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>실시간 채팅 테스트</title>
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			max-width: 800px;
+			margin: auto;
+			padding: 20px;
+		}
+
+		.chat-area {
+			height: 300px;
+			overflow-y: auto;
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin-bottom: 10px;
+			background: #f1f1f1;
+		}
+
+		.message {
+			margin: 5px 0;
+			padding: 8px;
+			border-radius: 5px;
+		}
+
+		.message.own {
+			background-color: #007bff;
+			color: white;
+			text-align: right;
+		}
+
+		.message.other {
+			background-color: #e2e2e2;
+			color: black;
+		}
+
+		.input-area {
+			display: flex;
+			gap: 10px;
+		}
+
+		.input-area input {
+			flex: 1;
+			padding: 8px;
+		}
+
+		.input-area button {
+			padding: 8px 16px;
+		}
+
+		#connectionStatus {
+			margin-top: 10px;
+			padding: 8px;
+			font-weight: bold;
+		}
+
+		.connected {
+			color: green;
+		}
+
+		.disconnected {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+<h1>실시간 채팅 테스트</h1>
+<div>
+	<button onclick="getToken(1)">User 1 토큰</button>
+	<button onclick="getToken(2)">User 2 토큰</button>
+	<input type="text" id="manualTokenInput" placeholder="토큰을 붙여넣으세요" style="width: 400px;">
+	<button onclick="setToken()">토큰 등록</button>
+	<div id="currentToken">현재 토큰: 없음</div>
+</div>
+<hr>
+<div>
+	<input type="text" id="matchTitle" placeholder="매치 제목" value="매치 제목입니다."><br>
+	<textarea id="matchContent" placeholder="매치 내용" rows="2">매치 내용입니다.</textarea><br>
+	<select id="genderSelect">
+		<option value="NONE" selected>성별 무관</option>
+		<option value="MALE">남성</option>
+		<option value="FEMALE">여성</option>
+	</select>
+	<select id="ageSelect">
+		<option value="NONE" selected>연령 무관</option>
+		<option value="UNDER_20">~20대</option>
+		<option value="FROM_20_TO_30">20~30대</option>
+		<option value="FROM_30_TO_40">30~40대</option>
+		<option value="OVER_40">40대 이상</option>
+	</select><br>
+	<input type="number" id="gameIdInput" placeholder="Game ID" value=446>
+	<input type="number" id="teamIdInput" placeholder="Team ID" value=2>
+	<input type="number" id="maxParticipantsInput" placeholder="최대 인원" value=5>
+	<label><input type="checkbox" id="sameTeamCheckbox"> 동일팀만</label>
+	<button onclick="createMatch()">매치 생성</button>
+	<input type="number" id="chatRoomIdInput" placeholder="입장할 채팅방 ID" value="">
+	<button onclick="enterChatRoom()">채팅방 입장</button>
+	<button onclick="leaveChatRoom()">채팅방 나가기</button>
+</div>
+<hr>
+<div id="connectionStatus" class="disconnected">웹소켓 연결되지 않음</div>
+<div class="chat-area" id="chatArea"></div>
+<div class="input-area">
+	<input type="text" id="messageInput" placeholder="메시지를 입력하세요..." onkeypress="handleKeyPress(event)">
+	<button onclick="sendMessage()">전송</button>
+</div>
+<div>
+	<input id="chatWebSocketInput" placeholder="입장할 채팅방 ID">
+	<button onclick="connectWebSocket()">웹소켓 연결</button>
+	<button onclick="disconnectWebSocket()">웹소켓 해제</button>
+</div>
+<script>
+	let stompClient = null;
+	let socket = null;
+	let currentToken = null;
+	let currentChatRoomId = null;
+	let subscription = null;
+
+	function addMessage(type, text) {
+		const div = document.createElement("div");
+		div.className = `message ${type}`;
+		div.textContent = text;
+		document.getElementById("chatArea").appendChild(div);
+		document.getElementById("chatArea").scrollTop = document.getElementById("chatArea").scrollHeight;
+	}
+
+	function updateConnectionStatus(connected) {
+		const el = document.getElementById("connectionStatus");
+		el.textContent = connected ? "웹소켓 연결됨" : "웹소켓 연결되지 않음";
+		el.className = connected ? "connected" : "disconnected";
+	}
+
+	function getToken(userId) {
+		console.log(`GET /token/${userId} 호출됨`);
+		fetch(`/token/${userId}`)
+				.then(res => res.json())
+				.then(data => {
+					currentToken = data.body;
+					document.getElementById("manualTokenInput").value = currentToken;
+					document.getElementById("currentToken").innerText = "현재 토큰: " + currentToken;
+					alert("토큰 발급 완료");
+				});
+	}
+
+	function setToken() {
+		console.log("토큰 수동 등록 실행됨");
+		const token = document.getElementById("manualTokenInput").value.trim();
+		if (!token) return alert("토큰을 입력하세요");
+		currentToken = token;
+		document.getElementById("currentToken").innerText = "현재 토큰: " + token;
+		alert("토큰 등록 완료");
+	}
+
+	async function createMatch() {
+		console.log("POST /s/api/matches 호출됨");
+		if (!currentToken) return alert("먼저 토큰 발급");
+		const res = await fetch("/s/api/matches", {
+			method: "POST",
+			headers: {"Content-Type": "application/json", "Authorization": `Bearer ${currentToken}`},
+			body: JSON.stringify({
+				gameId: parseInt(document.getElementById("gameIdInput").value),
+				teamId: parseInt(document.getElementById("teamIdInput").value),
+				maxParticipants: parseInt(document.getElementById("maxParticipantsInput").value),
+				preferredGender: document.getElementById("genderSelect").value,
+				preferredAge: document.getElementById("ageSelect").value,
+				title: document.getElementById("matchTitle").value,
+				content: document.getElementById("matchContent").value,
+				isSameTeam: document.getElementById("sameTeamCheckbox").checked
+			})
+		});
+		const json = await res.json();
+		if (json.status === 200) {
+			currentMatchId = json.body.chatRoom.id;
+			addMessage('other', `매치 생성됨 (ID: ${currentMatchId})`);
+		} else alert("매치 생성 실패");
+	}
+
+	function connectWebSocket() {
+		console.log("웹소켓 연결 시작 (/connect 호출됨)");
+
+		if (!currentToken) return alert("먼저 토큰 발급 필요");
+
+		// 👉 input에서 채팅방 ID 입력받기
+		const roomIdInput = parseInt(document.getElementById("chatWebSocketInput").value);
+		if (!roomIdInput) return alert("채팅방 ID 입력 필요");
+		currentChatRoomId = roomIdInput;
+
+		enterChatRoom().then(() => {
+			const socket = new WebSocket(`ws://localhost:8080/connect?token=${currentToken}&roomId=${currentChatRoomId}`);
+
+			stompClient = Stomp.over(socket);
+
+			stompClient.connect(
+					{
+						Authorization: `Bearer ${currentToken}`
+					},
+					function (frame) {
+						updateConnectionStatus(true);
+						addMessage("other", "웹소켓에 연결되었습니다.");
+
+						if (subscription) subscription.unsubscribe();
+						subscription = stompClient.subscribe(`/sub/chat/${currentChatRoomId}`, function (message) {
+							const msg = JSON.parse(message.body); // 받은 메시지를 파싱
+							const sender = msg.senderNickname || "익명";
+							const content = msg.content || "";
+
+							addMessage("other", `[${sender}] ${content}`);
+						});
+
+						// 인증 메시지
+						stompClient.send("/pub/chat/auth", {}, JSON.stringify({
+							type: "AUTH",
+							token: currentToken,
+							roomId: currentChatRoomId
+						}));
+					},
+					function (error) {
+						updateConnectionStatus(false);
+						addMessage("other", "웹소켓 연결 실패");
+					}
+			);
+		});
+	}
+
+	function disconnectWebSocket() {
+		console.log("웹소켓 수동 연결 해제됨");
+		if (stompClient) stompClient.disconnect();
+		updateConnectionStatus(false);
+		addMessage("other", "웹소켓 수동 연결 해제됨");
+	}
+
+	function sendMessage() {
+		console.log("SEND /pub/chat/send 호출됨");
+		const input = document.getElementById("messageInput");
+		const text = input.value;
+		if (!text || !stompClient || !currentChatRoomId) return;
+		stompClient.send("/pub/chat/send", {}, JSON.stringify({
+			accessToken: currentToken,
+			chatRoomId: currentChatRoomId, // ✅ 여기로 수정
+			message: text,
+			messageType: "TALK"
+		}));
+		input.value = "";
+	}
+
+	function handleKeyPress(event) {
+		if (event.key === "Enter") {
+			console.log("Enter 키 입력 - sendMessage 호출됨");
+			sendMessage();
+		}
+	}
+
+	function parseJwt(token) {
+		try {
+			return JSON.parse(atob(token.split('.')[1]));
+		} catch (e) {
+			return {};
+		}
+	}
+
+	async function enterChatRoom() {
+		console.log("POST /s/api/chatrooms/{id} 호출됨");
+		if (!currentToken) return alert("먼저 토큰 발급");
+		currentMatchId = parseInt(document.getElementById("chatRoomIdInput").value);
+		if (!currentMatchId) return alert("채팅방 ID 입력 필요");
+		const res = await fetch(`/s/api/chatrooms/${currentMatchId}`, {
+			method: "POST",
+			headers: {"Authorization": `Bearer ${currentToken}`}
+		});
+		const json = await res.json();
+		if (json.status === 200) addMessage("other", `채팅방 입장 완료 (ID: ${currentMatchId})`);
+		else alert("채팅방 입장 실패: " + json.msg);
+	}
+
+	async function leaveChatRoom() {
+		console.log("DELETE /s/api/chatrooms/user/{id} 호출됨");
+		if (!currentToken || !currentMatchId) return alert("먼저 토큰과 채팅방 ID 필요");
+		const res = await fetch(`/s/api/chatrooms/user/${currentMatchId}`, {
+			method: "DELETE",
+			headers: {"Authorization": `Bearer ${currentToken}`}
+		});
+		const json = await res.json();
+		console.log("채팅방 나가기 응답:", json);
+		if (json.status === 200) {
+			addMessage("other", "채팅방에서 나갔습니다.");
+			disconnectWebSocket();
+			currentMatchId = null;
+		} else {
+			alert("채팅방 나가기 실패: " + json.msg);
+		}
+	}
+
+	window.getToken = getToken;
+	window.setToken = setToken;
+	window.connectWebSocket = connectWebSocket;
+	window.disconnectWebSocket = disconnectWebSocket;
+	window.sendMessage = sendMessage;
+	window.enterChatRoom = enterChatRoom;
+	window.leaveChatRoom = leaveChatRoom;
+
+</script>
+</body>
+</html>
