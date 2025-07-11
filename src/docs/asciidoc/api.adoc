@@ -2,7 +2,7 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
-:todayHitterLineup: today-hitter-lineup-controller-test
+:home: home-controller-test
 
 
 = REST API
@@ -69,3 +69,11 @@ include::{snippets}/{todayHitterLineup}/getMatchupDetails_test/http-request.adoc
 
 ===== Response Example
 include::{snippets}/{todayHitterLineup}/getMatchupDetails_test/http-response.adoc[]
+
+
+== 홈 화면
+===== Request Example
+include::{snippets}/{home}/get_home_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{home}/get_home_test/http-response.adoc[]
