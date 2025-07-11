@@ -23,18 +23,18 @@ public class UserController {
         return Resp.ok(respDTO);
     }
 
-    // 유저 추가정보 유저 응원팀 id + 유저 닉네임
+    // 유저 회원 가입 후 추가 정보 입력 유저 응원팀 id + 유저 닉네임
     @PutMapping("/s/user/addtion-info")
-    public ResponseEntity<?> additionalUserInfo(@RequestBody @Valid UserRequest.AdditionalInfoDTO reqDTO) {
+    public ResponseEntity<?> getAdditionalUserInfo(@RequestBody @Valid UserRequest.AdditionalInfoDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        var respDTO = userService.additionalUserInfo(sessionUser, reqDTO);
+        var respDTO = userService.getAdditionalUserInfo(sessionUser, reqDTO);
         return Resp.ok(respDTO);
     }
 
     // 유저닉네임 중복체크
     @GetMapping("/s/api/users/check-nickname-available/{nickname}")
-    public ResponseEntity<?> checkUsernameAvailable(@PathVariable("nickname") String nickname) {
-        Map<String, Object> respDTO = userService.checkUsernameAvailable(nickname);
+    public ResponseEntity<?> checkUserNicknameAvailable(@PathVariable("nickname") String nickname) {
+        Map<String, Object> respDTO = userService.checkUserNicknameAvailable(nickname);
         return Resp.ok(respDTO);
     }
 
