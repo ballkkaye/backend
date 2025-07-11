@@ -1,5 +1,8 @@
 package com.example.ballkkaye.board;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi403;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye.board.image.BoardImage;
 import com.example.ballkkaye.board.image.BoardImageRepository;
 import com.example.ballkkaye.board.image.BoardImageResponse;
@@ -17,7 +20,6 @@ import com.example.ballkkaye.team.record.TeamRecordRepository;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.stereotype.Service;
@@ -42,16 +44,16 @@ public class BoardService {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         // 1. user 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 2. 팀 조회
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new RuntimeException("팀을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 3. 이미지 최대 수 검사
         List<String> base64Images = reqDTO.getImages();
         if (base64Images != null && base64Images.size() > 10) {
-            throw new RuntimeException("최대 이미지 저장 한도를 넘었습니다.");
+            throw new ExceptionApi400("최대 이미지 저장 한도를 넘었습니다.");
         }
 
         // 4. 게시글 저장
@@ -77,25 +79,25 @@ public class BoardService {
 
     // 커뮤니티 게시글 수정
     @Transactional
-    public BoardResponse.UpdateDTO update(BoardRequest.@Valid UpdateDTO reqDTO, User sessionUser, Integer boardId) {
+    public BoardResponse.UpdateDTO update(BoardRequest.UpdateDTO reqDTO, User sessionUser, Integer boardId) {
         // 1. user 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 2. 게시글이 존재하는지 확인
         Board boardPS = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 3. 게시글의 소유자인지 확인
-        if (!boardPS.getUser().getId().equals(userPS.getId())) throw new RuntimeException("403 예외처리 예정");
+        if (!boardPS.getUser().getId().equals(userPS.getId())) throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
 
         // 4. 존재하는 팀인지 확인
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new RuntimeException("팀을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 5. 이미지 수 10개 넘으면 throw
         if (reqDTO.getNewImages().size() + reqDTO.getRemainImageUrls().size() > 10) {
-            throw new RuntimeException("이미지 너무 많음");
+            throw new ExceptionApi400("최대 이미지 저장 한도를 넘었습니다.");
         }
 
         // 5. 기존 이미지 조회
@@ -181,7 +183,7 @@ public class BoardService {
     // 게시글 상세보기
     public BoardResponse.DetailWithReplyDTO getBoard(Integer boardId, User sessionUser) {
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         PrettyTime p = new PrettyTime(Locale.KOREAN);
 
         List<BoardReply> parentsReplies = boardReplyRepository.findByBoardIdAndParentReplyId(boardId, null);
@@ -313,15 +315,15 @@ public class BoardService {
     public Object delete(Integer boardId, User sessionUser) {
         // 1. 존재하는 유저인지
         userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 2. 게시글이 존재하는지 확인
         Board boardPS = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 3. 게시글 주인이 맞는지
         if (boardPS.getUser().getId() != sessionUser.getId()) {
-            throw new RuntimeException("403 예외처리 예정");
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
         }
 
         // 4. 게시글 DeleteStatus 상태 변경
@@ -333,9 +335,9 @@ public class BoardService {
 
     public Object detail(Integer boardId, User sessionUser) {
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         Board boardPS = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다"));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         Boolean isOwner = false;
         Boolean isLike = boardLikeRepository.findByBoardIdAndUserId(boardId, userPS.getId()).isPresent();
         Integer likeCount = boardLikeRepository.totalCount(boardId);
