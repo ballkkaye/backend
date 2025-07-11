@@ -90,6 +90,7 @@ public class UserService {
 
             return new UserResponse.LoginDTO(user, myAccessToken, isNewUser);
         }
+        
         // 2. 로그인 처리 (토큰 발급 및 저장)
         String myAccessToken = JwtUtil.create(userPS);
         return new UserResponse.LoginDTO(userPS, myAccessToken, isNewUser);

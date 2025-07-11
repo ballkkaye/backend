@@ -5,5 +5,6 @@ public enum ChatConnectedType {
     AUTH_FAIL,    // 인증 실패
     ENTER,        // 채팅방 입장
     LEAVE,        // 채팅방 퇴장
-    TALK          // 메시지 전송
+    TALK,         // 메시지 전송
+    ERROR         // 메시지 전송 실패
 }
