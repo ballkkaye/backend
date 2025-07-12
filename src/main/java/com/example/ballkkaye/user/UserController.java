@@ -112,7 +112,7 @@ public class UserController {
         userService.updateScoreAndTier();
     }
 
-    @GetMapping
+    @GetMapping("/s/api/users/tier")
     public ResponseEntity<?> getScoreAndTier() {
         var sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = userService.getScoreAndTier(sessionUser);

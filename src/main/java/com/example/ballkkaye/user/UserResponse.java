@@ -89,6 +89,7 @@ public class UserResponse {
         }
     }
 
+    @Data
     public static class ScoreAndTierDTO {
         private Integer score;
         private String tier;
