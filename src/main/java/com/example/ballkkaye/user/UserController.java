@@ -107,7 +107,7 @@ public class UserController {
         return Resp.ok(newAccess);
     }
 
-    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 1 * * *", zone = "Asia/Seoul")
     public void updateScoreAndTier() {
         userService.updateScoreAndTier();
     }
