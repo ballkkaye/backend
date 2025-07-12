@@ -98,21 +98,21 @@ VALUES (1, NULL, 'LG 트윈스', 'https://upload.wikimedia.org/wikipedia/ko/4/4f
 -- 5.user_tb
 INSERT INTO user_tb
 (username, password, name, nickname, team_id, phone_number, email, birth_date, gender, profile_url, provider_type,
- user_role, fcm_token)
+ user_role, fcm_token, prediction_score, prediction_tier)
 VALUES ('ssar123', '1234', '쌀', 'ssar', 1, '01011112222', 'ssar@nate.com', '1999-09-09', 'MALE', '/img/profile.png',
-        'BALLKKAYE', 'USER', '1111'),
+        'BALLKKAYE', 'USER', '1111', 0, 'NONE'),
        ('cos123', '1234', '코스', 'cos', 2, '01022223333', 'cos@nate.com', '2000-01-01', 'FEMALE', '/img/profile.png',
-        'BALLKKAYE', 'USER', '2222'),
+        'BALLKKAYE', 'USER', '2222', 0, 'IRON'),
        ('love123', '1234', '러브', 'love', 3, '01033334444', 'love@nate.com', '1998-08-08', 'MALE', '/img/profile.png',
-        'BALLKKAYE', 'USER', '3333'),
+        'BALLKKAYE', 'USER', '3333', 0, 'BRONZE'),
        ('haha123', '1234', '하하', 'haha', NULL, '01044445555', 'haha@nate.com', '1997-07-07', 'FEMALE',
-        '/img/profile.png', 'BALLKKAYE', 'ADMIN', null),
+        '/img/profile.png', 'BALLKKAYE', 'ADMIN', null, 0, 'SILVER'),
        ('harim123', '1234', '백하림', 'harim', 4, '01055556666', 'harim@example.com', '1995-05-05', 'MALE',
-        '/img/profile.png', 'BALLKKAYE', 'USER', '4444'),
+        '/img/profile.png', 'BALLKKAYE', 'USER', '4444', 0, 'GOLD'),
        ('jungwon123', '1234', '김정원', 'jungwon', 5, '01066667777', 'jungwon@example.com', '1996-06-06', 'MALE',
-        '/img/profile.png', 'BALLKKAYE', 'USER', '5555'),
+        '/img/profile.png', 'BALLKKAYE', 'USER', '5555', 0, 'PLATINUM'),
        ('misook123', '1234', '김미숙', 'misook', 6, '01077778888', 'misook@example.com', '1994-04-04', 'FEMALE',
-        '/img/profile.png', 'BALLKKAYE', 'USER', '6666');
+        '/img/profile.png', 'BALLKKAYE', 'USER', '6666', 0, 'DIAMOND');
 
 
 -- 6.game_tb
@@ -122,11 +122,11 @@ INSERT INTO game_tb (id, game_time, stadium_id, broadcast_channel, game_status,
                      home_prediction_score, away_prediction_score,
                      home_result_score, away_result_score,
                      total_prediction_score)
-VALUES (418, TIMESTAMP '2025-07-04 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (419, TIMESTAMP '2025-07-04 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (420, TIMESTAMP '2025-07-04 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
-       (421, TIMESTAMP '2025-07-04 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
-       (422, TIMESTAMP '2025-07-04 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL),
+VALUES (418, TIMESTAMP '2025-07-13 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0, 50.0, NULL, NULL, 6, 5, NULL),
+       (419, TIMESTAMP '2025-07-13 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
+       (420, TIMESTAMP '2025-07-13 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
+       (421, TIMESTAMP '2025-07-13 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1, 50.0, 50.0, NULL, NULL, 5, 5, NULL),
+       (422, TIMESTAMP '2025-07-13 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 2, 0, NULL),
        (423, TIMESTAMP '2025-07-05 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
        (424, TIMESTAMP '2025-07-05 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
        (425, TIMESTAMP '2025-07-02 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7, 50.0, 50.0, NULL, NULL, 3, 5, NULL),
@@ -536,3 +536,4 @@ VALUES (418, 95.0, 0.0, 0.0, 1, 24.0, 1.0, CURRENT_TIMESTAMP, TIMESTAMP '2025-07
        (427, 85.0, 0.0, 30.0, 2, 26.0, 1.1, CURRENT_TIMESTAMP, TIMESTAMP '2025-07-07 21:00:00', 'DB01', 'NORTH'),
        (427, 90.0, 0.0, 30.0, 2, 26.0, 0.8, CURRENT_TIMESTAMP, TIMESTAMP '2025-07-07 22:00:00', 'DB01', 'NORTH'),
        (427, 90.0, 0.0, 30.0, 2, 25.0, 0.6, CURRENT_TIMESTAMP, TIMESTAMP '2025-07-07 23:00:00', 'DB01', 'NORTH');
+
