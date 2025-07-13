@@ -15,7 +15,6 @@ public class BoardRequest {
         @NotBlank(message = "제목은 필수 입력입니다.")
         private String title;
 
-
         @Min(value = 1, message = "팀 ID는 1 이상이어야 합니다.")
         @Max(value = 10, message = "팀 ID는 10 이하여야 합니다.")
         private Integer teamId;
@@ -25,13 +24,6 @@ public class BoardRequest {
 
         @Size(max = 1000, message = "내용은 1000자 이내로 작성해주세요.")
         private String content;
-
-        public SaveDTO(String title, Integer teamId, List<String> images, String content) {
-            this.title = title;
-            this.teamId = teamId;
-            this.images = images;
-            this.content = content;
-        }
 
         public Board toEntity(User user, Team team) {
             return Board.builder()
