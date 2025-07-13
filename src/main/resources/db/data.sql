@@ -539,13 +539,11 @@ VALUES (418, 95.0, 0.0, 0.0, 1, 24.0, 1.0, CURRENT_TIMESTAMP, TIMESTAMP '2025-07
 
 
 -- baord_like_tb 게시글 좋아요
-INSERT INTO board_like_tb (id, user_id, board_id, created_at)
-VALUES (1, 1, 1, NOW());
-INSERT INTO board_like_tb (id, user_id, board_id, created_at)
-VALUES (2, 1, 2, NOW());
+INSERT INTO board_like_tb (user_id, board_id)
+VALUES (1, 1),
+       (1, 2),
+       (2, 1);
 
-INSERT INTO board_like_tb (id, user_id, board_id, created_at)
-VALUES (3, 2, 1, NOW());
 
 -- board_reply_tb
 INSERT INTO board_reply_tb (board_id, user_id, parent_reply_id, tag_reply_id, delete_status, content, created_at,
