@@ -133,7 +133,7 @@ public class BoardReplyService {
                             child.getUser().getNickname(),
                             child.getUser().getProfileUrl(),
                             p.format(new Date(child.getCreatedAt().getTime())),
-                            child.getUser().getTeam().getTeamName(),
+                            child.getUser().getTeam() != null ? child.getUser().getTeam().getTeamName() : null,
                             child.getContent(),
                             child.getParentReplyId().getId(),
                             child.getTagReplyId() != null ? child.getTagReplyId().getId() : null,
@@ -145,7 +145,9 @@ public class BoardReplyService {
             ).toList();
 
 
-            String parentTeamName = parent.getUser().getTeam().getTeamName();
+            String parentTeamName = parent.getUser().getTeam() != null
+                    ? parent.getUser().getTeam().getTeamName()
+                    : null;
             Integer parentTagReplyId = parent.getTagReplyId() != null ? parent.getTagReplyId().getId() : null;
 
             BoardReplyResponse.ParentItemDTO parentDTO = new BoardReplyResponse.ParentItemDTO(

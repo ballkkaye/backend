@@ -13,12 +13,6 @@ public class BoardReplyRequest {
         @NotBlank(message = "내용은 필수 입력입니다.")
         @Size(max = 300, message = "내용은 300자 이내로 작성해주세요.")
         private String content;
-
-        public SaveDTO(Integer parentReplyId, Integer tagReplyId, String content) {
-            this.parentReplyId = parentReplyId;
-            this.tagReplyId = tagReplyId;
-            this.content = content;
-        }
     }
 
     @Data
@@ -28,11 +22,5 @@ public class BoardReplyRequest {
         @NotBlank(message = "내용은 필수 입력입니다.")
         @Size(max = 300, message = "내용은 300자 이내로 작성해주세요.")
         private String content;
-
-        public UpdateDTO(Integer tagReplyId, String content) {
-            this.tagReplyId = tagReplyId;
-            this.content = content;
-        }
     }
-
 }
