@@ -4,11 +4,11 @@ import com.example.ballkkaye._core.error.ex.ExceptionApi400;
 import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.GenerateNickname;
 import com.example.ballkkaye._core.util.JwtUtil;
-import com.example.ballkkaye.common.enums.Gender;
-import com.example.ballkkaye.common.enums.ProviderType;
-import com.example.ballkkaye.common.enums.UserRole;
+import com.example.ballkkaye.common.enums.*;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.team.TeamRepository;
+import com.example.ballkkaye.user.userPrediction.UserPrediction;
+import com.example.ballkkaye.user.userPrediction.UserPredictionRepository;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.HttpEntity;
@@ -20,10 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -31,6 +28,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RestTemplate restTemplate = new RestTemplate();
     private final TeamRepository teamRepository;
+    private final UserPredictionRepository userPredictionRepository;
 
     @Transactional
     public Object naverOauthLogin(String accessToken, String fcmToken) {
@@ -85,6 +83,8 @@ public class UserService {
                     .providerType(ProviderType.NAVER)
                     .userRole(UserRole.USER)
                     .fcmToken(fcmToken != null && !fcmToken.isBlank() ? fcmToken : null)
+                    .predictionScore(0)
+                    .predictionTier(PredictionTier.NONE)
                     .build();
 
             userRepository.save(user);
@@ -201,5 +201,38 @@ public class UserService {
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         userPS.updateFcmToken(fcmToken); // 엔티티 내부의 setter 또는 메서드로 업데이트
+    }
+
+    @Transactional
+    public void updateScoreAndTier() {
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+
+        // 1. 예측 찾아서
+        List<UserPrediction> predictions = userPredictionRepository.findByGameDate(yesterday);
+
+        // 2. for문 돌리고
+        for (UserPrediction prediction : predictions) {
+
+            // 예측 맞으면 점수 / 티어 업데이트
+            if (prediction.getResult().equals(PredictionStatus.CORRECT)) {
+                User user = prediction.getUser();
+                user.updatePredictionScore(user.getPredictionScore() + 1);
+                user.updatePredictionTier();
+            }
+        }
+    }
+
+    public Object getScoreAndTier(User sessionUser) {
+        User user = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
+
+        UserResponse.ScoreAndTierDTO respDTO = new UserResponse.ScoreAndTierDTO(
+                user.getPredictionScore(),
+                user.getPredictionTier().toString(),
+                user.getId(),
+                user.getNickname()
+        );
+
+        return respDTO;
     }
 }

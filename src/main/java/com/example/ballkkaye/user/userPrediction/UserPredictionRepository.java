@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,4 +177,17 @@ public class UserPredictionRepository {
         return count > 0;
     }
 
+    public List<UserPrediction> findByGameDate(LocalDate gameDate) {
+        LocalDateTime startOfDay = gameDate.atStartOfDay(); // 2025-07-13 00:00:00
+        LocalDateTime endOfDay = gameDate.plusDays(1).atStartOfDay(); // 2025-07-14 00:00:00
+
+        String jpql = "SELECT upt FROM UserPrediction upt " +
+                "JOIN FETCH upt.user " +
+                "WHERE upt.game.gameTime >= :startOfDay AND upt.game.gameTime < :endOfDay";
+
+        return em.createQuery(jpql, UserPrediction.class)
+                .setParameter("startOfDay", startOfDay)
+                .setParameter("endOfDay", endOfDay)
+                .getResultList();
+    }
 }
