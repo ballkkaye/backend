@@ -1,6 +1,7 @@
 package com.example.ballkkaye.user;
 
 import com.example.ballkkaye.common.enums.Gender;
+import com.example.ballkkaye.common.enums.PredictionTier;
 import com.example.ballkkaye.common.enums.ProviderType;
 import com.example.ballkkaye.common.enums.UserRole;
 import com.example.ballkkaye.team.Team;
@@ -65,13 +66,20 @@ public class User {
     @Column
     private String fcmToken;
 
+    @Column(nullable = false)
+    private Integer predictionScore;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PredictionTier predictionTier;
+
     @CreationTimestamp
     private Timestamp createdAt; //
 
     @Builder
     public User(Integer id, String username, String password, String name, String nickname, Team team,
                 String phoneNumber, String email, LocalDate birthDate, Gender gender,
-                String profileUrl, ProviderType providerType, UserRole userRole, String fcmToken, Timestamp createdAt) {
+                String profileUrl, ProviderType providerType, UserRole userRole, String fcmToken, Integer predictionScore, PredictionTier predictionTier, Timestamp createdAt) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -86,6 +94,8 @@ public class User {
         this.providerType = providerType;
         this.userRole = userRole;
         this.fcmToken = fcmToken;
+        this.predictionScore = predictionScore;
+        this.predictionTier = predictionTier;
         this.createdAt = createdAt;
     }
 
@@ -102,5 +112,27 @@ public class User {
 
     public void updateFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public void updatePredictionScore(Integer predictionScore) {
+        this.predictionScore = predictionScore == null ? this.predictionScore : predictionScore;
+    }
+
+    public void updatePredictionTier() {
+        if (this.predictionScore >= 1000) {
+            this.predictionTier = PredictionTier.DIAMOND;
+        } else if (this.predictionScore >= 750) {
+            this.predictionTier = PredictionTier.PLATINUM;
+        } else if (this.predictionScore >= 500) {
+            this.predictionTier = PredictionTier.GOLD;
+        } else if (this.predictionScore >= 250) {
+            this.predictionTier = PredictionTier.SILVER;
+        } else if (this.predictionScore >= 100) {
+            this.predictionTier = PredictionTier.BRONZE;
+        } else if (this.predictionScore >= 50) {
+            this.predictionTier = PredictionTier.IRON;
+        } else {
+            this.predictionTier = PredictionTier.NONE;
+        }
     }
 }

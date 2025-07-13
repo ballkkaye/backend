@@ -88,4 +88,19 @@ public class UserResponse {
             this.userRole = user.getUserRole().toString();
         }
     }
+
+    @Data
+    public static class ScoreAndTierDTO {
+        private Integer score;
+        private String tier;
+        private Integer userId;
+        private String userNickname;
+
+        public ScoreAndTierDTO(Integer score, String tier, Integer userId, String userNickname) {
+            this.score = score;
+            this.tier = tier;
+            this.userId = userId;
+            this.userNickname = userNickname;
+        }
+    }
 }

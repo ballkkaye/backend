@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -104,5 +105,17 @@ public class UserController {
         User userPS = userRepository.findById(6).orElse(null);
         String newAccess = JwtUtil.create(userPS);
         return Resp.ok(newAccess);
+    }
+
+    @Scheduled(cron = "0 0 1 * * *", zone = "Asia/Seoul")
+    public void updateScoreAndTier() {
+        userService.updateScoreAndTier();
+    }
+
+    @GetMapping("/s/api/users/tier")
+    public ResponseEntity<?> getScoreAndTier() {
+        var sessionUser = (User) session.getAttribute("sessionUser");
+        var respDTO = userService.getScoreAndTier(sessionUser);
+        return Resp.ok(respDTO);
     }
 }
