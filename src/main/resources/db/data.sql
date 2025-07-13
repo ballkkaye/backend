@@ -547,7 +547,6 @@ VALUES (2, 1, 2, NOW());
 INSERT INTO board_like_tb (id, user_id, board_id, created_at)
 VALUES (3, 2, 1, NOW());
 
-
 -- board_reply_tb
 INSERT INTO board_reply_tb (board_id, user_id, parent_reply_id, tag_reply_id, delete_status, content, created_at,
                             updated_at)
