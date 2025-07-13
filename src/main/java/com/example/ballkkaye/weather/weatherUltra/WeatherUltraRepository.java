@@ -65,4 +65,13 @@ public class WeatherUltraRepository {
             return Optional.empty();
         }
     }
+    
+    // 일괄 저장
+    public void saveAll(List<WeatherUltra> weatherUltraList) {
+        for (WeatherUltra w : weatherUltraList) {
+            em.persist(w);
+        }
+    }
+
+    
 }
