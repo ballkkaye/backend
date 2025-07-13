@@ -10,7 +10,6 @@ public class FilterConfig {
 
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> authorizationFilter() {
-        System.out.println("authorizationFilter 동작");
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new AuthorizationFilter());
         registrationBean.addUrlPatterns("/s/*"); // 모든 요청에 적용

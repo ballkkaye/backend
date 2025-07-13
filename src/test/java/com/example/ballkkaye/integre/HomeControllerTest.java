@@ -108,6 +108,8 @@ public class HomeControllerTest extends MyRestDoc {
                 .phoneNumber("010-1234-5678")
                 .birthDate(LocalDate.of(1999, 12, 31))
                 .profileUrl("https://www.google.com")
+                .predictionScore(0)
+                .predictionTier(PredictionTier.NONE)
                 .gender(Gender.MALE)
                 .build();
 

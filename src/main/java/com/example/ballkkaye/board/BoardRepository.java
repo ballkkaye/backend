@@ -30,7 +30,7 @@ public class BoardRepository {
                 "LEFT JOIN FETCH b.team t " +
                 "WHERE b.deleteStatus = :deleteStatus " +
                 (teamId != null ? "AND t.id = :teamId " : "") +
-                "ORDER BY b.createdAt DESC";
+                "ORDER BY b.id DESC";
 
         Query query = em.createQuery(q, Board.class)
                 .setParameter("deleteStatus", deleteStatus);

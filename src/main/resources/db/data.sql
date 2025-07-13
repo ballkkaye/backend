@@ -537,3 +537,57 @@ VALUES (418, 95.0, 0.0, 0.0, 1, 24.0, 1.0, CURRENT_TIMESTAMP, TIMESTAMP '2025-07
        (427, 90.0, 0.0, 30.0, 2, 26.0, 0.8, CURRENT_TIMESTAMP, TIMESTAMP '2025-07-07 22:00:00', 'DB01', 'NORTH'),
        (427, 90.0, 0.0, 30.0, 2, 25.0, 0.6, CURRENT_TIMESTAMP, TIMESTAMP '2025-07-07 23:00:00', 'DB01', 'NORTH');
 
+
+-- baord_like_tb 게시글 좋아요
+INSERT INTO board_like_tb (id, user_id, board_id, created_at)
+VALUES (1, 1, 1, NOW());
+INSERT INTO board_like_tb (id, user_id, board_id, created_at)
+VALUES (2, 1, 2, NOW());
+
+INSERT INTO board_like_tb (id, user_id, board_id, created_at)
+VALUES (3, 2, 1, NOW());
+
+
+-- board_reply_tb
+INSERT INTO board_reply_tb (board_id, user_id, parent_reply_id, tag_reply_id, delete_status, content, created_at,
+                            updated_at)
+VALUES
+-- 부모 댓글
+(1, 1, NULL, NULL, 'NOT_DELETED', '직관 최고였어요! 9회말 역전 감동이네요.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 2, NULL, NULL, 'NOT_DELETED', '분위기 미쳤어요. 응원 열기 대단했음!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 3, NULL, NULL, 'NOT_DELETED', '중계로 봤는데도 소름 쫙 돋음.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- 대댓글 및 대대댓글
+(1, 4, 1, NULL, 'NOT_DELETED', '저도 그 장면에서 소리 질렀어요ㅋㅋ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 5, 1, 4, 'NOT_DELETED', '그 장면 유튜브에 클립 떠서 또 봤어요.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 6, 1, 5, 'NOT_DELETED', '직관 갔던 사람 부럽다ㅠㅠ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 7, 2, NULL, 'NOT_DELETED', '현장 분위기 진짜 보고 싶었음...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, NULL, NULL, 'NOT_DELETED', '직관 최고였어요! 9회말 역전 감동이네요.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 2, NULL, NULL, 'NOT_DELETED', '분위기 미쳤어요. 응원 열기 대단했음!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 3, NULL, NULL, 'NOT_DELETED', '중계로 봤는데도 소름 쫙 돋음.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- 대댓글 및 대대댓글
+(2, 4, 8, NULL, 'NOT_DELETED', '저도 그 장면에서 소리 질렀어요ㅋㅋ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 5, 8, 11, 'NOT_DELETED', '그 장면 유튜브에 클립 떠서 또 봤어요.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 6, 8, 12, 'NOT_DELETED', '직관 갔던 사람 부럽다ㅠㅠ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 7, 9, NULL, 'NOT_DELETED', '현장 분위기 진짜 보고 싶었음...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(11, 1, NULL, NULL, 'NOT_DELETED', '직관 최고였어요! 9회말 역전 감동이네요.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(11, 2, NULL, NULL, 'NOT_DELETED', '분위기 미쳤어요. 응원 열기 대단했음!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(11, 3, NULL, NULL, 'NOT_DELETED', '중계로 봤는데도 소름 쫙 돋음.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(11, 1, NULL, NULL, 'NOT_DELETED', '직관 최고였어요! 9회말 역전 감동이네요.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 2, NULL, NULL, 'NOT_DELETED', '분위기 미쳤어요. 응원 열기 대단했음!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 3, NULL, NULL, 'NOT_DELETED', '중계로 봤는데도 소름 쫙 돋음.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 2, NULL, NULL, 'NOT_DELETED', '분위기 미쳤어요. 응원 열기 대단했음!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 3, NULL, NULL, 'NOT_DELETED', '중계로 봤는데도 소름 쫙 돋음.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 2, NULL, NULL, 'NOT_DELETED', '분위기 미쳤어요. 응원 열기 대단했음!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 3, NULL, NULL, 'NOT_DELETED', '중계로 봤는데도 소름 쫙 돋음.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 3, NULL, NULL, 'NOT_DELETED', '중계로 봤는데도 소름 쫙 돋음.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 2, NULL, NULL, 'NOT_DELETED', '분위기 미쳤어요. 응원 열기 대단했음!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 3, NULL, NULL, 'NOT_DELETED', '중계로 봤는데도 소름 쫙 돋음.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+INSERT INTO board_image_tb (board_id, delete_status, img_url)
+VALUES (1, 'NOT_DELETED', 'https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg'),
+       (1, 'NOT_DELETED', 'https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image2.jpg');
