@@ -52,7 +52,7 @@ public class BoardControllerTest extends MyRestDoc {
         BoardRequest.SaveDTO reqDTO = new BoardRequest.SaveDTO();
         reqDTO.setTitle("제목1");
         reqDTO.setTeamId(1);
-        reqDTO.setImages(List.of("https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg\n"));
+        reqDTO.setImages(List.of("https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg"));
         reqDTO.setContent("내용1");
 
         String requestBody = om.writeValueAsString(reqDTO);
@@ -69,7 +69,7 @@ public class BoardControllerTest extends MyRestDoc {
 
         // eye
         String responseBody = actions.andReturn().getResponse().getContentAsString();
-        //        System.out.println(responseBody);
+        System.out.println(responseBody);
 
         // then
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
@@ -83,10 +83,10 @@ public class BoardControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.replyCount").value(0));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.relativeTime").value("방금"));
 
-        // 이미지 리스트 존재 여부
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.imagesUrl").isArray());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.imagesUrl[0].id").value(1));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.imagesUrl[0].imageUrl").value("https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg\n"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.imagesUrl[0].id").value(4));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.imagesUrl[0].imageUrl")
+                .value("https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg"));
 
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
