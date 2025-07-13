@@ -80,6 +80,10 @@ public class HomeControllerTest extends MyRestDoc {
         // 외래키 무시 + 전 테이블 truncate
         em.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
 
+        em.createNativeQuery("TRUNCATE TABLE team_tb RESTART IDENTITY").executeUpdate();
+        em.createNativeQuery("TRUNCATE TABLE stadium_correction_tb RESTART IDENTITY").executeUpdate();
+        em.createNativeQuery("TRUNCATE TABLE stadium_coordinate_tb RESTART IDENTITY").executeUpdate();
+        em.createNativeQuery("TRUNCATE TABLE stadium_tb RESTART IDENTITY").executeUpdate();
         em.createNativeQuery("TRUNCATE TABLE visit_record_tb RESTART IDENTITY").executeUpdate();
         em.createNativeQuery("TRUNCATE TABLE today_game_tb RESTART IDENTITY").executeUpdate();
         em.createNativeQuery("TRUNCATE TABLE game_tb RESTART IDENTITY").executeUpdate();
@@ -109,23 +113,106 @@ public class HomeControllerTest extends MyRestDoc {
 
         userRepository.save(user);
 
-        Team homeTeam1 = teamRepository.findById(1).orElseThrow();  // LG 트윈스
-        Team homeTeam2 = teamRepository.findById(2).orElseThrow(); // 두산 베어스
-        Team homeTeam3 = teamRepository.findById(3).orElseThrow();  // 키움 히어로즈
-        Team homeTeam4 = teamRepository.findById(4).orElseThrow();  // SSG 랜더스
-        Team homeTeam5 = teamRepository.findById(5).orElseThrow();  // KIA 타이거즈
+        Stadium stadium1 = stadiumRepository.save(Stadium.builder()
+                .stadiumName("잠실야구장")
+                .location("서울 송파구")
+                .stadiumType(StadiumType.OUTDOOR)
+                .build());
 
-        Team awayTeam1 = teamRepository.findById(6).orElseThrow();  // 삼성 라이온즈
-        Team awayTeam2 = teamRepository.findById(7).orElseThrow();  // 롯데 자이언츠
-        Team awayTeam3 = teamRepository.findById(8).orElseThrow();  // 한화 이글스
-        Team awayTeam4 = teamRepository.findById(9).orElseThrow();  // NC 다이노스
-        Team awayTeam5 = teamRepository.findById(10).orElseThrow();  // KT 위즈
+        Stadium stadium2 = stadiumRepository.save(Stadium.builder()
+                .stadiumName("고척스카이돔")
+                .location("서울 구로구")
+                .stadiumType(StadiumType.INDOOR)
+                .build());
 
-        Stadium stadium1 = stadiumRepository.findById(1).orElseThrow(); // 잠실야구장
-        Stadium stadium2 = stadiumRepository.findById(2).orElseThrow(); // 고척스카이돔
-        Stadium stadium3 = stadiumRepository.findById(3).orElseThrow(); // 인천 SSG 랜더스필드
-        Stadium stadium4 = stadiumRepository.findById(4).orElseThrow(); // 광주-기아 챔피언스필드
-        Stadium stadium5 = stadiumRepository.findById(5).orElseThrow(); // 대구 삼성라이온즈파크
+        Stadium stadium3 = stadiumRepository.save(Stadium.builder()
+                .stadiumName("인천 SSG 랜더스필드")
+                .location("인천 미추홀구")
+                .stadiumType(StadiumType.OUTDOOR)
+                .build());
+
+        Stadium stadium4 = stadiumRepository.save(Stadium.builder()
+                .stadiumName("광주-기아 챔피언스필드")
+                .location("광주 북구")
+                .stadiumType(StadiumType.OUTDOOR)
+                .build());
+
+        Stadium stadium5 = stadiumRepository.save(Stadium.builder()
+                .stadiumName("대구 삼성라이온즈파크")
+                .location("대구 수성구")
+                .stadiumType(StadiumType.OUTDOOR)
+                .build());
+
+        Team homeTeam1 = teamRepository.save(Team.builder()
+                .stadium1(stadium1)
+                .teamName("LG 트윈스")
+                .logoUrl("/img/team/lg.png")
+                .ticketLink("https://www.lgtwins.com")
+                .build());
+
+        Team homeTeam2 = teamRepository.save(Team.builder()
+                .stadium1(stadium1)
+                .teamName("두산 베어스")
+                .logoUrl("/img/team/doosan.png")
+                .ticketLink("https://www.doosanbears.com")
+                .build());
+
+        Team homeTeam3 = teamRepository.save(Team.builder()
+                .stadium1(stadium2)
+                .teamName("키움 히어로즈")
+                .logoUrl("/img/team/kiwoom.png")
+                .ticketLink("https://www.heroesbaseball.co.kr")
+                .build());
+
+        Team homeTeam4 = teamRepository.save(Team.builder()
+                .stadium1(stadium3)
+                .teamName("SSG 랜더스")
+                .logoUrl("/img/team/ssg.png")
+                .ticketLink("https://www.ssglanders.com")
+                .build());
+
+        Team homeTeam5 = teamRepository.save(Team.builder()
+                .stadium1(stadium4)
+                .teamName("KIA 타이거즈")
+                .logoUrl("/img/team/kia.png")
+                .ticketLink("https://www.tigers.co.kr")
+                .build());
+
+        Team awayTeam1 = teamRepository.save(Team.builder()
+                .stadium1(stadium5)
+                .teamName("삼성 라이온즈")
+                .logoUrl("/img/team/samsung.png")
+                .ticketLink("https://www.samsunglions.com")
+                .build());
+
+        Team awayTeam2 = teamRepository.save(Team.builder()
+                .stadium1(stadium5)
+                .teamName("롯데 자이언츠")
+                .logoUrl("/img/team/lotte.png")
+                .ticketLink("https://www.giantsclub.com")
+                .build());
+
+        Team awayTeam3 = teamRepository.save(Team.builder()
+                .stadium1(stadium5)
+                .teamName("한화 이글스")
+                .logoUrl("/img/team/hanwha.png")
+                .ticketLink("https://www.hanwhaeagles.co.kr")
+                .build());
+
+        Team awayTeam4 = teamRepository.save(Team.builder()
+                .stadium1(stadium5)
+                .teamName("NC 다이노스")
+                .logoUrl("/img/team/nc.png")
+                .ticketLink("https://www.ncdinos.com")
+                .build());
+
+        Team awayTeam5 = teamRepository.save(Team.builder()
+                .stadium1(stadium5)
+                .teamName("KT 위즈")
+                .logoUrl("/img/team/kt.png")
+                .ticketLink("https://www.ktwiz.co.kr")
+                .build());
+
 
         Player player1 = Player.builder()
                 .kboPlayerId(51867)
