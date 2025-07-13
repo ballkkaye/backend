@@ -588,3 +588,9 @@ VALUES
 INSERT INTO board_image_tb (board_id, delete_status, img_url)
 VALUES (1, 'NOT_DELETED', 'https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg'),
        (1, 'NOT_DELETED', 'https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image2.jpg');
+
+-- baord_like_tb 게시글 좋아요
+INSERT INTO board_reply_like_tb (user_id, board_reply_id)
+VALUES (1, 1),
+       (1, 2),
+       (2, 1);
