@@ -63,4 +63,16 @@ public class UserRequest {
             this.fcmToken = fcmToken;
         }
     }
+
+    @Data
+    public static class UpdateTokenDTO {
+        @NotBlank(message = "RefreshToken은 필수입니다.")
+        private String refreshToken;
+        private String fcmToken;  // optional이므로 검증은 생략 가능
+
+        public UpdateTokenDTO(String refreshToken, String fcmToken) {
+            this.refreshToken = refreshToken;
+            this.fcmToken = fcmToken;
+        }
+    }
 }
