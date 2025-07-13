@@ -4,8 +4,6 @@ import com.example.ballkkaye.MyRestDoc;
 import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye.board.BoardRequest;
 import com.example.ballkkaye.common.enums.UserRole;
-import com.example.ballkkaye.stadium.StadiumRepository;
-import com.example.ballkkaye.team.TeamRepository;
 import com.example.ballkkaye.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,12 +27,6 @@ public class BoardControllerTest extends MyRestDoc {
 
     @Autowired
     private ObjectMapper om;
-
-    @Autowired
-    private StadiumRepository stadiumRepository;
-
-    @Autowired
-    private TeamRepository teamRepository;
 
     private String accessToken;
 
