@@ -217,7 +217,7 @@ public class BoardReplyContollerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].myTeamName").value("LG 트윈스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].content").value("직관 최고였어요! 9회말 역전 감동이네요."))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].isOwner").value(true))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].likeCount").value(0))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].likeCount").value(2))
                 // 첫 번째 댓글의 첫 번째 대댓글
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].childReplies[0].replyId").value(4))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].childReplies[0].nickname").value("haha"))
