@@ -1,9 +1,6 @@
 package com.example.ballkkaye.board;
 
-import com.example.ballkkaye.common.enums.DeleteStatus;
-import com.example.ballkkaye.common.enums.Gender;
-import com.example.ballkkaye.common.enums.StadiumType;
-import com.example.ballkkaye.common.enums.UserRole;
+import com.example.ballkkaye.common.enums.*;
 import com.example.ballkkaye.stadium.Stadium;
 import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.user.User;
@@ -55,6 +52,11 @@ public class BoardRepositoryTest {
                 .gender(Gender.MALE)
                 .profileUrl("/img/profile.png")
                 .userRole(UserRole.USER)
+                .providerType(ProviderType.GOOGLE)
+                .username("ssar_test")
+                .predictionTier(PredictionTier.IRON)
+                .predictionScore(1)
+                .phoneNumber("010-1234-5678")
                 .team(team)
                 .build();
         em.persist(user);
@@ -108,6 +110,11 @@ public class BoardRepositoryTest {
                 .gender(Gender.MALE)
                 .profileUrl("/img/profile.png")
                 .userRole(UserRole.USER)
+                .providerType(ProviderType.GOOGLE)
+                .username("ssar_test")
+                .predictionTier(PredictionTier.IRON)
+                .predictionScore(1)
+                .phoneNumber("010-1234-5678")
                 .team(team)
                 .build();
         em.persist(user);
