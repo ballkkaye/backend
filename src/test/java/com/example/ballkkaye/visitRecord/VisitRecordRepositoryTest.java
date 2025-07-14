@@ -166,6 +166,8 @@ public class VisitRecordRepositoryTest {
                 .providerType(ProviderType.BALLKKAYE)
                 .userRole(UserRole.USER)
                 .profileUrl("/img/profile/default.png")
+                .predictionTier(PredictionTier.IRON)
+                .predictionScore(1)
                 .team(homeTeam)
                 .build();
         em.persist(user);
@@ -252,6 +254,8 @@ public class VisitRecordRepositoryTest {
                 .providerType(ProviderType.BALLKKAYE)
                 .userRole(UserRole.USER)
                 .profileUrl("/img/profile/default.png")
+                .predictionTier(PredictionTier.IRON)
+                .predictionScore(1)
                 .team(homeTeam)
                 .build();
         em.persist(user);
@@ -342,6 +346,8 @@ public class VisitRecordRepositoryTest {
                 .phoneNumber("01012341234")
                 .providerType(ProviderType.BALLKKAYE)
                 .userRole(UserRole.USER)
+                .predictionTier(PredictionTier.IRON)
+                .predictionScore(1)
                 .profileUrl("/img/profile/default.png")
                 .team(homeTeam)
                 .build();

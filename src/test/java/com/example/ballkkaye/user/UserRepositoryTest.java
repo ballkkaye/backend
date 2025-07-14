@@ -1,8 +1,6 @@
 package com.example.ballkkaye.user;
 
-import com.example.ballkkaye.common.enums.Gender;
-import com.example.ballkkaye.common.enums.StadiumType;
-import com.example.ballkkaye.common.enums.UserRole;
+import com.example.ballkkaye.common.enums.*;
 import com.example.ballkkaye.stadium.Stadium;
 import com.example.ballkkaye.team.Team;
 import jakarta.persistence.EntityManager;
@@ -48,6 +46,11 @@ public class UserRepositoryTest {
                 .gender(Gender.MALE)
                 .profileUrl("/img/profile.png")
                 .userRole(UserRole.USER)
+                .providerType(ProviderType.GOOGLE)
+                .username("ssar_test")
+                .predictionTier(PredictionTier.IRON)
+                .predictionScore(1)
+                .phoneNumber("010-1234-5678")
                 .team(team)
                 .build();
         em.persist(user);
