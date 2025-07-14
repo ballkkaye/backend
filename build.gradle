@@ -24,7 +24,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'  // redis
     implementation 'com.google.firebase:firebase-admin:9.2.0' // firebase sdk
     implementation 'com.squareup.okhttp3:okhttp:5.1.0' // okhttp
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'  // 문서 만들기
