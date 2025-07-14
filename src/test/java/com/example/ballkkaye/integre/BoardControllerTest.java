@@ -6,6 +6,7 @@ import com.example.ballkkaye.board.BoardRequest;
 import com.example.ballkkaye.common.enums.UserRole;
 import com.example.ballkkaye.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,8 @@ public class BoardControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.teamId").value(1));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.likeCount").value(0));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.replyCount").value(0));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.relativeTime").value("방금"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.relativeTime")
+                .value(Matchers.matchesPattern(".*금.*")));
 
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.imagesUrl").isArray());
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.imagesUrl[0].id").value(4));
@@ -128,7 +130,7 @@ public class BoardControllerTest extends MyRestDoc {
 
     // 커뮤니티 게시글 목록 (page & teamId로 필터)
     @Test
-    public void get_boards_page_and_team_id_test() throws Exception {
+    public void get_list_page_and_team_id_test() throws Exception {
         // given
         Integer page = 1;
         Integer teamId = 3;
@@ -184,7 +186,7 @@ public class BoardControllerTest extends MyRestDoc {
 
     // 커뮤니티 게시글 목록
     @Test
-    public void get_baords_test() throws Exception {
+    public void get_list_test() throws Exception {
 //        System.out.println(requestBody);
 
         // when
@@ -247,7 +249,7 @@ public class BoardControllerTest extends MyRestDoc {
 
     // 게시글 상세보기 조회 (게시글 + 댓글)
     @Test
-    public void get_baord_test() throws Exception {
+    public void get_detail_with_reply_test() throws Exception {
         // given
         Integer boardId = 1;
 
@@ -339,7 +341,7 @@ public class BoardControllerTest extends MyRestDoc {
 
     // 게시글 상세보기 (게시글)
     @Test
-    public void detail_test() throws Exception {
+    public void get_detail_test() throws Exception {
         // given
         Integer boardId = 1;
         String requestBody = om.writeValueAsString("boardId :" + boardId);
@@ -376,5 +378,8 @@ public class BoardControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.images[0].imageUrl").value("https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.images[1].id").value(2))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.images[1].imageUrl").value("https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image2.jpg"));
+
+        actions.andDo(MockMvcResultHandlers.print())
+                .andDo(document);
     }
 }

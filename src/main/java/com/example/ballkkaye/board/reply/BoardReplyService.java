@@ -110,7 +110,7 @@ public class BoardReplyService {
         return respDTO;
     }
 
-    public Object detail(Integer boardId, User sessionUser) {
+    public Object getDetail(Integer boardId, User sessionUser) {
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 

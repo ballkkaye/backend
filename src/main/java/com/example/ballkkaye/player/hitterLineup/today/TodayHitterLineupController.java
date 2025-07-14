@@ -13,11 +13,11 @@ public class TodayHitterLineupController {
     private final TodayHitterLineupService todayHitterLineUpService;
 
     @GetMapping("/api/today/hitter-lineup")
-    public ResponseEntity<?> getMatchupDetails(
+    public ResponseEntity<?> getDetailMatchup(
             @RequestParam Integer gameId,
             @RequestParam Integer teamId
     ) {
-        TodayHitterLineupResponse.DTO respDTO = todayHitterLineUpService.getMatchupDetailsByGameId(gameId, teamId);
+        TodayHitterLineupResponse.DTO respDTO = todayHitterLineUpService.getDetailMatchup(gameId, teamId);
         return Resp.ok(respDTO);
     }
 

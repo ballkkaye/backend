@@ -20,8 +20,7 @@ public class TodayGameController {
     // 승리예측 1
     @GetMapping("/s/api/today-games/prediction")
     public ResponseEntity<?> getTodayGamePredictions() {
-        LocalDate today = LocalDate.now(); // 오늘 날짜 기준
-        List<TodayGameResponse.PredictionDTO> respDTO = todayGameService.getTodayGamePredictions(today);
+        List<TodayGameResponse.PredictionDTO> respDTO = todayGameService.getTodayGamePredictions();
         return Resp.ok(respDTO);
     }
 

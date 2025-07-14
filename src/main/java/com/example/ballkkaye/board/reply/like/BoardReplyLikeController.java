@@ -17,7 +17,7 @@ public class BoardReplyLikeController {
     private final HttpSession session;
 
     // 좋아요 등록
-    @PostMapping("/s/api/boards/reply/{id}/like")
+    @PostMapping("/s/api/boards/replies/{id}/like")
     public ResponseEntity<?> save(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = boardReplyLikeService.save(id, sessionUser);
@@ -25,7 +25,7 @@ public class BoardReplyLikeController {
     }
 
     // 좋아요 삭제
-    @DeleteMapping("/s/api/boards/reply/like/{id}")
+    @DeleteMapping("/s/api/boards/replies/like/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = boardReplyLikeService.delete(id, sessionUser);

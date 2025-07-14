@@ -136,7 +136,7 @@ public class BoardService {
     }
 
     // 게시글 목록 조회
-    public BoardResponse.ListDTO getBoards(Integer teamId, Integer page) {
+    public BoardResponse.ListDTO getList(Integer teamId, Integer page) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         List<Board> boards = boardRepository.findAll(teamId, page, DeleteStatus.NOT_DELETED);
         List<BoardResponse.ItemDTO> itemDTOS = new ArrayList<>();
@@ -181,7 +181,7 @@ public class BoardService {
     }
 
     // 게시글 상세보기
-    public BoardResponse.DetailWithReplyDTO getBoard(Integer boardId, User sessionUser) {
+    public BoardResponse.DetailWithReplyDTO getDetailWithReply(Integer boardId, User sessionUser) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         PrettyTime p = new PrettyTime(Locale.KOREAN);
@@ -333,7 +333,7 @@ public class BoardService {
         return new BoardResponse.DeleteDTO();
     }
 
-    public Object detail(Integer boardId, User sessionUser) {
+    public Object getDetail(Integer boardId, User sessionUser) {
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         Board boardPS = boardRepository.findById(boardId)

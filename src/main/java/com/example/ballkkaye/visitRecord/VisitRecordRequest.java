@@ -57,5 +57,11 @@ public class VisitRecordRequest {
         private String content;
 
         private String imgUrl;
+
+        public UpdateDTO(Result result, String content, String imgUrl) {
+            this.result = result;
+            this.content = content;
+            this.imgUrl = imgUrl;
+        }
     }
 }
