@@ -39,4 +39,21 @@ public class ChatMessageResponse {
             this.deleteStatus = deleteStatus;
         }
     }
+
+    @Data
+    public static class ChatPublishDTO {
+        private Integer chatRoomId;
+        private Integer senderId;
+        private String senderNickname;
+        private String message;
+        private ChatConnectedType messageType;
+
+        public ChatPublishDTO(Integer roomId, Integer senderId, String senderNickname, String message, ChatConnectedType messageType) {
+            this.chatRoomId = roomId;
+            this.senderId = senderId;
+            this.senderNickname = senderNickname;
+            this.message = message;
+            this.messageType = messageType;
+        }
+    }
 }

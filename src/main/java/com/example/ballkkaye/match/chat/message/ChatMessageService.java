@@ -8,6 +8,7 @@ import com.example.ballkkaye.match.chat.room.ChatRoomRepository;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUser;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUserRepository;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUserRequest;
+import com.example.ballkkaye.publisher.Publisher;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class ChatMessageService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomUserRepository chatRoomUserRepository;
     private final ChatSessionManager chatSessionManager;
+    private final Publisher publisher;
 
     @Transactional
     public ChatMessageResponse.DTO save(ChatMessageRequest.DTO reqDTO, User sessionUser) {
@@ -46,6 +48,7 @@ public class ChatMessageService {
                 .build();
 
         chatMessageRepository.save(message);
+        publisher.publishNewMessage(message);
 
         return new ChatMessageResponse.DTO(
                 message.getId(),

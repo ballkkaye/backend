@@ -1,6 +1,8 @@
 package com.example.ballkkaye.subscriber;
 
 import com.example.ballkkaye.fcm.FcmService;
+import com.example.ballkkaye.match.chat.message.ChatMessageResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
@@ -30,6 +32,14 @@ public class Subscriber implements MessageListener {
             case "hitter-lineup-updated" -> fcmService.sendToUserRoleUsers("오늘의 타자 라인업이 공개되었습니다!");
             case "starting-pitcher-lineup-updated" -> fcmService.sendToUserRoleUsers("오늘의 승리예측이 업데이트 되었습니다!");
             case "team-record-updated" -> fcmService.sendToUserRoleUsers("팀 기록이 업데이트되었습니다!");
+            case "chat-message-created" -> {
+                try {
+                    ChatMessageResponse.ChatPublishDTO dto = new ObjectMapper().readValue(payload, ChatMessageResponse.ChatPublishDTO.class);
+                    fcmService.sendToChatRoomUsers(dto);
+                } catch (Exception e) {
+                    log.error("chat-message-created 처리 중 오류", e);
+                }
+            }
             default -> log.warn("수신한 채널을 처리하지 못했습니다: {}", channel);
         }
     }

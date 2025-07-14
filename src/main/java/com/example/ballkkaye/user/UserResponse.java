@@ -39,10 +39,9 @@ public class UserResponse {
         private String providerType;
         private String userRole;
         private String accessToken;
-        private String refreshToken;
         private Boolean isNewUser;
 
-        public LoginDTO(User user, String accessToken, String refreshToken,Boolean isNewUser) {
+        public LoginDTO(User user, String accessToken, Boolean isNewUser) {
             this.username = user.getUsername();
             this.name = user.getName();
             this.nickname = user.getNickname();
@@ -55,7 +54,6 @@ public class UserResponse {
             this.providerType = user.getProviderType().toString();
             this.userRole = user.getUserRole().toString();
             this.accessToken = accessToken;
-            this.refreshToken = refreshToken;
             this.isNewUser = isNewUser;
         }
     }
