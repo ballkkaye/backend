@@ -53,8 +53,7 @@ public class VisitRecord {
     private Timestamp createdAt;
 
     @Builder
-    public VisitRecord(Integer id, User user, Game game, Team team, Result result, String imgUrl, String content, DeleteStatus deleteStatus, Timestamp updatedAt, Timestamp createdAt) {
-        this.id = id;
+    public VisitRecord(User user, Game game, Team team, Result result, String imgUrl, String content, DeleteStatus deleteStatus) {
         this.user = user;
         this.game = game;
         this.team = team;
@@ -62,8 +61,6 @@ public class VisitRecord {
         this.imgUrl = imgUrl;
         this.content = content;
         this.deleteStatus = deleteStatus;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
     }
 
 

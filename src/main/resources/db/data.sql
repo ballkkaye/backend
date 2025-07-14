@@ -331,15 +331,15 @@ VALUES (1, 1,
         '2025-07-13 20:05:00');
 
 -- 16. chat_room_user_tb
-INSERT INTO chat_room_user_tb (user_id, chat_room_id, is_owner, delete_status)
-VALUES (1, 1, true, 'NOT_DELETED'),
-       (1, 2, true, 'NOT_DELETED'),
-       (2, 2, false, 'NOT_DELETED'),
-       (1, 3, true, 'NOT_DELETED'),
-       (3, 3, false, 'NOT_DELETED'),
-       (1, 4, true, 'NOT_DELETED'),
-       (2, 4, false, 'NOT_DELETED'),
-       (3, 4, false, 'NOT_DELETED');
+INSERT INTO chat_room_user_tb (user_id, chat_room_id, is_owner, delete_status, created_at)
+VALUES (1, 1, true, 'NOT_DELETED', NOW()),
+       (1, 2, true, 'NOT_DELETED', NOW()),
+       (2, 2, false, 'NOT_DELETED', NOW()),
+       (1, 3, true, 'NOT_DELETED', NOW()),
+       (3, 3, false, 'NOT_DELETED', NOW()),
+       (1, 4, true, 'NOT_DELETED', NOW()),
+       (2, 4, false, 'NOT_DELETED', NOW()),
+       (3, 4, false, 'NOT_DELETED', NOW());
 
 -- 17. match_like_tb
 INSERT INTO match_like_tb (user_id, match_id)
@@ -507,6 +507,13 @@ VALUES (8, 3.43, 0.0, 46, 33, 1, 80, 0.582, 0.754, 411, 1, NOW(), '4승0무6패'
        (9, 4.56, 7.5, 36, 38, 4, 78, 0.486, 0.703, 354, 8, NOW(), '6승0무4패', '1승'),
        (2, 4.69, 13.5, 32, 46, 3, 81, 0.410, 0.683, 328, 9, NOW(), '5승0무5패', '1승'),
        (3, 5.41, 21.0, 26, 55, 3, 84, 0.321, 0.653, 313, 10, NOW(), '5승1무4패', '1패');
+
+
+-- 9. visit_record_tb
+INSERT INTO visit_record_tb (user_id, game_id, team_id, result, img_url, content, delete_status, created_at)
+VALUES (1, 418, 2, 'WIN', 'https://example.com/photo1.jpg', '응원 열심히 했고, 분위기 최고였어요!', 'NOT_DELETED', NOW()),
+       (2, 418, 4, 'LOSE', 'https://example.com/photo2.jpg', '경기 내용은 아쉬웠지만, 그래도 응원은 즐거웠어요.', 'NOT_DELETED', NOW()),
+       (3, 420, 9, 'LOSE', 'https://example.com/photo3.jpg', '경기 끝난 후 분위기는 좋았지만, 결과는 아쉬웠습니다.', 'NOT_DELETED', NOW());
 
 
 -- 날씨
