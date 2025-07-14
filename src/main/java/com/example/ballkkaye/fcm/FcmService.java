@@ -84,7 +84,7 @@ public class FcmService {
                 .toList();
 
         for (User user : receivers) {
-            sendMessage(user.getFcmToken(), dto.getSenderNickname() + "님이 메시지를 보냈습니다", dto.getMessage());
+            sendMessage(user.getFcmToken(), "Ballkkaye", "[" + dto.getSenderNickname() + "] " + dto.getMessage());
         }
     }
 
