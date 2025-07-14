@@ -3,15 +3,16 @@ package com.example.ballkkaye.match.chat.message;
 import com.example.ballkkaye._core.util.ChatSessionManager;
 import com.example.ballkkaye.common.enums.ChatConnectedType;
 import com.example.ballkkaye.common.enums.DeleteStatus;
+import com.example.ballkkaye.fcm.FcmService;
 import com.example.ballkkaye.match.chat.room.ChatRoom;
 import com.example.ballkkaye.match.chat.room.ChatRoomRepository;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUser;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUserRepository;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUserRequest;
-import com.example.ballkkaye.publisher.Publisher;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ChatMessageService {
@@ -28,7 +30,7 @@ public class ChatMessageService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomUserRepository chatRoomUserRepository;
     private final ChatSessionManager chatSessionManager;
-    private final Publisher publisher;
+    private final FcmService fcmService;
 
     @Transactional
     public ChatMessageResponse.DTO save(ChatMessageRequest.DTO reqDTO, User sessionUser) {
@@ -48,7 +50,16 @@ public class ChatMessageService {
                 .build();
 
         chatMessageRepository.save(message);
-        publisher.publishNewMessage(message);
+        // 여기서 바로 FCM 전송용 DTO 만들고 전송
+        ChatMessageResponse.ChatPublishDTO dto = new ChatMessageResponse.ChatPublishDTO(
+                chatRoomPS.getId(),
+                userPS.getId(),
+                userPS.getNickname(),
+                reqDTO.getMessage(),
+                reqDTO.getMessageType()
+        );
+
+        fcmService.sendToChatRoomUsers(dto);
 
         return new ChatMessageResponse.DTO(
                 message.getId(),
