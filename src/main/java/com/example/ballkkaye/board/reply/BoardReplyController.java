@@ -14,7 +14,7 @@ public class BoardReplyController {
     private final HttpSession session;
 
     // 댓글 작성
-    @PostMapping("/s/api/boards/{id}/reply")
+    @PostMapping("/s/api/boards/{id}/replies")
     public ResponseEntity<?> save(@PathVariable("id") Integer id,
                                   @RequestBody BoardReplyRequest.SaveDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -23,7 +23,7 @@ public class BoardReplyController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/s/api/boards/reply/{id}")
+    @DeleteMapping("/s/api/boards/replies/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = boardReplyService.delete(id, sessionUser);
@@ -31,7 +31,7 @@ public class BoardReplyController {
     }
 
     // 댓글 수정
-    @PutMapping("/s/api/boards/reply/{id}")
+    @PutMapping("/s/api/boards/replies/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody BoardReplyRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = boardReplyService.update(reqDTO, id, sessionUser);
@@ -39,10 +39,10 @@ public class BoardReplyController {
     }
 
     // 특정 게시글 댓글 조회
-    @GetMapping("/s/api/boards/{id}/reply")
-    public ResponseEntity<?> detail(@PathVariable("id") Integer id) {
+    @GetMapping("/s/api/boards/{id}/replies")
+    public ResponseEntity<?> getDetail(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        var respDTO = boardReplyService.detail(id, sessionUser);
+        var respDTO = boardReplyService.getDetail(id, sessionUser);
         return Resp.ok(respDTO);
     }
 }

@@ -48,14 +48,15 @@ public class GameRepository {
         return em.createNativeQuery(sql).setParameter(1, month).getResultList();
     }
 
-    public List<String> findAllDistinctGameDates() {
-        String sql = "SELECT DISTINCT FORMATDATETIME(game_time, 'yyyy-MM-dd') FROM game_tb";
-        return em.createNativeQuery(sql).getResultList();
-    }
-
     // 경기 단건 저장
     public Game save(Game game) {
         em.persist(game);
         return game;
     }
+
+    public List<String> findDistinctDatesByMonth() {
+        String sql = "SELECT DISTINCT FORMATDATETIME(game_time, 'yyyy-MM-dd') FROM game_tb ";
+        return em.createNativeQuery(sql).getResultList();
+    }
+
 }

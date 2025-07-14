@@ -35,20 +35,20 @@ public class BoardController {
 
     // 게시글 목록
     @GetMapping("/s/api/boards")
-    public ResponseEntity<?> getBoards(@RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
-                                       @RequestParam(required = false, value = "teamId") Integer teamId
+    public ResponseEntity<?> getList(@RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+                                     @RequestParam(required = false, value = "teamId") Integer teamId
     ) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        BoardResponse.ListDTO respDTO = boardService.getBoards(teamId, page);
+        BoardResponse.ListDTO respDTO = boardService.getList(teamId, page);
 
         return Resp.ok(respDTO);
     }
 
     // 게시글 상세보기 조회 (게시글 + 댓글)
     @GetMapping("/s/api/boards/{id}")
-    public ResponseEntity<?> getBoard(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getDetailWithReply(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        BoardResponse.DetailWithReplyDTO respDTO = boardService.getBoard(id, sessionUser);
+        BoardResponse.DetailWithReplyDTO respDTO = boardService.getDetailWithReply(id, sessionUser);
         return Resp.ok(respDTO);
     }
 
@@ -62,9 +62,9 @@ public class BoardController {
 
     // 게시글 상세보기 (게시글)
     @GetMapping("/s/api/boards/{id}/detail")
-    public ResponseEntity<?> detail(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getDetail(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        var respDTO = boardService.detail(id, sessionUser);
+        var respDTO = boardService.getDetail(id, sessionUser);
         return Resp.ok(respDTO);
     }
 }

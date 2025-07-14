@@ -19,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class WeatherUltraControllerTest extends MyRestDoc {
+public class ChatRoomControllerTest extends MyRestDoc {
+
     @Autowired
     private ObjectMapper om;
 
@@ -32,15 +33,18 @@ public class WeatherUltraControllerTest extends MyRestDoc {
         accessToken = JwtUtil.create(ssar);
     }
 
-
     @Test
-    void get_today_forecast() throws Exception {
+    void delete_test() throws Exception {
         // given
-        Integer stadiumId = 2; // 잠실야구장 등 실제 stadiumId 존재해야 함
+        Integer chatRoomId = 1;
+
+        String requestBody = om.writeValueAsString(chatRoomId);
+        System.out.println(requestBody);
 
         // when
         ResultActions actions = mvc.perform(
-                MockMvcRequestBuilders.get("/api/today/weather/{stadiumId}", stadiumId)
+                MockMvcRequestBuilders
+                        .delete("/s/api/chatrooms/{id}", chatRoomId)
                         .header("Authorization", "Bearer " + accessToken)
         );
 
@@ -51,25 +55,9 @@ public class WeatherUltraControllerTest extends MyRestDoc {
         // then
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
-
-        // 위치 정보 및 메시지 확인
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.location").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.message").exists());
-
-        // 온도/날씨 예보 sample 항목 하나 검사
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourly[0].hour").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourly[0].temperature").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourly[0].temperatureDiffFromYesterday").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourly[0].weatherCode").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourly[0].humidity").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourly[0].windDirection").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourly[0].windSpeed").exists());
-
-        // 강수량 예보 sample 항목 하나 검사
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourlyRain[0].hour").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourlyRain[0].rainPer").exists());
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.hourlyRain[0].rainAmount").exists());
-
-        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.deleteStatus").value("DELETED"));
+        
+        actions.andDo(MockMvcResultHandlers.print())
+                .andDo(document);
     }
 }

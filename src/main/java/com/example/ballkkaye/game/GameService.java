@@ -55,8 +55,10 @@ public class GameService {
 
         if (date != null && !date.isBlank() && date.length() == 7) {
             dateList = gameRepository.findDistinctDatesByMonth(date);
+        } else if (date != null && !date.isBlank() && date.length() == 4) {
+            dateList = gameRepository.findDistinctDatesByMonth(date);
         } else {
-            throw new RuntimeException("잘못된 요청입니다.");
+            dateList = gameRepository.findDistinctDatesByMonth();
         }
 
         Map<String, Map<String, Set<String>>> groupedMap = new TreeMap<>();

@@ -20,7 +20,7 @@ public class TodayHitterLineupService {
     private final TodayStartingPitcherRepository todayStartingPitcherRepository;
 
 
-    public TodayHitterLineupResponse.DTO getMatchupDetailsByGameId(Integer gameId, Integer teamId) {
+    public TodayHitterLineupResponse.DTO getDetailMatchup(Integer gameId, Integer teamId) {
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new ExceptionApi404("경기 정보가 없습니다"));
 
