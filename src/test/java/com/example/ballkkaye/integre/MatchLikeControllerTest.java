@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class BoardReplyLikeControllerTest extends MyRestDoc {
+public class MatchLikeControllerTest extends MyRestDoc {
 
     @Autowired
     private ObjectMapper om;
@@ -33,45 +34,46 @@ public class BoardReplyLikeControllerTest extends MyRestDoc {
         accessToken = JwtUtil.create(ssar);
     }
 
-    // 댓글 좋아요 등록
     @Test
-    public void save_test() throws Exception {
+    void save_test() throws Exception {
         // given
-        Integer replyId = 10;
+        Integer matchId = 4;
+
+        String requestBody = om.writeValueAsString(matchId);
+//        System.out.println(requestBody);
 
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/s/api/boards/replies/{id}/like", replyId)
+                        .post("/s/api/matches/{id}/like", matchId)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + accessToken)
         );
 
         // eye
         String responseBody = actions.andReturn().getResponse().getContentAsString();
-        System.out.println(responseBody);
+//        System.out.println(responseBody);
 
         // then
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.count").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.id").value(4))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.userId").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.boardId").value(10));
-
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.likeId").value(8));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.likeCount").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.isLiked").value(true));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
-    // 댓글 좋아요 삭제
     @Test
-    public void delete_test() throws Exception {
+    void delete_test() throws Exception {
         // given
-        Integer replyId = 1;
+        Integer likeId = 1;
 
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .delete("/s/api/boards/replies/like/{id}", replyId)
+                        .delete("/s/api/matches/like/{id}", likeId)
                         .header("Authorization", "Bearer " + accessToken)
+                        .contentType(MediaType.APPLICATION_JSON)
         );
 
         // eye
@@ -79,12 +81,9 @@ public class BoardReplyLikeControllerTest extends MyRestDoc {
         System.out.println(responseBody);
 
         // then
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.count").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.isLike").value(false))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.deleteStatus").value("삭제됨"));
-
-        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.likeCount").value(4));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.isLiked").value(false));
     }
 }

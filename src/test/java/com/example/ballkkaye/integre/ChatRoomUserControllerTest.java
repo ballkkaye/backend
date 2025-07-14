@@ -19,59 +19,57 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class BoardReplyLikeControllerTest extends MyRestDoc {
+public class ChatRoomUserControllerTest extends MyRestDoc {
 
     @Autowired
     private ObjectMapper om;
 
-    private String accessToken;
+    private String accessToken1;
+    private String accessToken2;
 
     @BeforeEach
     public void setUp() {
         // 테스트 시작 전에 실행할 코드
         User ssar = User.builder().id(1).username("ssar").userRole(UserRole.USER).build();
-        accessToken = JwtUtil.create(ssar);
+        accessToken1 = JwtUtil.create(ssar);
+        User cos = User.builder().id(2).username("cos").userRole(UserRole.USER).build();
+        accessToken2 = JwtUtil.create(cos);
     }
 
-    // 댓글 좋아요 등록
     @Test
-    public void save_test() throws Exception {
+    void save_test() throws Exception {
         // given
-        Integer replyId = 10;
+        Integer chatRoomId = 1;
 
         // when
         ResultActions actions = mvc.perform(
-                MockMvcRequestBuilders
-                        .post("/s/api/boards/replies/{id}/like", replyId)
-                        .header("Authorization", "Bearer " + accessToken)
+                MockMvcRequestBuilders.post("/s/api/chatrooms/{id}", chatRoomId)
+                        .header("Authorization", "Bearer " + accessToken2)
         );
 
         // eye
         String responseBody = actions.andReturn().getResponse().getContentAsString();
-        System.out.println(responseBody);
+//        System.out.println(responseBody);
 
         // then
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.count").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.id").value(4))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.userId").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.boardId").value(10));
-
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.chatRoomUserId").value(9));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.chatRoomId").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.userId").value(2));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
-    // 댓글 좋아요 삭제
     @Test
-    public void delete_test() throws Exception {
+    void leave_chatroom_test() throws Exception {
         // given
-        Integer replyId = 1;
+        Integer chatRoomUserId = 1;
 
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .delete("/s/api/boards/replies/like/{id}", replyId)
-                        .header("Authorization", "Bearer " + accessToken)
+                        .delete("/s/api/chatrooms/user/{id}", chatRoomUserId)
+                        .header("Authorization", "Bearer " + accessToken1)
         );
 
         // eye
@@ -79,12 +77,9 @@ public class BoardReplyLikeControllerTest extends MyRestDoc {
         System.out.println(responseBody);
 
         // then
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.count").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.isLike").value(false))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.deleteStatus").value("삭제됨"));
-
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.deleteStatus").value("삭제됨"));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }

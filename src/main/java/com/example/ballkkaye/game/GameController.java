@@ -13,7 +13,7 @@ public class GameController {
     private final GameService gameService;
 
     @GetMapping("/s/api/games")
-    public ResponseEntity<?> getGames(@RequestParam(required = false) String date) {
+    public ResponseEntity<?> getGames(@RequestParam String date) {
         var respDTO = gameService.getGames(date);
         return Resp.ok(respDTO);
     }

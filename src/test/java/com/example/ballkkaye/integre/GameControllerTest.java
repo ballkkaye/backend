@@ -128,8 +128,14 @@ public class GameControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].year").value("2025"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].month").value("07"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day").isArray())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[0].day").value("02"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[0].isHaveGame").value(true));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[0].day").value("13"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[0].isHaveGame").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[1].day").value("14"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[1].isHaveGame").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[2].day").value("15"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[2].isHaveGame").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[3].day").value("16"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].monthDTO[0].day[3].isHaveGame").value(true));
 
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }

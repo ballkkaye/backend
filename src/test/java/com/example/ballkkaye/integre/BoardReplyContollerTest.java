@@ -54,7 +54,7 @@ public class BoardReplyContollerTest extends MyRestDoc {
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/s/api/boards/{id}/reply", baordId)
+                        .post("/s/api/boards/{id}/replies", baordId)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + accessToken)
@@ -101,7 +101,7 @@ public class BoardReplyContollerTest extends MyRestDoc {
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/s/api/boards/{id}/reply", baordId)
+                        .post("/s/api/boards/{id}/replies", baordId)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + accessToken)
@@ -141,7 +141,7 @@ public class BoardReplyContollerTest extends MyRestDoc {
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .delete("/s/api/boards/reply/{id}", replyId)
+                        .delete("/s/api/boards/replies/{id}", replyId)
                         .header("Authorization", "Bearer " + accessToken)
         );
 
@@ -172,7 +172,7 @@ public class BoardReplyContollerTest extends MyRestDoc {
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .put("/s/api/boards/reply/{id}", replyId)
+                        .put("/s/api/boards/replies/{id}", replyId)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + accessToken)
@@ -193,14 +193,14 @@ public class BoardReplyContollerTest extends MyRestDoc {
 
     // 특정 게시글 댓글 조회
     @Test
-    public void detail_test() throws Exception {
+    public void get_detail_test() throws Exception {
         // given
         Integer boardId = 1;
 
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .get("/s/api/boards/{id}/reply", boardId)
+                        .get("/s/api/boards/{id}/replies", boardId)
                         .header("Authorization", "Bearer " + accessToken)
         );
 
