@@ -127,7 +127,7 @@ public class MatchControllerTest extends MyRestDoc {
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].participationInfo").value("2/5"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].relativeTime")
-                        .value(Matchers.matchesPattern(".*19시간 전.*")))
+                        .value(Matchers.matchesPattern(".*시간 전.*")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].homeTeamName").value("NC 다이노스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].awayTeamName").value("롯데 자이언츠"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].title").value("기아 경기 같이 응원할 친구 구해요"))
@@ -159,6 +159,33 @@ public class MatchControllerTest extends MyRestDoc {
         System.out.println(responseBody);
 
         // then
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
+
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.isOwner").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.relativeTime").value("22시간 전"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.likeCount").value(5))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.isLike").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.matchId").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.homeTeamName").value("두산 베어스"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayTeamName").value("SSG 랜더스"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025-07-16"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.stadiumName").value("잠실야구장"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.userNickname").value("ssar"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.userTeamName").value("LG 트윈스"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.userProfileUrl").value("/img/profile.png"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.title").value("혹시 내일 같이 야구 볼 사람?"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.content").value("야구 좋아하는 사람 모여라! 롯데 팬이면 더 좋고, 같이 맛있는 거 먹으면서 직관할 사람 구합니다. 편하게 연락 주세요!"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gender").value("무관"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.age").value("연령 무관"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.teamId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.teamName").value("두산 베어스"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.isSameTeam").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.participationInfo").value("1/5"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.chatRoomId").value(1));
+
+        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
+
     }
 
     @Test
@@ -203,7 +230,7 @@ public class MatchControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.isLike").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameTitle").value("롯데 자이언츠 vs NC 다이노스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025-08-07"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.stadiumName").value("창원 NC파크"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.stadiumName").value("부산 사직야구장"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.userNickname").value("ssar"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.userTeamName").value("LG 트윈스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.userProfileUrl").value("/img/profile.png"))

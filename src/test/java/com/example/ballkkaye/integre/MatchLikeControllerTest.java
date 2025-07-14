@@ -85,5 +85,6 @@ public class MatchLikeControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.likeCount").value(4));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.isLiked").value(false));
+        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }

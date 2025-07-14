@@ -67,7 +67,7 @@ public class VisitRecordControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.id").value(4))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.id").value(5))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.homeTeamName").value("두산"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayTeamName").value("SSG"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.homeScore").value(3))

@@ -50,7 +50,7 @@ public class StadiumControllerTest extends MyRestDoc {
         // then
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.length()").value(14));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.length()").value(13));
 
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body[0].stadiumId").value(1));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body[0].stadiumName").value("잠실야구장"));
@@ -90,9 +90,6 @@ public class StadiumControllerTest extends MyRestDoc {
 
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body[12].stadiumId").value(13));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body[12].stadiumName").value("군산 월명야구장"));
-
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body[13].stadiumId").value(14));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body[13].stadiumName").value("부산 사직야구장"));
 
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }

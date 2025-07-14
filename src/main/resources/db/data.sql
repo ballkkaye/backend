@@ -14,9 +14,6 @@ VALUES ('잠실야구장', '서울특별시 잠실동', 'OUTDOOR'),
        ('포항야구장', '경상북도 포항시', 'OUTDOOR'),
        ('군산 월명야구장', '전라북도 군산시', 'OUTDOOR');
 
-INSERT INTO stadium_tb (stadium_name, location, stadium_type)
-VALUES ('부산 사직야구장', '부산광역시 사직동', 'OUTDOOR');
-
 -- 2. stadium_correction_tb (구장 보정 계수)테이블
 INSERT INTO stadium_correction_tb (stadium_id, correction, this_year)
 VALUES (1, 0.732, 2025);
@@ -149,12 +146,12 @@ VALUES (418, TIMESTAMP '2025-07-13 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4, 50.0
        (440, TIMESTAMP '2025-08-05 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, 3, 1, NULL),
 
 -- 8월 06일 경기
-       (441, TIMESTAMP '2025-08-06 18:30:00', 1, 'MS_T', 'SCHEDULED', 4, 6, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
-       (442, TIMESTAMP '2025-08-06 18:30:00', 5, 'KN_T', 'SCHEDULED', 8, 2, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
+       (441, TIMESTAMP '2025-08-06 18:30:00', 3, 'MS_T', 'SCHEDULED', 4, 6, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
+       (442, TIMESTAMP '2025-08-06 18:30:00', 7, 'KN_T', 'SCHEDULED', 8, 2, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
 
 -- 8월 2일 경기
-       (443, TIMESTAMP '2025-08-07 18:30:00', 8, 'SS_T', 'SCHEDULED', 7, 9, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
-       (444, TIMESTAMP '2025-08-07 18:30:00', 9, 'SPO_T', 'SCHEDULED', 1, 10, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
+       (443, TIMESTAMP '2025-08-07 18:30:00', 6, 'SS_T', 'SCHEDULED', 7, 9, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
+       (444, TIMESTAMP '2025-08-07 18:30:00', 1, 'SPO_T', 'SCHEDULED', 1, 10, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
 
 -- 8월 3일 경기
        (445, TIMESTAMP '2026-08-08 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5, 50.0, 50.0, NULL, NULL, NULL, NULL, NULL),
