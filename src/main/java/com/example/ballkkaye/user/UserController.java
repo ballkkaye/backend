@@ -55,6 +55,13 @@ public class UserController {
         return Resp.ok(respDTO);
     }
 
+    // 리프레시 토큰에 의한 fcm 토큰 갱신
+    @PostMapping("/s/api/tokens/refresh")
+    public ResponseEntity<?> refreshToken(@RequestBody @Valid UserRequest.UpdateTokenDTO reqDTO) {
+        var respDTO = userService.getRefreshAccessToken(reqDTO);
+        return Resp.ok(respDTO);
+    }
+
     private final UserRepository userRepository;
 
     // fcm 토큰 갱신용 임시 컨트롤러 - 하드코딩

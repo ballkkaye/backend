@@ -1,6 +1,7 @@
 package com.example.ballkkaye.user;
 
 import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi401;
 import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.GenerateNickname;
 import com.example.ballkkaye._core.util.JwtUtil;
@@ -90,8 +91,9 @@ public class UserService {
             userRepository.save(user);
             isNewUser = true;
             String myAccessToken = JwtUtil.create(user);
+            String myRefreshToken = JwtUtil.createRefresh(user);
 
-            return new UserResponse.LoginDTO(user, myAccessToken, isNewUser);
+            return new UserResponse.LoginDTO(user, myAccessToken, myRefreshToken,isNewUser);
         }
 
         // 기존 유저라면 fcmToken 갱신
@@ -101,7 +103,8 @@ public class UserService {
 
         // 2. 로그인 처리 (토큰 발급 및 저장)
         String myAccessToken = JwtUtil.create(userPS);
-        return new UserResponse.LoginDTO(userPS, myAccessToken, isNewUser);
+        String myRefreshToken = JwtUtil.createRefresh(userPS);
+        return new UserResponse.LoginDTO(userPS, myAccessToken, myRefreshToken,isNewUser);
     }
 
     // 유저 회원 가입 후 추가 정보 입력 유저 응원팀 id + 유저 닉네임
@@ -235,4 +238,33 @@ public class UserService {
 
         return respDTO;
     }
+
+    public Object getRefreshAccessToken(UserRequest.UpdateTokenDTO reqDTO) {
+        String refreshToken = reqDTO.getRefreshToken();
+
+        // verify()에서 직접 유저를 반환하므로 별도 검증 X
+        User tokenUser;
+        try {
+            tokenUser = JwtUtil.verify(refreshToken);
+        } catch (Exception e) {
+            throw new ExceptionApi401("유효하지 않은 Refresh 토큰입니다.");
+        }
+
+        // DB에서 진짜 유저 조회 (fcmToken 저장 위해서)
+        User user = userRepository.findById(tokenUser.getId())
+                .orElseThrow(() -> new ExceptionApi401("유저를 찾을 수 없습니다."));
+
+
+        // FCM 토큰 갱신
+        if (reqDTO.getFcmToken() != null && !reqDTO.getFcmToken().isBlank()) {
+            user.updateFcmToken(reqDTO.getFcmToken());
+        }
+
+
+        // 새 Access Token 발급
+        String newAccessToken = JwtUtil.create(user);
+
+        return new UserResponse.TokenDTO(newAccessToken);
+    }
+
 }
