@@ -34,7 +34,8 @@ public class Team {
     private String ticketLink;
 
     @Builder
-    public Team(Stadium stadium1, Stadium stadium2, String teamName, String logoUrl, String ticketLink) {
+    public Team(Integer id, Stadium stadium1, Stadium stadium2, String teamName, String logoUrl, String ticketLink) {
+        this.id = id;
         this.stadium1 = stadium1;
         this.stadium2 = stadium2;
         this.teamName = teamName;

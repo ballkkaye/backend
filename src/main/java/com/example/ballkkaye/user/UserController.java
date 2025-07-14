@@ -76,6 +76,7 @@ public class UserController {
 
         // 새로운 JWT 발급
         String newAccess = JwtUtil.create(userPS);
+        System.out.println("유저 토큰 발급됨");
         return Resp.ok(newAccess);
     }
 
