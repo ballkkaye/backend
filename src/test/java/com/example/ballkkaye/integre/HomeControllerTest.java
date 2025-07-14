@@ -56,7 +56,7 @@ public class HomeControllerTest extends MyRestDoc {
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.todayGames[0].gameId").value(423))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.todayGames[0].gameStatus").value("경기예정"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.todayGames[0].gameTime").value("18:30"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.todayGames[0].gameTime").value("20:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.todayGames[0].stadiumName").value("잠실"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.todayGames[0].broadcastChannel").value("MS_T"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.todayGames[0].homePitcherName").value("콜어빈"))

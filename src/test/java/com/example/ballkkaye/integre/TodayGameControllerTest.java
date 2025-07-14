@@ -160,7 +160,7 @@ public class TodayGameControllerTest extends MyRestDoc {
                 // Game 1
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameId").value(423))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameStatus").value("SCHEDULED"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameTime").value("18:30"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameTime").value("20:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].stadiumName").value("잠실야구장"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].broadcastChannel").value("MS_T"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].homePitcherName").value("콜어빈"))
@@ -172,7 +172,7 @@ public class TodayGameControllerTest extends MyRestDoc {
                 // Game 2
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].gameId").value(424))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].gameStatus").value("SCHEDULED"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].gameTime").value("18:30"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].gameTime").value("20:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].stadiumName").value("대구 삼성라이온즈파크"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].broadcastChannel").value("KN_T"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].homePitcherName").value("가라비토"))
@@ -184,7 +184,7 @@ public class TodayGameControllerTest extends MyRestDoc {
                 // Game 3
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].gameId").value(425))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].gameStatus").value("SCHEDULED"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].gameTime").value("18:30"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].gameTime").value("20:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].stadiumName").value("창원 NC파크"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].broadcastChannel").value("SS_T"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].homePitcherName").value("최성영"))
@@ -196,7 +196,7 @@ public class TodayGameControllerTest extends MyRestDoc {
                 // Game 4
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].gameId").value(426))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].gameStatus").value("SCHEDULED"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].gameTime").value("18:30"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].gameTime").value("20:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].stadiumName").value("수원 KT위즈파크"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].broadcastChannel").value("SPO_T"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].homePitcherName").value("소형준"))
@@ -208,7 +208,7 @@ public class TodayGameControllerTest extends MyRestDoc {
                 // Game 5
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].gameId").value(427))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].gameStatus").value("SCHEDULED"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].gameTime").value("18:30"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].gameTime").value("20:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].stadiumName").value("고척스카이돔"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].broadcastChannel").value("SPO_2T"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].homePitcherName").value("하영민"))

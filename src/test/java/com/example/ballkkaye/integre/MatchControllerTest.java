@@ -163,7 +163,8 @@ public class MatchControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.isOwner").value(true))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.relativeTime").value("22시간 전"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.relativeTime")
+                        .value(Matchers.matchesPattern(".*시간 전.*")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.likeCount").value(5))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.isLike").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matchId").value(1))

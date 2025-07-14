@@ -91,3 +91,12 @@ tasks.named('bootJar') {
 jar {
     enabled = false
 }
+
+bootRun {
+    jvmArgs = ['-Duser.timezone=Asia/Seoul']
+}
+
+test {
+    useJUnitPlatform()
+    jvmArgs += ['-Duser.timezone=Asia/Seoul']
+}
