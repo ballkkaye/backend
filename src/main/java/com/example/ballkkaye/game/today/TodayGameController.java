@@ -1,9 +1,6 @@
 package com.example.ballkkaye.game.today;
 
-import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye._core.util.Resp;
-import com.example.ballkkaye.common.enums.UserRole;
-import com.example.ballkkaye.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -35,16 +32,5 @@ public class TodayGameController {
     ) {
         List<TodayGameResponse.ItemDTO> respDTO = todayGameService.getTodayGames(date);
         return Resp.ok(respDTO);
-    }
-
-    @GetMapping("/1")
-    public String get() {
-        User user = new User().builder()
-                .id(1)
-                .username("ssar123")
-                .userRole(UserRole.USER)
-                .build();
-        String ac = JwtUtil.create(user);
-        return ac;
     }
 }
