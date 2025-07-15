@@ -27,7 +27,7 @@ public class TodayGameController {
     // 날짜 기반 오늘 경기 목록 조회
     @GetMapping("/s/api/today-games")
     public ResponseEntity<?> getTodayGames(
-            @RequestParam("date")
+            @RequestParam(value = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         List<TodayGameResponse.ItemDTO> respDTO = todayGameService.getTodayGames(date);
