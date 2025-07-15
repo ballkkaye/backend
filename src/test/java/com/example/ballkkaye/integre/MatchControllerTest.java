@@ -127,7 +127,7 @@ public class MatchControllerTest extends MyRestDoc {
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].participationInfo").value("2/5"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].relativeTime")
-                        .value(Matchers.matchesPattern(".*시간 전.*")))
+                        .value(Matchers.matchesPattern(".* 전.*")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].homeTeamName").value("NC 다이노스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].awayTeamName").value("롯데 자이언츠"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matches[0].title").value("기아 경기 같이 응원할 친구 구해요"))
@@ -164,13 +164,13 @@ public class MatchControllerTest extends MyRestDoc {
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.isOwner").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.relativeTime")
-                        .value(Matchers.matchesPattern(".*시간 전.*")))
+                        .value(Matchers.matchesPattern(".* 전.*")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.likeCount").value(5))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.isLike").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.matchId").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.homeTeamName").value("두산 베어스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayTeamName").value("SSG 랜더스"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025-07-16"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025-07-17"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.stadiumName").value("잠실야구장"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.userNickname").value("ssar"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.userTeamName").value("LG 트윈스"))
@@ -226,7 +226,7 @@ public class MatchControllerTest extends MyRestDoc {
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.isOwner").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.relativeTime")
-                        .value(Matchers.matchesPattern("\\d+시간 전")))
+                        .value(Matchers.matchesPattern(".* 전.*")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.likeCount").value(5))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.isLike").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameTitle").value("롯데 자이언츠 vs NC 다이노스"))

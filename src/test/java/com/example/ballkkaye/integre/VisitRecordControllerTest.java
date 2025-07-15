@@ -72,7 +72,7 @@ public class VisitRecordControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayTeamName").value("SSG"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.homeScore").value(3))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayScore").value(5))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025.07.14"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025.07.15"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.stadiumName").value("잠실야구장"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.result").value("승"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.content").value("응원 열심히 했고, 분위기 최고였어요!"))
@@ -117,7 +117,7 @@ public class VisitRecordControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayTeamName").value("SSG"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.homeScore").value(6))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayScore").value(5))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025.07.13"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025.07.14"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.stadiumName").value("잠실야구장"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.result").value("승"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.content").value("테스트용 수정 내용입니다~~"))
@@ -131,7 +131,7 @@ public class VisitRecordControllerTest extends MyRestDoc {
     @Test
     void get_list_date_test() throws Exception {
         // given
-        String date = "2025-07-14";
+        String date = "2025-07-15";
 
         // when
         ResultActions actions = mvc.perform(
@@ -154,7 +154,7 @@ public class VisitRecordControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].awayTeamName").value("SSG"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].homeScore").value(6))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].awayScore").value(5))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameDate").value("2025.07.13"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameDate").value("2025.07.14"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].stadiumName").value("잠실야구장"));
 
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
@@ -188,7 +188,7 @@ public class VisitRecordControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].awayTeamName").value("SSG"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].homeScore").value(6))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].awayScore").value(5))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameDate").value("2025.07.13"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameDate").value("2025.07.14"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].stadiumName").value("잠실야구장"));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
@@ -217,7 +217,7 @@ public class VisitRecordControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayTeamName").value("SSG"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.homeScore").value(6))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.awayScore").value(5))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025.07.13"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameDate").value("2025.07.14"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.stadiumName").value("잠실야구장"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.result").value("승"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.content").value("응원 열심히 했고, 분위기 최고였어요!"))
