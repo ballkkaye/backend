@@ -103,8 +103,8 @@ public class MatchControllerTest extends MyRestDoc {
                 MockMvcRequestBuilders
                         .get("/s/api/matches")
                         .param("page", page.toString())
-                        .param("gender", gender.name())
-                        .param("age", age.name())
+                        .param("gender", gender.toString())
+                        .param("age", age.toString())
                         .param("teamId", teamId.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + accessToken)

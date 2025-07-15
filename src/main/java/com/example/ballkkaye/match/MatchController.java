@@ -28,8 +28,8 @@ public class MatchController {
     @GetMapping("/s/api/matches")
     public ResponseEntity<?> getMatches(
             @RequestParam(required = false, defaultValue = "0") Integer page,
-            @RequestParam(required = false) Gender gender,
-            @RequestParam(required = false) Age age,
+            @RequestParam(required = false, defaultValue = "NONE") Gender gender,
+            @RequestParam(required = false, defaultValue = "NONE") Age age,
             @RequestParam(required = false) Integer teamId) {
 
         User sessionUser = (User) session.getAttribute("sessionUser");

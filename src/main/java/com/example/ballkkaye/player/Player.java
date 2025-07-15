@@ -25,7 +25,6 @@ public class Player {
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
-
     @Builder
     public Player(Integer id, Integer kboPlayerId, String name, Team team) {
         this.id = id;
