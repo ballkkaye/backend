@@ -1,13 +1,9 @@
 package com.example.ballkkaye.game.today;
 
-import com.example.ballkkaye._core.util.TodayGameUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,44 +40,8 @@ public class TodayGameService {
     }
 
     // 날짜 기반 오늘 경기 리스트 조회
-    public List<TodayGameResponse.ItemDTO> getTodayGames(LocalDate today) {
-        if (today == null) {
-            today = LocalDate.now();
-        }
-        List<Object[]> rows = todayGameRepository.findTodayGameList(today);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        return rows.stream()
-                .map(row -> {
-                    Integer gameId = (Integer) row[0];
-                    String gameStatus = (String) row[1];
-
-                    String gameTime;
-                    Object rawGameTime = row[2];
-                    if (rawGameTime instanceof Timestamp ts) {
-                        gameTime = ts.toLocalDateTime().format(formatter);
-                    } else if (rawGameTime instanceof LocalDateTime ldt) {
-                        gameTime = ldt.format(formatter);
-                    } else {
-                        gameTime = rawGameTime.toString(); // fallback
-                    }
-
-                    String stadiumName = TodayGameUtil.simplifyStadiumName((String) row[3]);
-
-                    return new TodayGameResponse.ItemDTO(
-                            gameId,
-                            gameStatus,
-                            gameTime,
-                            stadiumName,
-                            (String) row[4], // broadcastChannel
-                            (String) row[5], // homePitcherName
-                            (String) row[6], // homePitcherImg
-                            (String) row[7], // awayPitcherName
-                            (String) row[8], // awayPitcherImg
-                            (String) row[9]  // ticketLink
-                    );
-                })
-                .toList();
+    public List<TodayGameResponse.ItemDTO> getTodayGames(LocalDate date) {
+        LocalDate selectDate = date == null ? LocalDate.now() : date;
+        return todayGameRepository.findTodayGameList(selectDate);
     }
 }
