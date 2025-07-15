@@ -40,10 +40,6 @@ include::{snippets}/{board}/save_test/http-request.adoc[]
 
 include::{snippets}/{board}/save_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{board}/save_test/curl-request.adoc[]
-
 === 2. 게시글 수정
 
 ===== Request Example
@@ -53,10 +49,6 @@ include::{snippets}/{board}/update_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{board}/update_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{board}/update_test/curl-request.adoc[]
 
 === 3. 게시글 목록 (페이지 & 팀 필터)
 
@@ -68,10 +60,6 @@ include::{snippets}/{board}/get_list_page_and_team_id_test/http-request.adoc[]
 
 include::{snippets}/{board}/get_list_page_and_team_id_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{board}/get_list_page_and_team_id_test/curl-request.adoc[]
-
 === 4. 게시글 목록
 
 ===== Request Example
@@ -81,10 +69,6 @@ include::{snippets}/{board}/get_list_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{board}/get_list_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{board}/get_list_test/curl-request.adoc[]
 
 === 5. 게시글 상세보기 (댓글 포함)
 
@@ -96,10 +80,6 @@ include::{snippets}/{board}/get_detail_with_reply_test/http-request.adoc[]
 
 include::{snippets}/{board}/get_detail_with_reply_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{board}/get_detail_with_reply_test/curl-request.adoc[]
-
 === 6. 게시글 상세보기 (댓글 제외)
 
 ===== Request Example
@@ -110,10 +90,6 @@ include::{snippets}/{board}/get_detail_test/http-request.adoc[]
 
 include::{snippets}/{board}/get_detail_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{board}/get_detail_test/curl-request.adoc[]
-
 === 7. 게시글 삭제
 
 ===== Request Example
@@ -123,10 +99,6 @@ include::{snippets}/{board}/delete_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{board}/delete_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{board}/delete_test/curl-request.adoc[]
 
 == 좋아요
 
@@ -140,10 +112,6 @@ include::{snippets}/{like}/save_test/http-request.adoc[]
 
 include::{snippets}/{like}/save_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{like}/save_test/curl-request.adoc[]
-
 === 2. 게시글 좋아요 삭제
 
 ===== Request Example
@@ -153,10 +121,6 @@ include::{snippets}/{like}/delete_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{like}/delete_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{like}/delete_test/curl-request.adoc[]
 
 == 댓글
 
@@ -170,10 +134,6 @@ include::{snippets}/{reply}/save_test/http-request.adoc[]
 
 include::{snippets}/{reply}/save_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{reply}/save_test/curl-request.adoc[]
-
 === 2. 대댓글 등록
 
 ===== Request Example
@@ -183,10 +143,6 @@ include::{snippets}/{reply}/save_child_reply_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{reply}/save_child_reply_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{reply}/save_child_reply_test/curl-request.adoc[]
 
 === 3. 댓글 삭제
 
@@ -198,10 +154,6 @@ include::{snippets}/{reply}/delete_test/http-request.adoc[]
 
 include::{snippets}/{reply}/delete_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{reply}/delete_test/curl-request.adoc[]
-
 === 4. 댓글 수정
 
 ===== Request Example
@@ -212,10 +164,6 @@ include::{snippets}/{reply}/update_test/http-request.adoc[]
 
 include::{snippets}/{reply}/update_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{reply}/update_test/curl-request.adoc[]
-
 === 5. 특정 게시글 댓글 조회
 
 ===== Request Example
@@ -225,10 +173,6 @@ include::{snippets}/{reply}/get_detail_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{reply}/get_detail_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{reply}/get_detail_test/curl-request.adoc[]
 
 == 댓글 좋아요
 
@@ -242,10 +186,6 @@ include::{snippets}/{replyLike}/save_test/http-request.adoc[]
 
 include::{snippets}/{replyLike}/save_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{replyLike}/save_test/curl-request.adoc[]
-
 === 2. 댓글 좋아요 삭제
 
 ===== Request Example
@@ -255,10 +195,6 @@ include::{snippets}/{replyLike}/delete_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{replyLike}/delete_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{replyLike}/delete_test/curl-request.adoc[]
 
 == 채팅방
 
@@ -272,10 +208,6 @@ include::{snippets}/{chatroom}/delete_test/http-request.adoc[]
 
 include::{snippets}/{chatroom}/delete_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{chatroom}/delete_test/curl-request.adoc[]
-
 == 채팅방 유저
 
 === 1. 채팅방 참여
@@ -287,10 +219,6 @@ include::{snippets}/{chatroomUser}/save_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{chatroomUser}/save_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{chatroomUser}/save_test/curl-request.adoc[]
 
 === 2. 채팅방 나가기
 
