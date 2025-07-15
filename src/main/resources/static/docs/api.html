@@ -587,7 +587,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Content-Length: 164
 Host: localhost:8080
 
@@ -616,7 +616,7 @@ Content-Length: 404
       "id" : 4,
       "imageUrl" : "https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg"
     } ],
-    "relativeTime" : "방금",
+    "relativeTime" : "지금",
     "boardId" : 12,
     "title" : "제목1",
     "teamId" : 1,
@@ -635,7 +635,7 @@ Content-Length: 404
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ' \
     -d '{
   "title" : "제목1",
   "teamId" : 1,
@@ -654,7 +654,7 @@ Content-Length: 404
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/boards/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAyLCJ1c2VybmFtZSI6InNzYXIifQ.lhgPJVm45QpL5zDeYVHG1uc8q2w3PSffWjm0Xar39QdZAHskNlaNvu9WzXwwLyfygKU1tKbWFSadXXiADbVpPw
 Content-Length: 288
 Host: localhost:8080
 
@@ -702,7 +702,7 @@ Content-Length: 440
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAyLCJ1c2VybmFtZSI6InNzYXIifQ.lhgPJVm45QpL5zDeYVHG1uc8q2w3PSffWjm0Xar39QdZAHskNlaNvu9WzXwwLyfygKU1tKbWFSadXXiADbVpPw' \
     -d '{
   "title" : "수정된 제목",
   "teamId" : 1,
@@ -721,7 +721,7 @@ Content-Length: 440
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards?page=1&amp;teamId=3 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -845,7 +845,7 @@ Content-Length: 2768
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards?page=1&amp;teamId=3' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -857,7 +857,7 @@ Content-Length: 2768
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAyLCJ1c2VybmFtZSI6InNzYXIifQ.lhgPJVm45QpL5zDeYVHG1uc8q2w3PSffWjm0Xar39QdZAHskNlaNvu9WzXwwLyfygKU1tKbWFSadXXiADbVpPw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -981,7 +981,7 @@ Content-Length: 2770
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAyLCJ1c2VybmFtZSI6InNzYXIifQ.lhgPJVm45QpL5zDeYVHG1uc8q2w3PSffWjm0Xar39QdZAHskNlaNvu9WzXwwLyfygKU1tKbWFSadXXiADbVpPw'</code></pre>
 </div>
 </div>
 </div>
@@ -993,7 +993,7 @@ Content-Length: 2770
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1131,7 +1131,7 @@ Content-Length: 3754
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -1143,7 +1143,7 @@ Content-Length: 3754
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards/1/detail HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIyLCJ1c2VybmFtZSI6InNzYXIifQ.skAZuzMQelNXYldl7bydCFnDR4ZxJj1oLJSYBMzwiuUkPbmk_Tlh7KzyKsWhxmqNLnm7-bN3Sye8sNe4_Um3FA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAyLCJ1c2VybmFtZSI6InNzYXIifQ.lhgPJVm45QpL5zDeYVHG1uc8q2w3PSffWjm0Xar39QdZAHskNlaNvu9WzXwwLyfygKU1tKbWFSadXXiADbVpPw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1189,7 +1189,7 @@ Content-Length: 765
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1/detail' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIyLCJ1c2VybmFtZSI6InNzYXIifQ.skAZuzMQelNXYldl7bydCFnDR4ZxJj1oLJSYBMzwiuUkPbmk_Tlh7KzyKsWhxmqNLnm7-bN3Sye8sNe4_Um3FA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAyLCJ1c2VybmFtZSI6InNzYXIifQ.lhgPJVm45QpL5zDeYVHG1uc8q2w3PSffWjm0Xar39QdZAHskNlaNvu9WzXwwLyfygKU1tKbWFSadXXiADbVpPw'</code></pre>
 </div>
 </div>
 </div>
@@ -1201,7 +1201,7 @@ Content-Length: 765
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/boards/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAyLCJ1c2VybmFtZSI6InNzYXIifQ.lhgPJVm45QpL5zDeYVHG1uc8q2w3PSffWjm0Xar39QdZAHskNlaNvu9WzXwwLyfygKU1tKbWFSadXXiADbVpPw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1229,7 +1229,7 @@ Content-Length: 97
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAyLCJ1c2VybmFtZSI6InNzYXIifQ.lhgPJVm45QpL5zDeYVHG1uc8q2w3PSffWjm0Xar39QdZAHskNlaNvu9WzXwwLyfygKU1tKbWFSadXXiADbVpPw'</code></pre>
 </div>
 </div>
 </div>
@@ -1247,7 +1247,7 @@ Content-Length: 97
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards/10/like HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Content-Length: 2
 Host: localhost:8080
 
@@ -1283,7 +1283,7 @@ Content-Length: 157
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/10/like' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ' \
     -d '10'</code></pre>
 </div>
 </div>
@@ -1296,7 +1296,7 @@ Content-Length: 157
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/boards/like/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1326,7 +1326,7 @@ Content-Length: 138
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/like/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -1344,7 +1344,7 @@ Content-Length: 138
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards/1/replies HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Content-Length: 96
 Host: localhost:8080
 
@@ -1368,7 +1368,7 @@ Content-Length: 449
   "status" : 200,
   "msg" : "성공",
   "body" : {
-    "relativeTime" : "방금",
+    "relativeTime" : "지금",
     "replyId" : 29,
     "boardId" : 1,
     "userId" : 1,
@@ -1393,7 +1393,7 @@ Content-Length: 449
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1/replies' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ' \
     -d '{
   "parentReplyId" : null,
   "tagReplyId" : null,
@@ -1411,7 +1411,7 @@ Content-Length: 449
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards/1/replies HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Content-Length: 93
 Host: localhost:8080
 
@@ -1435,7 +1435,7 @@ Content-Length: 448
   "status" : 200,
   "msg" : "성공",
   "body" : {
-    "relativeTime" : "방금",
+    "relativeTime" : "지금",
     "replyId" : 28,
     "boardId" : 1,
     "userId" : 1,
@@ -1460,7 +1460,7 @@ Content-Length: 448
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1/replies' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ' \
     -d '{
   "parentReplyId" : 1,
   "tagReplyId" : 4,
@@ -1477,7 +1477,7 @@ Content-Length: 448
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/boards/replies/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1505,7 +1505,7 @@ Content-Length: 97
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/replies/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -1518,7 +1518,7 @@ Content-Length: 97
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/boards/replies/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Content-Length: 79
 Host: localhost:8080
 
@@ -1566,7 +1566,7 @@ Content-Length: 457
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/replies/1' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ' \
     -d '{
   "tagReplyId" : null,
   "content" : "수정된 댓글 내용입니다."
@@ -1582,7 +1582,7 @@ Content-Length: 457
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards/1/replies HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1699,7 +1699,7 @@ Content-Length: 2843
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1/replies' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -1716,7 +1716,7 @@ Content-Length: 2843
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards/replies/10/like HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -1748,7 +1748,7 @@ Content-Length: 135
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/replies/10/like' -i -X POST \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -1760,7 +1760,7 @@ Content-Length: 135
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/boards/replies/like/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1790,7 +1790,7 @@ Content-Length: 138
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/replies/like/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -1807,7 +1807,7 @@ Content-Length: 138
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/chatrooms/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1835,7 +1835,7 @@ Content-Length: 95
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/chatrooms/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -1852,7 +1852,7 @@ Content-Length: 95
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/chatrooms/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6ImNvcyJ9.C-oxrch6k5Vo1lmhedFUlNCUNGWkxDvF24ThcKIPH9WzQuuDJZH2Uq-aUxwDSw3U1vgdUm1bsQApKhkluH4pBw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvcyJ9.Mb67T0L6nKSUz8ENDQh0juYd3Kit4XGtRnVYFbsJjpBP-ZXCEihR-2XfUDMLcobDL-Z-3TH6Ez5YWSTX0caM6w
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -1883,7 +1883,7 @@ Content-Length: 131
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/chatrooms/1' -i -X POST \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6ImNvcyJ9.C-oxrch6k5Vo1lmhedFUlNCUNGWkxDvF24ThcKIPH9WzQuuDJZH2Uq-aUxwDSw3U1vgdUm1bsQApKhkluH4pBw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvcyJ9.Mb67T0L6nKSUz8ENDQh0juYd3Kit4XGtRnVYFbsJjpBP-ZXCEihR-2XfUDMLcobDL-Z-3TH6Ez5YWSTX0caM6w'</code></pre>
 </div>
 </div>
 </div>
@@ -1895,7 +1895,7 @@ Content-Length: 131
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/chatrooms/user/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1923,7 +1923,7 @@ Content-Length: 97
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/chatrooms/user/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzIzLCJ1c2VybmFtZSI6InNzYXIifQ.GMsO5rUxKrzJgc89oQLav0ZYMiRklL67t3RH5FG6GQtvg1Wn5aCPF3biCuTQdUb07D8Q4blsE-QxIxaaqVELhw'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -1941,7 +1941,7 @@ Content-Length: 97
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/games?date=2025-07 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1959,7 +1959,7 @@ Content-Length: 9498
   "msg" : "성공",
   "body" : {
     "games" : [ {
-      "gameDate" : "2025.07.13",
+      "gameDate" : "2025.07.14",
       "items" : [ {
         "gameId" : 418,
         "homeTeamId" : 2,
@@ -1972,7 +1972,7 @@ Content-Length: 9498
         "awayTeamScore" : 5,
         "stadiumFullName" : "잠실야구장",
         "stadiumShortName" : "잠실",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.14"
       }, {
         "gameId" : 419,
         "homeTeamId" : 6,
@@ -1985,7 +1985,7 @@ Content-Length: 9498
         "awayTeamScore" : 5,
         "stadiumFullName" : "대구 삼성라이온즈파크",
         "stadiumShortName" : "대구",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.14"
       }, {
         "gameId" : 420,
         "homeTeamId" : 9,
@@ -1998,7 +1998,7 @@ Content-Length: 9498
         "awayTeamScore" : 5,
         "stadiumFullName" : "창원 NC파크",
         "stadiumShortName" : "창원",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.14"
       }, {
         "gameId" : 421,
         "homeTeamId" : 10,
@@ -2011,77 +2011,9 @@ Content-Length: 9498
         "awayTeamScore" : 5,
         "stadiumFullName" : "수원 KT위즈파크",
         "stadiumShortName" : "수원",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.14"
       }, {
         "gameId" : 422,
-        "homeTeamId" : 3,
-        "homeTeamFullName" : "키움 히어로즈",
-        "homeTeamShortName" : "키움",
-        "homeTeamScore" : 2,
-        "awayTeamId" : 5,
-        "awayTeamFullName" : "KIA 타이거즈",
-        "awayTeamShortName" : "KIA",
-        "awayTeamScore" : 0,
-        "stadiumFullName" : "고척스카이돔",
-        "stadiumShortName" : "고척",
-        "gameDate" : "2025.07.13"
-      } ]
-    }, {
-      "gameDate" : "2025.07.14",
-      "items" : [ {
-        "gameId" : 423,
-        "homeTeamId" : 2,
-        "homeTeamFullName" : "두산 베어스",
-        "homeTeamShortName" : "두산",
-        "homeTeamScore" : 3,
-        "awayTeamId" : 4,
-        "awayTeamFullName" : "SSG 랜더스",
-        "awayTeamShortName" : "SSG",
-        "awayTeamScore" : 5,
-        "stadiumFullName" : "잠실야구장",
-        "stadiumShortName" : "잠실",
-        "gameDate" : "2025.07.14"
-      }, {
-        "gameId" : 424,
-        "homeTeamId" : 6,
-        "homeTeamFullName" : "삼성 라이온즈",
-        "homeTeamShortName" : "삼성",
-        "homeTeamScore" : 3,
-        "awayTeamId" : 8,
-        "awayTeamFullName" : "한화 이글스",
-        "awayTeamShortName" : "한화",
-        "awayTeamScore" : 5,
-        "stadiumFullName" : "대구 삼성라이온즈파크",
-        "stadiumShortName" : "대구",
-        "gameDate" : "2025.07.14"
-      }, {
-        "gameId" : 425,
-        "homeTeamId" : 9,
-        "homeTeamFullName" : "NC 다이노스",
-        "homeTeamShortName" : "NC",
-        "homeTeamScore" : 3,
-        "awayTeamId" : 7,
-        "awayTeamFullName" : "롯데 자이언츠",
-        "awayTeamShortName" : "롯데",
-        "awayTeamScore" : 5,
-        "stadiumFullName" : "창원 NC파크",
-        "stadiumShortName" : "창원",
-        "gameDate" : "2025.07.14"
-      }, {
-        "gameId" : 426,
-        "homeTeamId" : 10,
-        "homeTeamFullName" : "KT 위즈",
-        "homeTeamShortName" : "KT",
-        "homeTeamScore" : 5,
-        "awayTeamId" : 1,
-        "awayTeamFullName" : "LG 트윈스",
-        "awayTeamShortName" : "LG",
-        "awayTeamScore" : 5,
-        "stadiumFullName" : "수원 KT위즈파크",
-        "stadiumShortName" : "수원",
-        "gameDate" : "2025.07.14"
-      }, {
-        "gameId" : 427,
         "homeTeamId" : 3,
         "homeTeamFullName" : "키움 히어로즈",
         "homeTeamShortName" : "키움",
@@ -2097,7 +2029,7 @@ Content-Length: 9498
     }, {
       "gameDate" : "2025.07.15",
       "items" : [ {
-        "gameId" : 428,
+        "gameId" : 423,
         "homeTeamId" : 2,
         "homeTeamFullName" : "두산 베어스",
         "homeTeamShortName" : "두산",
@@ -2110,7 +2042,7 @@ Content-Length: 9498
         "stadiumShortName" : "잠실",
         "gameDate" : "2025.07.15"
       }, {
-        "gameId" : 429,
+        "gameId" : 424,
         "homeTeamId" : 6,
         "homeTeamFullName" : "삼성 라이온즈",
         "homeTeamShortName" : "삼성",
@@ -2123,7 +2055,7 @@ Content-Length: 9498
         "stadiumShortName" : "대구",
         "gameDate" : "2025.07.15"
       }, {
-        "gameId" : 430,
+        "gameId" : 425,
         "homeTeamId" : 9,
         "homeTeamFullName" : "NC 다이노스",
         "homeTeamShortName" : "NC",
@@ -2136,7 +2068,7 @@ Content-Length: 9498
         "stadiumShortName" : "창원",
         "gameDate" : "2025.07.15"
       }, {
-        "gameId" : 431,
+        "gameId" : 426,
         "homeTeamId" : 10,
         "homeTeamFullName" : "KT 위즈",
         "homeTeamShortName" : "KT",
@@ -2149,7 +2081,7 @@ Content-Length: 9498
         "stadiumShortName" : "수원",
         "gameDate" : "2025.07.15"
       }, {
-        "gameId" : 432,
+        "gameId" : 427,
         "homeTeamId" : 3,
         "homeTeamFullName" : "키움 히어로즈",
         "homeTeamShortName" : "키움",
@@ -2165,7 +2097,7 @@ Content-Length: 9498
     }, {
       "gameDate" : "2025.07.16",
       "items" : [ {
-        "gameId" : 433,
+        "gameId" : 428,
         "homeTeamId" : 2,
         "homeTeamFullName" : "두산 베어스",
         "homeTeamShortName" : "두산",
@@ -2178,6 +2110,74 @@ Content-Length: 9498
         "stadiumShortName" : "잠실",
         "gameDate" : "2025.07.16"
       }, {
+        "gameId" : 429,
+        "homeTeamId" : 6,
+        "homeTeamFullName" : "삼성 라이온즈",
+        "homeTeamShortName" : "삼성",
+        "homeTeamScore" : 3,
+        "awayTeamId" : 8,
+        "awayTeamFullName" : "한화 이글스",
+        "awayTeamShortName" : "한화",
+        "awayTeamScore" : 5,
+        "stadiumFullName" : "대구 삼성라이온즈파크",
+        "stadiumShortName" : "대구",
+        "gameDate" : "2025.07.16"
+      }, {
+        "gameId" : 430,
+        "homeTeamId" : 9,
+        "homeTeamFullName" : "NC 다이노스",
+        "homeTeamShortName" : "NC",
+        "homeTeamScore" : 3,
+        "awayTeamId" : 7,
+        "awayTeamFullName" : "롯데 자이언츠",
+        "awayTeamShortName" : "롯데",
+        "awayTeamScore" : 5,
+        "stadiumFullName" : "창원 NC파크",
+        "stadiumShortName" : "창원",
+        "gameDate" : "2025.07.16"
+      }, {
+        "gameId" : 431,
+        "homeTeamId" : 10,
+        "homeTeamFullName" : "KT 위즈",
+        "homeTeamShortName" : "KT",
+        "homeTeamScore" : 5,
+        "awayTeamId" : 1,
+        "awayTeamFullName" : "LG 트윈스",
+        "awayTeamShortName" : "LG",
+        "awayTeamScore" : 5,
+        "stadiumFullName" : "수원 KT위즈파크",
+        "stadiumShortName" : "수원",
+        "gameDate" : "2025.07.16"
+      }, {
+        "gameId" : 432,
+        "homeTeamId" : 3,
+        "homeTeamFullName" : "키움 히어로즈",
+        "homeTeamShortName" : "키움",
+        "homeTeamScore" : 2,
+        "awayTeamId" : 5,
+        "awayTeamFullName" : "KIA 타이거즈",
+        "awayTeamShortName" : "KIA",
+        "awayTeamScore" : 0,
+        "stadiumFullName" : "고척스카이돔",
+        "stadiumShortName" : "고척",
+        "gameDate" : "2025.07.16"
+      } ]
+    }, {
+      "gameDate" : "2025.07.17",
+      "items" : [ {
+        "gameId" : 433,
+        "homeTeamId" : 2,
+        "homeTeamFullName" : "두산 베어스",
+        "homeTeamShortName" : "두산",
+        "homeTeamScore" : 3,
+        "awayTeamId" : 4,
+        "awayTeamFullName" : "SSG 랜더스",
+        "awayTeamShortName" : "SSG",
+        "awayTeamScore" : 5,
+        "stadiumFullName" : "잠실야구장",
+        "stadiumShortName" : "잠실",
+        "gameDate" : "2025.07.17"
+      }, {
         "gameId" : 434,
         "homeTeamId" : 6,
         "homeTeamFullName" : "삼성 라이온즈",
@@ -2189,7 +2189,7 @@ Content-Length: 9498
         "awayTeamScore" : 3,
         "stadiumFullName" : "대구 삼성라이온즈파크",
         "stadiumShortName" : "대구",
-        "gameDate" : "2025.07.16"
+        "gameDate" : "2025.07.17"
       }, {
         "gameId" : 435,
         "homeTeamId" : 9,
@@ -2202,7 +2202,7 @@ Content-Length: 9498
         "awayTeamScore" : 4,
         "stadiumFullName" : "창원 NC파크",
         "stadiumShortName" : "창원",
-        "gameDate" : "2025.07.16"
+        "gameDate" : "2025.07.17"
       }, {
         "gameId" : 436,
         "homeTeamId" : 10,
@@ -2215,7 +2215,7 @@ Content-Length: 9498
         "awayTeamScore" : 7,
         "stadiumFullName" : "수원 KT위즈파크",
         "stadiumShortName" : "수원",
-        "gameDate" : "2025.07.16"
+        "gameDate" : "2025.07.17"
       }, {
         "gameId" : 437,
         "homeTeamId" : 3,
@@ -2228,7 +2228,7 @@ Content-Length: 9498
         "awayTeamScore" : 2,
         "stadiumFullName" : "고척스카이돔",
         "stadiumShortName" : "고척",
-        "gameDate" : "2025.07.16"
+        "gameDate" : "2025.07.17"
       } ]
     } ],
     "selectedDate" : "2025-07"
@@ -2243,7 +2243,7 @@ Content-Length: 9498
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/games?date=2025-07' -i -X GET \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -2254,9 +2254,9 @@ Content-Length: 9498
 <h5 id="_request_example_21">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/games?date=2025-07-13 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/games?date=2025-07-15 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2274,35 +2274,35 @@ Content-Length: 2463
   "msg" : "성공",
   "body" : {
     "games" : [ {
-      "gameDate" : "2025.07.13",
+      "gameDate" : "2025.07.15",
       "items" : [ {
-        "gameId" : 418,
+        "gameId" : 423,
         "homeTeamId" : 2,
         "homeTeamFullName" : "두산 베어스",
         "homeTeamShortName" : "두산",
-        "homeTeamScore" : 6,
+        "homeTeamScore" : 3,
         "awayTeamId" : 4,
         "awayTeamFullName" : "SSG 랜더스",
         "awayTeamShortName" : "SSG",
         "awayTeamScore" : 5,
         "stadiumFullName" : "잠실야구장",
         "stadiumShortName" : "잠실",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.15"
       }, {
-        "gameId" : 419,
+        "gameId" : 424,
         "homeTeamId" : 6,
         "homeTeamFullName" : "삼성 라이온즈",
         "homeTeamShortName" : "삼성",
-        "homeTeamScore" : 5,
+        "homeTeamScore" : 3,
         "awayTeamId" : 8,
         "awayTeamFullName" : "한화 이글스",
         "awayTeamShortName" : "한화",
         "awayTeamScore" : 5,
         "stadiumFullName" : "대구 삼성라이온즈파크",
         "stadiumShortName" : "대구",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.15"
       }, {
-        "gameId" : 420,
+        "gameId" : 425,
         "homeTeamId" : 9,
         "homeTeamFullName" : "NC 다이노스",
         "homeTeamShortName" : "NC",
@@ -2313,9 +2313,9 @@ Content-Length: 2463
         "awayTeamScore" : 5,
         "stadiumFullName" : "창원 NC파크",
         "stadiumShortName" : "창원",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.15"
       }, {
-        "gameId" : 421,
+        "gameId" : 426,
         "homeTeamId" : 10,
         "homeTeamFullName" : "KT 위즈",
         "homeTeamShortName" : "KT",
@@ -2326,9 +2326,9 @@ Content-Length: 2463
         "awayTeamScore" : 5,
         "stadiumFullName" : "수원 KT위즈파크",
         "stadiumShortName" : "수원",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.15"
       }, {
-        "gameId" : 422,
+        "gameId" : 427,
         "homeTeamId" : 3,
         "homeTeamFullName" : "키움 히어로즈",
         "homeTeamShortName" : "키움",
@@ -2339,10 +2339,10 @@ Content-Length: 2463
         "awayTeamScore" : 0,
         "stadiumFullName" : "고척스카이돔",
         "stadiumShortName" : "고척",
-        "gameDate" : "2025.07.13"
+        "gameDate" : "2025.07.15"
       } ]
     } ],
-    "selectedDate" : "2025-07-13"
+    "selectedDate" : "2025-07-15"
   }
 }</code></pre>
 </div>
@@ -2352,9 +2352,9 @@ Content-Length: 2463
 <h5 id="_curl_21">Curl</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/games?date=2025-07-13' -i -X GET \
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/games?date=2025-07-15' -i -X GET \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -2367,7 +2367,7 @@ Content-Length: 2463
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/games/dates?date=2025-07 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2388,9 +2388,6 @@ Content-Length: 417
     "monthDTO" : [ {
       "month" : "07",
       "day" : [ {
-        "day" : "13",
-        "isHaveGame" : true
-      }, {
         "day" : "14",
         "isHaveGame" : true
       }, {
@@ -2398,6 +2395,9 @@ Content-Length: 417
         "isHaveGame" : true
       }, {
         "day" : "16",
+        "isHaveGame" : true
+      }, {
+        "day" : "17",
         "isHaveGame" : true
       } ]
     } ]
@@ -2412,7 +2412,7 @@ Content-Length: 417
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/games/dates?date=2025-07' -i -X GET \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -2448,7 +2448,7 @@ Content-Length: 8025
     "todayGames" : [ {
       "gameId" : 423,
       "gameStatus" : "경기예정",
-      "gameTime" : "20:30",
+      "gameTime" : "18:30",
       "stadiumName" : "잠실",
       "broadcastChannel" : "MS_T",
       "homePitcherName" : "콜어빈",
@@ -2459,7 +2459,7 @@ Content-Length: 8025
     }, {
       "gameId" : 424,
       "gameStatus" : "경기예정",
-      "gameTime" : "20:30",
+      "gameTime" : "18:30",
       "stadiumName" : "대구",
       "broadcastChannel" : "KN_T",
       "homePitcherName" : "가라비토",
@@ -2470,7 +2470,7 @@ Content-Length: 8025
     }, {
       "gameId" : 425,
       "gameStatus" : "경기예정",
-      "gameTime" : "20:30",
+      "gameTime" : "18:30",
       "stadiumName" : "창원",
       "broadcastChannel" : "SS_T",
       "homePitcherName" : "최성영",
@@ -2481,7 +2481,7 @@ Content-Length: 8025
     }, {
       "gameId" : 426,
       "gameStatus" : "경기예정",
-      "gameTime" : "20:30",
+      "gameTime" : "18:30",
       "stadiumName" : "수원",
       "broadcastChannel" : "SPO_T",
       "homePitcherName" : "소형준",
@@ -2492,7 +2492,7 @@ Content-Length: 8025
     }, {
       "gameId" : 427,
       "gameStatus" : "경기예정",
-      "gameTime" : "20:30",
+      "gameTime" : "18:30",
       "stadiumName" : "고척",
       "broadcastChannel" : "SPO_2T",
       "homePitcherName" : "하영민",
@@ -2675,7 +2675,7 @@ Content-Length: 8025
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/matches HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Content-Length: 253
 Host: localhost:8080
 
@@ -2716,7 +2716,7 @@ Content-Length: 818
       "preferredGender" : "여성",
       "preferredAge" : "20~30대",
       "isSameTeam" : false,
-      "createdAt" : "2025-07-14 18:52"
+      "createdAt" : "2025-07-15 09:48"
     },
     "match" : {
       "id" : 6,
@@ -2725,7 +2725,7 @@ Content-Length: 818
       "chatRoomId" : 6,
       "title" : "같이 직관 가실 분!",
       "content" : "3루에서 보실 분 구해요~",
-      "createdAt" : "2025-07-14 18:52"
+      "createdAt" : "2025-07-15 09:48"
     }
   }
 }</code></pre>
@@ -2738,7 +2738,7 @@ Content-Length: 818
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/matches' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ' \
     -d '{
   "gameId" : 443,
   "teamId" : 7,
@@ -2761,7 +2761,7 @@ Content-Length: 818
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/matches?page=0&amp;gender=FEMALE&amp;age=FROM_20_TO_30&amp;teamId=7 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2772,7 +2772,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 639
+Content-Length: 635
 
 {
   "status" : 200,
@@ -2784,7 +2784,7 @@ Content-Length: 639
     "selectedTimeName" : "롯데 자이언츠",
     "matches" : [ {
       "participationInfo" : "2/5",
-      "relativeTime" : "23시간 전",
+      "relativeTime" : "2일 전",
       "homeTeamName" : "NC 다이노스",
       "awayTeamName" : "롯데 자이언츠",
       "title" : "기아 경기 같이 응원할 친구 구해요",
@@ -2806,7 +2806,7 @@ Content-Length: 639
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/matches?page=0&amp;gender=FEMALE&amp;age=FROM_20_TO_30&amp;teamId=7' -i -X GET \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -2818,7 +2818,7 @@ Content-Length: 639
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/matches/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2829,20 +2829,20 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 887
+Content-Length: 883
 
 {
   "status" : 200,
   "msg" : "성공",
   "body" : {
     "isOwner" : true,
-    "relativeTime" : "23시간 전",
+    "relativeTime" : "2일 전",
     "likeCount" : 5,
     "isLike" : true,
     "matchId" : 1,
     "homeTeamName" : "두산 베어스",
     "awayTeamName" : "SSG 랜더스",
-    "gameDate" : "2025-07-16",
+    "gameDate" : "2025-07-17",
     "stadiumName" : "잠실야구장",
     "userNickname" : "ssar",
     "userTeamName" : "LG 트윈스",
@@ -2866,7 +2866,7 @@ Content-Length: 887
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/matches/1' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -2879,7 +2879,7 @@ Content-Length: 887
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/matches/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Content-Length: 231
 Host: localhost:8080
 
@@ -2902,14 +2902,14 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 629
+Content-Length: 625
 
 {
   "status" : 200,
   "msg" : "성공",
   "body" : {
     "isOwner" : true,
-    "relativeTime" : "23시간 전",
+    "relativeTime" : "2일 전",
     "likeCount" : 5,
     "isLike" : true,
     "gameTitle" : "롯데 자이언츠 vs NC 다이노스",
@@ -2936,7 +2936,7 @@ Content-Length: 629
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/matches/1' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ' \
     -d '{
   "title" : "제목 수정함",
   "content" : "내용도 수정함",
@@ -2958,7 +2958,7 @@ Content-Length: 629
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/matches/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2986,7 +2986,7 @@ Content-Length: 95
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/matches/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -3004,7 +3004,7 @@ Content-Length: 95
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/matches/4/like HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3035,7 +3035,7 @@ Content-Length: 126
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/matches/4/like' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -3048,7 +3048,7 @@ Content-Length: 126
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/matches/like/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3078,7 +3078,7 @@ Content-Length: 108
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/matches/like/1' -i -X DELETE \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -3250,7 +3250,7 @@ Content-Length: 694
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/today-games/prediction HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3406,7 +3406,7 @@ Content-Length: 4971
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/today-games/prediction' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -3417,8 +3417,8 @@ Content-Length: 4971
 <h5 id="_request_example_34">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/today-games?date=2025-07-14 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/today-games?date=2025-07-15 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3437,7 +3437,7 @@ Content-Length: 2225
   "body" : [ {
     "gameId" : 423,
     "gameStatus" : "SCHEDULED",
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "stadiumName" : "잠실야구장",
     "broadcastChannel" : "MS_T",
     "homePitcherName" : "콜어빈",
@@ -3448,7 +3448,7 @@ Content-Length: 2225
   }, {
     "gameId" : 424,
     "gameStatus" : "SCHEDULED",
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "stadiumName" : "대구 삼성라이온즈파크",
     "broadcastChannel" : "KN_T",
     "homePitcherName" : "가라비토",
@@ -3459,7 +3459,7 @@ Content-Length: 2225
   }, {
     "gameId" : 425,
     "gameStatus" : "SCHEDULED",
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "stadiumName" : "창원 NC파크",
     "broadcastChannel" : "SS_T",
     "homePitcherName" : "최성영",
@@ -3470,7 +3470,7 @@ Content-Length: 2225
   }, {
     "gameId" : 426,
     "gameStatus" : "SCHEDULED",
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "stadiumName" : "수원 KT위즈파크",
     "broadcastChannel" : "SPO_T",
     "homePitcherName" : "소형준",
@@ -3481,7 +3481,7 @@ Content-Length: 2225
   }, {
     "gameId" : 427,
     "gameStatus" : "SCHEDULED",
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "stadiumName" : "고척스카이돔",
     "broadcastChannel" : "SPO_2T",
     "homePitcherName" : "하영민",
@@ -3498,8 +3498,8 @@ Content-Length: 2225
 <h5 id="_curl_34">Curl</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/today-games?date=2025-07-14' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/today-games?date=2025-07-15' -i -X GET \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -3630,9 +3630,9 @@ Content-Length: 2395
     "name" : "콜어빈",
     "gameCount" : 14,
     "result" : "5승 7패",
-    "qs" : 8,
     "era" : 4.86,
-    "whip" : 1.38
+    "whip" : 1.38,
+    "qs" : 8
   }
 }</code></pre>
 </div>
@@ -3667,7 +3667,7 @@ Content-Length: 2395
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/today/team-records HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3803,7 +3803,7 @@ Content-Length: 2622
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/today/team-records' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIifQ.FsFKfNu8QeAPwEYN8viWg1ISMCL3IzUV8raU9lmTaMSEi3h0TI5UtuQH-1kSYa35kbpPTVded7N5N48yb30WRQ'</code></pre>
 </div>
 </div>
 </div>
@@ -3821,7 +3821,7 @@ Content-Length: 2622
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/user/addtion-info HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvczEyMyJ9.n0eq2koGcqk0g_OKMhMhantcJjnwtCw4Zw0Q_bKI8UB39O-gk2R3fvf68fx9wS2XcEgz0q2FiFXlPSb31MkXxg
 Content-Length: 49
 Host: localhost:8080
 
@@ -3867,7 +3867,7 @@ Content-Length: 432
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/user/addtion-info' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvczEyMyJ9.n0eq2koGcqk0g_OKMhMhantcJjnwtCw4Zw0Q_bKI8UB39O-gk2R3fvf68fx9wS2XcEgz0q2FiFXlPSb31MkXxg' \
     -d '{
   "nickname" : "테스터",
   "teamId" : 3
@@ -3883,7 +3883,7 @@ Content-Length: 432
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/users/check-nickname-available/ssar HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvczEyMyJ9.n0eq2koGcqk0g_OKMhMhantcJjnwtCw4Zw0Q_bKI8UB39O-gk2R3fvf68fx9wS2XcEgz0q2FiFXlPSb31MkXxg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3911,7 +3911,7 @@ Content-Length: 88
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/users/check-nickname-available/ssar' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvczEyMyJ9.n0eq2koGcqk0g_OKMhMhantcJjnwtCw4Zw0Q_bKI8UB39O-gk2R3fvf68fx9wS2XcEgz0q2FiFXlPSb31MkXxg'</code></pre>
 </div>
 </div>
 </div>
@@ -3923,7 +3923,7 @@ Content-Length: 88
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/users/check-nickname-available/test HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvczEyMyJ9.n0eq2koGcqk0g_OKMhMhantcJjnwtCw4Zw0Q_bKI8UB39O-gk2R3fvf68fx9wS2XcEgz0q2FiFXlPSb31MkXxg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3951,7 +3951,7 @@ Content-Length: 87
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/users/check-nickname-available/test' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvczEyMyJ9.n0eq2koGcqk0g_OKMhMhantcJjnwtCw4Zw0Q_bKI8UB39O-gk2R3fvf68fx9wS2XcEgz0q2FiFXlPSb31MkXxg'</code></pre>
 </div>
 </div>
 </div>
@@ -3964,7 +3964,7 @@ Content-Length: 87
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/users HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIxMjMifQ.7Mpeg0qwP-dGNUq4PHkePtcyR0lPRbsr6f_rtW2Ntpbjlr-cVNLMkoS3yxROYiwJkV-bQJnu4AWDZquXBjX_fg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIxMjMifQ.FLpDvpUpTaF51mrVNXc4OoknI3nsKE4UE_zJVdrdMR2b4jGToXXAmrW_Ubpn7g4V3sb5T_ht0H3oWVQEMIOxsg
 Content-Length: 151
 Host: localhost:8080
 
@@ -4011,7 +4011,7 @@ Content-Length: 490
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/users' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIxMjMifQ.7Mpeg0qwP-dGNUq4PHkePtcyR0lPRbsr6f_rtW2Ntpbjlr-cVNLMkoS3yxROYiwJkV-bQJnu4AWDZquXBjX_fg' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIxMjMifQ.FLpDvpUpTaF51mrVNXc4OoknI3nsKE4UE_zJVdrdMR2b4jGToXXAmrW_Ubpn7g4V3sb5T_ht0H3oWVQEMIOxsg' \
     -d '{
   "nickname" : "업데이트닉네임12",
   "teamId" : 2,
@@ -4029,7 +4029,7 @@ Content-Length: 490
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/users/tier HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvczEyMyJ9.n0eq2koGcqk0g_OKMhMhantcJjnwtCw4Zw0Q_bKI8UB39O-gk2R3fvf68fx9wS2XcEgz0q2FiFXlPSb31MkXxg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4061,7 +4061,7 @@ Content-Length: 151
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/users/tier' -i -X GET \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6ImNvczEyMyJ9.n0eq2koGcqk0g_OKMhMhantcJjnwtCw4Zw0Q_bKI8UB39O-gk2R3fvf68fx9wS2XcEgz0q2FiFXlPSb31MkXxg'</code></pre>
 </div>
 </div>
 </div>
@@ -4078,7 +4078,7 @@ Content-Length: 151
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/predictions/today HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.k76PmSKyArK2wiW1D3qq2iBAG4jaIo1oR7We-08IrenjulPCUuz_j3wVkhiXWXTUsABMTKxSDgq1oTXWnb7OeA
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4096,7 +4096,7 @@ Content-Length: 1941
   "msg" : "성공",
   "body" : [ {
     "gameId" : 423,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 2,
       "teamName" : "두산 베어스",
@@ -4111,7 +4111,7 @@ Content-Length: 1941
     "awayVoteRate" : 0
   }, {
     "gameId" : 424,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 6,
       "teamName" : "삼성 라이온즈",
@@ -4126,7 +4126,7 @@ Content-Length: 1941
     "awayVoteRate" : 0
   }, {
     "gameId" : 425,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 9,
       "teamName" : "NC 다이노스",
@@ -4141,7 +4141,7 @@ Content-Length: 1941
     "awayVoteRate" : 0
   }, {
     "gameId" : 426,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 10,
       "teamName" : "KT 위즈",
@@ -4156,7 +4156,7 @@ Content-Length: 1941
     "awayVoteRate" : 0
   }, {
     "gameId" : 427,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 3,
       "teamName" : "키움 히어로즈",
@@ -4179,7 +4179,7 @@ Content-Length: 1941
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/predictions/today' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.k76PmSKyArK2wiW1D3qq2iBAG4jaIo1oR7We-08IrenjulPCUuz_j3wVkhiXWXTUsABMTKxSDgq1oTXWnb7OeA'</code></pre>
 </div>
 </div>
 </div>
@@ -4190,8 +4190,8 @@ Content-Length: 1941
 <h5 id="_request_example_43">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/predictions?date=2025-07-14 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIxMjMifQ.7Mpeg0qwP-dGNUq4PHkePtcyR0lPRbsr6f_rtW2Ntpbjlr-cVNLMkoS3yxROYiwJkV-bQJnu4AWDZquXBjX_fg
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/predictions?date=2025-07-15 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIxMjMifQ.FLpDvpUpTaF51mrVNXc4OoknI3nsKE4UE_zJVdrdMR2b4jGToXXAmrW_Ubpn7g4V3sb5T_ht0H3oWVQEMIOxsg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4209,7 +4209,7 @@ Content-Length: 2657
   "msg" : "성공",
   "body" : [ {
     "gameId" : 423,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 2,
       "teamName" : "두산 베어스",
@@ -4229,7 +4229,7 @@ Content-Length: 2657
     "gameStatus" : "SCHEDULED"
   }, {
     "gameId" : 424,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 6,
       "teamName" : "삼성 라이온즈",
@@ -4249,7 +4249,7 @@ Content-Length: 2657
     "gameStatus" : "SCHEDULED"
   }, {
     "gameId" : 425,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 9,
       "teamName" : "NC 다이노스",
@@ -4269,7 +4269,7 @@ Content-Length: 2657
     "gameStatus" : "SCHEDULED"
   }, {
     "gameId" : 426,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 10,
       "teamName" : "KT 위즈",
@@ -4289,7 +4289,7 @@ Content-Length: 2657
     "gameStatus" : "SCHEDULED"
   }, {
     "gameId" : 427,
-    "gameTime" : "20:30",
+    "gameTime" : "18:30",
     "homeTeam" : {
       "teamId" : 3,
       "teamName" : "키움 히어로즈",
@@ -4316,8 +4316,8 @@ Content-Length: 2657
 <h5 id="_curl_43">Curl</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/predictions?date=2025-07-14' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIxMjMifQ.7Mpeg0qwP-dGNUq4PHkePtcyR0lPRbsr6f_rtW2Ntpbjlr-cVNLMkoS3yxROYiwJkV-bQJnu4AWDZquXBjX_fg'</code></pre>
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/predictions?date=2025-07-15' -i -X GET \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTAzLCJ1c2VybmFtZSI6InNzYXIxMjMifQ.FLpDvpUpTaF51mrVNXc4OoknI3nsKE4UE_zJVdrdMR2b4jGToXXAmrW_Ubpn7g4V3sb5T_ht0H3oWVQEMIOxsg'</code></pre>
 </div>
 </div>
 </div>
@@ -4330,7 +4330,7 @@ Content-Length: 2657
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/predictions HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.k76PmSKyArK2wiW1D3qq2iBAG4jaIo1oR7We-08IrenjulPCUuz_j3wVkhiXWXTUsABMTKxSDgq1oTXWnb7OeA
 Content-Length: 258
 Host: localhost:8080
 
@@ -4390,7 +4390,7 @@ Content-Length: 345
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/predictions' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.olNgmhxUj-iM9ohGuO83KqT7zmuQ_VON3fcHcjMnzMF4G1CMmMC2PoUlDCfYE7QRjdF-OoYrD3rUcCIkaTG3Eg' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6ImNvczEyMyJ9.k76PmSKyArK2wiW1D3qq2iBAG4jaIo1oR7We-08IrenjulPCUuz_j3wVkhiXWXTUsABMTKxSDgq1oTXWnb7OeA' \
     -d '[ {
   "gameId" : 433,
   "userChoiceTeamId" : 2
@@ -4424,7 +4424,7 @@ Content-Length: 345
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/visit-records HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ
 Content-Length: 183
 Host: localhost:8080
 
@@ -4455,7 +4455,7 @@ Content-Length: 436
     "awayTeamName" : "SSG",
     "homeScore" : 3,
     "awayScore" : 5,
-    "gameDate" : "2025.07.14",
+    "gameDate" : "2025.07.15",
     "stadiumName" : "잠실야구장",
     "result" : "승",
     "content" : "응원 열심히 했고, 분위기 최고였어요!",
@@ -4472,7 +4472,7 @@ Content-Length: 436
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/visit-records' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ' \
     -d '{
   "gameId" : 423,
   "teamId" : 3,
@@ -4492,7 +4492,7 @@ Content-Length: 436
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/visit-records/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ
 Content-Length: 132
 Host: localhost:8080
 
@@ -4521,7 +4521,7 @@ Content-Length: 421
     "awayTeamName" : "SSG",
     "homeScore" : 6,
     "awayScore" : 5,
-    "gameDate" : "2025.07.13",
+    "gameDate" : "2025.07.14",
     "stadiumName" : "잠실야구장",
     "result" : "승",
     "content" : "테스트용 수정 내용입니다~~",
@@ -4538,7 +4538,7 @@ Content-Length: 421
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/visit-records/1' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA' \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ' \
     -d '{
   "result" : "WIN",
   "content" : "테스트용 수정 내용입니다~~",
@@ -4554,8 +4554,8 @@ Content-Length: 421
 <h5 id="_request_example_47">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/visit-records?date=2025-07-14 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/visit-records?date=2025-07-15 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4577,7 +4577,7 @@ Content-Length: 258
     "awayTeamName" : "SSG",
     "homeScore" : 6,
     "awayScore" : 5,
-    "gameDate" : "2025.07.13",
+    "gameDate" : "2025.07.14",
     "stadiumName" : "잠실야구장"
   } ]
 }</code></pre>
@@ -4588,8 +4588,8 @@ Content-Length: 258
 <h5 id="_curl_47">Curl</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/visit-records?date=2025-07-14' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/visit-records?date=2025-07-15' -i -X GET \
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ'</code></pre>
 </div>
 </div>
 </div>
@@ -4601,7 +4601,7 @@ Content-Length: 258
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/visit-records?year=2025&amp;month=7 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4623,7 +4623,7 @@ Content-Length: 258
     "awayTeamName" : "SSG",
     "homeScore" : 6,
     "awayScore" : 5,
-    "gameDate" : "2025.07.13",
+    "gameDate" : "2025.07.14",
     "stadiumName" : "잠실야구장"
   } ]
 }</code></pre>
@@ -4635,7 +4635,7 @@ Content-Length: 258
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/visit-records?year=2025&amp;month=7' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ'</code></pre>
 </div>
 </div>
 </div>
@@ -4647,7 +4647,7 @@ Content-Length: 258
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/visit-records/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4669,7 +4669,7 @@ Content-Length: 399
     "awayTeamName" : "SSG",
     "homeScore" : 6,
     "awayScore" : 5,
-    "gameDate" : "2025.07.13",
+    "gameDate" : "2025.07.14",
     "stadiumName" : "잠실야구장",
     "result" : "승",
     "content" : "응원 열심히 했고, 분위기 최고였어요!",
@@ -4684,7 +4684,7 @@ Content-Length: 399
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/visit-records/1' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ'</code></pre>
 </div>
 </div>
 </div>
@@ -4696,7 +4696,7 @@ Content-Length: 399
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/visit-records/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4724,7 +4724,7 @@ Content-Length: 97
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/visit-records/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ'</code></pre>
 </div>
 </div>
 </div>
@@ -4741,7 +4741,7 @@ Content-Length: 97
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/today/weather/2 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4988,7 +4988,7 @@ Content-Length: 5969
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/today/weather/2' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNDkwMzI0LCJ1c2VybmFtZSI6InNzYXIifQ.HdnQkETXHop4DAI-nma6ija0pPxGh0p4ULlcftv2RoB3Rhavs9sjfbnPQok1MC9Vab-iQvFu5AMw_Syj_UpASA'</code></pre>
+    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTQ0MTA0LCJ1c2VybmFtZSI6InNzYXIifQ.XPWtjxQtWTdy1gVMOpQIDARfyJG7iemJqNlow57mY4wkMELsAYNVkhjVYuLpAT60QLLqXtpMvQJSm5dZkLf2TQ'</code></pre>
 </div>
 </div>
 </div>
@@ -4999,7 +4999,7 @@ Content-Length: 5969
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-07-14 18:36:19 +0900
+Last updated 2025-07-14 19:10:01 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
