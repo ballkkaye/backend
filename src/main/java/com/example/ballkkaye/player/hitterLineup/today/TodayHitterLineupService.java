@@ -8,10 +8,12 @@ import com.example.ballkkaye.player.startingPitcher.today.TodayStartingPitcher;
 import com.example.ballkkaye.player.startingPitcher.today.TodayStartingPitcherRepository;
 import com.example.ballkkaye.team.Team;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class TodayHitterLineupService {
@@ -21,8 +23,13 @@ public class TodayHitterLineupService {
 
 
     public TodayHitterLineupResponse.DTO getDetailMatchup(Integer gameId, Integer teamId) {
+        log.info("타자 라인업 상세 조회 요청 - gameId: {}, teamId: {}", gameId, teamId);
+
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new ExceptionApi404("경기 정보가 없습니다"));
+                .orElseThrow(() -> {
+                    log.warn("존재하지 않는 경기 조회 시도 - gameId: {}", gameId);
+                    return new ExceptionApi404("경기 정보가 없습니다");
+                });
 
         // 선택한 팀 기준으로 타자 팀/상대 투수 팀 결정
         Team hitterTeam;
@@ -40,12 +47,16 @@ public class TodayHitterLineupService {
                 .findByGameIdAndTeam(gameId, pitcherTeam.getTeamName())
                 .stream()
                 .findFirst()
-                .orElseThrow(() -> new ExceptionApi404("선발투수 정보가 없습니다."));
+                .orElseThrow(() -> {
+                    log.warn("선발투수 없음 - gameId: {}, pitcherTeam: {}", gameId, pitcherTeam.getTeamName());
+                    return new ExceptionApi404("선발투수 정보가 없습니다.");
+                });
 
         // 선택한 팀 기준으로 타자 라인업 조회 (Today 기준)
         List<TodayHitterLineup> hitterLineups = todayHitterLineUpRepository.findByGameIdAndTeamId(gameId, hitterTeam.getId());
 
         if (hitterLineups.isEmpty()) {
+            log.warn("타자 라인업 없음 - gameId: {}, teamId: {}", gameId, hitterTeam.getId());
             throw new ExceptionApi404("타자 라인업 정보가 없습니다.");
         }
 
@@ -63,6 +74,9 @@ public class TodayHitterLineupService {
 
         // 시즌 정보는 gameTime의 연도 기준
         Integer season = game.getGameTime().toLocalDateTime().getYear();
+
+        log.info("타자 라인업 조회 완료 - gameId: {}, 팀: {}, 라인업 수: {}", gameId, hitterTeam.getTeamName(), hitterDTOs.size());
+
 
         // 최종 응답 DTO 구성
         return new TodayHitterLineupResponse.DTO(

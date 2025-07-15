@@ -6,6 +6,7 @@ import com.example.ballkkaye._core.error.ex.ExceptionApi401;
 import com.example.ballkkaye._core.error.ex.ExceptionApi403;
 import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.Resp;
+import io.sentry.Sentry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> exUnKnown(Exception e) {
-        log.error(e.getMessage());
-        System.out.println("관리자님 보세요 : " + e.getMessage());
+        Sentry.captureException(e);
+        log.error("알 수 없는 에러 발생", e);
         return Resp.fail(HttpStatus.INTERNAL_SERVER_ERROR, "관리자에게 문의하세요");
     }
 }

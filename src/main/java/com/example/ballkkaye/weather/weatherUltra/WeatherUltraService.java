@@ -4,6 +4,7 @@ import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.WeatherUtil;
 import com.example.ballkkaye.common.enums.RainoutLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class WeatherUltraService {
@@ -18,10 +20,13 @@ public class WeatherUltraService {
 
 
     public WeatherUltraResponse.DTO getTodayForecast(Integer stadiumId, Timestamp gameTime) {
+        log.info("오늘 초단기 예보 조회 요청 - stadiumId: {}, gameTime: {}", stadiumId, gameTime);
+
         // 1. 특정 구장의 오늘 예보 데이터를 조회
         List<WeatherUltra> forecasts = weatherUltraRepository.findTodayForecastByStadiumId(stadiumId);
 
         if (forecasts.isEmpty()) {
+            log.warn("예보 데이터 없음 - stadiumId: {}", stadiumId);
             throw new ExceptionApi404("해당 구장의 예보 데이터가 존재하지 않습니다.");
         }
 
@@ -40,6 +45,7 @@ public class WeatherUltraService {
                 diffFromYesterday = WeatherUtil.calculateTemperatureDiffFromYesterday(w, weatherUltraRepository);
             } catch (Exception e) {
                 diffFromYesterday = 0.0;  // 예외 발생 시 기본값
+                log.debug("어제 대비 온도차 계산 실패 - forecastAt: {}, stadiumId: {}", w.getForecastAt(), stadiumId);
             }
 
             // 2-2. 시간별 날씨 및 강수 정보 DTO 생성
@@ -60,11 +66,14 @@ public class WeatherUltraService {
         double rainoutScore = 0.0;
         if (closestForecast != null) {
             rainoutScore = WeatherUtil.predictRainoutFromBoth(closestForecast, closestForecast.getRainPer());
+            log.info("가장 근접한 예보 선택 - forecastAt: {}, rainoutScore: {}", closestForecast.getForecastAt(), rainoutScore);
         }
 
         // 5. 우천취소 점수 기반으로 Enum 메시지 도출
         RainoutLevel level = RainoutLevel.fromScore(rainoutScore);
         String comment = level.getMessage();
+
+        log.info("우천취소 예측 완료 - stadiumId: {}, rainoutLevel: {}, message: {}", stadiumId, level.name(), comment);
 
         // 6. 종합 DTO 반환 (위치 + 시간별 정보 + 강수 정보 + 코멘트)
         return new WeatherUltraResponse.DTO(location, hourlyWeatherList, hourlyRainList, comment);
