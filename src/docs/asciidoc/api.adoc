@@ -1,0 +1,579 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:board: board-controller-test
+:reply: board-reply-controller-test
+:like: board-like-controller-test
+:replyLike: board-reply-like-controller-test
+:chatroom: chat-room-controller-test
+:chatroomUser: chat-room-user-controller-test
+:game: game-controller-test
+:home: home-controller-test
+:match: match-controller-test
+:matchLike: match-like-controller-test
+:stadium: stadium-controller-test
+:team: team-controller-test
+:today-game: today-game-controller-test
+:today-hitter-lineup: today-hitter-lineup-controller-test
+:today-team-records: today-team-record-controller-test
+:user: user-controller-test
+:userPrediction: user-prediction-controller-test
+:visitRecord: visit-record-controller-test
+:weatherUltra: weather-ultra-controller-test
+
+
+= 커뮤니티 게시판 API
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 게시글
+
+=== 1. 게시글 등록
+
+===== Request Example
+
+include::{snippets}/{board}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{board}/save_test/http-response.adoc[]
+
+=== 2. 게시글 수정
+
+===== Request Example
+
+include::{snippets}/{board}/update_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{board}/update_test/http-response.adoc[]
+
+=== 3. 게시글 목록 (페이지 & 팀 필터)
+
+===== Request Example
+
+include::{snippets}/{board}/get_list_page_and_team_id_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{board}/get_list_page_and_team_id_test/http-response.adoc[]
+
+=== 4. 게시글 목록
+
+===== Request Example
+
+include::{snippets}/{board}/get_list_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{board}/get_list_test/http-response.adoc[]
+
+=== 5. 게시글 상세보기 (댓글 포함)
+
+===== Request Example
+
+include::{snippets}/{board}/get_detail_with_reply_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{board}/get_detail_with_reply_test/http-response.adoc[]
+
+=== 6. 게시글 상세보기 (댓글 제외)
+
+===== Request Example
+
+include::{snippets}/{board}/get_detail_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{board}/get_detail_test/http-response.adoc[]
+
+=== 7. 게시글 삭제
+
+===== Request Example
+
+include::{snippets}/{board}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{board}/delete_test/http-response.adoc[]
+
+== 좋아요
+
+=== 1. 게시글 좋아요 등록
+
+===== Request Example
+
+include::{snippets}/{like}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{like}/save_test/http-response.adoc[]
+
+=== 2. 게시글 좋아요 삭제
+
+===== Request Example
+
+include::{snippets}/{like}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{like}/delete_test/http-response.adoc[]
+
+== 댓글
+
+=== 1. 댓글 등록
+
+===== Request Example
+
+include::{snippets}/{reply}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{reply}/save_test/http-response.adoc[]
+
+=== 2. 대댓글 등록
+
+===== Request Example
+
+include::{snippets}/{reply}/save_child_reply_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{reply}/save_child_reply_test/http-response.adoc[]
+
+=== 3. 댓글 삭제
+
+===== Request Example
+
+include::{snippets}/{reply}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{reply}/delete_test/http-response.adoc[]
+
+=== 4. 댓글 수정
+
+===== Request Example
+
+include::{snippets}/{reply}/update_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{reply}/update_test/http-response.adoc[]
+
+=== 5. 특정 게시글 댓글 조회
+
+===== Request Example
+
+include::{snippets}/{reply}/get_detail_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{reply}/get_detail_test/http-response.adoc[]
+
+== 댓글 좋아요
+
+=== 1. 댓글 좋아요 등록
+
+===== Request Example
+
+include::{snippets}/{replyLike}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{replyLike}/save_test/http-response.adoc[]
+
+=== 2. 댓글 좋아요 삭제
+
+===== Request Example
+
+include::{snippets}/{replyLike}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{replyLike}/delete_test/http-response.adoc[]
+
+== 채팅방
+
+=== 1. 채팅방 삭제
+
+===== Request Example
+
+include::{snippets}/{chatroom}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{chatroom}/delete_test/http-response.adoc[]
+
+== 채팅방 유저
+
+=== 1. 채팅방 참여
+
+===== Request Example
+
+include::{snippets}/{chatroomUser}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{chatroomUser}/save_test/http-response.adoc[]
+
+=== 2. 채팅방 나가기
+
+===== Request Example
+
+include::{snippets}/{chatroomUser}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{chatroomUser}/delete_test/http-response.adoc[]
+
+== 경기
+
+=== 1. 경기 목록 조회 (월/일 기준)
+
+===== Request Example
+
+include::{snippets}/{game}/get_games_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{game}/get_games_test/http-response.adoc[]
+
+=== 2. 경기 목록 조회 (일 기준)
+
+===== Request Example
+
+include::{snippets}/{game}/get_games_by_day_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{game}/get_games_by_day_test/http-response.adoc[]
+
+=== 3. 캘린더 - 경기 존재 여부 조회
+
+===== Request Example
+
+include::{snippets}/{game}/get_calendar_game_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{game}/get_calendar_game_test/http-response.adoc[]
+
+== 홈
+
+=== 1. 홈 화면 정보 조회
+
+===== Request Example
+
+include::{snippets}/{home}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{home}/save_test/http-response.adoc[]
+
+== 매칭
+
+=== 1. 매칭 등록
+
+===== Request Example
+
+include::{snippets}/{match}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{match}/save_test/http-response.adoc[]
+
+=== 2. 매칭 목록 조회
+
+===== Request Example
+
+include::{snippets}/{match}/get_matches_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{match}/get_matches_test/http-response.adoc[]
+
+=== 3. 매칭 상세 조회
+
+===== Request Example
+
+include::{snippets}/{match}/get_detail_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{match}/get_detail_test/http-response.adoc[]
+
+=== 4. 매칭 수정
+
+===== Request Example
+
+include::{snippets}/{match}/update_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{match}/update_test/http-response.adoc[]
+
+=== 5. 매칭 삭제
+
+===== Request Example
+
+include::{snippets}/{match}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{match}/delete_test/http-response.adoc[]
+
+== 매칭 좋아요
+
+=== 1. 좋아요 등록
+
+===== Request Example
+
+include::{snippets}/{matchLike}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{matchLike}/save_test/http-response.adoc[]
+
+=== 2. 좋아요 삭제
+
+===== Request Example
+
+include::{snippets}/{matchLike}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{matchLike}/delete_test/http-response.adoc[]
+
+== 야구장 정보
+
+=== 1. 야구장 목록 조회
+
+===== Request Example
+
+include::{snippets}/{stadium}/get_stadium_options_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{stadium}/get_stadium_options_test/http-response.adoc[]
+
+== 팀 정보
+
+=== 1. 팀 목록 조회
+
+===== Request Example
+
+include::{snippets}/{team}/get_teams_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{team}/get_teams_test/http-response.adoc[]
+
+== 오늘의 경기
+
+=== 1. 오늘의 경기 예측 조회
+
+===== Request Example
+
+include::{snippets}/{today-game}/get_today_game_predictions_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{today-game}/get_today_game_predictions_test/http-response.adoc[]
+
+=== 2. 오늘의 경기 리스트 조회
+
+===== Request Example
+
+include::{snippets}/{today-game}/get_today_games_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{today-game}/get_today_games_test/http-response.adoc[]
+
+== 오늘의 타자 라인업
+
+=== 1. 특정 경기의 타자 라인업 및 상대 투수 정보 조회
+
+===== Request Example
+
+include::{snippets}/{today-hitter-lineup}/get_detail_matchup_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{today-hitter-lineup}/get_detail_matchup_test/http-response.adoc[]
+
+== 오늘의 팀 기록
+
+=== 1. 전체 팀 기록 순위표 조회
+
+- 현재 기준 팀 순위를 조회하는 API로, 각 팀의 승/패/무, 승률, 게임차, 연승/연패 정보 포함
+
+===== Request Example
+
+include::{snippets}/{today-team-records}/team_records_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{today-team-records}/team_records_test/http-response.adoc[]
+
+== 유저
+
+=== 1. 추가 정보 입력
+
+===== Request Example
+
+include::{snippets}/{user}/get_additional_user_info_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{user}/get_additional_user_info_test/http-response.adoc[]
+
+=== 2. 닉네임 중복 체크 - 실패
+
+===== Request Example
+
+include::{snippets}/{user}/check_user_nickname_available_fail_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{user}/check_user_nickname_available_fail_test/http-response.adoc[]
+
+=== 3. 닉네임 중복 체크 - 성공
+
+===== Request Example
+
+include::{snippets}/{user}/check_user_nickname_available_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{user}/check_user_nickname_available_test/http-response.adoc[]
+
+=== 4. 유저 정보 수정
+
+===== Request Example
+
+include::{snippets}/{user}/update_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{user}/update_test/http-response.adoc[]
+
+=== 5. 점수 및 티어 조회
+
+===== Request Example
+
+include::{snippets}/{user}/get_score_and_tier_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{user}/get_score_and_tier_test/http-response.adoc[]
+
+== 유저 예측
+
+=== 1. 오늘 경기 예측 정보 조회
+
+===== Request Example
+
+include::{snippets}/{userPrediction}/today_games_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{userPrediction}/today_games_test/http-response.adoc[]
+
+=== 2. 나의 경기 예측 조회
+
+===== Request Example
+
+include::{snippets}/{userPrediction}/find_my_predictions_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{userPrediction}/find_my_predictions_test/http-response.adoc[]
+
+=== 3. 유저 예측 저장
+
+===== Request Example
+
+include::{snippets}/{userPrediction}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{userPrediction}/save_test/http-response.adoc[]
+
+== 방문 기록
+
+=== 1. 방문 기록 저장
+
+===== Request Example
+
+include::{snippets}/{visitRecord}/save_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{visitRecord}/save_test/http-response.adoc[]
+
+=== 2. 방문 기록 수정
+
+===== Request Example
+
+include::{snippets}/{visitRecord}/update_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{visitRecord}/update_test/http-response.adoc[]
+
+=== 3. 방문 기록 조회 (일별)
+
+===== Request Example
+
+include::{snippets}/{visitRecord}/get_list_date_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{visitRecord}/get_list_date_test/http-response.adoc[]
+
+=== 4. 방문 기록 조회 (연도 + 월)
+
+===== Request Example
+
+include::{snippets}/{visitRecord}/get_list_year_and_month_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{visitRecord}/get_list_year_and_month_test/http-response.adoc[]
+
+=== 5. 방문 기록 상세조회
+
+===== Request Example
+
+include::{snippets}/{visitRecord}/get_detail_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{visitRecord}/get_detail_test/http-response.adoc[]
+
+=== 6. 방문 기록 삭제
+
+===== Request Example
+
+include::{snippets}/{visitRecord}/delete_test/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{visitRecord}/delete_test/http-response.adoc[]
+
+== 날씨 예보
+
+=== 1. 오늘의 초단기 예보 조회
+
+===== Request Example
+
+include::{snippets}/{weatherUltra}/get_today_forecast/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/{weatherUltra}/get_today_forecast/http-response.adoc[]
