@@ -20,9 +20,10 @@ public class UserPredictionController {
 
     // 유저 예측 화면 진입
     @GetMapping("/s/api/predictions/today")
-    public ResponseEntity<?> todayGames() {
+    public ResponseEntity<?> todayGames(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        List<UserPredictionResponse.TodayGameDTO> respDTO = userPredictionService.todayGames(sessionUser.getId());
+        List<UserPredictionResponse.TodayGameDTO> respDTO = userPredictionService.todayGames(date, sessionUser.getId());
         return Resp.ok(respDTO);
     }
 

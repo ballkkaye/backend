@@ -37,7 +37,7 @@ public class TodayHitterLineupControllerTest extends MyRestDoc {
     @Test
     void get_detail_matchup_test() throws Exception {
         // given
-        int gameId = 423;   // 테스트용 gameId
+        int gameId = 433;   // 테스트용 gameId
         int teamId = 3;     // 테스트용 teamId
 
         // when
@@ -55,7 +55,7 @@ public class TodayHitterLineupControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameId").value(423))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body.gameId").value(433))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.season").value(2025))
 
                 // Hitters

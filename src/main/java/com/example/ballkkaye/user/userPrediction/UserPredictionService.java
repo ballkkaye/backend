@@ -28,10 +28,10 @@ public class UserPredictionService {
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
 
-    public List<UserPredictionResponse.TodayGameDTO> todayGames(Integer userId) {
-        LocalDate today = LocalDate.now();
+    public List<UserPredictionResponse.TodayGameDTO> todayGames(LocalDate date, Integer userId) {
+        // 테스트 하실때 안되시면 이 친구 때문입니다 경기 사긴 지난 후 조회 안됩니다.
         List<UserPredictionResponse.TodayGameDTO> rawList =
-                userPredictionRepository.findTodayGamesForPrediction(today, userId);
+                userPredictionRepository.findTodayGamesForPrediction(date, userId);
 
         List<UserPredictionResponse.TodayGameDTO> TodayGameDTO = new ArrayList<>();
 
