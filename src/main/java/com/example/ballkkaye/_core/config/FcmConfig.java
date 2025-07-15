@@ -27,7 +27,10 @@ public class FcmConfig {
             // [1] 환경변수에서 Base64 인코딩된 Firebase 키 가져오기
             String base64 = System.getenv("FIREBASE_CONFIG_BASE64");
             if (base64 == null || base64.isBlank()) {
-                throw new IllegalStateException("FIREBASE_CONFIG_BASE64 환경변수가 설정되지 않았습니다.");
+                String msg = "FIREBASE_CONFIG_BASE64 환경변수가 설정되지 않았습니다.";
+                log.error(msg);
+                Sentry.captureMessage(msg);
+                throw new IllegalStateException(msg);
             }
 
             // [2] config 디렉토리 생성
