@@ -1,8 +1,6 @@
 package com.example.ballkkaye.user;
 
-import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye._core.util.Resp;
-import com.example.ballkkaye.common.enums.UserRole;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -66,16 +64,5 @@ public class UserController {
         var sessionUser = (User) session.getAttribute("sessionUser");
         var respDTO = userService.getScoreAndTier(sessionUser);
         return Resp.ok(respDTO);
-    }
-
-    @GetMapping("/token")
-    public String getToken() {
-        User user = new User().builder()
-                .id(1)
-                .username("ssar123")
-                .userRole(UserRole.USER)
-                .build();
-        String accessToken = JwtUtil.create(user);
-        return accessToken;
     }
 }
