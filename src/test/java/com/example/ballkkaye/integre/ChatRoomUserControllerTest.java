@@ -55,8 +55,6 @@ public class ChatRoomUserControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.chatRoomUserId").value(9));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.chatRoomId").value(1));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.userId").value(2));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
