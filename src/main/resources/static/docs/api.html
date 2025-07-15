@@ -587,7 +587,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Content-Length: 164
 Host: localhost:8080
 
@@ -616,7 +616,7 @@ Content-Length: 404
       "id" : 4,
       "imageUrl" : "https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg"
     } ],
-    "relativeTime" : "지금",
+    "relativeTime" : "방금",
     "boardId" : 12,
     "title" : "제목1",
     "teamId" : 1,
@@ -629,22 +629,6 @@ Content-Length: 404
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards' -i -X POST \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ' \
-    -d '{
-  "title" : "제목1",
-  "teamId" : 1,
-  "images" : [ "https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg" ],
-  "content" : "내용1"
-}'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_2_게시글_수정">2. 게시글 수정</h3>
@@ -654,7 +638,7 @@ Content-Length: 404
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/boards/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Content-Length: 288
 Host: localhost:8080
 
@@ -696,23 +680,6 @@ Content-Length: 440
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_2">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1' -i -X PUT \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ' \
-    -d '{
-  "title" : "수정된 제목",
-  "teamId" : 1,
-  "content" : "수정된 내용",
-  "remainImageUrls" : [ "https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg" ],
-  "newImages" : [ "https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image2.jpg" ]
-}'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_3_게시글_목록_페이지_팀_필터">3. 게시글 목록 (페이지 &amp; 팀 필터)</h3>
@@ -721,7 +688,7 @@ Content-Length: 440
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards?page=1&amp;teamId=3 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -840,15 +807,6 @@ Content-Length: 2768
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_3">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards?page=1&amp;teamId=3' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_4_게시글_목록">4. 게시글 목록</h3>
@@ -857,7 +815,7 @@ Content-Length: 2768
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE3LCJ1c2VybmFtZSI6InNzYXIifQ.NEBRByb24W7Cvqs6o1OL1ygynaQWmnP0OfkAlhZ5yhXxv7Z_dOnXk60xsJzvJWJc0FhX6_3sP4wEd0E868oiXg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -976,15 +934,6 @@ Content-Length: 2770
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_4">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_5_게시글_상세보기_댓글_포함">5. 게시글 상세보기 (댓글 포함)</h3>
@@ -993,7 +942,7 @@ Content-Length: 2770
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1126,15 +1075,6 @@ Content-Length: 3754
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_5">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_6_게시글_상세보기_댓글_제외">6. 게시글 상세보기 (댓글 제외)</h3>
@@ -1143,7 +1083,7 @@ Content-Length: 3754
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards/1/detail HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzM5LCJ1c2VybmFtZSI6InNzYXIifQ.ylhgLJIyOD7skjUIwD95ALkZWmW7F3OufpAe34SOx1M3Kbb1hWzwV8Xx_85Lld8angvNCopVTz5TPCYOIQkujA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE3LCJ1c2VybmFtZSI6InNzYXIifQ.NEBRByb24W7Cvqs6o1OL1ygynaQWmnP0OfkAlhZ5yhXxv7Z_dOnXk60xsJzvJWJc0FhX6_3sP4wEd0E868oiXg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1184,15 +1124,6 @@ Content-Length: 765
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_6">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1/detail' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzM5LCJ1c2VybmFtZSI6InNzYXIifQ.ylhgLJIyOD7skjUIwD95ALkZWmW7F3OufpAe34SOx1M3Kbb1hWzwV8Xx_85Lld8angvNCopVTz5TPCYOIQkujA'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_7_게시글_삭제">7. 게시글 삭제</h3>
@@ -1201,7 +1132,7 @@ Content-Length: 765
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/boards/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE3LCJ1c2VybmFtZSI6InNzYXIifQ.NEBRByb24W7Cvqs6o1OL1ygynaQWmnP0OfkAlhZ5yhXxv7Z_dOnXk60xsJzvJWJc0FhX6_3sP4wEd0E868oiXg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1224,15 +1155,6 @@ Content-Length: 97
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_7">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1247,7 +1169,7 @@ Content-Length: 97
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards/10/like HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Content-Length: 2
 Host: localhost:8080
 
@@ -1277,17 +1199,6 @@ Content-Length: 157
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_8">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/10/like' -i -X POST \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ' \
-    -d '10'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_2_게시글_좋아요_삭제">2. 게시글 좋아요 삭제</h3>
@@ -1296,7 +1207,7 @@ Content-Length: 157
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/boards/like/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1321,15 +1232,6 @@ Content-Length: 138
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_9">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/like/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1344,7 +1246,7 @@ Content-Length: 138
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards/1/replies HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Content-Length: 96
 Host: localhost:8080
 
@@ -1387,21 +1289,6 @@ Content-Length: 449
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_10">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1/replies' -i -X POST \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ' \
-    -d '{
-  "parentReplyId" : null,
-  "tagReplyId" : null,
-  "content" : "댓글 내용입니다."
-}'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_2_대댓글_등록">2. 대댓글 등록</h3>
@@ -1411,7 +1298,7 @@ Content-Length: 449
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards/1/replies HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Content-Length: 93
 Host: localhost:8080
 
@@ -1435,7 +1322,7 @@ Content-Length: 448
   "status" : 200,
   "msg" : "성공",
   "body" : {
-    "relativeTime" : "방금",
+    "relativeTime" : "지금",
     "replyId" : 28,
     "boardId" : 1,
     "userId" : 1,
@@ -1454,21 +1341,6 @@ Content-Length: 448
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_11">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1/replies' -i -X POST \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ' \
-    -d '{
-  "parentReplyId" : 1,
-  "tagReplyId" : 4,
-  "content" : "대댓글 내용입니다."
-}'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_3_댓글_삭제">3. 댓글 삭제</h3>
@@ -1477,7 +1349,7 @@ Content-Length: 448
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/boards/replies/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1500,15 +1372,6 @@ Content-Length: 97
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_12">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/replies/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_4_댓글_수정">4. 댓글 수정</h3>
@@ -1518,7 +1381,7 @@ Content-Length: 97
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/boards/replies/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Content-Length: 79
 Host: localhost:8080
 
@@ -1560,20 +1423,6 @@ Content-Length: 457
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_13">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/replies/1' -i -X PUT \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ' \
-    -d '{
-  "tagReplyId" : null,
-  "content" : "수정된 댓글 내용입니다."
-}'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_5_특정_게시글_댓글_조회">5. 특정 게시글 댓글 조회</h3>
@@ -1582,7 +1431,7 @@ Content-Length: 457
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/boards/1/replies HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1694,15 +1543,6 @@ Content-Length: 2843
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_14">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/1/replies' -i -X GET \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1716,7 +1556,7 @@ Content-Length: 2843
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/boards/replies/10/like HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -1743,15 +1583,6 @@ Content-Length: 135
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_15">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/replies/10/like' -i -X POST \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_2_댓글_좋아요_삭제">2. 댓글 좋아요 삭제</h3>
@@ -1760,7 +1591,7 @@ Content-Length: 135
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/boards/replies/like/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1785,15 +1616,6 @@ Content-Length: 138
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_16">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/boards/replies/like/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1807,7 +1629,7 @@ Content-Length: 138
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/chatrooms/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1830,15 +1652,6 @@ Content-Length: 95
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl_17">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/chatrooms/1' -i -X DELETE \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ'</code></pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1852,7 +1665,7 @@ Content-Length: 95
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/chatrooms/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6ImNvcyJ9.R-d14yZ7NwgMilEljb4VDBwvUuC-xjtr-tCH6HvTmo_EiQ2VfSqcRWiUy_TfM5Xws61EDGrNli-1db58ZqivCw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6ImNvcyJ9.WoxyYSNP0x1491MkZjic_M3QTjWUzAYnV1nDjeh84uTyPXHPdIV1b3-eLzgkDaCljcAYHmL5aFW3yOg3tvNP8Q
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -1864,26 +1677,15 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 131
+Content-Length: 89
 
 {
   "status" : 200,
   "msg" : "성공",
   "body" : {
-    "chatRoomUserId" : 9,
-    "chatRoomId" : 1,
-    "userId" : 2
+    "chatRoomUserId" : 9
   }
 }</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_curl_18">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/s/api/chatrooms/1' -i -X POST \
-    -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6ImNvcyJ9.R-d14yZ7NwgMilEljb4VDBwvUuC-xjtr-tCH6HvTmo_EiQ2VfSqcRWiUy_TfM5Xws61EDGrNli-1db58ZqivCw'</code></pre>
 </div>
 </div>
 </div>
@@ -1895,7 +1697,7 @@ Content-Length: 131
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/chatroom-users/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1932,7 +1734,7 @@ Content-Length: 97
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/games?date=2025-07 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2237,7 +2039,7 @@ Content-Length: 9498
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/games?date=2025-07-15 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2338,7 +2140,7 @@ Content-Length: 2463
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/games/dates?date=2025-07 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2400,7 +2202,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 8025
+Content-Length: 8022
 
 {
   "status" : 200,
@@ -2529,56 +2331,56 @@ Content-Length: 8025
       "awayWinPercent" : 52.4
     }, {
       "gameId" : 433,
-      "homeTeamName" : "키움",
-      "awayTeamName" : "KIA",
+      "homeTeamName" : "두산",
+      "awayTeamName" : "SSG",
       "homePitcherName" : null,
       "awayPitcherName" : null,
       "homePitcherProfileUrl" : null,
       "awayPitcherProfileUrl" : null,
-      "homePredictionScore" : 3.5,
+      "homePredictionScore" : 4.2,
       "awayPredictionScore" : 3.9,
-      "totalPredictionScore" : 7.4,
-      "homeWinPercent" : 47.6,
-      "awayWinPercent" : 52.4
+      "totalPredictionScore" : 8.1,
+      "homeWinPercent" : 52.0,
+      "awayWinPercent" : 48.0
     }, {
       "gameId" : 434,
-      "homeTeamName" : "키움",
-      "awayTeamName" : "KIA",
+      "homeTeamName" : "삼성",
+      "awayTeamName" : "한화",
       "homePitcherName" : null,
       "awayPitcherName" : null,
       "homePitcherProfileUrl" : null,
       "awayPitcherProfileUrl" : null,
-      "homePredictionScore" : 3.5,
-      "awayPredictionScore" : 3.9,
-      "totalPredictionScore" : 7.4,
-      "homeWinPercent" : 47.6,
-      "awayWinPercent" : 52.4
+      "homePredictionScore" : 3.7,
+      "awayPredictionScore" : 3.8,
+      "totalPredictionScore" : 7.5,
+      "homeWinPercent" : 49.2,
+      "awayWinPercent" : 50.8
     }, {
       "gameId" : 435,
-      "homeTeamName" : "키움",
-      "awayTeamName" : "KIA",
+      "homeTeamName" : "NC",
+      "awayTeamName" : "롯데",
       "homePitcherName" : null,
       "awayPitcherName" : null,
       "homePitcherProfileUrl" : null,
       "awayPitcherProfileUrl" : null,
-      "homePredictionScore" : 3.5,
-      "awayPredictionScore" : 3.9,
-      "totalPredictionScore" : 7.4,
-      "homeWinPercent" : 47.6,
-      "awayWinPercent" : 52.4
+      "homePredictionScore" : 4.5,
+      "awayPredictionScore" : 3.6,
+      "totalPredictionScore" : 8.1,
+      "homeWinPercent" : 55.6,
+      "awayWinPercent" : 44.4
     }, {
       "gameId" : 436,
-      "homeTeamName" : "키움",
-      "awayTeamName" : "KIA",
+      "homeTeamName" : "KT",
+      "awayTeamName" : "LG",
       "homePitcherName" : null,
       "awayPitcherName" : null,
       "homePitcherProfileUrl" : null,
       "awayPitcherProfileUrl" : null,
-      "homePredictionScore" : 3.5,
-      "awayPredictionScore" : 3.9,
-      "totalPredictionScore" : 7.4,
-      "homeWinPercent" : 47.6,
-      "awayWinPercent" : 52.4
+      "homePredictionScore" : 3.8,
+      "awayPredictionScore" : 3.8,
+      "totalPredictionScore" : 7.6,
+      "homeWinPercent" : 50.0,
+      "awayWinPercent" : 50.0
     }, {
       "gameId" : 437,
       "homeTeamName" : "키움",
@@ -2628,7 +2430,7 @@ Content-Length: 8025
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/matches HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Content-Length: 253
 Host: localhost:8080
 
@@ -2669,7 +2471,7 @@ Content-Length: 818
       "preferredGender" : "여성",
       "preferredAge" : "20~30대",
       "isSameTeam" : false,
-      "createdAt" : "2025-07-15 11:32"
+      "createdAt" : "2025-07-15 17:35"
     },
     "match" : {
       "id" : 6,
@@ -2678,7 +2480,7 @@ Content-Length: 818
       "chatRoomId" : 6,
       "title" : "같이 직관 가실 분!",
       "content" : "3루에서 보실 분 구해요~",
-      "createdAt" : "2025-07-15 11:32"
+      "createdAt" : "2025-07-15 17:35"
     }
   }
 }</code></pre>
@@ -2694,7 +2496,7 @@ Content-Length: 818
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/matches?page=0&amp;gender=FEMALE&amp;age=FROM_20_TO_30&amp;teamId=7 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2741,7 +2543,7 @@ Content-Length: 635
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/matches/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2793,7 +2595,7 @@ Content-Length: 883
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/matches/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Content-Length: 231
 Host: localhost:8080
 
@@ -2852,7 +2654,7 @@ Content-Length: 625
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/matches/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2889,7 +2691,7 @@ Content-Length: 95
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/matches/4/like HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2923,7 +2725,7 @@ Content-Length: 126
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/matches/like/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQwLCJ1c2VybmFtZSI6InNzYXIifQ.OQTX5c00qoc5WfLMdlk58folpXK2i0ZWUusgS-oTRUqdWSceqNczSH7NUjBPMsaebnVfBdOmZL5i6KgM07gJaQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3097,7 +2899,7 @@ Content-Length: 694
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/today-games/prediction HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3108,7 +2910,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 4971
+Content-Length: 4950
 
 {
   "status" : 200,
@@ -3180,56 +2982,56 @@ Content-Length: 4971
     "awayWinPercent" : 52.4
   }, {
     "gameId" : 433,
-    "homeTeamName" : "키움 히어로즈",
-    "awayTeamName" : "KIA 타이거즈",
+    "homeTeamName" : "두산 베어스",
+    "awayTeamName" : "SSG 랜더스",
     "homePitcherName" : null,
     "awayPitcherName" : null,
     "homePitcherProfileUrl" : null,
     "awayPitcherProfileUrl" : null,
-    "homePredictionScore" : 3.5,
+    "homePredictionScore" : 4.2,
     "awayPredictionScore" : 3.9,
-    "totalPredictionScore" : 7.4,
-    "homeWinPercent" : 47.6,
-    "awayWinPercent" : 52.4
+    "totalPredictionScore" : 8.1,
+    "homeWinPercent" : 52.0,
+    "awayWinPercent" : 48.0
   }, {
     "gameId" : 434,
-    "homeTeamName" : "키움 히어로즈",
-    "awayTeamName" : "KIA 타이거즈",
+    "homeTeamName" : "삼성 라이온즈",
+    "awayTeamName" : "한화 이글스",
     "homePitcherName" : null,
     "awayPitcherName" : null,
     "homePitcherProfileUrl" : null,
     "awayPitcherProfileUrl" : null,
-    "homePredictionScore" : 3.5,
-    "awayPredictionScore" : 3.9,
-    "totalPredictionScore" : 7.4,
-    "homeWinPercent" : 47.6,
-    "awayWinPercent" : 52.4
+    "homePredictionScore" : 3.7,
+    "awayPredictionScore" : 3.8,
+    "totalPredictionScore" : 7.5,
+    "homeWinPercent" : 49.2,
+    "awayWinPercent" : 50.8
   }, {
     "gameId" : 435,
-    "homeTeamName" : "키움 히어로즈",
-    "awayTeamName" : "KIA 타이거즈",
+    "homeTeamName" : "NC 다이노스",
+    "awayTeamName" : "롯데 자이언츠",
     "homePitcherName" : null,
     "awayPitcherName" : null,
     "homePitcherProfileUrl" : null,
     "awayPitcherProfileUrl" : null,
-    "homePredictionScore" : 3.5,
-    "awayPredictionScore" : 3.9,
-    "totalPredictionScore" : 7.4,
-    "homeWinPercent" : 47.6,
-    "awayWinPercent" : 52.4
+    "homePredictionScore" : 4.5,
+    "awayPredictionScore" : 3.6,
+    "totalPredictionScore" : 8.1,
+    "homeWinPercent" : 55.6,
+    "awayWinPercent" : 44.4
   }, {
     "gameId" : 436,
-    "homeTeamName" : "키움 히어로즈",
-    "awayTeamName" : "KIA 타이거즈",
+    "homeTeamName" : "KT 위즈",
+    "awayTeamName" : "LG 트윈스",
     "homePitcherName" : null,
     "awayPitcherName" : null,
     "homePitcherProfileUrl" : null,
     "awayPitcherProfileUrl" : null,
-    "homePredictionScore" : 3.5,
-    "awayPredictionScore" : 3.9,
-    "totalPredictionScore" : 7.4,
-    "homeWinPercent" : 47.6,
-    "awayWinPercent" : 52.4
+    "homePredictionScore" : 3.8,
+    "awayPredictionScore" : 3.8,
+    "totalPredictionScore" : 7.6,
+    "homeWinPercent" : 50.0,
+    "awayWinPercent" : 50.0
   }, {
     "gameId" : 437,
     "homeTeamName" : "키움 히어로즈",
@@ -3256,7 +3058,7 @@ Content-Length: 4971
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/today-games?date=2025-07-15 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3459,9 +3261,9 @@ Content-Length: 2395
     "name" : "콜어빈",
     "gameCount" : 14,
     "result" : "5승 7패",
-    "whip" : 1.38,
+    "era" : 4.86,
     "qs" : 8,
-    "era" : 4.86
+    "whip" : 1.38
   }
 }</code></pre>
 </div>
@@ -3487,7 +3289,7 @@ Content-Length: 2395
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/today/team-records HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE4LCJ1c2VybmFtZSI6InNzYXIifQ.oIbVt3A9zhGWN73lrBoPwdgNO7sB_bnFVEClFmPQjZOWX2IqhEO6RIIPdllzbXhRPfnDs8Fi9-C1Q4WolWqCVw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3632,7 +3434,7 @@ Content-Length: 2622
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/user/addtion-info HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6ImNvczEyMyJ9.ldIgBRNrq_dgiCNQgXBqbxeSknUlIBNhm2MAHRmadTthTqPgfjBWEcgFHL95H8yappmbb7Tu-ahp_mWIXbU8yg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6ImNvczEyMyJ9.hhgbMQPFJhfSUYgG4g6HRh4I0itLzAPP_EhhuItBQHd8rS6kGsqakimsStRh_bK5hadvmPXiy0hSauzWlN8EYg
 Content-Length: 49
 Host: localhost:8080
 
@@ -3680,7 +3482,7 @@ Content-Length: 432
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/users/check-nickname-available/ssar HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6ImNvczEyMyJ9.ldIgBRNrq_dgiCNQgXBqbxeSknUlIBNhm2MAHRmadTthTqPgfjBWEcgFHL95H8yappmbb7Tu-ahp_mWIXbU8yg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6ImNvczEyMyJ9.hhgbMQPFJhfSUYgG4g6HRh4I0itLzAPP_EhhuItBQHd8rS6kGsqakimsStRh_bK5hadvmPXiy0hSauzWlN8EYg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3711,7 +3513,7 @@ Content-Length: 88
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/users/check-nickname-available/test HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6ImNvczEyMyJ9.ldIgBRNrq_dgiCNQgXBqbxeSknUlIBNhm2MAHRmadTthTqPgfjBWEcgFHL95H8yappmbb7Tu-ahp_mWIXbU8yg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6ImNvczEyMyJ9.hhgbMQPFJhfSUYgG4g6HRh4I0itLzAPP_EhhuItBQHd8rS6kGsqakimsStRh_bK5hadvmPXiy0hSauzWlN8EYg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3743,7 +3545,7 @@ Content-Length: 87
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/users HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIxMjMifQ.Vg-DvcsMRbvnZQ6kvC96pZ6JMBg9Ch1IE8kCa1yLKYfFz_BH7e5ilY1JR3mNDy2HphoI6qvxCfvL3B0SmeTdxg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIxMjMifQ.i6VHvWcgAjTNXSfkuvOtAuftJ3f_sDhvI-oLiSD7TBUzZ4okhw4mspkaUUrXU5rSkl8MXb1BnaGgxFm79_fqcg
 Content-Length: 151
 Host: localhost:8080
 
@@ -3793,7 +3595,7 @@ Content-Length: 490
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/users/tier HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6ImNvczEyMyJ9.ldIgBRNrq_dgiCNQgXBqbxeSknUlIBNhm2MAHRmadTthTqPgfjBWEcgFHL95H8yappmbb7Tu-ahp_mWIXbU8yg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6ImNvczEyMyJ9.hhgbMQPFJhfSUYgG4g6HRh4I0itLzAPP_EhhuItBQHd8rS6kGsqakimsStRh_bK5hadvmPXiy0hSauzWlN8EYg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3832,7 +3634,7 @@ Content-Length: 151
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/predictions/today HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6ImNvczEyMyJ9.ldIgBRNrq_dgiCNQgXBqbxeSknUlIBNhm2MAHRmadTthTqPgfjBWEcgFHL95H8yappmbb7Tu-ahp_mWIXbU8yg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6ImNvczEyMyJ9.hhgbMQPFJhfSUYgG4g6HRh4I0itLzAPP_EhhuItBQHd8rS6kGsqakimsStRh_bK5hadvmPXiy0hSauzWlN8EYg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3936,7 +3738,7 @@ Content-Length: 1941
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/predictions?date=2025-07-15 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIxMjMifQ.Vg-DvcsMRbvnZQ6kvC96pZ6JMBg9Ch1IE8kCa1yLKYfFz_BH7e5ilY1JR3mNDy2HphoI6qvxCfvL3B0SmeTdxg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIxMjMifQ.i6VHvWcgAjTNXSfkuvOtAuftJ3f_sDhvI-oLiSD7TBUzZ4okhw4mspkaUUrXU5rSkl8MXb1BnaGgxFm79_fqcg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4066,7 +3868,7 @@ Content-Length: 2657
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/predictions HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6ImNvczEyMyJ9.ldIgBRNrq_dgiCNQgXBqbxeSknUlIBNhm2MAHRmadTthTqPgfjBWEcgFHL95H8yappmbb7Tu-ahp_mWIXbU8yg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MiwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6ImNvczEyMyJ9.hhgbMQPFJhfSUYgG4g6HRh4I0itLzAPP_EhhuItBQHd8rS6kGsqakimsStRh_bK5hadvmPXiy0hSauzWlN8EYg
 Content-Length: 258
 Host: localhost:8080
 
@@ -4134,7 +3936,7 @@ Content-Length: 345
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /s/api/visit-records HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIifQ.mLVj_ua86mc1VSIr3Lmz8gQ5KwQJvVCtA6eLa0zoV1WWvm1whfajL3z-kKTP4uj2lyxcS0QPXaK2728ajGbL1A
 Content-Length: 183
 Host: localhost:8080
 
@@ -4185,7 +3987,7 @@ Content-Length: 436
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /s/api/visit-records/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIifQ.mLVj_ua86mc1VSIr3Lmz8gQ5KwQJvVCtA6eLa0zoV1WWvm1whfajL3z-kKTP4uj2lyxcS0QPXaK2728ajGbL1A
 Content-Length: 132
 Host: localhost:8080
 
@@ -4233,7 +4035,7 @@ Content-Length: 421
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/visit-records?date=2025-07-15 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIifQ.mLVj_ua86mc1VSIr3Lmz8gQ5KwQJvVCtA6eLa0zoV1WWvm1whfajL3z-kKTP4uj2lyxcS0QPXaK2728ajGbL1A
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4270,7 +4072,7 @@ Content-Length: 258
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/visit-records?year=2025&amp;month=7 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIifQ.mLVj_ua86mc1VSIr3Lmz8gQ5KwQJvVCtA6eLa0zoV1WWvm1whfajL3z-kKTP4uj2lyxcS0QPXaK2728ajGbL1A
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4307,7 +4109,7 @@ Content-Length: 258
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /s/api/visit-records/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIifQ.mLVj_ua86mc1VSIr3Lmz8gQ5KwQJvVCtA6eLa0zoV1WWvm1whfajL3z-kKTP4uj2lyxcS0QPXaK2728ajGbL1A
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4347,7 +4149,7 @@ Content-Length: 399
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /s/api/visit-records/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIifQ.mLVj_ua86mc1VSIr3Lmz8gQ5KwQJvVCtA6eLa0zoV1WWvm1whfajL3z-kKTP4uj2lyxcS0QPXaK2728ajGbL1A
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4383,7 +4185,7 @@ Content-Length: 97
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/today/weather/2 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTUwMzQxLCJ1c2VybmFtZSI6InNzYXIifQ.fpfTx1djwpWpOXyLex5f4pWfs0HyVK15tO1LBeQ7b7jVPyhWeyV5RDvIJxlam3Z-dLLWUpkYD56RjvaqDEluPw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJ1c2Vycm9sZSI6IlVTRVIiLCJpZCI6MSwiZXhwIjoxNzUyNTcyMTE5LCJ1c2VybmFtZSI6InNzYXIifQ.mLVj_ua86mc1VSIr3Lmz8gQ5KwQJvVCtA6eLa0zoV1WWvm1whfajL3z-kKTP4uj2lyxcS0QPXaK2728ajGbL1A
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -4632,7 +4434,7 @@ Content-Length: 5969
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-07-15 11:30:53 +0900
+Last updated 2025-07-15 17:16:23 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
