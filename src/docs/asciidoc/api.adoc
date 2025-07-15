@@ -296,15 +296,11 @@ include::{snippets}/{chatroomUser}/save_test/curl-request.adoc[]
 
 ===== Request Example
 
-include::{snippets}/{chatroomUser}/leave_chatroom_test/http-request.adoc[]
+include::{snippets}/{chatroomUser}/delete_test/http-request.adoc[]
 
 ===== Response Example
 
-include::{snippets}/{chatroomUser}/leave_chatroom_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{chatroomUser}/leave_chatroom_test/curl-request.adoc[]
+include::{snippets}/{chatroomUser}/delete_test/http-response.adoc[]
 
 == 경기
 
@@ -318,10 +314,6 @@ include::{snippets}/{game}/get_games_test/http-request.adoc[]
 
 include::{snippets}/{game}/get_games_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{game}/get_games_test/curl-request.adoc[]
-
 === 2. 경기 목록 조회 (일 기준)
 
 ===== Request Example
@@ -332,10 +324,6 @@ include::{snippets}/{game}/get_games_by_day_test/http-request.adoc[]
 
 include::{snippets}/{game}/get_games_by_day_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{game}/get_games_by_day_test/curl-request.adoc[]
-
 === 3. 캘린더 - 경기 존재 여부 조회
 
 ===== Request Example
@@ -345,10 +333,6 @@ include::{snippets}/{game}/get_calendar_game_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{game}/get_calendar_game_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{game}/get_calendar_game_test/curl-request.adoc[]
 
 == 홈
 
@@ -362,10 +346,6 @@ include::{snippets}/{home}/save_test/http-request.adoc[]
 
 include::{snippets}/{home}/save_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{home}/save_test/curl-request.adoc[]
-
 == 매칭
 
 === 1. 매칭 등록
@@ -378,10 +358,6 @@ include::{snippets}/{match}/save_test/http-request.adoc[]
 
 include::{snippets}/{match}/save_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{match}/save_test/curl-request.adoc[]
-
 === 2. 매칭 목록 조회
 
 ===== Request Example
@@ -391,10 +367,6 @@ include::{snippets}/{match}/get_matches_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{match}/get_matches_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{match}/get_matches_test/curl-request.adoc[]
 
 === 3. 매칭 상세 조회
 
@@ -406,10 +378,6 @@ include::{snippets}/{match}/get_detail_test/http-request.adoc[]
 
 include::{snippets}/{match}/get_detail_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{match}/get_detail_test/curl-request.adoc[]
-
 === 4. 매칭 수정
 
 ===== Request Example
@@ -420,10 +388,6 @@ include::{snippets}/{match}/update_test/http-request.adoc[]
 
 include::{snippets}/{match}/update_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{match}/update_test/curl-request.adoc[]
-
 === 5. 매칭 삭제
 
 ===== Request Example
@@ -433,10 +397,6 @@ include::{snippets}/{match}/delete_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{match}/delete_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{match}/delete_test/curl-request.adoc[]
 
 == 매칭 좋아요
 
@@ -450,10 +410,6 @@ include::{snippets}/{matchLike}/save_test/http-request.adoc[]
 
 include::{snippets}/{matchLike}/save_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{matchLike}/save_test/curl-request.adoc[]
-
 === 2. 좋아요 삭제
 
 ===== Request Example
@@ -463,10 +419,6 @@ include::{snippets}/{matchLike}/delete_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{matchLike}/delete_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{matchLike}/delete_test/curl-request.adoc[]
 
 == 야구장 정보
 
@@ -480,10 +432,6 @@ include::{snippets}/{stadium}/get_stadium_options_test/http-request.adoc[]
 
 include::{snippets}/{stadium}/get_stadium_options_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{stadium}/get_stadium_options_test/curl-request.adoc[]
-
 == 팀 정보
 
 === 1. 팀 목록 조회
@@ -495,10 +443,6 @@ include::{snippets}/{team}/get_teams_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{team}/get_teams_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{team}/get_teams_test/curl-request.adoc[]
 
 == 오늘의 경기
 
@@ -512,10 +456,6 @@ include::{snippets}/{today-game}/get_today_game_predictions_test/http-request.ad
 
 include::{snippets}/{today-game}/get_today_game_predictions_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{today-game}/get_today_game_predictions_test/curl-request.adoc[]
-
 === 2. 오늘의 경기 리스트 조회
 
 ===== Request Example
@@ -525,10 +465,6 @@ include::{snippets}/{today-game}/get_today_games_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{today-game}/get_today_games_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{today-game}/get_today_games_test/curl-request.adoc[]
 
 == 오늘의 타자 라인업
 
@@ -541,10 +477,6 @@ include::{snippets}/{today-hitter-lineup}/get_detail_matchup_test/http-request.a
 ===== Response Example
 
 include::{snippets}/{today-hitter-lineup}/get_detail_matchup_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{today-hitter-lineup}/get_detail_matchup_test/curl-request.adoc[]
 
 == 오늘의 팀 기록
 
@@ -560,10 +492,6 @@ include::{snippets}/{today-team-records}/team_records_test/http-request.adoc[]
 
 include::{snippets}/{today-team-records}/team_records_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{today-team-records}/team_records_test/curl-request.adoc[]
-
 == 유저
 
 === 1. 추가 정보 입력
@@ -576,10 +504,6 @@ include::{snippets}/{user}/get_additional_user_info_test/http-request.adoc[]
 
 include::{snippets}/{user}/get_additional_user_info_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{user}/get_additional_user_info_test/curl-request.adoc[]
-
 === 2. 닉네임 중복 체크 - 실패
 
 ===== Request Example
@@ -589,10 +513,6 @@ include::{snippets}/{user}/check_user_nickname_available_fail_test/http-request.
 ===== Response Example
 
 include::{snippets}/{user}/check_user_nickname_available_fail_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{user}/check_user_nickname_available_fail_test/curl-request.adoc[]
 
 === 3. 닉네임 중복 체크 - 성공
 
@@ -604,10 +524,6 @@ include::{snippets}/{user}/check_user_nickname_available_test/http-request.adoc[
 
 include::{snippets}/{user}/check_user_nickname_available_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{user}/check_user_nickname_available_test/curl-request.adoc[]
-
 === 4. 유저 정보 수정
 
 ===== Request Example
@@ -618,10 +534,6 @@ include::{snippets}/{user}/update_test/http-request.adoc[]
 
 include::{snippets}/{user}/update_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{user}/update_test/curl-request.adoc[]
-
 === 5. 점수 및 티어 조회
 
 ===== Request Example
@@ -631,10 +543,6 @@ include::{snippets}/{user}/get_score_and_tier_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{user}/get_score_and_tier_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{user}/get_score_and_tier_test/curl-request.adoc[]
 
 == 유저 예측
 
@@ -648,10 +556,6 @@ include::{snippets}/{userPrediction}/today_games_test/http-request.adoc[]
 
 include::{snippets}/{userPrediction}/today_games_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{userPrediction}/today_games_test/curl-request.adoc[]
-
 === 2. 나의 경기 예측 조회
 
 ===== Request Example
@@ -662,10 +566,6 @@ include::{snippets}/{userPrediction}/find_my_predictions_test/http-request.adoc[
 
 include::{snippets}/{userPrediction}/find_my_predictions_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{userPrediction}/find_my_predictions_test/curl-request.adoc[]
-
 === 3. 유저 예측 저장
 
 ===== Request Example
@@ -675,10 +575,6 @@ include::{snippets}/{userPrediction}/save_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{userPrediction}/save_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{userPrediction}/save_test/curl-request.adoc[]
 
 == 방문 기록
 
@@ -692,10 +588,6 @@ include::{snippets}/{visitRecord}/save_test/http-request.adoc[]
 
 include::{snippets}/{visitRecord}/save_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{visitRecord}/save_test/curl-request.adoc[]
-
 === 2. 방문 기록 수정
 
 ===== Request Example
@@ -705,10 +597,6 @@ include::{snippets}/{visitRecord}/update_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{visitRecord}/update_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{visitRecord}/update_test/curl-request.adoc[]
 
 === 3. 방문 기록 조회 (일별)
 
@@ -720,10 +608,6 @@ include::{snippets}/{visitRecord}/get_list_date_test/http-request.adoc[]
 
 include::{snippets}/{visitRecord}/get_list_date_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{visitRecord}/get_list_date_test/curl-request.adoc[]
-
 === 4. 방문 기록 조회 (연도 + 월)
 
 ===== Request Example
@@ -733,10 +617,6 @@ include::{snippets}/{visitRecord}/get_list_year_and_month_test/http-request.adoc
 ===== Response Example
 
 include::{snippets}/{visitRecord}/get_list_year_and_month_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{visitRecord}/get_list_year_and_month_test/curl-request.adoc[]
 
 === 5. 방문 기록 상세조회
 
@@ -748,10 +628,6 @@ include::{snippets}/{visitRecord}/get_detail_test/http-request.adoc[]
 
 include::{snippets}/{visitRecord}/get_detail_test/http-response.adoc[]
 
-===== Curl
-
-include::{snippets}/{visitRecord}/get_detail_test/curl-request.adoc[]
-
 === 6. 방문 기록 삭제
 
 ===== Request Example
@@ -761,10 +637,6 @@ include::{snippets}/{visitRecord}/delete_test/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{visitRecord}/delete_test/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{visitRecord}/delete_test/curl-request.adoc[]
 
 == 날씨 예보
 
@@ -777,7 +649,3 @@ include::{snippets}/{weatherUltra}/get_today_forecast/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/{weatherUltra}/get_today_forecast/http-response.adoc[]
-
-===== Curl
-
-include::{snippets}/{weatherUltra}/get_today_forecast/curl-request.adoc[]
