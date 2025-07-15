@@ -41,6 +41,7 @@ public class TodayGameService {
 
     // 날짜 기반 오늘 경기 리스트 조회
     public List<TodayGameResponse.ItemDTO> getTodayGames(LocalDate date) {
-        return todayGameRepository.findTodayGameList(date);
+        LocalDate selectDate = date == null ? LocalDate.now() : date;
+        return todayGameRepository.findTodayGameList(selectDate);
     }
 }
