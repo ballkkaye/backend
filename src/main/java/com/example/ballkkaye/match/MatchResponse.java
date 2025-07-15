@@ -56,8 +56,8 @@ public class MatchResponse {
         private List<Item> matches;
 
         public ListDTO(Gender selectedGender, Age selectedAge, Integer selectedTeamId, String selectedTimeName, List<Item> matches) {
-            this.selectedGender = selectedGender.toString();
-            this.selectedAge = selectedAge.toString();
+            this.selectedGender = selectedGender.getLabel();
+            this.selectedAge = selectedAge.getName();
             this.selectedTeamId = selectedTeamId;
             this.selectedTimeName = selectedTimeName;
             this.matches = matches;
