@@ -296,15 +296,15 @@ include::{snippets}/{chatroomUser}/save_test/curl-request.adoc[]
 
 ===== Request Example
 
-include::{snippets}/{chatroomUser}/leave_chatroom_test/http-request.adoc[]
+include::{snippets}/{chatroomUser}/delete_test/http-request.adoc[]
 
 ===== Response Example
 
-include::{snippets}/{chatroomUser}/leave_chatroom_test/http-response.adoc[]
+include::{snippets}/{chatroomUser}/delete_test/http-response.adoc[]
 
 ===== Curl
 
-include::{snippets}/{chatroomUser}/leave_chatroom_test/curl-request.adoc[]
+include::{snippets}/{chatroomUser}/delete_test/curl-request.adoc[]
 
 == 경기
 
