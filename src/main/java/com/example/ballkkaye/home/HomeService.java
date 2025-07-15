@@ -3,12 +3,14 @@ package com.example.ballkkaye.home;
 
 import com.example.ballkkaye._core.util.TodayGameUtil;
 import com.example.ballkkaye.board.BoardRepository;
-import com.example.ballkkaye.common.enums.GameStatus;
 import com.example.ballkkaye.game.today.TodayGameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com.example.ballkkaye._core.util.TodayGameUtil.round;
@@ -25,19 +27,44 @@ public class HomeService {
 
         // 1. 오늘의 경기
         List<HomeResponse.DTO.TodayGameDTO> todayGames =
+                // 1. 오늘 날짜 기준으로 게임 데이터 Object[] 형태로 조회
                 todayGameRepository.findTodayGameList(today).stream()
-                        .map(game -> new HomeResponse.DTO.TodayGameDTO(
-                                game.getGameId(),
-                                GameStatus.valueOf(game.getGameStatus()),
-                                game.getGameTime(),
-                                TodayGameUtil.simplifyStadiumName(game.getStadiumName()),
-                                game.getBroadcastChannel(),
-                                game.getHomePitcherName(),
-                                game.getHomeTeamLogoUrl(),
-                                game.getAwayPitcherName(),
-                                game.getAwayTeamLogoUrl(),
-                                game.getTicketLink()
-                        )).toList();
+                        .map(row -> {
+                            // [0] 경기 ID
+                            Integer gameId = (Integer) row[0];
+                            // [1] 경기 상태 (예: 예정, 진행중, 종료 등)
+                            String gameStatus = (String) row[1];
+
+                            // [2] 경기 시작 시간 (HH:mm 형식으로 포맷팅)
+                            String gameTime;
+                            Object rawGameTime = row[2];
+                            if (rawGameTime instanceof Timestamp ts) {
+                                gameTime = ts.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+                            } else if (rawGameTime instanceof LocalDateTime ldt) {
+                                gameTime = ldt.format(DateTimeFormatter.ofPattern("HH:mm"));
+                            } else {
+                                gameTime = rawGameTime.toString(); // fallback (예외 케이스)
+                            }
+
+                            // [3] 구장 이름 → 단순화 함수 적용 (예: "인천SSG랜더스필드" → "인천")
+                            String rawStadiumName = (String) row[3];
+                            String stadiumName = TodayGameUtil.simplifyStadiumName(rawStadiumName);
+
+                            // [4~9] 기타 정보 → 그대로 DTO로 매핑
+                            return new HomeResponse.DTO.TodayGameDTO(
+                                    gameId,
+                                    gameStatus,
+                                    gameTime,
+                                    stadiumName,
+                                    (String) row[4],  // broadcastChannel
+                                    (String) row[5],  // homePitcherName
+                                    (String) row[6],  // homeTeamLogoUrl
+                                    (String) row[7],  // awayPitcherName
+                                    (String) row[8],  // awayTeamLogoUrl
+                                    (String) row[9]   // ticketLink
+                            );
+                        })
+                        .toList();
 
         // 2. 승리 예측
         List<HomeResponse.DTO.WinPredictionDTO> predictions =

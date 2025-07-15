@@ -187,16 +187,25 @@ VALUES
  47.6, 52.4, 3.5, 3.9, 2, 0, 7.4, 427),
 
 ------------------------------------
-(6, TIMESTAMP '2025-07-16 18:30:00', 1, 'MS_T', 'SCHEDULED', 3, 5,
- 47.6, 52.4, 3.5, 3.9, NULL, NULL, 7.4, 433),
-(7, TIMESTAMP '2025-07-16 18:30:00', 5, 'KN_T', 'SCHEDULED', 3, 5,
- 47.6, 52.4, 3.5, 3.9, NULL, NULL, 7.4, 434),
-(8, TIMESTAMP '2025-07-16 18:30:00', 8, 'SS_T', 'SCHEDULED', 3, 5,
- 47.6, 52.4, 3.5, 3.9, NULL, NULL, 7.4, 435),
-(9, TIMESTAMP '2025-07-16 18:30:00', 9, 'SPO_T', 'SCHEDULED', 3, 5,
- 47.6, 52.4, 3.5, 3.9, NULL, NULL, 7.4, 436),
-(10, TIMESTAMP '2025-07-16 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5,
- 47.6, 52.4, 3.5, 3.9, NULL, NULL, 7.4, 437);
+-- 두산 vs SSG
+(6, TIMESTAMP '2025-07-15 18:30:00', 1, 'MS_T', 'SCHEDULED', 2, 4,
+ 52.0, 48.0, 4.2, 3.9, 3, 5, 8.1, 433),
+
+-- 삼성 vs 한화
+(7, TIMESTAMP '2025-07-15 18:30:00', 5, 'KN_T', 'SCHEDULED', 6, 8,
+ 49.2, 50.8, 3.7, 3.8, 3, 5, 7.5, 434),
+
+-- NC vs 롯데
+(8, TIMESTAMP '2025-07-15 18:30:00', 8, 'SS_T', 'SCHEDULED', 9, 7,
+ 55.6, 44.4, 4.5, 3.6, 3, 5, 8.1, 435),
+
+-- KT vs LG
+(9, TIMESTAMP '2025-07-15 18:30:00', 9, 'SPO_T', 'SCHEDULED', 10, 1,
+ 50.0, 50.0, 3.8, 3.8, 5, 5, 7.6, 436),
+
+-- 키움 vs KIA
+(10, TIMESTAMP '2025-07-15 18:30:00', 2, 'SPO_2T', 'SCHEDULED', 3, 5,
+ 47.6, 52.4, 3.5, 3.9, 2, 0, 7.4, 437);
 
 -- 8. user_prediction_tb 유저 예측 테이블
 INSERT INTO user_prediction_tb (user_id, game_id, team_id, result)
@@ -205,11 +214,11 @@ VALUES (1, 423, 2, 'INCORRECT'), -- homeTeamId = 6
        (1, 425, 9, 'INCORRECT'), -- homeTeamId = 3
        (1, 426, 10, 'CORRECT'),  -- homeTeamId = 5
        (1, 427, 3, 'INCORRECT'), -- homeTeamId = 2
-       (1, 433, 3, 'WAITING'),   -- gameId 433, userChoiceTeamId = 3
-       (1, 434, 2, 'WAITING'),   -- gameId 434, userChoiceTeamId = 2
-       (1, 435, 4, 'WAITING'),   -- gameId 435, userChoiceTeamId = 4
-       (1, 436, 6, 'WAITING'),   -- gameId 436, userChoiceTeamId = 6
-       (1, 437, 5, 'WAITING');
+       (1, 433, 2, 'WAITING'),   -- gameId 433, userChoiceTeamId = 3
+       (1, 434, 6, 'WAITING'),   -- gameId 434, userChoiceTeamId = 2
+       (1, 435, 9, 'WAITING'),   -- gameId 435, userChoiceTeamId = 4
+       (1, 436, 10, 'WAITING'),  -- gameId 436, userChoiceTeamId = 6
+       (1, 437, 3, 'WAITING');
 -- gameId 437, userChoiceTeamId = 5
 
 

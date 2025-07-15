@@ -1,6 +1,5 @@
 package com.example.ballkkaye.home;
 
-import com.example.ballkkaye.common.enums.GameStatus;
 import lombok.Data;
 
 import java.util.List;
@@ -28,13 +27,13 @@ public class HomeResponse {
             private String awayTeamLogoUrl;
             private String ticketLink;
 
-            public TodayGameDTO(Integer gameId, GameStatus gameStatus, String gameTime,
+            public TodayGameDTO(Integer gameId, String gameStatus, String gameTime,
                                 String stadiumName, String broadcastChannel,
                                 String homePitcherName, String homeTeamLogoUrl,
                                 String awayPitcherName, String awayTeamLogoUrl,
                                 String ticketLink) {
                 this.gameId = gameId;
-                this.gameStatus = gameStatus.getState();
+                this.gameStatus = gameStatus;
                 this.gameTime = gameTime;
                 this.stadiumName = stadiumName;
                 this.broadcastChannel = broadcastChannel;
