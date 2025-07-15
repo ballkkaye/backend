@@ -1,6 +1,8 @@
 package com.example.ballkkaye.match;
 
+import com.example.ballkkaye.common.enums.Age;
 import com.example.ballkkaye.common.enums.DeleteStatus;
+import com.example.ballkkaye.common.enums.Gender;
 import com.example.ballkkaye.match.chat.room.ChatRoomResponse;
 import lombok.Data;
 
@@ -53,9 +55,9 @@ public class MatchResponse {
         private String selectedTimeName;
         private List<Item> matches;
 
-        public ListDTO(String selectedGender, String selectedAge, Integer selectedTeamId, String selectedTimeName, List<Item> matches) {
-            this.selectedGender = selectedGender;
-            this.selectedAge = selectedAge;
+        public ListDTO(Gender selectedGender, Age selectedAge, Integer selectedTeamId, String selectedTimeName, List<Item> matches) {
+            this.selectedGender = selectedGender.toString();
+            this.selectedAge = selectedAge.toString();
             this.selectedTeamId = selectedTeamId;
             this.selectedTimeName = selectedTimeName;
             this.matches = matches;

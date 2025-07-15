@@ -19,14 +19,14 @@ public class MatchRepository {
         em.persist(match);
     }
 
-    public List<Match> findAll(int page, String gender, String age, Integer teamId) {
+    public List<Match> findAll(int page, Gender gender, Age age, Integer teamId) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT m FROM Match m WHERE m.deleteStatus = 'NOT_DELETED'");
 
-        if (gender != null && !gender.isBlank()) {
+        if (gender != Gender.NONE) {
             sb.append(" AND m.chatRoom.preferredGender = :gender");
         }
-        if (age != null && !age.isBlank()) {
+        if (age != Age.NONE) {
             sb.append(" AND m.chatRoom.preferredAge = :age");
         }
         if (teamId != null) {
@@ -38,11 +38,11 @@ public class MatchRepository {
 
         Query query = em.createQuery(sb.toString());
 
-        if (gender != null && !gender.isBlank() && !(gender.equals(Gender.NONE.name()))) {
-            query.setParameter("gender", Gender.valueOf(gender));
+        if (gender != Gender.NONE) {
+            query.setParameter("gender", Gender.valueOf(gender.toString()));
         }
-        if (age != null && !age.isBlank() && !(age.equals(Age.NONE.name()))) {
-            query.setParameter("age", Age.valueOf(age));
+        if (age != Age.NONE) {
+            query.setParameter("age", Age.valueOf(age.toString()));
         }
         if (teamId != null) {
             query.setParameter("teamId", teamId);
