@@ -101,18 +101,15 @@ public class MatchService {
     // 동행글 목록 조회
     public Object getMatches(User sessionUser, Integer page, Gender gender, Age age, Integer teamId) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
-        String selectedGender = gender == null ? null : gender.getLabel();
         String selectedTimeName = null;
-        String selectedAge = age == null ? null : age.getName();
+        Gender selectedGender = gender == null ? Gender.NONE : gender;
+        Age selectedAge = age == null ? Age.NONE : age;
         if (teamId != null) {
             Team team = teamRepository.findById(teamId)
                     .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
             selectedTimeName = team.getTeamName();
         }
-
-        String genderStr = (gender != null) ? gender.name() : null;
-        String ageStr = (age != null) ? age.name() : null;
-        List<Match> matches = matchRepository.findAll(page, genderStr, ageStr, teamId);
+        List<Match> matches = matchRepository.findAll(page, selectedGender, selectedAge, teamId);
 
         List<MatchResponse.Item> items = new ArrayList<>();
         for (Match match : matches) {
