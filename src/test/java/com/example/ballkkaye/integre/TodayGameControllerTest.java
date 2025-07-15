@@ -137,7 +137,7 @@ public class TodayGameControllerTest extends MyRestDoc {
     @Test
     void get_today_games_test() throws Exception {
         // given
-        String date = "2025-07-14";
+        String date = "2025-07-15";
 
         // when
         ResultActions actions = mvc.perform(
@@ -149,7 +149,7 @@ public class TodayGameControllerTest extends MyRestDoc {
 
         // eye
         String responseBody = actions.andReturn().getResponse().getContentAsString();
-//        System.out.println(responseBody);
+        System.out.println(responseBody);
 
         // then
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))

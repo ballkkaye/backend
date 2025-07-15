@@ -123,7 +123,7 @@ public class UserPredictionControllerTest extends MyRestDoc {
     @Test
     void find_my_predictions_test() throws Exception {
         // given
-        String date = "2025-07-14";
+        String date = "2025-07-15";
 
         // when
         ResultActions actions = mvc.perform(

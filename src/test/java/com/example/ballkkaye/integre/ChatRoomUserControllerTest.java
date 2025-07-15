@@ -61,14 +61,14 @@ public class ChatRoomUserControllerTest extends MyRestDoc {
     }
 
     @Test
-    void leave_chatroom_test() throws Exception {
+    void delete_test() throws Exception {
         // given
         Integer chatRoomUserId = 1;
 
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders
-                        .delete("/s/api/chatrooms/user/{id}", chatRoomUserId)
+                        .delete("/s/api/chatroom-users/{id}", chatRoomUserId)
                         .header("Authorization", "Bearer " + accessToken1)
         );
 
