@@ -10,11 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
     private final HomeService mainPageService;
-    
+
     // 홈 화면
     @GetMapping("/api/home")
     public ResponseEntity<?> getHome() {
         HomeResponse.DTO respDTO = mainPageService.getHome();
         return Resp.ok(respDTO);
+    }
+
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "<h1>ballkkaye</h1>";
     }
 }

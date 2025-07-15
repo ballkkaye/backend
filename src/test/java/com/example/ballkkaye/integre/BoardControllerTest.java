@@ -378,5 +378,8 @@ public class BoardControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.images[0].imageUrl").value("https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image1.jpg"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.images[1].id").value(2))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body.images[1].imageUrl").value("https://ballkkaye-bucket.s3.ap-northeast-2.amazonaws.com/test/image2.jpg"));
+
+        actions.andDo(MockMvcResultHandlers.print())
+                .andDo(document);
     }
 }
