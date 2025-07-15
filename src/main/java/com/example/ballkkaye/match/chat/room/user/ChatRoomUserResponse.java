@@ -7,10 +7,10 @@ import lombok.Data;
 public class ChatRoomUserResponse {
     @Data
     public static class SaveDTO {
-        private Integer chatRoomId;
+        private Integer chatRoomUserId;
 
         public SaveDTO(ChatRoomUser chatRoomUser) {
-            this.chatRoomId = chatRoomUser.getChatRoom().getId();
+            this.chatRoomUserId = chatRoomUser.getId();
         }
     }
 

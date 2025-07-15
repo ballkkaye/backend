@@ -124,22 +124,5 @@ public class ChatMessageService {
         chatMessagePS.delete();
         return new ChatMessageResponse.DeleteDTO(DeleteStatus.DELETED);
     }
-
-    public ChatMessageResponse.DTO unsubscribe(User sessionUser, ChatRoomUserRequest.AuthDTO reqDTO) {
-        chatSessionManager.removeSubscriber(reqDTO.getRoomId(), sessionUser.getId());
-
-        // 퇴장 메시지 전송
-        ChatMessageResponse.DTO respDTO = new ChatMessageResponse.DTO(
-                null,
-                reqDTO.getRoomId(),
-                sessionUser.getId(),
-                sessionUser.getNickname(),
-                sessionUser.getNickname() + "님이 퇴장하셨습니다.",
-                ChatConnectedType.LEAVE,
-                false,
-                null
-        );
-        return respDTO;
-    }
 }
 
