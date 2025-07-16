@@ -27,6 +27,7 @@ public class UserResponse {
 
     @Data
     public static class LoginDTO {
+        private Integer userId;
         private String username;
         private String name;
         private String nickname;
@@ -42,6 +43,7 @@ public class UserResponse {
         private Boolean isNewUser;
 
         public LoginDTO(User user, String accessToken, Boolean isNewUser) {
+            this.userId = user.getId();
             this.username = user.getUsername();
             this.name = user.getName();
             this.nickname = user.getNickname();
