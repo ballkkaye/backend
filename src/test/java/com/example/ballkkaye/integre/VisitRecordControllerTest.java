@@ -131,7 +131,7 @@ public class VisitRecordControllerTest extends MyRestDoc {
     @Test
     void get_list_date_test() throws Exception {
         // given
-        String date = "2025-07-15";
+        String date = "2025-07-16";
 
         // when
         ResultActions actions = mvc.perform(

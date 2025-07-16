@@ -31,6 +31,7 @@ public class UserRequest {
 
     @Data
     public static class UpdateDTO {
+        private Integer userId;
         private String nickname;
 
         @Min(value = 1, message = "팀 ID는 1 이상이어야 합니다.")
@@ -41,7 +42,7 @@ public class UserRequest {
                 regexp = "^https://.*\\.s3\\..*\\.amazonaws\\.com/.*$",
                 message = "S3 URL만 허용됩니다."
         )
-        private String ProfileImg;
+        private String profileImg;
     }
 
     @Data
