@@ -3,7 +3,6 @@ package com.example.ballkkaye._core.interceptor;
 import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye.match.chat.room.user.ChatRoomUserRepository;
 import com.example.ballkkaye.user.User;
-import io.sentry.Sentry;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +60,6 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
             return true;
 
         } catch (Exception e) {
-            Sentry.captureException(e);
             log.error("WebSocket beforeHandshake 실패: {}", e.getMessage(), e);
             return false;
         }
