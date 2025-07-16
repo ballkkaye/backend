@@ -3,10 +3,13 @@ package com.example.ballkkaye._core.filter;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.example.ballkkaye._core.error.ex.ExceptionApi400;
+import com.example.ballkkaye._core.error.ex.ExceptionApi401;
 import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye._core.util.Resp;
 import com.example.ballkkaye.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.sentry.Sentry;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,8 +27,8 @@ public class AuthorizationFilter implements Filter {
         String accessToken = request.getHeader("Authorization");
 
         try {
-            if (accessToken == null || accessToken.isBlank()) throw new RuntimeException("토큰을 전달해주세요");
-            if (!accessToken.startsWith("Bearer ")) throw new RuntimeException("유효하지 않은 토큰입니다.");
+            if (accessToken == null || accessToken.isBlank()) throw new ExceptionApi400("토큰을 전달해주세요");
+            if (!accessToken.startsWith("Bearer ")) throw new ExceptionApi401("유효하지 않은 토큰입니다.");
 
             accessToken = accessToken.replace("Bearer ", "");
 
@@ -38,12 +41,15 @@ public class AuthorizationFilter implements Filter {
 
             chain.doFilter(request, response);
         } catch (TokenExpiredException e1) {
+            Sentry.captureException(e1);
             e1.printStackTrace();
             exResponse(response, "토큰이 만료되었습니다");
         } catch (JWTDecodeException | SignatureVerificationException e2) {
+            Sentry.captureException(e2);
             e2.printStackTrace();
             exResponse(response, "토큰 검증에 실패했어요");
         } catch (RuntimeException e3) {
+            Sentry.captureException(e3);
             e3.printStackTrace();
             exResponse(response, e3.getMessage());
         }

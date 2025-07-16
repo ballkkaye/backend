@@ -21,11 +21,13 @@ import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class BoardService {
@@ -42,36 +44,57 @@ public class BoardService {
     @Transactional
     public BoardResponse.SaveDTO save(BoardRequest.SaveDTO reqDTO, User sessionUser) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
+
+        log.info("[게시글 등록 요청] userId={}, teamId={}, 이미지 수={}",
+                sessionUser.getId(),
+                reqDTO.getTeamId(),
+                reqDTO.getImages() != null ? reqDTO.getImages().size() : 0
+        );
+
+
         // 1. user 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> {
+                    log.warn("게시글 등록 실패 - 존재하지 않는 사용자: userId={}", sessionUser.getId());
+                    return new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
+                });
 
         // 2. 팀 조회
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> {
+                    log.warn("게시글 등록 실패 - 존재하지 않는 팀: teamId={}", reqDTO.getTeamId());
+                    return new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
+                });
 
         // 3. 이미지 최대 수 검사
         List<String> base64Images = reqDTO.getImages();
         if (base64Images != null && base64Images.size() > 10) {
+            log.warn("게시글 등록 실패 - 이미지 수 초과: userId={}, count={}", sessionUser.getId(), base64Images.size());
             throw new ExceptionApi400("최대 이미지 저장 한도를 넘었습니다.");
         }
 
         // 4. 게시글 저장
         Board board = reqDTO.toEntity(userPS, teamPS);
         boardRepository.save(board);
+        log.info("게시글 저장 완료: boardId={}, userId={}", board.getId(), sessionUser.getId());
+
 
         // 5. 이미지 저장
         List<BoardImageResponse.ItemDTO> itemDTOS = new ArrayList<>();
-        for (String img : reqDTO.getImages()) {
-            BoardImage boardImage = new BoardImage()
-                    .builder()
-                    .board(board)
-                    .deleteStatus(DeleteStatus.NOT_DELETED)
-                    .imgUrl(img)
-                    .build();
-            boardImageRepository.save(boardImage);
-            itemDTOS.add(new BoardImageResponse.ItemDTO(boardImage.getId(), boardImage.getImgUrl()));
+        if (base64Images != null) {
+            for (String img : base64Images) {
+                BoardImage boardImage = new BoardImage()
+                        .builder()
+                        .board(board)
+                        .deleteStatus(DeleteStatus.NOT_DELETED)
+                        .imgUrl(img)
+                        .build();
+                boardImageRepository.save(boardImage);
+                itemDTOS.add(new BoardImageResponse.ItemDTO(boardImage.getId(), boardImage.getImgUrl()));
+            }
+            log.debug("이미지 {}건 저장 완료: boardId={}", base64Images.size(), board.getId());
         }
+
 
         // 6. 응답 반환
         return new BoardResponse.SaveDTO(board, itemDTOS, p.format(new Date(board.getCreatedAt().getTime())));
@@ -80,23 +103,43 @@ public class BoardService {
     // 커뮤니티 게시글 수정
     @Transactional
     public BoardResponse.UpdateDTO update(BoardRequest.UpdateDTO reqDTO, User sessionUser, Integer boardId) {
+        log.info("[게시글 수정 요청] boardId={}, userId={}, 새 이미지 수={}, 기존 유지 이미지 수={}",
+                boardId, sessionUser.getId(),
+                reqDTO.getNewImages().size(),
+                reqDTO.getRemainImageUrls().size());
+
         // 1. user 조회
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> {
+                    log.warn("게시글 수정 실패 - 존재하지 않는 사용자: userId={}", sessionUser.getId());
+                    return new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
+                });
+
 
         // 2. 게시글이 존재하는지 확인
         Board boardPS = boardRepository.findById(boardId)
-                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> {
+                    log.warn("게시글 수정 실패 - 존재하지 않는 게시글: boardId={}", boardId);
+                    return new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
+                });
 
         // 3. 게시글의 소유자인지 확인
-        if (!boardPS.getUser().getId().equals(userPS.getId())) throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
+        if (!boardPS.getUser().getId().equals(userPS.getId())) {
+            log.warn("게시글 수정 실패 - 권한 없음: userId={}, boardOwnerId={}", sessionUser.getId(), boardPS.getUser().getId());
+            throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
+        }
 
         // 4. 존재하는 팀인지 확인
         Team teamPS = teamRepository.findById(reqDTO.getTeamId())
-                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> {
+                    log.warn("게시글 수정 실패 - 존재하지 않는 팀: teamId={}", reqDTO.getTeamId());
+                    return new ExceptionApi404("해당 자원을 찾을 수 없습니다.");
+                });
 
         // 5. 이미지 수 10개 넘으면 throw
+        int totalImageCount = reqDTO.getNewImages().size() + reqDTO.getRemainImageUrls().size();
         if (reqDTO.getNewImages().size() + reqDTO.getRemainImageUrls().size() > 10) {
+            log.warn("게시글 수정 실패 - 이미지 수 초과: userId={}, count={}", sessionUser.getId(), totalImageCount);
             throw new ExceptionApi400("최대 이미지 저장 한도를 넘었습니다.");
         }
 
@@ -104,6 +147,7 @@ public class BoardService {
         List<BoardImage> images = boardImageRepository.findByBoardIdAndDeleteStatus(boardPS, DeleteStatus.NOT_DELETED);
 
         // 6. 삭제할 이미지 찾아서 삭제 호출 << 컬럼 상태값 갱신
+        int deletedCount = 0;
         for (BoardImage image : images) {
             if (!reqDTO.getRemainImageUrls().contains(image.getImgUrl())) {
                 image.delete();
@@ -111,6 +155,7 @@ public class BoardService {
         }
 
         // 7. 새 이미지 저장
+        int addedCount = 0;
         for (String img : reqDTO.getNewImages()) {
             BoardImage boardImage = new BoardImage()
                     .builder()
@@ -120,9 +165,14 @@ public class BoardService {
                     .build();
             boardImageRepository.save(boardImage);
         }
+        log.info("게시글 이미지 수정 완료: deleted={}, added={}", deletedCount, addedCount);
+
+        // 8. 게시글 내용 수정
 
         // 8. 게시글 update 성공
         boardPS.update(reqDTO.getTitle(), reqDTO.getContent(), teamPS);
+        log.info("게시글 내용 수정 완료: boardId={}, title={}", boardPS.getId(), reqDTO.getTitle());
+
 
         // 9. udpate한 게시글 이미지들 조회
         List<BoardImage> newImagesUrl = boardImageRepository.findByBoardIdAndDeleteStatus(boardPS, DeleteStatus.NOT_DELETED);
@@ -137,9 +187,12 @@ public class BoardService {
 
     // 게시글 목록 조회
     public BoardResponse.ListDTO getList(Integer teamId, Integer page) {
+        log.info("[게시글 목록 조회 요청] teamId={}, page={}", teamId, page);
+
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         List<Board> boards = boardRepository.findAll(teamId, page, DeleteStatus.NOT_DELETED);
         List<BoardResponse.ItemDTO> itemDTOS = new ArrayList<>();
+        log.info("게시글 조회 결과: {}건", boards.size());
 
         for (Board board : boards) {
             String title = board.getTitle();
@@ -166,6 +219,7 @@ public class BoardService {
         }
         List<TeamResponse.ItemDTO> teamDTOS = new ArrayList<>();
         List<Team> teams = teamRepository.findAll();
+        log.info("팀 리스트 조회 결과: {}개 팀", teams.size());
         for (Team team : teams) {
 
             TeamResponse.ItemDTO dto = new TeamResponse.ItemDTO(
@@ -177,11 +231,14 @@ public class BoardService {
             teamDTOS.add(dto);
         }
         BoardResponse.ListDTO respDTO = new BoardResponse.ListDTO(teamDTOS, itemDTOS);
+        log.info("게시글 목록 응답 완료: 게시글={}건, 팀={}개", itemDTOS.size(), teamDTOS.size());
         return respDTO;
     }
 
     // 게시글 상세보기
     public BoardResponse.DetailWithReplyDTO getDetailWithReply(Integer boardId, User sessionUser) {
+        log.info("[게시글 상세보기 요청] boardId={}, 요청자 userId={}", boardId, sessionUser.getId());
+
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         PrettyTime p = new PrettyTime(Locale.KOREAN);
@@ -306,6 +363,9 @@ public class BoardService {
                 itemDTOS,
                 parentReplyItemDTOs);
 
+        log.info("게시글 ID={} 상세 조회 완료 - 댓글 수={}, 이미지 수={}",
+                boardId, parentReplyItemDTOs.size(), itemDTOS.size());
+
         return respDTO;
     }
 
@@ -313,6 +373,8 @@ public class BoardService {
     // 게시글 삭제
     @Transactional
     public Object delete(Integer boardId, User sessionUser) {
+        log.info("[게시글 삭제 요청] userId={}, boardId={}", sessionUser.getId(), boardId);
+
         // 1. 존재하는 유저인지
         userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
@@ -328,12 +390,15 @@ public class BoardService {
 
         // 4. 게시글 DeleteStatus 상태 변경
         boardPS.delete();
+        log.info("게시글 삭제 완료 - boardId={}, 삭제한 사용자={}", boardId, sessionUser.getId());
 
         // 5. ok
         return new BoardResponse.DeleteDTO();
     }
 
     public Object getDetail(Integer boardId, User sessionUser) {
+        log.info("[게시글 상세조회] userId={}, boardId={}", sessionUser.getId(), boardId);
+
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         Board boardPS = boardRepository.findById(boardId)
@@ -350,6 +415,9 @@ public class BoardService {
         for (BoardImage image : boardImages) {
             itemDTOS.add(new BoardImageResponse.ItemDTO(image.getId(), image.getImgUrl()));
         }
+
+        log.info("상세조회 결과 - isOwner={}, isLike={}, likeCount={}, imageCount={}",
+                isOwner, isLike, likeCount, itemDTOS.size());
 
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         String relativeTime = p.format(new Date(boardPS.getCreatedAt().getTime()));

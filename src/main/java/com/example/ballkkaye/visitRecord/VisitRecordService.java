@@ -11,12 +11,14 @@ import com.example.ballkkaye.team.TeamRepository;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class VisitRecordService {
@@ -29,6 +31,10 @@ public class VisitRecordService {
     // 직관기록 등록
     @Transactional
     public VisitRecordResponse.DTO save(VisitRecordRequest.SaveDTO reqDTO, User sessionUser) {
+        log.debug("[직관기록 등록 요청] userId={}, gameId={}, teamId={}, 이미지 있음 여부={}",
+                sessionUser.getId(), reqDTO.getGameId(), reqDTO.getTeamId(),
+                reqDTO.getImgUrl() != null);
+
         // user 조회
         User userPS = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
@@ -47,7 +53,7 @@ public class VisitRecordService {
         VisitRecord visitRecord = reqDTO.toEntity(userPS, gamePS, teamPS, reqDTO.getImgUrl());
         visitRecordRepository.save(visitRecord);
 
-
+        log.debug("[직관기록 저장 완료] visitRecordId={}, userId={}", visitRecord.getId(), userPS.getId());
         return new VisitRecordResponse.DTO(visitRecord);
     }
 
@@ -55,6 +61,9 @@ public class VisitRecordService {
     // 직관기록 수정
     @Transactional
     public VisitRecordResponse.DTO update(VisitRecordRequest.UpdateDTO reqDTO, Integer id, Integer sessionUserId) {
+        log.debug("직관기록 수정 요청: visitRecordId={}, userId={}, result={}, content={}, imgUrl={}",
+                id, sessionUserId, reqDTO.getResult(), reqDTO.getContent(), reqDTO.getImgUrl());
+
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(id, sessionUserId)
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
@@ -80,12 +89,15 @@ public class VisitRecordService {
 
         // 4. 새 기록 생성 후 저장
         visitRecordRepository.save(newRecord);
+        log.debug("직관기록 수정 완료: newVisitRecordId={}", newRecord.getId());
         return new VisitRecordResponse.DTO(newRecord);
     }
 
 
     // 직관기록 목록
     public List<VisitRecordResponse.ListDTO> getList(Integer sessionUserId, LocalDate date, Integer year, Integer month) {
+        log.debug("직관기록 목록 요청: userId={}", sessionUserId);
+
         List<VisitRecord> visitRecords;
         if (date != null) {
             visitRecords = visitRecordRepository.findAllByUserIdAndDate(sessionUserId, date);
@@ -107,6 +119,8 @@ public class VisitRecordService {
 
     // 직관기록 상세보기
     public VisitRecordResponse.DetailDTO getDetail(Integer visitRecordId, Integer sessionUserId) {
+        log.debug("직관기록 상세보기 요청: visitRecordId={}, userId={}", visitRecordId, sessionUserId);
+
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(visitRecordId, sessionUserId)
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
@@ -123,6 +137,8 @@ public class VisitRecordService {
     // 직관기록 삭제
     @Transactional
     public Object delete(Integer visitRecordId, Integer sessionUserId) {
+        log.debug("직관기록 삭제 요청: visitRecordId={}, userId={}", visitRecordId, sessionUserId);
+        
         // 1. 직관기록 조회
         VisitRecord visitRecordPS = visitRecordRepository.findByIdAndUserId(visitRecordId, sessionUserId)
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));

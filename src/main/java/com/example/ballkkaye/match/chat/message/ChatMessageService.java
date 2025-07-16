@@ -1,5 +1,7 @@
 package com.example.ballkkaye.match.chat.message;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi403;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.ChatSessionManager;
 import com.example.ballkkaye.common.enums.ChatConnectedType;
 import com.example.ballkkaye.common.enums.DeleteStatus;
@@ -31,11 +33,11 @@ public class ChatMessageService {
     @Transactional // TODO 유효성 검사 로직 추가해야 됨
     public ChatMessageResponse.DTO save(ChatMessageRequest.DTO reqDTO, User sessionUser) {
         ChatRoom chatRoomPS = chatRoomRepository.findById(reqDTO.getChatRoomId())
-                .orElseThrow(() -> new RuntimeException("채팅방 없음"));
+                .orElseThrow(() -> new ExceptionApi404("채팅방 없음"));
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저 없음"));
+                .orElseThrow(() -> new ExceptionApi404("유저 없음"));
         ChatRoomUser chatRoomUserPS = chatRoomUserRepository.findByUserIdAndChatRoomId(userPS.getId(), chatRoomPS.getId())
-                .orElseThrow(() -> new RuntimeException("채팅방에 존재하지 않음"));
+                .orElseThrow(() -> new ExceptionApi404("채팅방에 존재하지 않음"));
 
         ChatMessage message = ChatMessage.builder()
                 .chatRoom(chatRoomPS)
@@ -87,7 +89,7 @@ public class ChatMessageService {
     // 메시지 List로 반환
     public List<ChatMessageResponse.DTO> getMessages(Integer roomId, User sessionUser) {
         chatRoomUserRepository.findByUserIdAndChatRoomId(sessionUser.getId(), roomId)
-                .orElseThrow(() -> new RuntimeException("권한 없음"));
+                .orElseThrow(() -> new ExceptionApi403("권한 없음"));
 
 
         Timestamp connectedAt = chatRoomUserRepository.findCreatedAt(roomId, sessionUser.getId());
@@ -112,14 +114,14 @@ public class ChatMessageService {
     public Object delete(Integer chatMessageId, User sessionUser) {
         // 채팅 조회
         ChatMessage chatMessagePS = chatMessageRepository.findById(chatMessageId)
-                .orElseThrow(() -> new RuntimeException("해당 자원이 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원이 없습니다."));
 
         // 권한 조회
         if (!chatMessagePS.getUser().getId().equals(sessionUser.getId())) {
-            throw new RuntimeException("권한이 없습니다.");
+            throw new ExceptionApi403("권한이 없습니다.");
         }
         if (chatMessagePS.getDeleteStatus() == DeleteStatus.DELETED) {
-            throw new RuntimeException("해당 자원이 없습니다.");
+            throw new ExceptionApi404("해당 자원이 없습니다.");
         }
         chatMessagePS.delete();
         return new ChatMessageResponse.DeleteDTO(DeleteStatus.DELETED);
