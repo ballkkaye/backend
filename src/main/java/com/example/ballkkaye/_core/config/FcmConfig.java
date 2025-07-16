@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,9 +47,15 @@ public class FcmConfig {
             Files.write(firebaseKeyPath, decoded);
 
             // [4] Firebase 초기화
-            try (FileInputStream serviceAccount = new FileInputStream(firebaseKeyPath.toFile())) {
+            try {
+                // JSON 문자열로 Firebase 인증 정보를 생성
+                String json = new String(decoded);
+                GoogleCredentials credentials = GoogleCredentials.fromStream(
+                        new java.io.ByteArrayInputStream(json.getBytes())
+                );
+
                 FirebaseOptions options = FirebaseOptions.builder()
-                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .setCredentials(credentials)
                         .build();
 
                 if (FirebaseApp.getApps().isEmpty()) {
@@ -59,6 +64,10 @@ public class FcmConfig {
                 } else {
                     log.info("FirebaseApp 이미 초기화되어 있음 - 중복 초기화 생략");
                 }
+
+            } catch (Exception e) {
+                Sentry.captureException(e);
+                log.error("Firebase 초기화 실패: {}", e.getMessage(), e);
             }
 
         } catch (Exception e) {
