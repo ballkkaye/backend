@@ -1,8 +1,6 @@
 package com.example.ballkkaye.game.today;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -26,47 +24,16 @@ public class TodayGameRepository {
         }
     }
 
-
-    // 오늘 경기의 예측 관련 원본 데이터를 조회
-    public List<Object[]> findTodayGamePredictionData() {
+    public List<TodayGame> findTodayGames() {
         return em.createQuery("""
-                SELECT
-                    tg.game.id,
-                    homeTeam.teamName,
-                    awayTeam.teamName,
-                    homePitcher.player.name,
-                    awayPitcher.player.name,
-                    homePitcher.profileUrl,
-                    awayPitcher.profileUrl,
-                    tg.homePredictionScore,
-                    tg.awayPredictionScore,
-                    tg.totalPredictionScore,
-                    tg.homeWinPer,
-                    tg.awayWinPer
-                FROM TodayGame tg
-                JOIN tg.homeTeam homeTeam
-                JOIN tg.awayTeam awayTeam
-                LEFT JOIN TodayStartingPitcher homePitcher
-                    ON homePitcher.game.id = tg.game.id
-                    AND homePitcher.player.team.id = homeTeam.id
-                LEFT JOIN TodayStartingPitcher awayPitcher
-                    ON awayPitcher.game.id = tg.game.id
-                    AND awayPitcher.player.team.id = awayTeam.id
-                """, Object[].class).getResultList();
+                        SELECT tg FROM TodayGame tg
+                        JOIN FETCH tg.homeTeam
+                        JOIN FETCH tg.awayTeam
+                        ORDER BY tg.id DESC
+                        """, TodayGame.class)
+                .setMaxResults(5)
+                .getResultList();
     }
-
-    // 주어진 gameId로 TodayGame 객체 조회
-    public Optional<TodayGame> findByGameId(Integer gameId) {
-        String jpql = "SELECT tg FROM TodayGame tg WHERE tg.game.id = :gameId";
-        TypedQuery<TodayGame> query = em.createQuery(jpql, TodayGame.class);
-        query.setParameter("gameId", gameId);
-        try {
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
-    }
-
 
     // 특정 날짜에 대한 모든 경기의 간략한 정보 조회
     public List<TodayGameResponse.ItemDTO> findTodayGameList(LocalDate date) {

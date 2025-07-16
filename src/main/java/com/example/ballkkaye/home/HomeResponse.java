@@ -51,6 +51,9 @@ public class HomeResponse {
         public static class WinPredictionDTO {
             private Integer gameId;
 
+            private Integer homeTeamId;
+            private Integer awayTeamId;
+
             private String homeTeamName;
             private String awayTeamName;
 
@@ -67,21 +70,10 @@ public class HomeResponse {
             private Double homeWinPercent;
             private Double awayWinPercent;
 
-            public WinPredictionDTO(
-                    Integer gameId,
-                    String homeTeamName,
-                    String awayTeamName,
-                    String homePitcherName,
-                    String awayPitcherName,
-                    String homePitcherProfileUrl,
-                    String awayPitcherProfileUrl,
-                    Double homePredictionScore,
-                    Double awayPredictionScore,
-                    Double totalPredictionScore,
-                    Double homeWinPercent,
-                    Double awayWinPercent
-            ) {
+            public WinPredictionDTO(Integer gameId, Integer homeTeamId, Integer awayTeamId, String homeTeamName, String awayTeamName, String homePitcherName, String awayPitcherName, String homePitcherProfileUrl, String awayPitcherProfileUrl, Double homePredictionScore, Double awayPredictionScore, Double totalPredictionScore, Double homeWinPercent, Double awayWinPercent) {
                 this.gameId = gameId;
+                this.homeTeamId = homeTeamId;
+                this.awayTeamId = awayTeamId;
                 this.homeTeamName = homeTeamName;
                 this.awayTeamName = awayTeamName;
                 this.homePitcherName = homePitcherName;

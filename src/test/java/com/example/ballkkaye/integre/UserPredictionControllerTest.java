@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,10 +45,11 @@ public class UserPredictionControllerTest extends MyRestDoc {
     @Test
     void today_games_test() throws Exception {
         // given
-
+        LocalDate date = LocalDate.of(2025, 7, 16);
         // when
         ResultActions actions = mvc.perform(
                 MockMvcRequestBuilders.get("/s/api/predictions/today")
+                        .param("date", date.toString())
                         .header("Authorization", "Bearer " + accessToken2)
         );
 
@@ -56,12 +58,12 @@ public class UserPredictionControllerTest extends MyRestDoc {
         System.out.println(responseBody);
 
         // then
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
+        actions.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body").isArray())
-
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameId").value(423))
+                // body[0]
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameId").value(428))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].gameTime").value("18:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].homeTeam.teamId").value(2))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].homeTeam.teamName").value("두산 베어스"))
@@ -69,10 +71,11 @@ public class UserPredictionControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].awayTeam.teamId").value(4))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].awayTeam.teamName").value("SSG 랜더스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].awayTeam.logoUrl").value("/img/logo/SSG로고.png"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].homeVoteRate").value(100))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].homeVoteRate").value(0))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[0].awayVoteRate").value(0))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].gameId").value(424))
+                // body[1]
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].gameId").value(429))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].gameTime").value("18:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].homeTeam.teamId").value(6))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].homeTeam.teamName").value("삼성 라이온즈"))
@@ -80,10 +83,11 @@ public class UserPredictionControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].awayTeam.teamId").value(8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].awayTeam.teamName").value("한화 이글스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].awayTeam.logoUrl").value("/img/logo/한화로고.png"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].homeVoteRate").value(100))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].homeVoteRate").value(0))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[1].awayVoteRate").value(0))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].gameId").value(425))
+                // body[2]
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].gameId").value(430))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].gameTime").value("18:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].homeTeam.teamId").value(9))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].homeTeam.teamName").value("NC 다이노스"))
@@ -91,10 +95,11 @@ public class UserPredictionControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].awayTeam.teamId").value(7))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].awayTeam.teamName").value("롯데 자이언츠"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].awayTeam.logoUrl").value("/img/logo/롯데로고.png"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].homeVoteRate").value(100))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].homeVoteRate").value(0))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[2].awayVoteRate").value(0))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].gameId").value(426))
+                // body[3]
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].gameId").value(431))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].gameTime").value("18:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].homeTeam.teamId").value(10))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].homeTeam.teamName").value("KT 위즈"))
@@ -102,10 +107,11 @@ public class UserPredictionControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].awayTeam.teamId").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].awayTeam.teamName").value("LG 트윈스"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].awayTeam.logoUrl").value("/img/logo/LG로고.png"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].homeVoteRate").value(100))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].homeVoteRate").value(0))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[3].awayVoteRate").value(0))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].gameId").value(427))
+                // body[4]
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].gameId").value(432))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].gameTime").value("18:30"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].homeTeam.teamId").value(3))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].homeTeam.teamName").value("키움 히어로즈"))
@@ -113,11 +119,10 @@ public class UserPredictionControllerTest extends MyRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].awayTeam.teamId").value(5))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].awayTeam.teamName").value("KIA 타이거즈"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].awayTeam.logoUrl").value("/img/logo/KIA로고.png"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].homeVoteRate").value(100))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].homeVoteRate").value(0))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.body[4].awayVoteRate").value(0));
 
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
-
     }
 
     @Test

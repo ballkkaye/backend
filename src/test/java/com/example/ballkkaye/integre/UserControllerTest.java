@@ -64,6 +64,7 @@ public class UserControllerTest extends MyRestDoc {
         // then
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.userId").value(2));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.username").value("cos123"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.name").value("코스"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.nickname").value("테스터"));
@@ -149,6 +150,7 @@ public class UserControllerTest extends MyRestDoc {
         // then
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.userId").value(1));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.username").value("ssar123"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.nickname").value("업데이트닉네임12"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.teamId").value(2));
@@ -189,5 +191,5 @@ public class UserControllerTest extends MyRestDoc {
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
-    
+
 }

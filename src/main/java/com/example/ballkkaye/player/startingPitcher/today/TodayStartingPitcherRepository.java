@@ -42,4 +42,13 @@ public class TodayStartingPitcherRepository {
         em.persist(todayStartingPitcher);
         return todayStartingPitcher;
     }
+
+    public List<TodayStartingPitcher> findByGameId(Integer gameId) {
+        return em.createQuery("""
+                            SELECT tsp FROM TodayStartingPitcher tsp
+                            WHERE tsp.game.id = :gameId
+                        """, TodayStartingPitcher.class)
+                .setParameter("gameId", gameId)
+                .getResultList();
+    }
 }
