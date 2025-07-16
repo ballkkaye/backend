@@ -36,9 +36,9 @@ public class ChatRoomUserService {
     @Transactional
     public Object save(Integer chatRoomId, User sessionUser) {
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원이 존재하지 않습니다."));
         ChatRoom chatRoomPS = chatRoomRepository.findById(chatRoomId)
-                .orElseThrow(() -> new RuntimeException("해당 자원이 존재하지 않습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원이 존재하지 않습니다."));
 
         Optional<ChatRoomUser> chatRoomUserOP = chatRoomUserRepository.findByUserIdAndChatRoomId(userPS.getId(), chatRoomId);
 

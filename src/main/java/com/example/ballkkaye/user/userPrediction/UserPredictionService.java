@@ -10,6 +10,7 @@ import com.example.ballkkaye.team.Team;
 import com.example.ballkkaye.user.User;
 import com.example.ballkkaye.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserPredictionService {
@@ -106,12 +108,15 @@ public class UserPredictionService {
 
             prediction.setPredictionStatus(predictionStatus);
         }
-
+        log.debug("[예측 결과 계산] userId={}, date={}, 총 예측 수={}", userId, date, MyPredictionDTO.size());
         return MyPredictionDTO;
     }
 
     @Transactional
     public List<UserPredictionRequest.SaveDTO> save(Integer userId, List<UserPredictionRequest.SaveDTO> saveDTOs) {
+        log.debug("[예측 저장 시작] userId={}, 요청 수={}", userId, saveDTOs.size());
+
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
@@ -122,19 +127,20 @@ public class UserPredictionService {
         for (UserPredictionRequest.SaveDTO dto : saveDTOs) {
             Integer gameId = dto.getGameId();
             Integer teamId = dto.getUserChoiceTeamId();
+            log.debug(" [요청 처리 중] gameId={}, teamId={}", gameId, teamId);
 
             if (gameId == null) {
-                throw new IllegalArgumentException("예측할 경기 ID가 누락되었습니다.");
+                throw new ExceptionApi400("예측할 경기 ID가 누락되었습니다.");
             }
             if (teamId == null) {
-                throw new IllegalArgumentException("경기 [ID: " + gameId + "]에 대한 선택 팀 정보가 누락되었습니다.");
+                throw new ExceptionApi400("경기 [ID: " + gameId + "]에 대한 선택 팀 정보가 누락되었습니다.");
             }
             if (!gameIdsInCurrentRequest.add(gameId)) {
-                throw new IllegalArgumentException("요청 내에 경기 [ID: " + gameId + "]에 대한 중복 예측 요청이 있습니다.");
+                throw new ExceptionApi400("요청 내에 경기 [ID: " + gameId + "]에 대한 중복 예측 요청이 있습니다.");
             }
 
             if (userPredictionRepository.isExistsByUserIdAndGameId(userId, gameId)) {
-                throw new IllegalArgumentException("경기 [ID: " + gameId + "]는 이미 예측되었습니다.");
+                throw new ExceptionApi400("경기 [ID: " + gameId + "]는 이미 예측되었습니다.");
             }
 
             Game game = gameRepository.findById(gameId)
@@ -160,10 +166,13 @@ public class UserPredictionService {
                     .userChoiceTeam(chosenTeam)
                     .result(PredictionStatus.WAITING)
                     .build());
+
+            log.debug("[예측 준비 완료] gameId={}, 선택 팀={}", gameId, chosenTeam.getTeamName());
         }
 
         if (!predictionsToSave.isEmpty()) {
             userPredictionRepository.saveAll(predictionsToSave);
+            log.debug(" [예측 저장 완료] 저장 수={}", predictionsToSave.size());
         }
         return saveDTOs;
     }

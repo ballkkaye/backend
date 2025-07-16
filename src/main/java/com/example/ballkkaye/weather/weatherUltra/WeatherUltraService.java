@@ -4,6 +4,7 @@ import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye._core.util.WeatherUtil;
 import com.example.ballkkaye.common.enums.RainoutLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class WeatherUltraService {
@@ -18,6 +20,8 @@ public class WeatherUltraService {
 
 
     public WeatherUltraResponse.DTO getTodayForecast(Integer stadiumId, Timestamp gameTime) {
+        log.debug("[초단기예보 조회] stadiumId={}, gameTime={}", stadiumId, gameTime.toLocalDateTime());
+
         // 1. 특정 구장의 오늘 예보 데이터를 조회
         List<WeatherUltra> forecasts = weatherUltraRepository.findTodayForecastByStadiumId(stadiumId);
 

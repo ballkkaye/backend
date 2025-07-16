@@ -9,12 +9,14 @@ import com.example.ballkkaye.game.today.TodayGameRepository;
 import com.example.ballkkaye.player.startingPitcher.today.TodayStartingPitcher;
 import com.example.ballkkaye.player.startingPitcher.today.TodayStartingPitcherRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class HomeService {
@@ -25,6 +27,7 @@ public class HomeService {
 
     public HomeResponse.DTO getHome() {
         LocalDate today = LocalDate.now();
+        log.info("홈 화면 데이터 조회 시작 - 날짜: {}", today);
 
         // 1. 오늘의 경기
         List<HomeResponse.DTO.TodayGameDTO> todayGames =
@@ -41,9 +44,11 @@ public class HomeService {
                                 game.getAwayTeamLogoUrl(),
                                 game.getTicketLink()
                         )).toList();
+        log.info("오늘 경기 수: {}", todayGames.size());
 
         // 2. 승리 예측
         List<TodayGame> games = todayGameRepository.findTodayGames();
+        log.info("예측 대상 경기 수: {}", games.size());
         List<HomeResponse.DTO.WinPredictionDTO> predictions = new ArrayList<>();
 
         for (TodayGame game : games) {
@@ -86,6 +91,7 @@ public class HomeService {
                                 b.getTitle(),
                                 b.getContent()
                         )).toList();
+        log.info("최신 커뮤니티 글 수: {}", boards.size());
 
         return new HomeResponse.DTO(todayGames, predictions, boards);
     }

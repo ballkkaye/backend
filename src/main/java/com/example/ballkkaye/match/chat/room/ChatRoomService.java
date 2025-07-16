@@ -1,5 +1,7 @@
 package com.example.ballkkaye.match.chat.room;
 
+import com.example.ballkkaye._core.error.ex.ExceptionApi403;
+import com.example.ballkkaye._core.error.ex.ExceptionApi404;
 import com.example.ballkkaye.common.enums.DeleteStatus;
 import com.example.ballkkaye.match.Match;
 import com.example.ballkkaye.match.MatchRepository;
@@ -32,13 +34,13 @@ public class ChatRoomService {
     @Transactional
     public Object delete(Integer chatRoomId, User sessionUser) {
         ChatRoom chatRoomPS = chatRoomRepository.findById(chatRoomId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         ChatRoomUser chatRoomUserPS = chatRoomUserRepository.findByUserIdAndChatRoomId(sessionUser.getId(), chatRoomId).orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
 
-        if (!chatRoomUserPS.getIsOwner()) throw new RuntimeException("해당 자원에 대한 권한이 없습니다.");
+        if (!chatRoomUserPS.getIsOwner()) throw new ExceptionApi403("해당 자원에 대한 권한이 없습니다.");
 
         Match matchPS = matchRepository.findByChatRoomId(chatRoomId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         // 채팅방 유저 목록 조회
         List<ChatRoomUser> chatRoomUsersPS = chatRoomUserRepository.findByChatRoomIdAndDeleteStatus(matchPS.getChatRoom().getId());
@@ -56,9 +58,9 @@ public class ChatRoomService {
     @Transactional
     public void handleUserLeft(User sessionUser, Integer chatRoomId) {
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("유저 없음"));
+                .orElseThrow(() -> new ExceptionApi404("유저 없음"));
         ChatRoom chatRoomPS = chatRoomRepository.findById(chatRoomId)
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
         ChatRoomUser chatRoomUserPS = chatRoomUserRepository.findByUserIdAndChatRoomId(userPS.getId(), chatRoomId).orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
 
         chatRoomUserPS.updateLastDisconnectedAt();
@@ -68,7 +70,7 @@ public class ChatRoomService {
     public Object chatrooms(User sessionUser) {
         PrettyTime p = new PrettyTime(Locale.KOREAN);
         User userPS = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
 
         List<ChatRoomResponse.ItemDTO> respDTO = new ArrayList<>();
         List<ChatRoomUser> userChatRooms = chatRoomUserRepository.findByUserId(userPS.getId());
@@ -93,7 +95,7 @@ public class ChatRoomService {
             ChatMessage chatMessagePS = chatMessageRepository.findLatestByChatRoomIdAndDeleteStatus(chatRoomUser.getChatRoom().getId());
             ChatRoom chatRoom = chatRoomUser.getChatRoom();
             Match matchPS = matchRepository.findByChatRoomId(chatRoom.getId())
-                    .orElseThrow(() -> new RuntimeException("해당 자원을 찾을 수 없습니다."));
+                    .orElseThrow(() -> new ExceptionApi404("해당 자원을 찾을 수 없습니다."));
             if (chatMessagePS != null) {
                 latestMessageTime = p.format(new Date(chatMessagePS.getCreatedAt().getTime()));
                 latestMessageContent = chatMessagePS.getContent();
