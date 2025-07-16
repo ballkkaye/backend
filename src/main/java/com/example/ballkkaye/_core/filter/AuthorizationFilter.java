@@ -9,15 +9,16 @@ import com.example.ballkkaye._core.util.JwtUtil;
 import com.example.ballkkaye._core.util.Resp;
 import com.example.ballkkaye.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.sentry.Sentry;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@Slf4j
 public class AuthorizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
@@ -41,16 +42,13 @@ public class AuthorizationFilter implements Filter {
 
             chain.doFilter(request, response);
         } catch (TokenExpiredException e1) {
-            Sentry.captureException(e1);
-            e1.printStackTrace();
+            log.error("JWT 만료 예외 발생", e1);
             exResponse(response, "토큰이 만료되었습니다");
         } catch (JWTDecodeException | SignatureVerificationException e2) {
-            Sentry.captureException(e2);
-            e2.printStackTrace();
+            log.error("JWT 디코딩 또는 서명 검증 실패", e2);
             exResponse(response, "토큰 검증에 실패했어요");
         } catch (RuntimeException e3) {
-            Sentry.captureException(e3);
-            e3.printStackTrace();
+            log.error("기타 런타임 예외 발생", e3);
             exResponse(response, e3.getMessage());
         }
     }
